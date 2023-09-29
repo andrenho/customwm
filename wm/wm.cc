@@ -3,6 +3,8 @@
 #include <stdexcept>
 #include <xcb/xcb_keysyms.h>
 
+#include <iostream>
+
 WM& WM::start()
 {
     dpy = xcb_connect(config.display_name.c_str(), nullptr);
@@ -39,11 +41,21 @@ int WM::handle_event()
     if (r == 0) {
         xcb_generic_event_t *ev = xcb_wait_for_event(dpy);
         if (ev != nullptr) {
+            switch (ev->response_type & ~0x80) {
+                case XCB_BUTTON_PRESS:
+                    on_button_press(reinterpret_cast<xcb_button_press_event_t *>(ev));
+                    break;
+            }
             // TODO - handle event
             free(ev);
         }
     }
     xcb_flush(dpy);
     return r;
+}
+
+void WM::on_button_press(xcb_button_press_event_t *e)
+{
+    std::cout << e << "\n";
 }
 

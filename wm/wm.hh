@@ -19,6 +19,8 @@ private:
     xcb_screen_t* scr;
 
     int handle_event();
+
+    void on_button_press(xcb_button_press_event_t* e);
 };
 
 #endif //WM_HH_
