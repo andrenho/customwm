@@ -20,8 +20,8 @@ private:
 
     int handle_event();
 
-    static void log(std::string const& event_type, uint32_t window_id, const char* fmt, ...) ;
-    static void log(std::string const& event_type, uint32_t window_id) { log(event_type, window_id, ""); }
+    void log(std::string const& event_type, uint32_t window_id, const char* fmt, ...) const;
+    void log(std::string const& event_type, uint32_t window_id) const { log(event_type, window_id, ""); }
 
     void on_create_notify(xcb_create_notify_event_t const& e);
     void on_configure_request(xcb_configure_request_event_t const& e);
