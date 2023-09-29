@@ -19,3 +19,4 @@ The programs are:
 * https://magcius.github.io/xplain/article/x-basics.html
 * https://github.com/mcpcpc/xwm
 * https://jichu4n.com/posts/how-x-window-managers-work-and-how-to-write-one-part-i/
+* https://community.kde.org/Xcb

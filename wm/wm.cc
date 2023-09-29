@@ -3,7 +3,8 @@
 #include <stdexcept>
 #include <xcb/xcb_keysyms.h>
 
-#include <iostream>
+#include <cstdio>
+#include <cstdarg>
 
 WM& WM::start()
 {
@@ -35,6 +36,19 @@ void WM::run()
         r = handle_event();
 }
 
+void WM::log(const std::string &event_type, uint32_t window_id, const char *fmt, ...)
+{
+    printf("%s: window %d ", event_type.c_str(), window_id);
+
+    va_list args;
+    va_start(args, fmt);
+    vprintf(fmt, args);
+    va_end(args);
+
+    printf("\n");
+}
+
+
 int WM::handle_event()
 {
     int r = xcb_connection_has_error(dpy);
@@ -42,9 +56,10 @@ int WM::handle_event()
         xcb_generic_event_t *ev = xcb_wait_for_event(dpy);
         if (ev != nullptr) {
             switch (ev->response_type & ~0x80) {
-                case XCB_BUTTON_PRESS:
-                    on_button_press(reinterpret_cast<xcb_button_press_event_t *>(ev));
-                    break;
+                case XCB_CREATE_NOTIFY:     on_create_notify(*(xcb_create_notify_event_t *)(ev)); break;
+                case XCB_CONFIGURE_REQUEST: on_configure_request(*(xcb_configure_request_event_t *)(ev)); break;
+                case XCB_MAP_REQUEST:       on_map_request(*(xcb_map_request_event_t *)(ev)); break;
+                case XCB_BUTTON_PRESS:      on_button_press(*reinterpret_cast<xcb_button_press_event_t *>(ev)); break;
             }
             // TODO - handle event
             free(ev);
@@ -54,8 +69,41 @@ int WM::handle_event()
     return r;
 }
 
-void WM::on_button_press(xcb_button_press_event_t *e)
+void WM::on_create_notify(xcb_create_notify_event_t const& e)
 {
-    std::cout << e << "\n";
+    log("CreateNotify", e.window, "pos: (%d %d)", e.x, e.y);
+}
+
+void WM::on_configure_request(const xcb_configure_request_event_t &e)
+{
+    log("ConfigureRequest", e.window, "pos: (%d %d) size: (%d %d) border: %d", e.x, e.y, e.width, e.height, e.border_width);
+
+    static uint16_t config_mask = XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y | XCB_CONFIG_WINDOW_WIDTH |
+            XCB_CONFIG_WINDOW_HEIGHT | XCB_CONFIG_WINDOW_BORDER_WIDTH | XCB_CONFIG_WINDOW_SIBLING |
+            XCB_CONFIG_WINDOW_STACK_MODE;
+
+    xcb_configure_window_value_list_t cw = {
+            .x = e.x,
+            .y = e.y,
+            .width = e.width,
+            .height = e.height,
+            .border_width = e.border_width,
+            .sibling = e.sibling,
+            .stack_mode = e.stack_mode,
+    };
+
+    xcb_configure_window_aux(dpy, e.window, config_mask, &cw);
+    xcb_flush(dpy);
+}
+
+void WM::on_map_request(const xcb_map_request_event_t &e)
+{
+    log("MapWindow", e.window);
+    xcb_map_window(dpy, e.window);
+    xcb_flush(dpy);
+}
+
+void WM::on_button_press(xcb_button_press_event_t const& e)
+{
 }
 

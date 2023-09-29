@@ -15,12 +15,18 @@ public:
 private:
     Config const& config;
 
-    xcb_connection_t* dpy;
-    xcb_screen_t* scr;
+    xcb_connection_t* dpy = nullptr;
+    xcb_screen_t* scr = nullptr;
 
     int handle_event();
 
-    void on_button_press(xcb_button_press_event_t* e);
+    static void log(std::string const& event_type, uint32_t window_id, const char* fmt, ...) ;
+    static void log(std::string const& event_type, uint32_t window_id) { log(event_type, window_id, ""); }
+
+    void on_create_notify(xcb_create_notify_event_t const& e);
+    void on_configure_request(xcb_configure_request_event_t const& e);
+    void on_map_request(xcb_map_request_event_t const& e);
+    void on_button_press(xcb_button_press_event_t const& e);
 };
 
 #endif //WM_HH_
