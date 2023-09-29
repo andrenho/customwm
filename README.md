@@ -9,6 +9,7 @@ The programs are:
 - customwm-bar: a highly configurable bar
 - customwm-menu: a highly configurable menu
 - customwm-fm: a highly configurable file manager
+- customwm-theme-parser: parse a theme file, and from that generates config files for GTK, KDE, etc...
 - customwm-themes: a theme viewer and switcher
 - customwm-theme-editor: a theme editor (?)
 - customwm-lib: a library used by all, allows reading config files and has a layer on top of X
