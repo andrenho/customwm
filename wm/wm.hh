@@ -17,6 +17,8 @@ private:
 
     xcb_connection_t* dpy;
     xcb_screen_t* scr;
+
+    int handle_event();
 };
 
 #endif //WM_HH_

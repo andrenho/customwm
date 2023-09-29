@@ -16,6 +16,7 @@ WM& WM::start()
                       | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY
                       | XCB_EVENT_MASK_PROPERTY_CHANGE;
     xcb_change_window_attributes_checked(dpy, scr->root, XCB_CW_EVENT_MASK, &values);
+    xcb_flush(dpy);  // TODO
 
     xcb_grab_button(dpy, 0, scr->root, XCB_EVENT_MASK_BUTTON_PRESS |
                                         XCB_EVENT_MASK_BUTTON_RELEASE, XCB_GRAB_MODE_ASYNC,
@@ -27,6 +28,22 @@ WM& WM::start()
 
 void WM::run()
 {
-    for (;;);
+    int r = 0;
+    while (r == 0)
+        r = handle_event();
+}
+
+int WM::handle_event()
+{
+    int r = xcb_connection_has_error(dpy);
+    if (r == 0) {
+        xcb_generic_event_t *ev = xcb_wait_for_event(dpy);
+        if (ev != nullptr) {
+            // TODO - handle event
+            free(ev);
+        }
+    }
+    xcb_flush(dpy);
+    return r;
 }
 
