@@ -17,11 +17,11 @@ The programs are:
 ## Plan
 
 - Version 0.1: basic reparenting window manager (+ compositing?)
-- Version 0.2: configuration (lib: lua, png)
-- Version 0.3: menu & bar
-- Version 0.4: file manager
-- Version 0.5: theme manager
-- Version 0.6: settings
+- Version 0.2: ICCCM and EWMH
+- Version 0.3: advanced configuration options
+- Version 0.4: menu & bar
+- Version 0.5: file manager
+- Version 0.6: theme manager & user settings
 
 ## Configurations
 
@@ -30,6 +30,7 @@ The programs are:
 - general behaviour: focus, click on desktop
 - mouse pointers
 - special keys
+- workspaces
 - user-configurable options
 - dark/light mode
 - bars
@@ -40,3 +41,7 @@ The programs are:
 * https://github.com/mcpcpc/xwm
 * https://jichu4n.com/posts/how-x-window-managers-work-and-how-to-write-one-part-i/
 * https://community.kde.org/Xcb
+* https://en.wikipedia.org/wiki/X_Window_System_protocols_and_architecture
+* https://en.wikipedia.org/wiki/X_logical_font_description
+* https://en.wikipedia.org/wiki/X_Window_System_core_protocol
+* https://www.x.org/wiki/guide/
