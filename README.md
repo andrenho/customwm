@@ -22,6 +22,7 @@ The programs are:
 - Version 0.4: menu & bar
 - Version 0.5: file manager
 - Version 0.6: theme manager & user settings
+- Version 0.7: vectors
 
 ## Configurations
 
@@ -41,6 +42,7 @@ The programs are:
 * https://github.com/mcpcpc/xwm
 * https://jichu4n.com/posts/how-x-window-managers-work-and-how-to-write-one-part-i/
 * https://community.kde.org/Xcb
+* https://jichu4n.com/content/images/2018/10/sB-bXhvvzFJe2u65_YRwARA.png
 * https://en.wikipedia.org/wiki/X_Window_System_protocols_and_architecture
 * https://en.wikipedia.org/wiki/X_logical_font_description
 * https://en.wikipedia.org/wiki/X_Window_System_core_protocol
