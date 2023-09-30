@@ -82,6 +82,7 @@ void WM::on_configure_request(const xcb_configure_request_event_t &e)
 {
     log("ConfigureRequest", e.window, "pos: (%d %d) size: (%d %d) border: %d", e.x, e.y, e.width, e.height, e.border_width);
 
+    /*
     static uint16_t config_mask = XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y | XCB_CONFIG_WINDOW_WIDTH |
             XCB_CONFIG_WINDOW_HEIGHT | XCB_CONFIG_WINDOW_BORDER_WIDTH | XCB_CONFIG_WINDOW_SIBLING |
             XCB_CONFIG_WINDOW_STACK_MODE;
@@ -98,6 +99,7 @@ void WM::on_configure_request(const xcb_configure_request_event_t &e)
 
     xcb_configure_window_aux(dpy, e.window, config_mask, &cw);
     xcb_flush(dpy);
+     */
 }
 
 void WM::on_map_request(const xcb_map_request_event_t &e)

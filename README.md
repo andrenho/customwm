@@ -11,8 +11,28 @@ The programs are:
 - **customwm-fm**: a highly configurable file manager
 - **customwm-theme-parser**: parse a theme file, and from that generates config files for GTK, KDE, etc...
 - **customwm-themes**: a theme viewer and switcher
-- **customwm-theme-editor**: a theme editor (?)
+- **customwm-settings**: set X11 + theme settings
 - **customwm-lib**: a library used by all, allows reading config files and has a layer on top of X
+
+## Plan
+
+- Version 0.1: basic reparenting window manager (+ compositing?)
+- Version 0.2: configuration (lib: lua, png)
+- Version 0.3: menu & bar
+- Version 0.4: file manager
+- Version 0.5: theme manager
+- Version 0.6: settings
+
+## Configurations
+
+- window border/title images, fonts, behaviour
+- desktop default background
+- general behaviour: focus, click on desktop
+- mouse pointers
+- special keys
+- user-configurable options
+- dark/light mode
+- bars
 
 ## Resources
 
