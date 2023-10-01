@@ -3,11 +3,10 @@
 #include <cstdio>
 #include <variant>
 
-#include "wm.hh"
+#include "wm_x_11.hh"
 
 int main(int argc, char* argv[])
 {
     CustomWMLib lib(argc, argv);
-    Window w;
-    WM(lib).run();
+    WM_X11(lib).run();
 }
