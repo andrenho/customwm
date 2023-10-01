@@ -17,7 +17,7 @@ return {
     },]]
 
     window = {
-        border_width = { all = 3 },
+        border_width = 3,
         on_draw = function (window, brush)
             print('hello')
         end

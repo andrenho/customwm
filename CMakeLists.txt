@@ -13,7 +13,9 @@ add_library(customwm-lib STATIC
         lib/customwmlib.hh
         lib/customwmlib.cc
         lib/theme.hh
-        lib/theme.cc)
+        lib/theme.cc
+        lib/types.hh
+        lib/exceptions.hh)
 
 add_executable(customwm wm/main.cc)
 target_link_libraries(customwm customwm-lib)

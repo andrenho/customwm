@@ -8,7 +8,9 @@ class CustomWMLib {
 public:
     CustomWMLib(int argc, char* argv[]);
 
-    [[nodiscard]] std::string_view display() const { return display_; }
+    std::string_view display() const { return display_; }
+
+    Theme const& theme() const { return theme_; }
 
 private:
     std::string display_;
