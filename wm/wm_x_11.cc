@@ -46,17 +46,20 @@ void WM_X11::map_request(xcb_map_request_event_t const& e)
 {
     Window& w = windows_.add({ .inner_id = e.window });
 
+    Padding padding = lib_.theme().window_border_width(w, 1);
     Point pos = window_starting_pos(w);
 
     auto geo = xcb_get_geometry_reply(dpy, xcb_get_geometry(dpy, e.window), nullptr);
+    geo->width += padding.left + padding.right;
+    geo->height += padding.top + padding.bottom;
 
     uint32_t outer_w = xcb_generate_id(dpy);
     uint32_t values = XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |
                       XCB_EVENT_MASK_STRUCTURE_NOTIFY;
-    xcb_create_window(dpy, XCB_COPY_FROM_PARENT, outer_w, scr->root, pos.x, pos.y, geo->width, geo->height, geo->border_width,
-                      XCB_WINDOW_CLASS_INPUT_OUTPUT, XCB_COPY_FROM_PARENT, XCB_CW_EVENT_MASK, &values);
+    xcb_create_window(dpy, XCB_COPY_FROM_PARENT, outer_w, scr->root, pos.x, pos.y, geo->width, geo->height,
+                      geo->border_width, XCB_WINDOW_CLASS_INPUT_OUTPUT, XCB_COPY_FROM_PARENT, XCB_CW_EVENT_MASK, &values);
     xcb_change_save_set(dpy, XCB_SET_MODE_INSERT, e.window);
-    xcb_reparent_window(dpy, e.window, outer_w, 0, 0);
+    xcb_reparent_window(dpy, e.window, outer_w, padding.left, padding.top);
     xcb_map_window(dpy, outer_w);
     xcb_map_window(dpy, e.window);
 
