@@ -1,10 +1,12 @@
 # Version 0.1
 
-- [ ] Theme image
-- [ ] Basic theme file
-- [ ] Conf loader
 - [ ] Base WM
 - [ ] Map/configure/destroy/unmap windows
+
+- [x] Theme image
+- [ ] Basic theme file
+- [ ] Conf loader
+
 - Interact with windows
     - [ ] Close windows
     - [ ] Move windows (composite?)

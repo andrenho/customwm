@@ -1,21 +1,7 @@
-#include "config.hh"
-#include "wm.hh"
-
-#include <iostream>
-#include <stdexcept>
+#include "../lib/customwmlib.hh"
 
 int main(int argc, char* argv[])
 {
-    Config config(argc, argv);
+    CustomWMLib lib(argc, argv);
 
-    WM wm(config);
-
-    try {
-        wm.start();
-    } catch (std::exception& e) {
-        std::cerr << "Error starting customwm: " << e.what() << std::endl;
-        return EXIT_FAILURE;
-    }
-
-    wm.run();
 }
