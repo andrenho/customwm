@@ -6,7 +6,9 @@
 #include <memory>
 #include <string>
 
+extern "C" {
 #include <lua.h>
+}
 
 class Theme {
 public:

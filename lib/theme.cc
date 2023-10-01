@@ -6,7 +6,9 @@
 #include <fstream>
 #include <sstream>
 
+extern "C" {
 #include <lauxlib.h>
+}
 #include <sys/stat.h>
 
 Theme::Theme()
@@ -29,7 +31,7 @@ std::optional<std::string> Theme::find_file(const std::string &theme_file)
 {
     struct stat buffer {};
     for (const char* path : theme_paths) {
-        std::string full_path = std::string(path) + "/" + path + ".customvm_theme";
+        std::string full_path = std::string(path) + "/" + theme_file + ".customvm_theme";
         if (stat(full_path.c_str(), &buffer) == 0)
             return full_path;
     }
