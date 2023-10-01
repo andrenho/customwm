@@ -6,7 +6,7 @@
 
 class Windows {
 public:
-    void add(Window const& w);
+    Window& add(Window const& w);
     void remove(uint32_t id);
 
     std::optional<Window> find(uint32_t id) const;

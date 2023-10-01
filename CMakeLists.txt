@@ -23,5 +23,6 @@ add_executable(customwm wm/main.cc
         wm/windows.cc
         wm/windows.hh
         wm/wm_x_11.cc
-        wm/wm_x_11.hh)
+        wm/wm_x_11.hh
+        wm/types.hh)
 target_link_libraries(customwm customwm-lib)

@@ -1,15 +1,15 @@
 #include "windows.hh"
 
-void Windows::add(const Window &w)
+Window& Windows::add(const Window &w)
 {
-    windows_[w.outer_id] = w;
+    return windows_.insert({ w.inner_id, w }).first->second;
 }
 
 void Windows::remove(uint32_t id)
 {
     auto ow = find(id);
     if (ow)
-        windows_.erase(ow->outer_id);
+        windows_.erase(ow->inner_id);
 }
 
 std::optional<Window> Windows::find(uint32_t id) const
@@ -19,7 +19,7 @@ std::optional<Window> Windows::find(uint32_t id) const
         return it->second;
 
     for (auto const& w: windows_)
-        if (w.second.inner_id == id)
+        if (w.second.outer_id == id)
             return w.second;
 
     return {};

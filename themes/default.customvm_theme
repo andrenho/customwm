@@ -16,6 +16,10 @@ return {
         }
     },]]
 
+    wm = {
+        window_starting_location = 'cascade',  -- options: cascade, center, random, maximized, requested, { x, y }, function returning { x, y }
+    },
+
     window = {
         border_width = 5,
         on_draw = function (window, brush)
