@@ -17,5 +17,9 @@ add_library(customwm-lib STATIC
         lib/types.hh
         lib/exceptions.hh)
 
-add_executable(customwm wm/main.cc)
+add_executable(customwm wm/main.cc
+        wm/wm.cc
+        wm/wm.hh
+        wm/windows.cc
+        wm/windows.hh)
 target_link_libraries(customwm customwm-lib)

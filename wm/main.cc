@@ -3,8 +3,11 @@
 #include <cstdio>
 #include <variant>
 
+#include "wm.hh"
+
 int main(int argc, char* argv[])
 {
     CustomWMLib lib(argc, argv);
-    printf("%d\n", std::get<int>(lib.theme().window_border_width()));
+    Window w;
+    WM(lib).run();
 }

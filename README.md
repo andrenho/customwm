@@ -27,6 +27,7 @@ The programs are:
 ## Configurations
 
 - window border/title images, fonts, behaviour
+- initial window position
 - desktop default background
 - general behaviour: focus, click on desktop
 - mouse pointers

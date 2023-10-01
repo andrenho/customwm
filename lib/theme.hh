@@ -18,26 +18,28 @@ public:
 
     void load(std::string const& theme_name);
 
-    Padding window_border_width() const { return read_padding("window.border_width"); }
+    Padding window_border_width(Window const& w, Padding default_value) const { return read_padding("window.border_width", w, default_value); }
 
 private:
     std::unique_ptr<lua_State, std::function<void(lua_State *)>> L_ptr;
     lua_State *L;
 
     void load_theme_file(std::string const& filename);
-
-    Padding read_padding(std::string const& prop_name) const;
-
-    bool push_property(std::string const& prop_name) const;
-
     static std::optional<std::string> find_file(std::string const& theme_file) ;
+
+    Padding read_padding(std::string const& prop_name, Window const& w, std::optional<Padding> default_value={}) const;
+
+    void empty_stack() const;
+    bool push_property(std::string const& prop_name) const;
+    void push_window(const Window &window) const;
+
+    bool call_lua_window_function(const Window &window) const;
 
     static constexpr const char* theme_paths[] = {
             "../themes",
             "./themes",
     };
 
-    void empty_stack() const;
 };
 
 #endif //THEME_HH_

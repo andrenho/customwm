@@ -8,7 +8,7 @@ class CustomWMLib {
 public:
     CustomWMLib(int argc, char* argv[]);
 
-    std::string_view display() const { return display_; }
+    std::string const& display() const { return display_; }
 
     Theme const& theme() const { return theme_; }
 

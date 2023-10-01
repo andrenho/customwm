@@ -1,4 +1,5 @@
 #include "customwmlib.hh"
+#include "exceptions.hh"
 
 #include <getopt.h>
 #include <cstdio>
@@ -7,7 +8,12 @@ CustomWMLib::CustomWMLib(int argc, char **argv)
     : display_(getenv("DISPLAY")), theme_name_("default"), theme_()
 {
     read_args(argc, argv);
-    theme_.load(theme_name_);
+    try {
+        theme_.load(theme_name_);
+    } catch (LuaException& e) {
+        fprintf(stderr, "lua error: %s", e.what());
+        exit(EXIT_FAILURE);
+    }
 }
 
 void CustomWMLib::read_args(int argc, char **argv)
