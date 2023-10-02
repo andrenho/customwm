@@ -25,7 +25,7 @@ Point WM::window_starting_pos(Window const& w, int16_t win_x, int16_t win_y, int
         case WindowStartingPos::Maximized:
             throw std::runtime_error("Not implemented");  // TODO
         case WindowStartingPos::Requested:
-            throw Point { win_x, win_y };
+            return Point { win_x, win_y };
         case WindowStartingPos::Custom:
             return wsp.point;
     }
