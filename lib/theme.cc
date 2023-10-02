@@ -101,6 +101,42 @@ Padding Theme::read_padding(std::string const& prop_name, Window const& w, std::
     return padding;
 }
 
+WindowStartingPos Theme::read_starting_pos(const std::string &prop_name, const Window &w) const
+{
+    call_lua_window_function(w);
+
+    WindowStartingPos window_starting_pos;
+    switch (lua_type(L, -1)) {
+        case LUA_TSTRING: {
+            std::string s(lua_tostring(L, -1));
+            if (s == "cascade")
+                window_starting_pos.starting_pos = WindowStartingPos::Cascade;
+            else if (s == "center")
+                window_starting_pos.starting_pos = WindowStartingPos::Center;
+            else if (s == "random")
+                window_starting_pos.starting_pos = WindowStartingPos::Random;
+            else if (s == "maximized")
+                window_starting_pos.starting_pos = WindowStartingPos::Maximized;
+            else if (s == "requested")
+                window_starting_pos.starting_pos = WindowStartingPos::Requested;
+            else
+                throw LuaException("Invalid starting position '" + s + "'");
+            break;
+        }
+        case LUA_TTABLE:
+            window_starting_pos = {
+                    .starting_pos = WindowStartingPos::Custom,
+                    .point = to_point(-1),
+            };
+            break;
+        default:
+            throw LuaException(prop_name + ": expected a string, table or function");
+    }
+
+    empty_stack();
+    return window_starting_pos;
+}
+
 bool Theme::push_property(std::string const& prop_name) const
 {
     std::istringstream iss(prop_name);
@@ -137,5 +173,18 @@ void Theme::push_window(const Window &window) const
 {
     lua_newtable(L);
     // TODO - convert window
+}
+
+Point Theme::to_point(int i) const
+{
+    auto get_idx = [this, i](int idx) {
+        lua_geti(L, i, idx);
+        int n = (int) luaL_checkinteger(L, -1);
+        lua_pop(L, 1);
+        return (int16_t) n;
+    };
+    int16_t x = get_idx(1);
+    int16_t y = get_idx(2);
+    return { x, y };
 }
 

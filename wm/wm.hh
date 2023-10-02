@@ -4,7 +4,6 @@
 
 #include "../lib/customwmlib.hh"
 #include "windows.hh"
-#include "types.hh"
 
 class WM {
 public:
@@ -16,7 +15,7 @@ protected:
     virtual void setup() = 0;
     virtual void loop() = 0;
 
-    Point window_starting_pos(Window const& w) const;
+    Point window_starting_pos(Window const& w, int16_t win_x, int16_t win_y, int16_t win_w, int16_t win_h, int16_t scr_w, int16_t scr_h) const;
 
     CustomWMLib const& lib_;
     Windows windows_;

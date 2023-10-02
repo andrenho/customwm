@@ -3,9 +3,18 @@
 
 #include <variant>
 
+struct Point {
+    int16_t x, y;
+};
+
 struct Window {
     uint32_t inner_id;
     uint32_t outer_id;
+};
+
+struct WindowStartingPos {
+    enum { Cascade, Center, Random, Maximized, Requested, Custom } starting_pos;
+    Point point;
 };
 
 struct Padding {

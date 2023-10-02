@@ -17,12 +17,22 @@ return {
     },]]
 
     wm = {
-        window_starting_location = 'cascade',  -- options: cascade, center, random, maximized, requested, { x, y }, function returning { x, y }
+        -- determine window default starting location:
+        --   'cascade':   windows on top of each other except for the title bar (Windows/Apple like)
+        --   'center':    windows always centered
+        --   'random':    random position in the first quadrant
+        --   'maximized': all new windows maximized
+        --   'requested': honor the position requested by the window
+        --   { x, y } or function returning { x, y }: create window at x, y position
+        window_starting_pos = { 20, 20 },
     },
 
     window = {
+        -- size of the window border
         border_width = { 20, 20, 2, 2 },
-        on_draw = function (window, brush)
+
+        -- function executed when window decorations are requested
+        on_draw = function (w)
             print('hello')
         end
     }
