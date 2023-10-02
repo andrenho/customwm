@@ -1,9 +1,9 @@
-#include "graphx11.hh"
+#include "x11.hh"
 
 #include <stdexcept>
 #include <string>
 
-void GraphX11::setup(void* data)
+void X11::setup(void* data)
 {
     // setup connection
     dpy = xcb_connect((const char *) data, nullptr);
@@ -20,12 +20,12 @@ void GraphX11::setup(void* data)
     xcb_flush(dpy);
 }
 
-bool GraphX11::running() const
+bool X11::running() const
 {
     return !xcb_connection_has_error(dpy);
 }
 
-void GraphX11::do_events(WM_Events *events)
+void X11::do_events(IEvents *events)
 {
     xcb_generic_event_t *ev = xcb_wait_for_event(dpy);
     if (ev != nullptr) {
@@ -51,7 +51,7 @@ void GraphX11::do_events(WM_Events *events)
     xcb_flush(dpy);
 }
 
-Area GraphX11::inner_window_size(const Window &w) const
+Area X11::inner_window_size(const Window &w) const
 {
     auto geo = xcb_get_geometry_reply(dpy, xcb_get_geometry(dpy, w.inner_id), nullptr);
     Area area = { geo->x, geo->y, geo->width, geo->height };
@@ -59,12 +59,12 @@ Area GraphX11::inner_window_size(const Window &w) const
     return area;
 }
 
-Area GraphX11::screen_size() const
+Area X11::screen_size() const
 {
     return { 0, 0, scr->width_in_pixels, scr->height_in_pixels };
 }
 
-Handle GraphX11::reparent_window(const Window &w, const Point &pos, const Area &window_sz, const Padding &padding)
+Handle X11::reparent_window(const Window &w, const Point &pos, const Area &window_sz, const Padding &padding)
 {
     uint32_t outer_w = xcb_generate_id(dpy);
 
@@ -84,7 +84,7 @@ Handle GraphX11::reparent_window(const Window &w, const Point &pos, const Area &
     return outer_w;
 }
 
-void GraphX11::destroy_window(const Window &w)
+void X11::destroy_window(const Window &w)
 {
     xcb_unmap_window(dpy, w.outer_id);
     xcb_reparent_window(dpy, w.inner_id, scr->root, 0, 0);

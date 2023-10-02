@@ -1,38 +1,48 @@
 #include "wm.hh"
-#include "../graphlib/graphx11.hh"
+
+#include <chrono>
+using namespace std::chrono_literals;
+using clk = std::chrono::system_clock;
+
+#define CHECK_EVERY 500ms
 
 void WM::run()
 {
-    graph_ = std::make_unique<GraphX11>();
+    x11_.setup((void *) lib_.display().c_str());
 
-    graph_->setup((void *) lib_.display().c_str());
+    auto next_theme_check = clk::now() + CHECK_EVERY;
+    while (x11_.running()) {
+        x11_.do_events(this);
 
-    while (graph_->running())
-        graph_->do_events(this);
+        if (clk::now() > next_theme_check) {
+            lib_.check_for_theme_reload();
+            next_theme_check = clk::now() + CHECK_EVERY;
+        }
+    }
 }
 
 void WM::on_create_window(Handle window_id)
 {
     // add window to list
-    Window& w = windows_.add({ .inner_id = window_id });
+    Window& w = windows_.insert({ w.inner_id, { w.inner_id } }).first->second;
 
     // find window configuration
-    Padding padding = lib_.theme().window_padding_width(w, 1);
-    Area window_size = graph_->inner_window_size(w);
-    Area screen_size = graph_->screen_size();
+    Padding padding = lib_.theme().read_padding("window.border_width", w, 1);
+    Area window_size = x11_.inner_window_size(w);
+    Area screen_size = x11_.screen_size();
     Point pos = window_starting_pos(w, window_size, screen_size, padding);
 
     // create window
-    Handle outer_id = graph_->reparent_window(w, pos, window_size, padding);
+    Handle outer_id = x11_.reparent_window(w, pos, window_size, padding);
     w.outer_id = outer_id;
 }
 
 void WM::on_destroy_window(Handle window_id)
 {
-    auto ow = windows_.find(window_id);
+    auto ow = find_window(window_id);
     if (ow) {
-        graph_->destroy_window(*ow);
-        windows_.remove(window_id);
+        x11_.destroy_window(*ow);
+        windows_.erase(ow->inner_id);
     }
 }
 
@@ -43,7 +53,7 @@ void WM::on_expose_window(Handle window_id, Area area)
 
 Point WM::window_starting_pos(Window const& w, Area const& window_sz, Area const& scr_sz, Padding const& pad) const
 {
-    WindowStartingPos wsp = lib_.theme().window_starting_pos(w);
+    WindowStartingPos wsp = lib_.theme().read_starting_pos("wm.window_starting_pos", w);
     switch (wsp.starting_pos) {
         case WindowStartingPos::Cascade: {
             Point p = { cascade_ * pad.left, cascade_ * pad.top };
@@ -63,5 +73,18 @@ Point WM::window_starting_pos(Window const& w, Area const& window_sz, Area const
         case WindowStartingPos::Custom:
             return wsp.point;
     }
+}
+
+std::optional<Window> WM::find_window(uint32_t id) const
+{
+    auto it = windows_.find(id);
+    if (it != windows_.end())
+        return it->second;
+
+    for (auto const& w: windows_)
+        if (w.second.outer_id == id)
+            return w.second;
+
+    return {};
 }
 

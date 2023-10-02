@@ -20,12 +20,9 @@ add_library(customwm-lib STATIC
 add_executable(customwm wm/main.cc
         wm/wm/wm.cc
         wm/wm/wm.hh
-        wm/wm/windows.cc
-        wm/wm/windows.hh
-        wm/wm/wm_events.hh
-        wm/graphlib/graphiclibrary.hh
-        wm/graphlib/graphx11.cc
-        wm/graphlib/graphx11.hh
+        wm/wm/ievents.hh
+        wm/x11/x11.cc
+        wm/x11/x11.hh
         wm/wm/wmtypes.hh
 )
 target_link_libraries(customwm customwm-lib)

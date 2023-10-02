@@ -1,7 +1,7 @@
 # customwm
 A highly customizable Window Manager for X.
 
-The WindowManager allows for applying themes on the fly. Each theme lives in a zip that contains a Lua file with the configuration, along with the resource files.
+The WindowList allows for applying themes on the fly. Each theme lives in a zip that contains a Lua file with the configuration, along with the resource files.
 
 The programs are:
 

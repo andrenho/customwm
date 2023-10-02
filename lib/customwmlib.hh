@@ -10,17 +10,17 @@ class CustomWMLib {
 public:
     CustomWMLib(int argc, char* argv[]);
 
+    void check_for_theme_reload();
+
     std::string const& display() const { return display_; }
-
     Theme const& theme() const { return theme_; }
-
-    void reload_theme();
 
 private:
     std::string display_;
     std::string theme_name_;
-    Theme theme_;
-    std::thread watch_theme_;
+    Theme       theme_;
+    std::string current_theme_filename_;
+    time_t      theme_file_last_modified_ = 0;
 
     void read_args(int argc, char *argv[]);
 

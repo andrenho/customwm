@@ -6,6 +6,7 @@
 - [ ] Theme image
 - [x] Basic theme file
 - [x] Conf loader
+- [x] Watch for file changes
 
 - Interact with windows
   - [ ] Draw windows

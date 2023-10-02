@@ -20,7 +20,11 @@ Theme::Theme()
     luaL_openlibs(L);
 }
 
-void Theme::load(std::string const& theme_name)
+//
+// THEME LOADING
+//
+
+std::string Theme::load(std::string const& theme_name)
 {
     auto ofile = find_file(theme_name);
     if (!ofile) {
@@ -29,6 +33,7 @@ void Theme::load(std::string const& theme_name)
     }
 
     load_theme_file(*ofile);
+    return *ofile;
 }
 
 std::optional<std::string> Theme::find_file(std::string const& theme_file)
@@ -61,6 +66,15 @@ void Theme::load_theme_file(std::string const& filename)
     if (lua_type(L, -1) != LUA_TTABLE)
         throw LuaException("The theme file doesn't return a table. Make sure the syntax is `return { ... }`.\n");
 }
+
+void Theme::reset()
+{
+    lua_pop(L, lua_gettop(L));
+}
+
+//
+// PUBLIC READING METHODS
+//
 
 Padding Theme::read_padding(std::string const& prop_name, Window const& w, std::optional<Padding> default_value) const
 {
@@ -140,6 +154,10 @@ WindowStartingPos Theme::read_starting_pos(const std::string &prop_name, const W
     return window_starting_pos;
 }
 
+//
+// LUA STACK MANAGEMENT
+//
+
 bool Theme::push_property(std::string const& prop_name) const
 {
     std::istringstream iss(prop_name);
@@ -189,10 +207,5 @@ Point Theme::to_point(int i) const
     int16_t x = get_idx(1);
     int16_t y = get_idx(2);
     return { x, y };
-}
-
-void Theme::reset()
-{
-    lua_pop(L, lua_gettop(L));
 }
 

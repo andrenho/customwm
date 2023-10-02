@@ -3,30 +3,43 @@
 
 #include <cstdio>
 #include <getopt.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+using namespace std::chrono_literals;
 
 CustomWMLib::CustomWMLib(int argc, char **argv)
     : display_(getenv("DISPLAY")), theme_name_("default"), theme_()
 {
     read_args(argc, argv);
     load_theme();
-
-    watch_theme_ = std::thread([](){});  // TODO
 }
 
 void CustomWMLib::load_theme()
 {
     try {
-        theme_.load(theme_name_);
+        current_theme_filename_ = theme_.load(theme_name_);
+
+        struct stat result {};
+        if (stat(current_theme_filename_.c_str(), &result) == 0) {
+            theme_file_last_modified_ = result.st_mtime;
+        }
     } catch (LuaException& e) {
         fprintf(stderr, "lua error: %s", e.what());
         exit(EXIT_FAILURE);
     }
 }
 
-void CustomWMLib::reload_theme()
+void CustomWMLib::check_for_theme_reload()
 {
-    theme_.reset();
-    load_theme();
+    struct stat result {};
+    if (stat(current_theme_filename_.c_str(), &result) == 0) {
+        if (result.st_mtime > theme_file_last_modified_) {
+            theme_.reset();
+            load_theme();
+            printf("Theme file reloaded.");
+        }
+    }
 }
 
 void CustomWMLib::read_args(int argc, char **argv)
