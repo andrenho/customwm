@@ -3,12 +3,12 @@
 #include <stdexcept>
 #include <string>
 
-void X11::setup(void* data)
+void X11::setup(std::string const& display_name)
 {
     // setup connection
-    dpy = xcb_connect((const char *) data, nullptr);
+    dpy = xcb_connect(display_name.c_str(), nullptr);
     if (xcb_connection_has_error(dpy))
-        throw std::runtime_error(std::string("Could not connect to display ") + (const char *) data);
+        throw std::runtime_error("Could not connect to display " + display_name);
 
     // get screen
     scr = xcb_setup_roots_iterator(xcb_get_setup(dpy)).data;

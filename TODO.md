@@ -7,6 +7,7 @@
 - [x] Basic theme file
 - [x] Conf loader
 - [x] Watch for file changes
+- [ ] Remove CustomWMLib
 
 - Interact with windows
   - [ ] Draw windows

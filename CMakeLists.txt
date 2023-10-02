@@ -10,8 +10,6 @@ link_libraries(${X11_xcb_LIB} ${LUA_LIBRARIES})
 include_directories(${X11_xcb_INCLUDE_PATH} ${LUA_INCLUDE_DIR})
 
 add_library(customwm-lib STATIC
-        lib/customwmlib.hh
-        lib/customwmlib.cc
         lib/theme.hh
         lib/theme.cc
         lib/types.hh

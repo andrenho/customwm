@@ -24,7 +24,7 @@ Theme::Theme()
 // THEME LOADING
 //
 
-std::string Theme::load(std::string const& theme_name)
+void Theme::load(std::string const& theme_name)
 {
     auto ofile = find_file(theme_name);
     if (!ofile) {
@@ -33,7 +33,16 @@ std::string Theme::load(std::string const& theme_name)
     }
 
     load_theme_file(*ofile);
-    return *ofile;
+}
+
+void Theme::reload_if_modified()
+{
+    time_t t = theme_file_last_modified();
+    if (t > loaded_theme_last_modified_) {
+        lua_pop(L, lua_gettop(L));
+        load_theme_file(theme_filename_);
+        printf("Theme file reloaded.\n");
+    }
 }
 
 std::optional<std::string> Theme::find_file(std::string const& theme_file)
@@ -46,6 +55,15 @@ std::optional<std::string> Theme::find_file(std::string const& theme_file)
     }
 
     return {};
+}
+
+time_t Theme::theme_file_last_modified()
+{
+    struct stat buffer {};
+    if (stat(theme_filename_.c_str(), &buffer) == 0)
+        return buffer.st_mtime;
+    else
+        return 0;
 }
 
 void Theme::load_theme_file(std::string const& filename)
@@ -65,11 +83,9 @@ void Theme::load_theme_file(std::string const& filename)
     lua_call(L, 0, 1);
     if (lua_type(L, -1) != LUA_TTABLE)
         throw LuaException("The theme file doesn't return a table. Make sure the syntax is `return { ... }`.\n");
-}
 
-void Theme::reset()
-{
-    lua_pop(L, lua_gettop(L));
+    theme_filename_ = filename;
+    loaded_theme_last_modified_ = theme_file_last_modified();
 }
 
 //

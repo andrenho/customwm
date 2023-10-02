@@ -6,16 +6,21 @@ using clk = std::chrono::system_clock;
 
 #define CHECK_EVERY 500ms
 
+WM::WM(std::string const& display_name, std::string const& theme_name)
+{
+    x11_.setup(display_name);
+    theme_.load(theme_name);
+}
+
 void WM::run()
 {
-    x11_.setup((void *) lib_.display().c_str());
-
     auto next_theme_check = clk::now() + CHECK_EVERY;
+
     while (x11_.running()) {
         x11_.do_events(this);
 
         if (clk::now() > next_theme_check) {
-            lib_.check_for_theme_reload();
+            theme_.reload_if_modified();
             next_theme_check = clk::now() + CHECK_EVERY;
         }
     }
@@ -27,7 +32,7 @@ void WM::on_create_window(Handle window_id)
     Window& w = windows_.insert({ window_id, { .inner_id = window_id } }).first->second;
 
     // find window configuration
-    Padding padding = lib_.theme().read_padding("window.border_width", w, Padding(1));
+    Padding padding = theme_.read_padding("window.border_width", w, Padding(1));
     Area window_size = x11_.inner_window_size(w);
     Area screen_size = x11_.screen_size();
     Point pos = window_starting_pos(w, window_size, screen_size, padding);
@@ -53,7 +58,7 @@ void WM::on_expose_window(Handle window_id, Area area)
 
 Point WM::window_starting_pos(Window const& w, Area const& window_sz, Area const& scr_sz, Padding const& pad) const
 {
-    WindowStartingPos wsp = lib_.theme().read_starting_pos("wm.window_starting_pos", w);
+    WindowStartingPos wsp = theme_.read_starting_pos("wm.window_starting_pos", w);
     switch (wsp.starting_pos) {
         case WindowStartingPos::Cascade: {
             Point p = { cascade_ * pad.left, cascade_ * pad.top };

@@ -7,7 +7,7 @@
 
 class X11 {
 public:
-    void setup(void* data);
+    void setup(std::string const& display_name);
     bool running() const;
     void do_events(IEvents *events);
 
