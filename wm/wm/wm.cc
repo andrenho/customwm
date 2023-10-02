@@ -6,8 +6,6 @@ using clk = std::chrono::system_clock;
 
 #define CHECK_EVERY 500ms
 
-#include "../../lib/types.hh"
-
 void WM::run()
 {
     x11_.setup((void *) lib_.display().c_str());
