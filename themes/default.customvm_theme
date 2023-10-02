@@ -21,7 +21,7 @@ return {
     },
 
     window = {
-        border_width = 5,
+        border_width = { 20, 20, 2, 2 },
         on_draw = function (window, brush)
             print('hello')
         end
