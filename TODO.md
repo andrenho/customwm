@@ -3,11 +3,10 @@
 - [x] Base WM
 - [x] Map/configure/destroy/unmap windows
 
-- [ ] Theme image
 - [x] Basic theme file
 - [x] Conf loader
 - [x] Watch for file changes
-- [ ] Remove CustomWMLib
+- [x] Remove CustomWMLib
 
 - Interact with windows
   - [ ] Draw windows

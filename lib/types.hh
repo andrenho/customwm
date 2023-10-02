@@ -13,11 +13,6 @@ struct Area {
     int x, y, w, h;
 };
 
-struct Window {
-    uint32_t inner_id;
-    uint32_t outer_id;
-};
-
 struct WindowStartingPos {
     enum { Cascade, Center, Random, Maximized, Requested, Custom } starting_pos;
     Point point;
@@ -25,10 +20,10 @@ struct WindowStartingPos {
 
 struct Padding {
     Padding() {}
-    Padding(int16_t top, int16_t bottom, int16_t left, int16_t right) : top(top), bottom(bottom), left(left), right(right) {}
-    explicit Padding(int16_t value) : top(value), bottom(value), left(value), right(value) {}
+    Padding(int top, int bottom, int left, int right) : top(top), bottom(bottom), left(left), right(right) {}
+    explicit Padding(int value) : top(value), bottom(value), left(value), right(value) {}
 
-    int16_t top, bottom, left, right;
+    int top, bottom, left, right;
 };
 
 #endif //TYPES_HH_

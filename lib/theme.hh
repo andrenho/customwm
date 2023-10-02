@@ -6,7 +6,7 @@
 #include <memory>
 #include <string>
 #include <variant>
-#include "types.hh"
+#include "window.hh"
 
 extern "C" {
 #include <lua.h>
@@ -22,6 +22,8 @@ public:
     Padding           read_padding(std::string const& prop_name, Window const& w, std::optional<Padding> default_value={}) const;
     WindowStartingPos read_starting_pos(std::string const& prop_name, Window const& w) const;
 
+    void              call_with_window_and_brush(std::string const& prop_name, Window& w);
+
 private:
     std::unique_ptr<lua_State, std::function<void(lua_State *)>> L_ptr;
     lua_State   *L;
@@ -34,7 +36,8 @@ private:
 
     void empty_stack() const;
     bool push_property(std::string const& prop_name) const;
-    void push_window(const Window &window) const;
+    void push_window(const Window &window, bool include_brush) const;
+    void push_brush(IBrush& brush) const;
     Point to_point(int n) const;
 
     bool call_lua_window_function(const Window &window) const;

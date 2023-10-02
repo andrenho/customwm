@@ -3,7 +3,7 @@
 
 #include <xcb/xcb.h>
 #include "../wm/ievents.hh"
-#include "../../lib/types.hh"
+#include "../../lib/window.hh"
 
 class X11 {
 public:

@@ -8,6 +8,7 @@
 #include "ievents.hh"
 #include "../x11/x11.hh"
 #include "../../lib/theme.hh"
+#include "../../lib/window.hh"
 
 class WM : public IEvents {
 public:
@@ -22,7 +23,7 @@ public:
 protected:
     Point window_starting_pos(Window const& w, Area const& window_sz, Area const& scr_sz, Padding const& pad) const;
 
-    std::optional<Window> find_window(Handle id) const;
+    std::optional<Window*> find_window(Handle id) const;
 
     X11                x11_;
     Theme              theme_;

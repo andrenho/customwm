@@ -170,6 +170,20 @@ WindowStartingPos Theme::read_starting_pos(const std::string &prop_name, const W
     return window_starting_pos;
 }
 
+
+void Theme::call_with_window_and_brush(const std::string &prop_name, Window &w)
+{
+    if (!push_property(prop_name))
+        throw PropertyNotFoundException(prop_name);
+
+    if (lua_type(L, -1) != LUA_TFUNCTION)
+        throw LuaException("Property " + prop_name + " is not a function.");
+
+    push_window(w, true);
+    lua_call(L, 1, 0);
+}
+
+
 //
 // LUA STACK MANAGEMENT
 //
@@ -201,15 +215,28 @@ bool Theme::call_lua_window_function(Window const& window) const
     if (lua_type(L, -1) != LUA_TFUNCTION)
         return false;
 
-    push_window(window);
+    push_window(window, false);
     lua_call(L, 1, 1);
     return true;
 }
 
-void Theme::push_window(const Window &window) const
+void Theme::push_window(const Window &window, bool include_brush) const
 {
     lua_newtable(L);
-    // TODO - convert window
+    lua_pushinteger(L, window.w); lua_setfield(L, -2, "w");
+    lua_pushinteger(L, window.h); lua_setfield(L, -2, "h");
+
+    if (include_brush) {
+        push_brush(*window.brush);
+        lua_setfield(L, -2, "brush");
+    }
+}
+
+void Theme::push_brush(IBrush& brush) const
+{
+    lua_newtable(L);
+
+    lua_pushcfunction(L, [](lua_State* l) { return 0; });
 }
 
 Point Theme::to_point(int i) const
@@ -218,10 +245,9 @@ Point Theme::to_point(int i) const
         lua_geti(L, i, idx);
         int n = (int) luaL_checkinteger(L, -1);
         lua_pop(L, 1);
-        return (int16_t) n;
+        return n;
     };
-    int16_t x = get_idx(1);
-    int16_t y = get_idx(2);
+    int x = get_idx(1);
+    int y = get_idx(2);
     return { x, y };
 }
-
