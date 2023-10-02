@@ -4,7 +4,7 @@
 #include <variant>
 
 struct Point {
-    int16_t x, y;
+    int x, y;
 };
 
 struct Window {

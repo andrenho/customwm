@@ -3,7 +3,7 @@
 
 #include <xcb/xcb.h>
 
-#include "wm.hh"
+#include "wm/wm.hh"
 
 class WM_X11 : public WM {
 public:

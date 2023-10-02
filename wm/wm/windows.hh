@@ -2,7 +2,7 @@
 #define WINDOWS_HH_
 
 #include <unordered_map>
-#include "../lib/types.hh"
+#include "../../lib/types.hh"
 
 class Windows {
 public:
