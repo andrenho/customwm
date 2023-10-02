@@ -21,6 +21,8 @@ public:
     Padding window_padding_width(Window const& w, Padding default_value) const { return read_padding("window.border_width", w, default_value); }
     WindowStartingPos window_starting_pos(Window const& w) const { return read_starting_pos("wm.window_starting_pos", w); }
 
+    void reset();
+
 private:
     std::unique_ptr<lua_State, std::function<void(lua_State *)>> L_ptr;
     lua_State *L;

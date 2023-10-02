@@ -12,6 +12,8 @@ public:
 
     Theme const& theme() const { return theme_; }
 
+    void reload_theme();
+
 private:
     std::string display_;
     std::string theme_name_;
@@ -20,6 +22,8 @@ private:
     void read_args(int argc, char *argv[]);
 
     static void display_help(int exit_status);
+
+    void load_theme();
 };
 
 #endif //CUSTOMWMLIB_HH_

@@ -191,3 +191,8 @@ Point Theme::to_point(int i) const
     return { x, y };
 }
 
+void Theme::reset()
+{
+    lua_pop(L, lua_gettop(L));
+}
+

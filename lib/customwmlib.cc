@@ -1,13 +1,19 @@
 #include "customwmlib.hh"
 #include "exceptions.hh"
 
-#include <getopt.h>
 #include <cstdio>
+#include <csignal>
+#include <getopt.h>
 
 CustomWMLib::CustomWMLib(int argc, char **argv)
     : display_(getenv("DISPLAY")), theme_name_("default"), theme_()
 {
     read_args(argc, argv);
+    load_theme();
+}
+
+void CustomWMLib::load_theme()
+{
     try {
         theme_.load(theme_name_);
     } catch (LuaException& e) {
@@ -59,3 +65,10 @@ void CustomWMLib::display_help(int exit_status)
     printf("    -h, --help      Prints this help\n");
     exit(EXIT_FAILURE);
 }
+
+void CustomWMLib::reload_theme()
+{
+    theme_.reset();
+    load_theme();
+}
+
