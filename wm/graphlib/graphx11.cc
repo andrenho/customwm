@@ -31,17 +31,17 @@ void GraphX11::do_events(WM_Events *events)
     if (ev != nullptr) {
         switch (ev->response_type & ~0x80) {
             case XCB_MAP_REQUEST: {
-                auto e = reinterpret_cast<xcb_map_window_request_t *>(ev);
+                auto* e = reinterpret_cast<xcb_map_request_event_t *>(ev);
                 events->on_create_window(e->window);
                 break;
             }
             case XCB_UNMAP_NOTIFY: {
-                auto e = reinterpret_cast<xcb_unmap_notify_event_t *>(ev);
+                auto* e = reinterpret_cast<xcb_unmap_notify_event_t *>(ev);
                 events->on_destroy_window(e->window);
                 break;
             }
             case XCB_EXPOSE: {
-                auto e = reinterpret_cast<xcb_expose_event_t *>(ev);
+                auto* e = reinterpret_cast<xcb_expose_event_t *>(ev);
                 events->on_expose_window(e->window, { e->x, e->y, e->width, e->height });
                 break;
             }
@@ -71,7 +71,7 @@ Handle GraphX11::reparent_window(const Window &w, const Point &pos, const Area &
     uint32_t values = XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |
                       XCB_EVENT_MASK_STRUCTURE_NOTIFY |
                       XCB_EVENT_MASK_EXPOSURE;
-    xcb_create_window(dpy, XCB_COPY_FROM_PARENT, w.outer_id, scr->root, (int16_t) pos.x, (int16_t) pos.y,
+    xcb_create_window(dpy, XCB_COPY_FROM_PARENT, outer_w, scr->root, (int16_t) pos.x, (int16_t) pos.y,
                       window_sz.w + padding.left + padding.right + 1,
                       window_sz.h + padding.top + padding.bottom + 1,
                       1, XCB_WINDOW_CLASS_INPUT_OUTPUT, XCB_COPY_FROM_PARENT, XCB_CW_EVENT_MASK, &values);
