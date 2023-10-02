@@ -1,7 +1,9 @@
 #ifndef CUSTOMWMLIB_HH_
 #define CUSTOMWMLIB_HH_
 
+#include <thread>
 #include <string>
+
 #include "theme.hh"
 
 class CustomWMLib {
@@ -18,6 +20,7 @@ private:
     std::string display_;
     std::string theme_name_;
     Theme theme_;
+    std::thread watch_theme_;
 
     void read_args(int argc, char *argv[]);
 

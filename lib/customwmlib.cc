@@ -2,7 +2,6 @@
 #include "exceptions.hh"
 
 #include <cstdio>
-#include <csignal>
 #include <getopt.h>
 
 CustomWMLib::CustomWMLib(int argc, char **argv)
@@ -10,6 +9,8 @@ CustomWMLib::CustomWMLib(int argc, char **argv)
 {
     read_args(argc, argv);
     load_theme();
+
+    watch_theme_ = std::thread([](){});  // TODO
 }
 
 void CustomWMLib::load_theme()
@@ -20,6 +21,12 @@ void CustomWMLib::load_theme()
         fprintf(stderr, "lua error: %s", e.what());
         exit(EXIT_FAILURE);
     }
+}
+
+void CustomWMLib::reload_theme()
+{
+    theme_.reset();
+    load_theme();
 }
 
 void CustomWMLib::read_args(int argc, char **argv)
@@ -64,11 +71,5 @@ void CustomWMLib::display_help(int exit_status)
     printf("    -t, --theme     Sets the theme (default: default)\n");
     printf("    -h, --help      Prints this help\n");
     exit(EXIT_FAILURE);
-}
-
-void CustomWMLib::reload_theme()
-{
-    theme_.reset();
-    load_theme();
 }
 
