@@ -23,6 +23,5 @@ add_executable(customwm wm/main.cc
         wm/wm/ievents.hh
         wm/x11/x11.cc
         wm/x11/x11.hh
-        wm/wm/wmtypes.hh
 )
 target_link_libraries(customwm customwm-lib)

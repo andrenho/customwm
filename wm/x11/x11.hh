@@ -2,7 +2,6 @@
 #define X11_HH_
 
 #include <xcb/xcb.h>
-#include "../wm/wmtypes.hh"
 #include "../wm/ievents.hh"
 #include "../../lib/types.hh"
 

@@ -6,6 +6,8 @@ using clk = std::chrono::system_clock;
 
 #define CHECK_EVERY 500ms
 
+#include "../../lib/types.hh"
+
 void WM::run()
 {
     x11_.setup((void *) lib_.display().c_str());
@@ -24,10 +26,10 @@ void WM::run()
 void WM::on_create_window(Handle window_id)
 {
     // add window to list
-    Window& w = windows_.insert({ w.inner_id, { w.inner_id } }).first->second;
+    Window& w = windows_.insert({ window_id, { .inner_id = window_id } }).first->second;
 
     // find window configuration
-    Padding padding = lib_.theme().read_padding("window.border_width", w, 1);
+    Padding padding = lib_.theme().read_padding("window.border_width", w, Padding(1));
     Area window_size = x11_.inner_window_size(w);
     Area screen_size = x11_.screen_size();
     Point pos = window_starting_pos(w, window_size, screen_size, padding);
