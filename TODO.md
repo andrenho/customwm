@@ -1,15 +1,17 @@
 # Version 0.1
 
-- [ ] Base WM
-- [ ] Map/configure/destroy/unmap windows
+- [x] Base WM
+- [x] Map/configure/destroy/unmap windows
 
-- [x] Theme image
-- [ ] Basic theme file
-- [ ] Conf loader
+- [ ] Theme image
+- [x] Basic theme file
+- [x] Conf loader
 
 - Interact with windows
-    - [ ] Close windows
-    - [ ] Move windows (composite?)
-    - [ ] Maximize / restore
-    - [ ] Resize windows (composite?)
-    - [ ] Minimize (to somewhere?)
+  - [ ] Draw windows
+    - [ ] Use pixmaps
+  - [ ] Close windows
+  - [ ] Move windows (composite?)
+  - [ ] Maximize / restore
+  - [ ] Resize windows (composite?)
+  - [ ] Minimize (to somewhere?)

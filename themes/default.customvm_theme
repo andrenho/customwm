@@ -29,10 +29,10 @@ return {
 
     window = {
         -- size of the window border
-        border_width = { 20, 20, 2, 2 },
+        border_width = { 24, 3, 3, 3 },
 
         -- function executed when window decorations are requested
-        on_draw = function (w)
+        on_draw = function (w, brush)
             print('hello')
         end
     }

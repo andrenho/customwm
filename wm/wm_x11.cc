@@ -1,4 +1,4 @@
-#include "wm_x_11.hh"
+#include "wm_x11.hh"
 
 void WM_X11::setup()
 {
@@ -35,6 +35,7 @@ void WM_X11::loop()
             switch (ev->response_type & ~0x80) {
                 case XCB_MAP_REQUEST:       map_request(*(xcb_map_request_event_t *) ev); break;
                 case XCB_UNMAP_NOTIFY:      unmap_notify(*(xcb_unmap_notify_event_t *) ev); break;
+                case XCB_EXPOSE:            expose(*(xcb_expose_event_t *) ev); break;
             }
             free(ev);
         }
@@ -44,16 +45,23 @@ void WM_X11::loop()
 
 void WM_X11::map_request(xcb_map_request_event_t const& e)
 {
-    Window& w = windows_.add({ .inner_id = e.window });
+    uint32_t outer_w = xcb_generate_id(dpy);
 
+    // add window
+    Window& w = windows_.add({
+        .inner_id = e.window,
+        .outer_id = outer_w
+    });
+
+    // find window configuration
     Padding padding = lib_.theme().window_padding_width(w, 1);
-
     auto geo = xcb_get_geometry_reply(dpy, xcb_get_geometry(dpy, e.window), nullptr);
     Point pos = window_starting_pos(w, geo->x, geo->y, geo->width, geo->height, scr->width_in_pixels, scr->height_in_pixels, padding.top, padding.left);
 
-    uint32_t outer_w = xcb_generate_id(dpy);
+    // create outer window and reparent
     uint32_t values = XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |
-                      XCB_EVENT_MASK_STRUCTURE_NOTIFY;
+                      XCB_EVENT_MASK_STRUCTURE_NOTIFY |
+                      XCB_EVENT_MASK_EXPOSURE;
     xcb_create_window(dpy, XCB_COPY_FROM_PARENT, outer_w, scr->root, pos.x, pos.y,
                       geo->width + padding.left + padding.right + 1,
                       geo->height + padding.top + padding.bottom + 1,
@@ -62,11 +70,9 @@ void WM_X11::map_request(xcb_map_request_event_t const& e)
     xcb_reparent_window(dpy, e.window, outer_w, padding.left, padding.top);
     xcb_map_window(dpy, outer_w);
     xcb_map_window(dpy, e.window);
-
-    w.outer_id = outer_w;
-
     xcb_flush(dpy);
 
+    // cleanup
     free(geo);
 }
 
@@ -81,4 +87,15 @@ void WM_X11::unmap_notify(xcb_unmap_notify_event_t const& e)
         windows_.remove(e.window);
         xcb_flush(dpy);
     }
+}
+
+void WM_X11::expose(xcb_expose_event_t const& e)
+{
+    /*
+    auto ow = windows_.find(e.window);
+    if (ow) {
+        lib_.theme().draw_window_callback(*ow);
+    }
+    printf("%d\n", e.window);
+     */
 }

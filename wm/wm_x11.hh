@@ -1,5 +1,5 @@
-#ifndef WM_X_11_HH_
-#define WM_X_11_HH_
+#ifndef WM_X11_HH_
+#define WM_X11_HH_
 
 #include <xcb/xcb.h>
 
@@ -19,9 +19,11 @@ private:
 
     void map_request(xcb_map_request_event_t const& e);
     void unmap_notify(xcb_unmap_notify_event_t const& e);
+    void expose(xcb_expose_event_t const& e);
 
     xcb_connection_t* dpy = nullptr;
     xcb_screen_t* scr = nullptr;
+
 };
 
-#endif //WM_X_11_HH_
+#endif //WM_X11_HH_

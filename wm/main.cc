@@ -5,7 +5,7 @@
 
 #include <memory>
 
-#include "wm_x_11.hh"
+#include "wm_x11.hh"
 
 int main(int argc, char* argv[])
 {
