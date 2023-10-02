@@ -49,7 +49,7 @@ void WM_X11::map_request(xcb_map_request_event_t const& e)
     Padding padding = lib_.theme().window_padding_width(w, 1);
 
     auto geo = xcb_get_geometry_reply(dpy, xcb_get_geometry(dpy, e.window), nullptr);
-    Point pos = window_starting_pos(w, geo->x, geo->y, geo->width, geo->height, scr->width_in_pixels, scr->height_in_pixels);
+    Point pos = window_starting_pos(w, geo->x, geo->y, geo->width, geo->height, scr->width_in_pixels, scr->height_in_pixels, padding.top, padding.left);
 
     uint32_t outer_w = xcb_generate_id(dpy);
     uint32_t values = XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |

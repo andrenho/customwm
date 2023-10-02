@@ -24,7 +24,7 @@ return {
         --   'maximized': all new windows maximized
         --   'requested': honor the position requested by the window
         --   { x, y } or function returning { x, y }: create window at x, y position
-        window_starting_pos = { 20, 20 },
+        window_starting_pos = 'cascade',
     },
 
     window = {

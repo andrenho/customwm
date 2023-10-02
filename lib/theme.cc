@@ -76,7 +76,7 @@ Padding Theme::read_padding(std::string const& prop_name, Window const& w, std::
     Padding padding;
     switch (lua_type(L, -1)) {
         case LUA_TNUMBER: {
-            padding = Padding((int) lua_tonumber(L, -1));
+            padding = Padding((int16_t) lua_tonumber(L, -1));
             break;
         }
         case LUA_TTABLE: {
@@ -87,8 +87,8 @@ Padding Theme::read_padding(std::string const& prop_name, Window const& w, std::
                 return n;
             };
             padding.top = get_idx(1);
-            padding.bottom = get_idx(2);
-            padding.left = get_idx(3);
+            padding.left = get_idx(2);
+            padding.bottom = get_idx(3);
             padding.right = get_idx(4);
             break;
         }
@@ -103,9 +103,12 @@ Padding Theme::read_padding(std::string const& prop_name, Window const& w, std::
 
 WindowStartingPos Theme::read_starting_pos(const std::string &prop_name, const Window &w) const
 {
+    if (!push_property(prop_name))
+        throw PropertyNotFoundException(prop_name);
+
     call_lua_window_function(w);
 
-    WindowStartingPos window_starting_pos;
+    WindowStartingPos window_starting_pos {};
     switch (lua_type(L, -1)) {
         case LUA_TSTRING: {
             std::string s(lua_tostring(L, -1));
