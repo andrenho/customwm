@@ -33,7 +33,7 @@ return {
 
         -- function executed when window decorations are requested
         on_draw = function (w)
-            w:set_color(2, 3, 4)
+            w:set_color(255, 0, 0)
         end
     }
 }

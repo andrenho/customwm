@@ -1,5 +1,7 @@
+#include <string>
 #include "ibrush.hh"
 #include "window.hh"
+#include "../exceptions.hh"
 
 extern "C" {
 #include <lualib.h>
@@ -8,6 +10,16 @@ extern "C" {
 
 static std::pair<IBrush*, Handle> brush_info(lua_State* L)
 {
+    static const char* error_msg = "Expected a window. Check if you're not using '.' instead of ':' when executing an action on a window.";
+
+    if (lua_type(L, 1) != LUA_TTABLE)
+        throw LuaException(error_msg);
+
+    lua_getfield(L, 1, "type");
+    if (std::string(lua_tostring(L, -1)) != "window")
+        throw LuaException(error_msg);
+    lua_pop(L, 1);
+
     Window* window = (Window *) lua_topointer(L, 1);
     lua_getglobal(L, "__brush_ptr");
     IBrush* ibrush = (IBrush *) lua_topointer(L, -1);
@@ -16,7 +28,11 @@ static std::pair<IBrush*, Handle> brush_info(lua_State* L)
 }
 
 static luaL_Reg brush_f[] = {
-        { "set_color", [](lua_State *L) { auto [brush, gc] = brush_info(L); brush->set_color(gc, luaL_checkinteger(L, 2), luaL_checkinteger(L, 3), luaL_checkinteger(L, 4)); return 0; } },
+        { "set_color", [](lua_State *L) {
+            auto [brush, gc] = brush_info(L);
+            brush->set_color(gc, luaL_checkinteger(L, 2), luaL_checkinteger(L, 3), luaL_checkinteger(L, 4));
+            return 0;
+        } },
         { nullptr, nullptr },
 };
 
