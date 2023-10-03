@@ -14,6 +14,7 @@ extern "C" {
 Theme::Theme(const std::string &theme_name)
         : L_ptr(luaL_newstate(), [](lua_State* LL) { lua_close(LL); }), L(L_ptr.get()), theme_file_(theme_name)
 {
+    luaL_openlibs(L);
     load_theme_file();
 }
 
@@ -41,7 +42,7 @@ void Theme::load_theme_file()
 void Theme::reload_if_modified()
 {
     if (theme_file_.is_modified()) {
-        luaw_popstack(L, 0);
+        luaw_settop(L, 0);
         load_theme_file();
         printf("Theme file reloaded.\n");
     }

@@ -22,6 +22,9 @@ public:
     template<typename T>
     T read(std::string const &prop_name, std::optional<Window const*> w={}, std::optional<T> default_value = {}) const;
 
+    template<typename... Types>
+    void call(std::string const& prop_name, Types... args);
+
 private:
     std::unique_ptr<lua_State, std::function<void(lua_State *)>> L_ptr;
     lua_State   *L;

@@ -7,7 +7,7 @@ extern "C" {
 #include <lua.h>
 }
 
-void luaw_popstack(lua_State* L, int left_in_stack);
+void luaw_settop(lua_State* L, int left_in_stack);
 
 bool luaw_getfield(lua_State* L, int index, const char* k);
 
@@ -16,5 +16,7 @@ T luaw_to(lua_State* L, int index);
 
 template <typename T>
 void luaw_push(lua_State* L, T const& t);
+
+void luaw_asserttop(lua_State* L, int expected);
 
 #endif //LUAW_HH_

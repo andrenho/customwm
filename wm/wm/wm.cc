@@ -62,7 +62,7 @@ void WM::on_expose_window(Handle window_id, Area area)
     auto ow = find_window(window_id);
     if (ow) {
         try {
-            // theme_.call_with_window_and_brush("window.on_draw", **ow);
+            theme_.call("window.on_draw", **ow);
         } catch (PropertyNotFoundException& unused) {}
     }
 }
