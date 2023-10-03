@@ -1,7 +1,7 @@
 #ifndef IEVENTS_HH_
 #define IEVENTS_HH_
 
-#include "../../lib/types.hh"
+#include "../../lib/types/types.hh"
 
 class IEvents {
 public:

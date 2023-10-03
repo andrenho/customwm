@@ -8,7 +8,7 @@
 #include "ievents.hh"
 #include "../x11/x11.hh"
 #include "../../lib/theme.hh"
-#include "../../lib/window.hh"
+#include "../../lib/types/window.hh"
 
 class WM : public IEvents {
 public:

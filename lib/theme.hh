@@ -6,7 +6,8 @@
 #include <memory>
 #include <string>
 #include <variant>
-#include "window.hh"
+#include "types/window.hh"
+#include "themefile.hh"
 
 extern "C" {
 #include <lua.h>
@@ -14,38 +15,21 @@ extern "C" {
 
 class Theme {
 public:
-    Theme();
+    explicit Theme(std::string const& theme_name);
 
-    void load(std::string const& theme_name);
     void reload_if_modified();
 
-    Padding           read_padding(std::string const& prop_name, Window const& w, std::optional<Padding> default_value={}) const;
-    WindowStartingPos read_starting_pos(std::string const& prop_name, Window const& w) const;
-
-    void              call_with_window_and_brush(std::string const& prop_name, Window& w);
+    template<typename T>
+    T read(std::string const &prop_name, std::optional<Window const*> w={}, std::optional<T> default_value = {}) const;
 
 private:
     std::unique_ptr<lua_State, std::function<void(lua_State *)>> L_ptr;
     lua_State   *L;
-    std::string theme_filename_;
-    time_t      loaded_theme_last_modified_;
+    ThemeFile   theme_file_;
 
-    void   load_theme_file(std::string const& filename);
-    time_t theme_file_last_modified();
-    static std::optional<std::string> find_file(std::string const& theme_file);
-
-    void empty_stack() const;
-    bool push_property(std::string const& prop_name) const;
-    void push_window(const Window &window, bool include_brush) const;
-    void push_brush(IBrush& brush) const;
-    Point to_point(int n) const;
-
-    bool call_lua_window_function(const Window &window) const;
-
-    static constexpr const char* theme_paths[] = {
-            "../themes",
-            "./themes",
-    };
+    void   load_theme_file();
 };
+
+#include "theme.inl"
 
 #endif //THEME_HH_

@@ -6,13 +6,12 @@ using clk = std::chrono::system_clock;
 
 #define CHECK_EVERY 500ms
 
-#include "../x11/brush.hh"
 #include "../../lib/exceptions.hh"
 
 WM::WM(std::string const& display_name, std::string const& theme_name)
+    : theme_(theme_name)
 {
     x11_.setup(display_name);
-    theme_.load(theme_name);
 }
 
 void WM::run()
@@ -35,7 +34,7 @@ void WM::on_create_window(Handle window_id)
     Window& w = windows_.insert({ window_id, Window { .inner_id = window_id } }).first->second;
 
     // find window configuration
-    Padding padding = theme_.read_padding("window.border_width", w, Padding(1));
+    Padding padding = theme_.read<Padding>("window.border_width", &w, Padding(1));
     Area window_size = x11_.inner_window_size(w);
     Area screen_size = x11_.screen_size();
     Point pos = window_starting_pos(w, window_size, screen_size, padding);
@@ -47,7 +46,6 @@ void WM::on_create_window(Handle window_id)
     w.outer_id = outer_id;
     w.w = window_size.w;
     w.h = window_size.h;
-    w.brush = std::make_unique<Brush>(outer_id);
 }
 
 void WM::on_destroy_window(Handle window_id)
@@ -64,14 +62,14 @@ void WM::on_expose_window(Handle window_id, Area area)
     auto ow = find_window(window_id);
     if (ow) {
         try {
-            theme_.call_with_window_and_brush("window.on_draw", **ow);
+            // theme_.call_with_window_and_brush("window.on_draw", **ow);
         } catch (PropertyNotFoundException& unused) {}
     }
 }
 
 Point WM::window_starting_pos(Window const& w, Area const& window_sz, Area const& scr_sz, Padding const& pad) const
 {
-    WindowStartingPos wsp = theme_.read_starting_pos("wm.window_starting_pos", w);
+    WindowStartingPos wsp = theme_.read<WindowStartingPos>("wm.window_starting_pos", &w);
     switch (wsp.starting_pos) {
         case WindowStartingPos::Cascade: {
             Point p = { cascade_ * pad.left, cascade_ * pad.top };
@@ -105,4 +103,3 @@ std::optional<Window*> WM::find_window(uint32_t id) const
 
     return {};
 }
-

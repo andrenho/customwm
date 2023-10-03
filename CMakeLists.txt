@@ -12,9 +12,16 @@ include_directories(${X11_xcb_INCLUDE_PATH} ${LUA_INCLUDE_DIR})
 add_library(customwm-lib STATIC
         lib/theme.hh
         lib/theme.cc
-        lib/types.hh
+        lib/types/types.hh
         lib/exceptions.hh
-        lib/window.hh)
+        lib/types/window.hh
+        lib/luaw.cc
+        lib/luaw.hh
+        lib/themefile.cc
+        lib/themefile.hh
+        lib/types/types.cc
+        lib/theme.inl
+        lib/types/window.cc)
 
 add_executable(customwm wm/main.cc
         wm/wm/wm.cc
@@ -22,7 +29,5 @@ add_executable(customwm wm/main.cc
         wm/wm/ievents.hh
         wm/x11/x11.cc
         wm/x11/x11.hh
-        wm/x11/brush.cc
-        wm/x11/brush.hh
 )
 target_link_libraries(customwm customwm-lib)
