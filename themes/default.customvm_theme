@@ -34,6 +34,7 @@ return {
         -- function executed when window decorations are requested
         on_draw = function (w)
             w:set_color(255, 0, 0)
+            w:draw_rect(0, 0, 20, 20, "fill")
         end
     }
 }
