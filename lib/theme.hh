@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 #include <variant>
+#include "types/ibrush.hh"
 #include "types/window.hh"
 #include "themefile.hh"
 
@@ -24,6 +25,8 @@ public:
 
     template<typename... Types>
     void call(std::string const& prop_name, Types... args);
+
+    void set_brush(IBrush* brush);
 
 private:
     std::unique_ptr<lua_State, std::function<void(lua_State *)>> L_ptr;

@@ -9,6 +9,7 @@
 #include "../x11/x11.hh"
 #include "../../lib/theme.hh"
 #include "../../lib/types/window.hh"
+#include "../x11/brush.hh"
 
 class WM : public IEvents {
 public:

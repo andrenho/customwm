@@ -12,6 +12,7 @@ WM::WM(std::string const& display_name, std::string const& theme_name)
     : theme_(theme_name)
 {
     x11_.setup(display_name);
+    theme_.set_brush(x11_.brush());
 }
 
 void WM::run()
@@ -46,6 +47,9 @@ void WM::on_create_window(Handle window_id)
     w.outer_id = outer_id;
     w.w = window_size.w;
     w.h = window_size.h;
+
+    // create GC
+    w.gc = x11_.create_gc(w);
 }
 
 void WM::on_destroy_window(Handle window_id)

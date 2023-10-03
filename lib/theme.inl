@@ -57,7 +57,6 @@ void Theme::call(std::string const& prop_name, Types... args)
 
     // execute function
     lua_call(L, sizeof...(args), 0);
-    ;
 }
 
 #endif //THEME_INL_

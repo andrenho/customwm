@@ -21,7 +21,9 @@ add_library(customwm-lib STATIC
         lib/themefile.hh
         lib/types/types.cc
         lib/theme.inl
-        lib/types/window.cc)
+        lib/types/window.cc
+        lib/types/ibrush.hh
+        lib/types/ibrush.cc)
 
 add_executable(customwm wm/main.cc
         wm/wm/wm.cc
@@ -29,5 +31,7 @@ add_executable(customwm wm/main.cc
         wm/wm/ievents.hh
         wm/x11/x11.cc
         wm/x11/x11.hh
+        wm/x11/brush.cc
+        wm/x11/brush.hh
 )
 target_link_libraries(customwm customwm-lib)

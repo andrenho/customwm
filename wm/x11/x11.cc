@@ -18,6 +18,8 @@ void X11::setup(std::string const& display_name)
                       XCB_EVENT_MASK_STRUCTURE_NOTIFY;
     xcb_change_window_attributes_checked(dpy, scr->root, XCB_CW_EVENT_MASK, &values);
     xcb_flush(dpy);
+
+    brush_ = std::make_unique<Brush>(dpy);
 }
 
 bool X11::running() const
@@ -91,4 +93,14 @@ void X11::destroy_window(const Window &w)
     xcb_change_save_set(dpy, XCB_SET_MODE_DELETE, w.inner_id);
     xcb_destroy_window(dpy, w.outer_id);
     xcb_flush(dpy);
+}
+
+Handle X11::create_gc(const Window &w)
+{
+    xcb_gcontext_t gc;
+
+    gc = xcb_generate_id(dpy);
+    xcb_create_gc (dpy, gc, w.outer_id, 0, nullptr);
+
+    return gc;
 }

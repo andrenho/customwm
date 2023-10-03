@@ -33,8 +33,7 @@ return {
 
         -- function executed when window decorations are requested
         on_draw = function (w)
-            print('hello')
-            print(w:width())
+            w:set_color(2, 3, 4)
         end
     }
 }

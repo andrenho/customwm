@@ -10,6 +10,7 @@
 struct Window {
     Handle outer_id;
     Handle inner_id;
+    Handle gc;
     int w, h;
 };
 

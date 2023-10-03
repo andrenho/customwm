@@ -10,6 +10,7 @@ extern "C" {
 
 #include "luaw.hh"
 #include "exceptions.hh"
+#include "types/ibrush.hh"
 
 Theme::Theme(const std::string &theme_name)
         : L_ptr(luaL_newstate(), [](lua_State* LL) { lua_close(LL); }), L(L_ptr.get()), theme_file_(theme_name)
@@ -46,4 +47,9 @@ void Theme::reload_if_modified()
         load_theme_file();
         printf("Theme file reloaded.\n");
     }
+}
+
+void Theme::set_brush(IBrush* brush)
+{
+    ibrush_add_to_lua(L, brush);
 }
