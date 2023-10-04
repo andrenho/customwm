@@ -17,6 +17,8 @@ Theme::Theme(const std::string &theme_name)
 {
     luaL_openlibs(L);
     load_theme_file();
+
+    IBrush::create_lua_metatable(L);
 }
 
 void Theme::load_theme_file()
@@ -47,9 +49,4 @@ void Theme::reload_if_modified()
         load_theme_file();
         printf("Theme file reloaded.\n");
     }
-}
-
-void Theme::set_brush(IBrush* brush)
-{
-    ibrush_add_to_lua(L, brush);
 }

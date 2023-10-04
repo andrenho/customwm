@@ -1,5 +1,5 @@
 # customwm
-A highly customizable Window Manager for X.
+A highly customizable IWindow Manager for X.
 
 The WindowList allows for applying themes on the fly. Each theme lives in a zip that contains a Lua file with the configuration, along with the resource files.
 

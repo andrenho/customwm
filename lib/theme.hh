@@ -7,7 +7,7 @@
 #include <string>
 #include <variant>
 #include "types/ibrush.hh"
-#include "types/window.hh"
+#include "types/iwindow.hh"
 #include "themefile.hh"
 
 extern "C" {
@@ -21,10 +21,10 @@ public:
     void reload_if_modified();
 
     template<typename T>
-    T read(std::string const &prop_name, std::optional<Window const*> w={}, std::optional<T> default_value = {}) const;
+    T read(std::string const &prop_name, std::optional<IWindow const*> w={}, std::optional<T> default_value = {}) const;
 
     template<typename... Types>
-    void call(std::string const& prop_name, Types... args);
+    void call(std::string const& prop_name, Types&... args);
 
     void set_brush(IBrush* brush);
 

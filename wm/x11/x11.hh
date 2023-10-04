@@ -3,9 +3,10 @@
 
 #include <xcb/xcb.h>
 #include "../wm/ievents.hh"
-#include "../../lib/types/window.hh"
+#include "../../lib/types/iwindow.hh"
 #include "../../lib/types/ibrush.hh"
 #include "brush.hh"
+#include "../wm/window.hh"
 
 class X11 {
 public:
@@ -19,14 +20,11 @@ public:
     Handle reparent_window(const Window &w, const Point &pos, const Area &window_sz, const Padding &padding);
     void   destroy_window(const Window &w);
 
-    Handle create_gc(Window const& w);
-
-    Brush* brush() { return brush_.get(); }
+    std::unique_ptr<Brush> create_brush(Window const& w);
 
 private:
     xcb_connection_t* dpy = nullptr;
     xcb_screen_t*     scr = nullptr;
-    std::unique_ptr<Brush> brush_;
 };
 
 #endif //X11_HH_

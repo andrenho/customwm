@@ -6,10 +6,14 @@
 
 class IBrush {
 public:
-    virtual void set_color(Handle gc, uint8_t r, uint8_t g, uint8_t b) = 0;
-    virtual void draw_rect(Handle window, Handle gc, int x, int y, int w, int h, bool filled) = 0;
+    virtual ~IBrush() = default;
+
+    virtual void set_color(const char* str) = 0;
+    virtual void draw_rect(int x, int y, int w, int h, bool filled) = 0;
+
+    static void create_lua_metatable(lua_State* L);
 };
 
-void ibrush_add_to_lua(lua_State* L, IBrush* ibrush);
+template<> void luaw_push(lua_State* L, IBrush const& w);
 
 #endif //IBRUSH_HH_

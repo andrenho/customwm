@@ -12,7 +12,6 @@ WM::WM(std::string const& display_name, std::string const& theme_name)
     : theme_(theme_name)
 {
     x11_.setup(display_name);
-    theme_.set_brush(x11_.brush());
 }
 
 void WM::run()
@@ -32,7 +31,7 @@ void WM::run()
 void WM::on_create_window(Handle window_id)
 {
     // add window to list
-    Window& w = windows_.insert({ window_id, Window { .inner_id = window_id } }).first->second;
+    Window& w = windows_.insert({window_id, Window { .inner_id = window_id } }).first->second;
 
     // find window configuration
     Padding padding = theme_.read<Padding>("window.border_width", &w, Padding(1));
@@ -51,7 +50,7 @@ void WM::on_create_window(Handle window_id)
     w.h = window_size.h;
 
     // create GC
-    w.gc = x11_.create_gc(w);
+    brushes_[outer_id] = x11_.create_brush(w);
 }
 
 void WM::on_destroy_window(Handle window_id)
@@ -59,6 +58,7 @@ void WM::on_destroy_window(Handle window_id)
     auto ow = find_window(window_id);
     if (ow) {
         x11_.destroy_window(**ow);
+        brushes_.erase((*ow)->outer_id);
         windows_.erase((*ow)->inner_id);
     }
 }
@@ -68,7 +68,9 @@ void WM::on_expose_window(Handle window_id, Area area)
     auto ow = find_window(window_id);
     if (ow) {
         try {
-            theme_.call("window.on_draw", **ow);
+            theme_.call("window.on_draw",
+                        *static_cast<IWindow*>(*ow),
+                        *static_cast<IBrush*>(brushes_.at((*ow)->outer_id).get()));
         } catch (PropertyNotFoundException& unused) {}
     }
 }

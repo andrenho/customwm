@@ -5,7 +5,7 @@
 #include "luaw.hh"
 
 template<typename T>
-T Theme::read(std::string const &prop_name, std::optional<Window const*> w, std::optional<T> default_value) const
+T Theme::read(std::string const &prop_name, std::optional<IWindow const*> w, std::optional<T> default_value) const
 {
     if (lua_gettop(L) != 1)
         throw LuaException("reading '" + prop_name + "': stack in incorrect position");
@@ -39,7 +39,7 @@ T Theme::read(std::string const &prop_name, std::optional<Window const*> w, std:
 }
 
 template<typename... Types>
-void Theme::call(std::string const& prop_name, Types... args)
+void Theme::call(std::string const& prop_name, Types&... args)
 {
     if (lua_gettop(L) != 1)
         throw LuaException("reading '" + prop_name + "': stack in incorrect position");

@@ -8,7 +8,7 @@
 #include "ievents.hh"
 #include "../x11/x11.hh"
 #include "../../lib/theme.hh"
-#include "../../lib/types/window.hh"
+#include "window.hh"
 #include "../x11/brush.hh"
 
 class WM : public IEvents {
@@ -28,7 +28,8 @@ protected:
 
     X11                x11_;
     Theme              theme_;
-    std::unordered_map<size_t, Window> windows_;
+    std::unordered_map<Handle, Window> windows_;
+    std::unordered_map<Handle, std::unique_ptr<Brush>> brushes_;
 
     mutable uint8_t cascade_ = 0;
 };

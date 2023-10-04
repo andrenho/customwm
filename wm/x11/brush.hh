@@ -6,14 +6,23 @@
 
 class Brush : public IBrush {
 public:
-    explicit Brush(xcb_connection_t* dpy, xcb_screen_t* scr) : dpy_(dpy), scr_(scr) {}
+    Brush(xcb_connection_t* dpy, xcb_screen_t* scr, xcb_window_t outer_id);
+    ~Brush();
 
-    void set_color(Handle gc, uint8_t r, uint8_t g, uint8_t b) override;
-    void draw_rect(Handle window, Handle gc, int x, int y, int w, int h, bool filled) override;
+    Brush(Brush const&) = delete;
+    Brush& operator=(Brush const&) = delete;
+
+    Brush(Brush&&) = default;
+    Brush& operator=(Brush&&) = default;
+
+    void set_color(const char* str) override;
+    void draw_rect(int x, int y, int w, int h, bool filled) override;
 
 private:
     xcb_connection_t* dpy_;
     xcb_screen_t* scr_;
+    xcb_window_t outer_id_;
+    xcb_gcontext_t gc_;
 };
 
 #endif //BRUSH_HH_
