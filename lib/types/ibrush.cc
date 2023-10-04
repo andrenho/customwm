@@ -23,11 +23,19 @@ static std::tuple<IBrush*, Handle, Handle> brush_info(lua_State* L)
         throw LuaException(error_msg);
     lua_pop(L, 1);
 
-    Window* window = (Window *) lua_topointer(L, 1);
+    lua_getfield(L, 1, "outer_id");
+    int outer_id = lua_tointeger(L, -1);
+    lua_pop(L, 1);
+
+    lua_getfield(L, 1, "gc");
+    int gc = lua_tointeger(L, -1);
+    lua_pop(L, 1);
+
     lua_getglobal(L, "__brush_ptr");
     IBrush* ibrush = (IBrush *) lua_topointer(L, -1);
     lua_pop(L, 1);
-    return { ibrush, window->outer_id, window->gc };
+
+    return { ibrush, outer_id, gc };
 }
 
 static luaL_Reg brush_f[] = {

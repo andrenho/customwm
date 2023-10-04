@@ -19,7 +19,7 @@ void X11::setup(std::string const& display_name)
     xcb_change_window_attributes_checked(dpy, scr->root, XCB_CW_EVENT_MASK, &values);
     xcb_flush(dpy);
 
-    brush_ = std::make_unique<Brush>(dpy);
+    brush_ = std::make_unique<Brush>(dpy, scr);
 }
 
 bool X11::running() const
@@ -76,18 +76,29 @@ Handle X11::reparent_window(const Window &w, const Point &pos, const Area &windo
     xcb_create_window(dpy, XCB_COPY_FROM_PARENT, outer_w, scr->root, (int16_t) pos.x, (int16_t) pos.y,
                       window_sz.w + padding.left + padding.right + 1,
                       window_sz.h + padding.top + padding.bottom + 1,
-                      1, XCB_WINDOW_CLASS_INPUT_OUTPUT, XCB_COPY_FROM_PARENT, XCB_CW_EVENT_MASK, &values);
+                      0, XCB_WINDOW_CLASS_INPUT_OUTPUT, XCB_COPY_FROM_PARENT, XCB_CW_EVENT_MASK, &values);
     xcb_change_save_set(dpy, XCB_SET_MODE_INSERT, w.inner_id);
     xcb_reparent_window(dpy, w.inner_id, outer_w, padding.left, padding.top);
     xcb_map_window(dpy, outer_w);
     xcb_map_window(dpy, w.inner_id);
     xcb_flush(dpy);
 
+    /*
+    xcb_gcontext_t gc = xcb_generate_id(dpy);
+    uint32_t color = scr->black_pixel;
+    xcb_create_gc(dpy, gc, outer_w, XCB_GC_FOREGROUND, &color);
+
+    xcb_rectangle_t r = { 0, 0, 20, 20 };
+    xcb_poly_rectangle(dpy, outer_w, gc, 1, &r);
+    xcb_flush(dpy);
+     */
+
     return outer_w;
 }
 
 void X11::destroy_window(const Window &w)
 {
+    xcb_free_gc(dpy, w.gc);
     xcb_unmap_window(dpy, w.outer_id);
     xcb_reparent_window(dpy, w.inner_id, scr->root, 0, 0);
     xcb_change_save_set(dpy, XCB_SET_MODE_DELETE, w.inner_id);

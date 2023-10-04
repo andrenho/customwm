@@ -45,6 +45,8 @@ void WM::on_create_window(Handle window_id)
 
     // fill out window fields
     w.outer_id = outer_id;
+    w.x = pos.x;
+    w.y = pos.y;
     w.w = window_size.w;
     w.h = window_size.h;
 

@@ -11,7 +11,7 @@ struct Window {
     Handle outer_id;
     Handle inner_id;
     Handle gc;
-    int w, h;
+    int x, y, w, h;
 };
 
 template<> void luaw_push(lua_State* L, Window const& w);

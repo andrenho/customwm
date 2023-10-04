@@ -14,6 +14,8 @@ template<> void luaw_push(lua_State* L, Window const& w)
     lua_pushinteger(L, w.outer_id); lua_setfield(L, -2, "outer_id");
     lua_pushinteger(L, w.inner_id); lua_setfield(L, -2, "inner_id");
     lua_pushinteger(L, w.gc); lua_setfield(L, -2, "gc");
+    lua_pushinteger(L, w.x); lua_setfield(L, -2, "x");
+    lua_pushinteger(L, w.y); lua_setfield(L, -2, "y");
     lua_pushinteger(L, w.w); lua_setfield(L, -2, "w");
     lua_pushinteger(L, w.h); lua_setfield(L, -2, "h");
 
