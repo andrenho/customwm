@@ -49,3 +49,21 @@ The programs are:
 * https://en.wikipedia.org/wiki/X_Window_System_core_protocol
 * https://www.x.org/wiki/guide/
 * https://www.x.org/releases/X11R7.5/doc/libxcb/tutorial/index.html
+
+## Architecture
+
+1. User provided theme file
+2. customwm-theme (reads lua theme)
+3. customwm
+   1. Base theme - main logic
+   2. Window Manager
+
+The **Window Manager** has the following responsibilities:
+ - Own the outer windows and keep track of them
+ - Reparent and deal with inner window lifecycle
+ - Events: either deal with them or send them up to the theme
+ - Execute things requested by the theme on X11
+
+The **base theme** has the following responsabilities:
+ - Deal with mouse click, movements and keyboard shortcuts
+ - Apply configurations from the user provided theme
