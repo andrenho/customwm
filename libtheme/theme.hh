@@ -10,6 +10,8 @@ extern "C" {
 #include <string>
 #include <cstdint>
 
+#include "exceptions.hh"
+
 class Theme {
 public:
     Theme();
@@ -25,6 +27,12 @@ public:
 
     bool theme_file_modified() const;
 
+    template<typename T, typename... Types>
+    T read(std::string const &prop_name, Types&... args) const;
+
+    template<typename... Types>
+    void call(std::string const& prop_name, Types&... args);
+
 private:
     lua_State *L;
     std::string loaded_file_;
@@ -32,5 +40,7 @@ private:
 
     void merge_theme();
 };
+
+#include "theme.inl"
 
 #endif //THEME_HH_

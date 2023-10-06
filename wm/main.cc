@@ -1,6 +1,3 @@
-#include "options.hh"
-#include "../libtheme/theme.hh"
-
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
@@ -8,7 +5,9 @@
 #include <thread>
 
 #include "base/base.hh"
-#include "../libtheme/exceptions.hh"
+#include "../libtheme/theme.hh"
+#include "options.hh"
+#include "wm.hh"
 
 int main(int argc, char* argv[])
 {
@@ -27,6 +26,8 @@ start:
        theme.load_from_ram("base", base_lua, base_lua_len);
        if (options.theme_file)
            theme.load_from_file(*options.theme_file);
+
+       WM(*options.display, theme).run();
 
     } catch (RestartException&) {
         goto start;
