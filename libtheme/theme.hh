@@ -21,9 +21,14 @@ public:
     Theme& operator=(Theme&&) = default;
 
     void load_from_ram(std::string const& name, uint8_t const* data, unsigned int len);
+    void load_from_file(std::string const& file);
+
+    bool theme_file_modified() const;
 
 private:
     lua_State *L;
+    std::string loaded_file_;
+    time_t      last_modification_ = 0;
 
     void merge_theme();
 };

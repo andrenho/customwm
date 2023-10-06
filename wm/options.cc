@@ -47,8 +47,8 @@ Options::Options(int argc, char **argv)
                 abort();
         }
 
-        if (optind < argc)
-            display_help(EXIT_FAILURE);
     }
 
+    if (optind < argc)
+        display_help(EXIT_FAILURE);
 }

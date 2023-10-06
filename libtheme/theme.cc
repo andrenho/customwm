@@ -1,5 +1,7 @@
 #include "theme.hh"
 
+#include <sys/stat.h>
+
 #include "exceptions.hh"
 #include "luaw.hh"
 
@@ -28,6 +30,33 @@ void Theme::load_from_ram(std::string const& name, uint8_t const* data, unsigned
     merge_theme();
 }
 
+void Theme::load_from_file(std::string const& file)
+{
+    struct stat buffer {};
+    if (stat(file.c_str(), &buffer) == 0)
+        last_modification_ = buffer.st_mtime;
+
+    int r = luaL_loadfile(L, file.c_str());
+    if (r == LUA_ERRFILE)
+        throw LuaException("Could not open theme file.");
+    if (r != LUA_OK)
+        throw LuaException("Error loading theme file.");
+    if (lua_pcall(L, 0, 1, 0) != LUA_OK)
+        throw LuaException("Error running theme file.");
+
+    loaded_file_ = file;
+
+    merge_theme();
+}
+
+bool Theme::theme_file_modified() const
+{
+    struct stat buffer {};
+    if (!loaded_file_.empty() && (stat(loaded_file_.c_str(), &buffer) == 0))
+        return buffer.st_mtime > last_modification_;
+    return false;
+}
+
 void Theme::merge_theme()
 {
     luaw_asserttop(L, 1);
@@ -41,9 +70,9 @@ void Theme::merge_theme()
         lua_pushvalue(L, -2);        // copy key
         lua_insert(L, 3);
         lua_settable(L, -4);        // set field in "theme", the key is left over
-        printf("%s\n", lua_tostring(L, -1));
     }
 
     lua_pop(L, 2);  // remove the table in the original script
     luaw_assertempty(L);
 }
+

@@ -14,4 +14,6 @@ public:
     explicit LuaException(std::string const& error) : std::runtime_error(error) {}
 };
 
+class RestartException : public std::runtime_error {};
+
 #endif //EXCEPTIONS_HH_

@@ -5,7 +5,10 @@
 #include <cstdlib>
 #include <ctime>
 
+#include <thread>
+
 #include "base/base.hh"
+#include "../libtheme/exceptions.hh"
 
 int main(int argc, char* argv[])
 {
@@ -17,6 +20,19 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-    Theme theme;
-    theme.load_from_ram("base", base_lua, base_lua_len);
+start:
+   try {
+       Theme theme;
+
+       theme.load_from_ram("base", base_lua, base_lua_len);
+       if (options.theme_file)
+           theme.load_from_file(*options.theme_file);
+
+    } catch (RestartException&) {
+        goto start;
+
+    } catch (LuaException& e) {
+       fprintf(stderr, "lua error: %s\n", e.what());
+       exit(EXIT_FAILURE);
+   }
 }

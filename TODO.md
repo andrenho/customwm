@@ -3,8 +3,7 @@
 - [x] Create WM main, read args
 - [x] Create simple base theme
 - [x] Create customwm-theme, read base theme
-- [ ] Load user theme that overrides base theme
-- [ ] Restart application when user theme is rewritten
+- [x] Load user theme that overrides base theme
 - [ ] Create window manager on WM
 - [ ] Create base X11
 - [ ] X11: deal with events, reparent/destroy window, manage outer windows
@@ -22,3 +21,7 @@
 - [ ] Move windows
 - [ ] Deal with button clicks
 - [ ] Minimize/maximize
+
+# Someday
+
+- [ ] Restart application when user theme is rewritten
