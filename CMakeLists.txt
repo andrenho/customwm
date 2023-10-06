@@ -12,6 +12,8 @@ include_directories(${X11_xcb_INCLUDE_PATH} ${LUA_INCLUDE_DIR})
 add_library(customwm-libtheme STATIC
         libtheme/theme.hh
         libtheme/theme.cc
+        libtheme/exceptions.hh
+        libtheme/luaw.cc
 )
 
 set(COMPILED_BASE_THEME ${CMAKE_CURRENT_SOURCE_DIR}/wm/base/base)

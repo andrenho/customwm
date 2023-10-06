@@ -1,8 +1,8 @@
 # Version 0.0.1
 
 - [x] Create WM main, read args
-- [ ] Create simple base theme
-- [ ] Create customwm-theme, read base theme
+- [x] Create simple base theme
+- [x] Create customwm-theme, read base theme
 - [ ] Load user theme that overrides base theme
 - [ ] Restart application when user theme is rewritten
 - [ ] Create window manager on WM

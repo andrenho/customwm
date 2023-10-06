@@ -18,5 +18,5 @@ int main(int argc, char* argv[])
     }
 
     Theme theme;
-    theme.load_from_ram(base_lua, base_lua_len);
+    theme.load_from_ram("base", base_lua, base_lua_len);
 }
