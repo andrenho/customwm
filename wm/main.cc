@@ -1,8 +1,11 @@
 #include "options.hh"
+#include "../libtheme/theme.hh"
 
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
+
+#include "base/base.hh"
 
 int main(int argc, char* argv[])
 {
@@ -14,4 +17,5 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    Theme theme;
 }
