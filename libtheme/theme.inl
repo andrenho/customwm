@@ -31,7 +31,7 @@ T Theme::read(std::string const &prop_name, Types&... args) const
         luaw_asserttop(L, top);
         return t;
     } catch (LuaException& e) {
-        throw LuaException(prop_name + ": " + e.what());
+        throw LuaException(L, prop_name + ": " + e.what());
     }
 }
 
@@ -44,7 +44,7 @@ void Theme::call(std::string const& prop_name, Types&... args)
     if (!luaw_getfield(L, -1, prop_name.c_str()))
         throw PropertyNotFoundException(prop_name);
     if (lua_type(L, -1) != LUA_TFUNCTION)
-        throw LuaException("expected function for property '" + prop_name + "'");
+        throw LuaException(L, "expected function for property '" + prop_name + "'");
 
     // push arguments
     ([&] {

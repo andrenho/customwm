@@ -12,6 +12,8 @@
 
 - [x] Create Lua interface to window
 - [x] Remove TWindow
+- [ ] Draw rectangle
+- [ ] Draw line
 - [ ] Load pixmap from theme file
 - [ ] Draw things on the screen
 - [ ] Load font

@@ -36,5 +36,5 @@ bool luaw_getfield(lua_State* L, int index, const char* k)
 void luaw_asserttop(lua_State* L, int expected)
 {
     if (lua_gettop(L) != expected)
-        throw LuaException("Stack size assertion error: expected " + std::to_string(expected) + ", found " + std::to_string(lua_gettop(L)));
+        throw LuaException(L, "Stack size assertion error: expected " + std::to_string(expected) + ", found " + std::to_string(lua_gettop(L)));
 }

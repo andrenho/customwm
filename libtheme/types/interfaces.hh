@@ -10,7 +10,7 @@
 class IWindow {
 public:
     virtual Rectangle area() const = 0;
-    virtual void draw_rectangles(std::vector<Rectangle> const& rectangles, std::string const& color, bool filled) = 0;
+    virtual void draw_rectangles(std::vector<Rectangle> const& rectangles, Color const& color, bool filled) = 0;
 
     static void create_metatable(lua_State* L);
 };

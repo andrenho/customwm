@@ -3,6 +3,7 @@
 
 #include <cstdio>
 #include <cstdint>
+#include <vector>
 
 extern "C" {
 #include <lua.h>
@@ -24,6 +25,12 @@ struct Rectangle {
     uint16_t w, h;
 };
 template<> void luaw_push(lua_State* L, Rectangle const& r);
+template<> Rectangle luaw_to(lua_State* L, int index);
+
+struct Color {
+    uint8_t r, g, b;
+};
+template<> Color luaw_to(lua_State* L, int index);
 
 struct WindowStartingPos {
     enum { Cascade, Center, Random, Maximized, Requested, Custom } starting_pos;

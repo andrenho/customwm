@@ -9,6 +9,7 @@ struct IWindowUserData {
 };
 
 static IWindow& get_window(lua_State* L, int idx) {
+    luaL_checkudata(L, idx, "__iwindow_mt");
     return *((IWindowUserData *) lua_touserdata(L, idx))->iwindow;
 }
 
@@ -16,6 +17,10 @@ static luaL_Reg iwindow_f[] = {
         { "area", [](lua_State *L) {
             luaw_push(L, get_window(L, 1).area());
             return 1;
+        } },
+        { "draw_rectangle", [](lua_State *L) {
+            get_window(L, 1).draw_rectangles({ luaw_to<Rectangle>(L, 2) }, luaw_to<Color>(L, 3), lua_toboolean(L, 4));
+            return 0;
         } },
         {nullptr, nullptr},
 };

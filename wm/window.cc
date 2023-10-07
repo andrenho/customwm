@@ -34,7 +34,11 @@ Window::~Window()
     xcb_flush(dpy_);
 }
 
-void Window::draw_rectangles(const std::vector<Rectangle> &rectangles, const std::string &color, bool filled)
+void Window::draw_rectangles(const std::vector<Rectangle> &rectangles, Color const& color, bool filled)
 {
+    for (Rectangle const& r: rectangles)
+        printf("%d %d %d %d\n", r.x, r.y, r.w, r.h);
+    printf("%d %d %d\n", color.r, color.g, color.b);
+    printf("%d\n", filled);
     // TODO
 }

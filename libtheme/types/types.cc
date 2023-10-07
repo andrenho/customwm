@@ -42,7 +42,7 @@ template<> WindowStartingPos luaw_to(lua_State* L, int index)
             else if (s == "requested")
                 window_starting_pos.starting_pos = WindowStartingPos::Requested;
             else
-                throw LuaException("Invalid starting position '" + s + "'");
+                throw LuaException(L, "Invalid starting position '" + s + "'");
             break;
         }
         case LUA_TTABLE:
@@ -52,7 +52,7 @@ template<> WindowStartingPos luaw_to(lua_State* L, int index)
             };
             break;
         default:
-            throw LuaException("expected a string, table or function");
+            throw LuaException(L, "expected a string, table or function");
     }
 
     return window_starting_pos;
@@ -70,6 +70,37 @@ template<> Padding luaw_to(lua_State* L, int index)
         return n;
     };
     return { get_idx(1), get_idx(2), get_idx(3), get_idx(4) };
+}
+
+template<> Color luaw_to(lua_State* L, int index)
+{
+    std::string color = luaL_checkstring(L, index);
+
+    try {
+        if (color.size() != 7 || color[0] != '#')
+            throw;
+        return {
+            (uint8_t) std::stoi(color.substr(1, 2), nullptr, 16),
+            (uint8_t) std::stoi(color.substr(3, 2), nullptr, 16),
+            (uint8_t) std::stoi(color.substr(5, 2), nullptr, 16)
+        };
+
+    } catch (std::exception& e) {
+        throw LuaException(L, "Invalid color format");
+    }
+}
+
+template<> Rectangle luaw_to(lua_State* L, int index)
+{
+    luaL_checktype(L, index, LUA_TTABLE);
+
+    auto get_idx = [L, index](int idx) {
+        lua_geti(L, index, idx);
+        int16_t n = (int16_t) luaL_checkinteger(L, -1);
+        lua_pop(L, 1);
+        return n;
+    };
+    return { get_idx(1), get_idx(2), (uint16_t) get_idx(3), (uint16_t) get_idx(4) };
 }
 
 //

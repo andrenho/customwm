@@ -3,6 +3,11 @@
 
 #include <stdexcept>
 
+extern "C" {
+#include <lua.h>
+#include <lauxlib.h>
+}
+
 class PropertyNotFoundException : public std::runtime_error {
 public:
     explicit PropertyNotFoundException(std::string const& property)
@@ -11,7 +16,9 @@ public:
 
 class LuaException : public std::runtime_error {
 public:
-    explicit LuaException(std::string const& error) : std::runtime_error(error) {}
+    explicit LuaException(lua_State* L, std::string const& error) : std::runtime_error(error) {
+        luaL_error(L, "%s", error.c_str());
+    }
 };
 
 class RestartException : public std::runtime_error {};
