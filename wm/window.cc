@@ -21,11 +21,15 @@ Window::Window(xcb_connection_t *dpy, xcb_screen_t* scr, Rectangle area, xcb_win
     gc_ = xcb_generate_id(dpy);
     xcb_create_gc (dpy, gc_, id, 0, nullptr);
 
+    colormap_ = xcb_generate_id(dpy_);
+    xcb_create_colormap(dpy_, XCB_COLORMAP_ALLOC_NONE, colormap_, id, scr_->root_visual);
+
     xcb_flush(dpy);
 }
 
 Window::~Window()
 {
+    xcb_free_colormap(dpy_, colormap_);  // TODO - how to free colors?
     xcb_free_gc(dpy_, gc_);
 
     xcb_unmap_window(dpy_, id);

@@ -2,6 +2,8 @@
 #define WINDOW_HH_
 
 #include <cstdint>
+#include <unordered_map>
+
 #include <xcb/xcb.h>
 
 #include "../libtheme/types/interfaces.hh"
@@ -26,6 +28,7 @@ private:
     xcb_screen_t*     scr_;
     Rectangle         area_;
     xcb_gcontext_t    gc_;
+    xcb_colormap_t    colormap_;
 
     uint32_t get_color(Color const& color);
 };
