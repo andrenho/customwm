@@ -15,7 +15,10 @@ inline void luaw_assertempty(lua_State* L) { luaw_asserttop(L, 0); }
 bool luaw_getfield(lua_State* L, int index, const char* k);
 
 template <typename T> T    luaw_to(lua_State* L, int index);
+
 template <typename T> void luaw_push(lua_State* L, T const& t);
 template <typename T> void luaw_push(lua_State* L, T* t);
+
+#include "luaw.inl"
 
 #endif //LUAW_HH_

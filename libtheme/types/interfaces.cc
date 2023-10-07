@@ -22,6 +22,10 @@ static luaL_Reg iwindow_f[] = {
             get_window(L, 1).draw_rectangles({ luaw_to<Rectangle>(L, 2) }, luaw_to<Color>(L, 3), lua_toboolean(L, 4));
             return 0;
         } },
+        { "draw_rectangles", [](lua_State *L) {
+            get_window(L, 1).draw_rectangles({ luaw_to<std::vector<Rectangle>>(L, 2) }, luaw_to<Color>(L, 3), lua_toboolean(L, 4));
+            return 0;
+        } },
         {nullptr, nullptr},
 };
 
