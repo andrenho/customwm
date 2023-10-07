@@ -12,8 +12,9 @@
 
 - [x] Create Lua interface to window
 - [x] Remove TWindow
-- [ ] Draw rectangle
-- [ ] Draw line
+- [x] Draw rectangle
+- [x] Draw line
+- [x] Draw polygon
 - [ ] Load pixmap from theme file
 - [ ] Draw things on the screen
 - [ ] Load font
