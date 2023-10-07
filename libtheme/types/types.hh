@@ -29,6 +29,9 @@ template<> Rectangle luaw_to(lua_State* L, int index);
 
 struct Color {
     uint8_t r, g, b;
+    bool operator <(Color const& c) const {
+        return ((((uint32_t) r) << 16) | (((uint32_t) g) << 8) | b) < ((((uint32_t) c.r) << 16) | (((uint32_t) c.g) << 8) | c.b);
+    }
 };
 template<> Color luaw_to(lua_State* L, int index);
 

@@ -2,7 +2,7 @@
 #define WINDOW_HH_
 
 #include <cstdint>
-#include <unordered_map>
+#include <map>
 
 #include <xcb/xcb.h>
 
@@ -29,6 +29,8 @@ private:
     Rectangle         area_;
     xcb_gcontext_t    gc_;
     xcb_colormap_t    colormap_;
+
+    std::map<Color, uint32_t> colors_;
 
     uint32_t get_color(Color const& color);
 };

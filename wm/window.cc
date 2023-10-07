@@ -23,6 +23,8 @@ Window::Window(xcb_connection_t *dpy, xcb_screen_t* scr, Rectangle area, xcb_win
 
     colormap_ = xcb_generate_id(dpy_);
     xcb_create_colormap(dpy_, XCB_COLORMAP_ALLOC_NONE, colormap_, id, scr_->root_visual);
+    colors_.emplace(Color { 0, 0, 0 }, scr_->black_pixel);
+    colors_.emplace(Color { 255, 255, 255 }, scr_->white_pixel);
 
     xcb_flush(dpy);
 }
@@ -59,6 +61,11 @@ void Window::draw_rectangles(const std::vector<Rectangle> &rectangles, Color con
 
 uint32_t Window::get_color(Color const& color)
 {
+    // look into the cache
+    auto it = colors_.find(color);
+    if (it != colors_.end())
+        return it->second;
+
     // TODO
     return scr_->white_pixel;
 }
