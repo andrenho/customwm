@@ -38,8 +38,7 @@ T Theme::read(std::string const &prop_name, Types&... args) const
 template<typename... Types>
 void Theme::call(std::string const& prop_name, Types&... args)
 {
-    if (lua_gettop(L) != 1)
-        throw LuaException("reading '" + prop_name + "': stack in incorrect position");
+    lua_getglobal(L, "theme");
 
     // get the property
     if (!luaw_getfield(L, -1, prop_name.c_str()))
@@ -54,6 +53,8 @@ void Theme::call(std::string const& prop_name, Types&... args)
 
     // execute function
     lua_call(L, sizeof...(args), 0);
+
+    lua_pop(L, 1);
 }
 
 #endif //THEME_INL_

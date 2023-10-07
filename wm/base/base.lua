@@ -10,5 +10,9 @@ return {
     window = {
         padding = { 24, 3, 3, 3 },
         starting_pos = "random",
+        on_expose = function(window, area)
+            area = window:area()
+            print(area.x, area.y, area.w, area.h)
+        end
     }
 }
