@@ -10,6 +10,8 @@
 
 # Version 0.0.2
 
+- [x] Create Lua interface to window
+- [x] Remove TWindow
 - [ ] Load pixmap from theme file
 - [ ] Draw things on the screen
 - [ ] Load font

@@ -8,6 +8,10 @@ extern "C" {
 
 #include "../exceptions.hh"
 
+//
+// TO
+//
+
 template<> Point luaw_to(lua_State* L, int index)
 {
     auto get_idx = [L, index](int idx) {
@@ -68,4 +72,16 @@ template<> Padding luaw_to(lua_State* L, int index)
     return { get_idx(1), get_idx(2), get_idx(3), get_idx(4) };
 }
 
+//
+// PUSH
+//
+
+template<> void luaw_push(lua_State* L, Rectangle const& r)
+{
+    lua_newtable(L);
+    lua_pushinteger(L, r.x); lua_setfield(L, -2, "x");
+    lua_pushinteger(L, r.y); lua_setfield(L, -2, "y");
+    lua_pushinteger(L, r.w); lua_setfield(L, -2, "w");
+    lua_pushinteger(L, r.h); lua_setfield(L, -2, "h");
+}
 

@@ -4,11 +4,14 @@
 
 #include "exceptions.hh"
 #include "luaw.hh"
+#include "types/interfaces.hh"
 
 Theme::Theme()
     : L(luaL_newstate())
 {
     luaL_openlibs(L);
+
+    IWindow::create_metatable(L);
 
     lua_newtable(L);
     lua_setglobal(L, "theme");

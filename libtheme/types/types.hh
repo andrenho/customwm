@@ -2,6 +2,7 @@
 #define TYPES_HH_
 
 #include <cstdio>
+#include <cstdint>
 
 extern "C" {
 #include <lua.h>
@@ -13,6 +14,16 @@ struct Point {
     int16_t x, y;
 };
 template<> Point luaw_to(lua_State* L, int index);
+
+struct Size {
+    uint16_t w, h;
+};
+
+struct Rectangle {
+    int16_t x, y;
+    uint16_t w, h;
+};
+template<> void luaw_push(lua_State* L, Rectangle const& r);
 
 struct WindowStartingPos {
     enum { Cascade, Center, Random, Maximized, Requested, Custom } starting_pos;

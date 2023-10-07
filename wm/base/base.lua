@@ -9,6 +9,6 @@ return {
 
     window = {
         padding = { 24, 3, 3, 3 },
-        starting_pos = "cascade",
+        starting_pos = "random",
     }
 }

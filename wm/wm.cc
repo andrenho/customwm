@@ -1,6 +1,6 @@
 #include "wm.hh"
 #include "../libtheme/types/types.hh"
-#include "../libtheme/types/twindow.hh"
+#include "window.hh"
 
 WM::WM(std::string const& display, Theme& theme)
     : theme_(theme)
@@ -56,32 +56,21 @@ void WM::run()
 void WM::on_map_request(xcb_map_request_event_t *e)
 {
     // figure out information about the window
-    uint32_t id = xcb_generate_id(dpy);
     auto geo = xcb_get_geometry_reply(dpy, xcb_get_geometry(dpy, e->window), nullptr);
 
     // get configuration from theme
-    TWindow twin { .x = geo->x, .y = geo->y, .w = geo->width, .h = geo->height};
-    Padding padding = theme_.read<Padding>("window.padding", twin);
-    WindowStartingPos wps = theme_.read<WindowStartingPos>("window.starting_pos", twin);
+    Rectangle child_sz { geo->x, geo->y, geo->width, geo->height };
+    Padding padding = theme_.read<Padding>("window.padding", child_sz);
+    WindowStartingPos wps = theme_.read<WindowStartingPos>("window.starting_pos", child_sz);
     auto [x, y] = calculate_starting_position(wps, geo);
 
     // calculate outer window size
-    int16_t w = geo->width + padding.left + padding.right + 1;
-    int16_t h = geo->height + padding.top + padding.bottom + 1;
-
-    uint32_t values = XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |
-                      XCB_EVENT_MASK_STRUCTURE_NOTIFY |
-                      XCB_EVENT_MASK_EXPOSURE;
-    xcb_create_window(dpy, XCB_COPY_FROM_PARENT, id, scr->root, x, y, w, h,
-                      0, XCB_WINDOW_CLASS_INPUT_OUTPUT, XCB_COPY_FROM_PARENT, XCB_CW_EVENT_MASK, &values);
-    xcb_change_save_set(dpy, XCB_SET_MODE_INSERT, e->window);
-    xcb_reparent_window(dpy, e->window, id, padding.left, padding.top);
-    xcb_map_window(dpy, id);
-    xcb_map_window(dpy, e->window);
-    xcb_flush(dpy);
+    uint16_t w = geo->width + padding.left + padding.right + 1;
+    uint16_t h = geo->height + padding.top + padding.bottom + 1;
 
     // add window to list
-    windows_[id] = Window { .id = id, .child_id = e->window };
+    auto window = std::make_unique<Window>(dpy, scr->root, Rectangle { x, y, w, h }, e->window, Point { padding.left, padding.top });
+    windows_.emplace(std::pair<uint32_t, std::unique_ptr<Window>> { window->id, std::move(window) });
 
     // cleanup
     free(geo);
@@ -89,15 +78,10 @@ void WM::on_map_request(xcb_map_request_event_t *e)
 
 void WM::on_unmap_notify(xcb_unmap_notify_event_t *e)
 {
-    for (auto kv : windows_) {
-        Window const& w = kv.second;
-        if (w.child_id == e->window) {
-            xcb_unmap_window(dpy, w.id);
-            xcb_reparent_window(dpy, e->window, scr->root, 0, 0);
-            xcb_change_save_set(dpy, XCB_SET_MODE_DELETE, e->window);
-            xcb_destroy_window(dpy, w.id);
-            xcb_flush(dpy);
-            windows_.erase(w.id);
+    for (auto& kv : windows_) {
+        Window const* w = kv.second.get();
+        if (w->child_id == e->window) {
+            windows_.erase(w->id);
             break;
         }
     }
@@ -105,7 +89,12 @@ void WM::on_unmap_notify(xcb_unmap_notify_event_t *e)
 
 void WM::on_expose(xcb_expose_event_t *e)
 {
-
+    try {
+        IWindow* iwindow = windows_.at(e->window).get();
+        Rectangle r { (int16_t) e->x, int16_t (e->y) , e->width, e->height };
+        theme_.call("window.on_expose", iwindow, r);
+    } catch (PropertyNotFoundException& unused) {
+    } catch (std::out_of_range& unused) {}
 }
 
 std::pair<int16_t, int16_t> WM::calculate_starting_position(WindowStartingPos const &wsp, xcb_get_geometry_reply_t *geo)

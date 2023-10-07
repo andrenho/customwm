@@ -18,8 +18,8 @@ add_library(customwm-libtheme STATIC
         libtheme/types/types.cc
         libtheme/types/types.hh
         libtheme/theme.inl
-        libtheme/types/twindow.hh
-        libtheme/types/twindow.cc
+        libtheme/types/interfaces.hh
+        libtheme/types/interfaces.cc
 )
 
 set(COMPILED_BASE_THEME ${CMAKE_CURRENT_SOURCE_DIR}/wm/base/base)
@@ -40,6 +40,7 @@ add_executable(customwm
         wm/window.hh
         wm/wm.cc
         wm/wm.hh
+        wm/window.cc
 )
 add_dependencies(customwm base)
 target_link_libraries(customwm customwm-libtheme)

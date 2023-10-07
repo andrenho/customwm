@@ -7,11 +7,7 @@
 
 #include "../libtheme/theme.hh"
 #include "../libtheme/types/types.hh"
-
-struct Window {
-    uint32_t id;
-    uint32_t child_id;
-};
+#include "window.hh"
 
 class WM {
 public:
@@ -30,7 +26,7 @@ private:
     xcb_screen_t*     scr = nullptr;
     Theme&            theme_;
     mutable uint16_t  cascade_ = 0;     // used to calculate the position of the next window to be open
-    std::unordered_map<uint32_t, Window> windows_;
+    std::unordered_map<uint32_t, std::unique_ptr<Window>> windows_;
 
     void on_map_request(xcb_map_request_event_t *e);
     void on_unmap_notify(xcb_unmap_notify_event_t *e);
