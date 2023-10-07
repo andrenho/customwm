@@ -4,9 +4,9 @@
 - [x] Create simple base theme
 - [x] Create customwm-theme, read base theme
 - [x] Load user theme that overrides base theme
-- [ ] Create window manager on WM
-- [ ] Create base X11
-- [ ] X11: deal with events, reparent/destroy window, manage outer windows
+- [x] Create window manager on WM
+- [x] Create base X11
+- [x] X11: deal with events, reparent/destroy window, manage outer windows
 
 # Version 0.0.2
 

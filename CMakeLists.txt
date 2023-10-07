@@ -18,7 +18,8 @@ add_library(customwm-libtheme STATIC
         libtheme/types/types.cc
         libtheme/types/types.hh
         libtheme/theme.inl
-        libtheme/types/TWindow.hh
+        libtheme/types/twindow.hh
+        libtheme/types/twindow.cc
 )
 
 set(COMPILED_BASE_THEME ${CMAKE_CURRENT_SOURCE_DIR}/wm/base/base)

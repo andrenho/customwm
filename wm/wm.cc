@@ -1,6 +1,6 @@
 #include "wm.hh"
 #include "../libtheme/types/types.hh"
-#include "../libtheme/types/TWindow.hh"
+#include "../libtheme/types/twindow.hh"
 
 WM::WM(std::string const& display, Theme& theme)
     : theme_(theme)
@@ -60,17 +60,19 @@ void WM::on_map_request(xcb_map_request_event_t *e)
     auto geo = xcb_get_geometry_reply(dpy, xcb_get_geometry(dpy, e->window), nullptr);
 
     // get configuration from theme
-    TWindow twin {};
+    TWindow twin { .x = geo->x, .y = geo->y, .w = geo->width, .h = geo->height};
     Padding padding = theme_.read<Padding>("window.padding", twin);
     WindowStartingPos wps = theme_.read<WindowStartingPos>("window.starting_pos", twin);
     auto [x, y] = calculate_starting_position(wps, geo);
 
+    // calculate outer window size
+    int16_t w = geo->width + padding.left + padding.right + 1;
+    int16_t h = geo->height + padding.top + padding.bottom + 1;
+
     uint32_t values = XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |
                       XCB_EVENT_MASK_STRUCTURE_NOTIFY |
                       XCB_EVENT_MASK_EXPOSURE;
-    xcb_create_window(dpy, XCB_COPY_FROM_PARENT, id, scr->root, x, y,
-                      geo->width + padding.left + padding.right + 1,
-                      geo->height + padding.top + padding.bottom + 1,
+    xcb_create_window(dpy, XCB_COPY_FROM_PARENT, id, scr->root, x, y, w, h,
                       0, XCB_WINDOW_CLASS_INPUT_OUTPUT, XCB_COPY_FROM_PARENT, XCB_CW_EVENT_MASK, &values);
     xcb_change_save_set(dpy, XCB_SET_MODE_INSERT, e->window);
     xcb_reparent_window(dpy, e->window, id, padding.left, padding.top);
@@ -78,39 +80,27 @@ void WM::on_map_request(xcb_map_request_event_t *e)
     xcb_map_window(dpy, e->window);
     xcb_flush(dpy);
 
-    /*
-    // fill out window fields
-    w.outer_id = outer_id;
-    w.x = pos.x;
-    w.y = pos.y;
-    w.w = window_size.w;
-    w.h = window_size.h;
-
-    // create GC
-    brushes_[outer_id] = x11_.create_brush(w);
-     */
-
+    // add window to list
     windows_[id] = Window { .id = id, .child_id = e->window };
 
+    // cleanup
     free(geo);
 }
 
 void WM::on_unmap_notify(xcb_unmap_notify_event_t *e)
 {
-    /*
-    auto ow = find_window(window_id);
-    if (ow) {
-        x11_.destroy_window(**ow);
-        brushes_.erase((*ow)->outer_id);
-        windows_.erase((*ow)->inner_id);
+    for (auto kv : windows_) {
+        Window const& w = kv.second;
+        if (w.child_id == e->window) {
+            xcb_unmap_window(dpy, w.id);
+            xcb_reparent_window(dpy, e->window, scr->root, 0, 0);
+            xcb_change_save_set(dpy, XCB_SET_MODE_DELETE, e->window);
+            xcb_destroy_window(dpy, w.id);
+            xcb_flush(dpy);
+            windows_.erase(w.id);
+            break;
+        }
     }
-
-    xcb_unmap_window(dpy, w.outer_id);
-    xcb_reparent_window(dpy, w.inner_id, scr->root, 0, 0);
-    xcb_change_save_set(dpy, XCB_SET_MODE_DELETE, w.inner_id);
-    xcb_destroy_window(dpy, w.outer_id);
-    xcb_flush(dpy);
-     */
 }
 
 void WM::on_expose(xcb_expose_event_t *e)

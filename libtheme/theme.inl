@@ -8,8 +8,9 @@
 template<typename T, typename... Types>
 T Theme::read(std::string const &prop_name, Types&... args) const
 {
-    if (lua_gettop(L) != 1)
-        throw LuaException("reading '" + prop_name + "': stack in incorrect position");
+    int top = lua_gettop(L);
+
+    lua_getglobal(L, "theme");
 
     // get the property
     if (!luaw_getfield(L, -1, prop_name.c_str()))
@@ -26,7 +27,8 @@ T Theme::read(std::string const &prop_name, Types&... args) const
     // read the value
     try {
         T t = luaw_to<T>(L, -1);
-        luaw_settop(L, 1);
+        lua_pop(L, 2);
+        luaw_asserttop(L, top);
         return t;
     } catch (LuaException& e) {
         throw LuaException(prop_name + ": " + e.what());
