@@ -69,7 +69,7 @@ void WM::on_map_request(xcb_map_request_event_t *e)
     uint16_t h = geo->height + padding.top + padding.bottom + 1;
 
     // add window to list
-    auto window = std::make_unique<Window>(dpy, scr->root, Rectangle { x, y, w, h }, e->window, Point { padding.left, padding.top });
+    auto window = std::make_unique<Window>(dpy, scr, Rectangle { x, y, w, h }, e->window, Point { padding.left, padding.top });
     windows_.emplace(std::pair<uint32_t, std::unique_ptr<Window>> { window->id, std::move(window) });
 
     // cleanup

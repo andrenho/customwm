@@ -7,7 +7,7 @@
 #include "../libtheme/types/interfaces.hh"
 
 struct Window : public IWindow {
-    Window(xcb_connection_t *dpy, xcb_window_t root, Rectangle area, xcb_window_t child_id, Point child_pos);
+    Window(xcb_connection_t *dpy, xcb_screen_t* scr, Rectangle area, xcb_window_t child_id, Point child_pos);
     ~Window();
 
     Window(Window const&) = delete;
@@ -23,9 +23,11 @@ struct Window : public IWindow {
 
 private:
     xcb_connection_t* dpy_;
-    xcb_window_t      root_;
+    xcb_screen_t*     scr_;
     Rectangle         area_;
     xcb_gcontext_t    gc_;
+
+    uint32_t get_color(Color const& color);
 };
 
 #endif //WINDOW_HH_

@@ -86,7 +86,7 @@ template<> Color luaw_to(lua_State* L, int index)
         };
 
     } catch (std::exception& e) {
-        throw LuaException(L, "Invalid color format");
+        throw LuaException(L, "Invalid get_color format");
     }
 }
 
