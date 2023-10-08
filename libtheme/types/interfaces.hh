@@ -12,6 +12,7 @@ public:
     virtual Rectangle area() const = 0;
     virtual void draw_rectangles(std::vector<Rectangle> const& rectangles, Color const& color, bool filled) = 0;
     virtual void draw_polygon(std::vector<Point> const& points, Color const& color, bool filled) = 0;
+    virtual void draw_image(Point p, std::string const& image_idx, std::string const& slice) = 0;
 
     static void create_metatable(lua_State* L);
 };

@@ -101,3 +101,8 @@ uint32_t Window::get_color(Color const& color)
     return pixel;
 }
 
+void Window::draw_image(Point p, std::string const &image_idx, std::string const &slice)
+{
+    // TODO
+}
+

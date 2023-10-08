@@ -25,6 +25,8 @@ struct Window : public IWindow {
     void draw_rectangles(std::vector<Rectangle> const& rectangles, Color const& color, bool filled) override;
     void draw_polygon(std::vector<Point> const& points, const Color &color, bool filled) override;
 
+    void draw_image(Point p, std::string const &image_idx, std::string const &slice) override;
+
 private:
     xcb_connection_t* dpy_;
     xcb_screen_t*     scr_;
