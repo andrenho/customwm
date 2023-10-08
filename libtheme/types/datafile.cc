@@ -28,6 +28,8 @@ static std::string base64_decode(const std::string &in) {
 
 template<> DataFile luaw_to(lua_State* L, int index)
 {
+    int top = lua_gettop(L);
+
     DataFile df;
 
     luaL_checktype(L, index, LUA_TTABLE);
@@ -36,6 +38,7 @@ template<> DataFile luaw_to(lua_State* L, int index)
     if (lua_type(L, -1) != LUA_TSTRING)
         throw LuaException(L, "The format was not specified.");
     df.format = lua_tostring(L, -1);
+    lua_pop(L, 1);
 
     bool loaded = false;
 
@@ -52,11 +55,24 @@ template<> DataFile luaw_to(lua_State* L, int index)
         std::stringstream buffer;
         buffer << f.rdbuf();
         df.data = buffer.str();
+        loaded = true;
     }
     lua_pop(L, 1);
 
     if (!loaded)
         throw LuaException(L, "No images where presented to load. Use either `base64` or `file`");
+
+    lua_getfield(L, -1, "slices");
+    if (!lua_isnil(L, -1)) {
+        lua_pushnil(L);
+        while (lua_next(L, -2) != 0) {
+            df.slices.emplace(lua_tostring(L, -2), luaw_to<Rectangle>(L, -1));
+            lua_pop(L, 1);
+        }
+    }
+    lua_pop(L, 1);
+
+    luaw_asserttop(L, top);
 
     return df;
 }

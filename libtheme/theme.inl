@@ -38,6 +38,8 @@ T Theme::read(std::string const &prop_name, Types&... args) const
 template<typename... Types>
 void Theme::call(std::string const& prop_name, Types&... args)
 {
+    int top = lua_gettop(L);
+
     lua_getglobal(L, "theme");
 
     // get the property
@@ -55,6 +57,8 @@ void Theme::call(std::string const& prop_name, Types&... args)
     lua_call(L, sizeof...(args), 0);
 
     lua_pop(L, 1);
+
+    luaw_asserttop(L, top);
 }
 
 #endif //THEME_INL_

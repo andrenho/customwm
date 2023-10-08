@@ -7,9 +7,10 @@
 #include <xcb/xcb.h>
 
 #include "../libtheme/types/interfaces.hh"
+#include "resources.hh"
 
 struct Window : public IWindow {
-    Window(xcb_connection_t *dpy, xcb_screen_t* scr, Rectangle area, xcb_window_t child_id, Point child_pos);
+    Window(xcb_connection_t *dpy, xcb_screen_t* scr, Rectangle area, xcb_window_t child_id, Point child_pos, Resources* res);
     ~Window();
 
     Window(Window const&) = delete;
@@ -30,6 +31,7 @@ private:
     Rectangle         area_;
     xcb_gcontext_t    gc_;
     xcb_colormap_t    colormap_;
+    Resources*        res_;
 
     std::map<Color, uint32_t> colors_;
 

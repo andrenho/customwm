@@ -81,6 +81,8 @@ void Theme::merge_theme()
 
 std::vector<std::string> Theme::keys(std::string const& parent_prop) const
 {
+    int top = lua_gettop(L);
+
     std::vector<std::string> keys;
 
     lua_getglobal(L, "theme");
@@ -98,6 +100,8 @@ std::vector<std::string> Theme::keys(std::string const& parent_prop) const
     }
 
     lua_pop(L, 2);
+
+    luaw_asserttop(L, top);
 
     return keys;
 }

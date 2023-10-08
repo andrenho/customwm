@@ -14,6 +14,8 @@ extern "C" {
 
 template<> Point luaw_to(lua_State* L, int index)
 {
+    int top = lua_gettop(L);
+
     auto get_idx = [L, index](int idx) {
         lua_geti(L, index, idx);
         int16_t n = (int16_t) luaL_checkinteger(L, -1);
@@ -22,11 +24,16 @@ template<> Point luaw_to(lua_State* L, int index)
     };
     int16_t x = get_idx(1);
     int16_t y = get_idx(2);
+
+    luaw_asserttop(L, top);
+
     return { x, y };
 }
 
 template<> WindowStartingPos luaw_to(lua_State* L, int index)
 {
+    int top = lua_gettop(L);
+
     WindowStartingPos window_starting_pos {};
     switch (lua_type(L, index)) {
         case LUA_TSTRING: {
@@ -55,12 +62,16 @@ template<> WindowStartingPos luaw_to(lua_State* L, int index)
             throw LuaException(L, "expected a string, table or function");
     }
 
+    luaw_asserttop(L, top);
+
     return window_starting_pos;
 }
 
 
 template<> Padding luaw_to(lua_State* L, int index)
 {
+    int top = lua_gettop(L);
+
     luaL_checktype(L, index, LUA_TTABLE);
 
     auto get_idx = [L, index](int idx) {
@@ -69,7 +80,10 @@ template<> Padding luaw_to(lua_State* L, int index)
         lua_pop(L, 1);
         return n;
     };
-    return { get_idx(1), get_idx(2), get_idx(3), get_idx(4) };
+
+    Padding padding = { get_idx(1), get_idx(2), get_idx(3), get_idx(4) };
+    luaw_asserttop(L, top);
+    return padding;
 }
 
 template<> Color luaw_to(lua_State* L, int index)
@@ -92,6 +106,8 @@ template<> Color luaw_to(lua_State* L, int index)
 
 template<> Rectangle luaw_to(lua_State* L, int index)
 {
+    int top = lua_gettop(L);
+
     luaL_checktype(L, index, LUA_TTABLE);
 
     auto get_idx = [L, index](int idx) {
@@ -100,7 +116,9 @@ template<> Rectangle luaw_to(lua_State* L, int index)
         lua_pop(L, 1);
         return n;
     };
-    return { get_idx(1), get_idx(2), (uint16_t) get_idx(3), (uint16_t) get_idx(4) };
+    Rectangle r = { get_idx(1), get_idx(2), (uint16_t) get_idx(3), (uint16_t) get_idx(4) };
+    luaw_asserttop(L, top);
+    return r;
 }
 
 //

@@ -26,9 +26,13 @@ bool luaw_getproperty(lua_State* L, int index, const char* k)
         }
     }
 
-    // final queue should contain: #1 - the theme, #2 - the property
-    lua_replace(L, 2);
-    lua_settop(L, 2);
+    // leave on queue only: #1 - theme, #2 - final property
+    if (lua_gettop(L) > 2) {
+        lua_replace(L, 2);
+        lua_settop(L, 2);
+    }
+
+    luaw_asserttop(L, 2);
 
     return true;  // property found
 }

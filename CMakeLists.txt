@@ -45,6 +45,8 @@ add_executable(customwm
         wm/wm.cc
         wm/wm.hh
         wm/window.cc
+        wm/resources.cc
+        wm/resources.hh
 )
 add_dependencies(customwm base)
 target_link_libraries(customwm customwm-libtheme)

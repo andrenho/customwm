@@ -13,6 +13,8 @@ concept Iterable = requires(T t) {
 
 template <Iterable T> T luaw_to(lua_State* L, int index)
 {
+    int top = lua_gettop(L);
+
     luaL_checktype(L, index, LUA_TTABLE);
 
     T ts;
@@ -21,6 +23,8 @@ template <Iterable T> T luaw_to(lua_State* L, int index)
         ts.push_back(luaw_to<typename T::value_type>(L, -1));
         lua_pop(L, 1);
     }
+
+    luaw_asserttop(L, top);
 
     return ts;
 }

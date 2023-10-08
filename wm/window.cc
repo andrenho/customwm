@@ -2,8 +2,8 @@
 
 #include <algorithm>
 
-Window::Window(xcb_connection_t *dpy, xcb_screen_t* scr, Rectangle area, xcb_window_t child_id, Point child_pos)
-    : dpy_(dpy), child_id(child_id), scr_(scr), area_(area), id(xcb_generate_id(dpy))
+Window::Window(xcb_connection_t *dpy, xcb_screen_t* scr, Rectangle area, xcb_window_t child_id, Point child_pos, Resources* res)
+    : dpy_(dpy), child_id(child_id), scr_(scr), area_(area), id(xcb_generate_id(dpy)), res_(res)
 {
     uint32_t values = XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |
                       XCB_EVENT_MASK_STRUCTURE_NOTIFY |
