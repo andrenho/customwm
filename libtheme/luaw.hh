@@ -12,7 +12,7 @@ void luaw_settop(lua_State* L, int left_in_stack);
 
 inline void luaw_assertempty(lua_State* L) { luaw_asserttop(L, 0); }
 
-bool luaw_getfield(lua_State* L, int index, const char* k);
+bool luaw_getproperty(lua_State* L, int index, const char* k);
 
 template <typename T> T    luaw_to(lua_State* L, int index);
 

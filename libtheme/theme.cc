@@ -79,3 +79,25 @@ void Theme::merge_theme()
     luaw_assertempty(L);
 }
 
+std::vector<std::string> Theme::keys(std::string const& parent_prop) const
+{
+    std::vector<std::string> keys;
+
+    lua_getglobal(L, "theme");
+
+    if (!luaw_getproperty(L, -1, parent_prop.c_str()))
+        throw PropertyNotFoundException(parent_prop);
+
+    luaL_checktype(L, -1, LUA_TTABLE);
+
+    lua_pushnil(L);
+    while (lua_next(L, -2) != 0) {
+        if (lua_type(L, -2) == LUA_TSTRING)
+            keys.push_back(lua_tostring(L, -2));
+        lua_pop(L, 1);
+    }
+
+    lua_pop(L, 2);
+
+    return keys;
+}

@@ -11,7 +11,7 @@ void luaw_settop(lua_State* L, int left_in_stack)
     lua_pop(L, lua_gettop(L) - left_in_stack);
 }
 
-bool luaw_getfield(lua_State* L, int index, const char* k)
+bool luaw_getproperty(lua_State* L, int index, const char* k)
 {
     luaw_asserttop(L, 1);
 

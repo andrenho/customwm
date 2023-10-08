@@ -1,14 +1,16 @@
 #ifndef THEME_HH_
 #define THEME_HH_
 
+#include <cstdint>
+
+#include <string>
+#include <vector>
+
 extern "C" {
 #include <lua.h>
 #include <lualib.h>
 #include <lauxlib.h>
 }
-
-#include <string>
-#include <cstdint>
 
 #include "exceptions.hh"
 
@@ -32,6 +34,8 @@ public:
 
     template<typename... Types>
     void call(std::string const& prop_name, Types&... args);
+
+    std::vector<std::string> keys(std::string const& parent_prop) const;
 
 private:
     lua_State *L;

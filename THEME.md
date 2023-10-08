@@ -1,8 +1,11 @@
 ## Properties
 
+metadata = { name, author, link={} }
 window.padding = Padding or function(inner_area) -> Padding
 window.starting_pos = Point or function(inner_area) -> Point
 window.on_expose(window)
+images.src = { { format="png", base64="" or file="" } }
+images.slices.* = { x, y, w, h }
 
 ## Window
 

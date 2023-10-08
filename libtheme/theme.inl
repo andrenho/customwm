@@ -13,7 +13,7 @@ T Theme::read(std::string const &prop_name, Types&... args) const
     lua_getglobal(L, "theme");
 
     // get the property
-    if (!luaw_getfield(L, -1, prop_name.c_str()))
+    if (!luaw_getproperty(L, -1, prop_name.c_str()))
         throw PropertyNotFoundException(prop_name);
 
     // if the property is a function, run it, put the result back on the stack
@@ -41,7 +41,7 @@ void Theme::call(std::string const& prop_name, Types&... args)
     lua_getglobal(L, "theme");
 
     // get the property
-    if (!luaw_getfield(L, -1, prop_name.c_str()))
+    if (!luaw_getproperty(L, -1, prop_name.c_str()))
         throw PropertyNotFoundException(prop_name);
     if (lua_type(L, -1) != LUA_TFUNCTION)
         throw LuaException(L, "expected function for property '" + prop_name + "'");

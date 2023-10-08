@@ -3,10 +3,12 @@ project(customwm)
 
 set(CMAKE_CXX_STANDARD 20)
 
-find_package(X11 REQUIRED)
+find_package(PkgConfig)
 find_package(Lua REQUIRED)
+pkg_check_modules(XCBIMAGE REQUIRED xcb xcb-image)
 
-link_libraries(${X11_xcb_LIB} ${LUA_LIBRARIES})
+link_directories(${XCBIMAGE_LIBRARY_DIRS})
+link_libraries(${X11_xcb_LIB} ${LUA_LIBRARIES} ${XCBIMAGE_LIBRARIES})
 include_directories(${X11_xcb_INCLUDE_PATH} ${LUA_INCLUDE_DIR})
 
 add_library(customwm-libtheme STATIC
@@ -20,6 +22,8 @@ add_library(customwm-libtheme STATIC
         libtheme/theme.inl
         libtheme/types/interfaces.hh
         libtheme/types/interfaces.cc
+        libtheme/types/datafile.cc
+        libtheme/types/datafile.hh
 )
 
 set(COMPILED_BASE_THEME ${CMAKE_CURRENT_SOURCE_DIR}/wm/base/base)

@@ -1,6 +1,17 @@
 #include "wm.hh"
+
+#include <xcb/xcb_image.h>
+
+#include "../libtheme/types/datafile.hh"
 #include "../libtheme/types/types.hh"
 #include "window.hh"
+
+#define STBI_NO_HDR
+#define STBI_NO_LINEAR
+#define STBI_ONLY_PNG
+#define STB_IMAGE_IMPLEMENTATION
+#define STBI_FAILURE_USERMSG
+#include "contrib/stb_image.h"
 
 WM::WM(std::string const& display, Theme& theme)
     : theme_(theme)
@@ -12,6 +23,10 @@ WM::WM(std::string const& display, Theme& theme)
 
     // get screen
     scr = xcb_setup_roots_iterator(xcb_get_setup(dpy)).data;
+
+    // load images
+    for (std::string const& key : theme_.keys("images.src"))
+        load_image(key, theme_.read<DataFile>("images.src." + key));
 
     // select event filter
     uint32_t values = XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |
@@ -119,4 +134,30 @@ std::pair<int16_t, int16_t> WM::calculate_starting_position(WindowStartingPos co
         case WindowStartingPos::Custom:
             return { wsp.point.x, wsp.point.y };
     }
+}
+
+void WM::load_image(std::string const& name, DataFile const &df)
+{
+    int w, h;
+    int comp;
+    uint8_t* data = stbi_load_from_memory((stbi_uc const *) df.data.data(), (int) df.data.length(),
+                                          &w, &h, &comp, 4);
+
+    unsigned* dp = (unsigned*) data;
+    for(size_t i = 0, len = w * h; i < len; i++) //rgba to bgra
+        dp[i] = dp[i] & 0xff00ff00 | ((dp[i] >> 16) & 0xFF) | ((dp[i] << 16) & 0xFF0000);
+
+    xcb_pixmap_t px = xcb_generate_id(dpy);
+    xcb_gcontext_t gc = xcb_generate_id(dpy);
+
+    xcb_create_pixmap(dpy, scr->root_depth, px, scr->root, w, h);
+    xcb_create_gc(dpy, gc, px, 0, nullptr);
+
+    xcb_image_t* image = xcb_image_create_native(dpy, w, h, XCB_IMAGE_FORMAT_Z_PIXMAP, scr->root_depth, data, w * h * 4, data);
+    xcb_image_put(dpy, px, gc, image, 0, 0, 0);
+
+    xcb_image_destroy(image);
+    xcb_free_gc(dpy, gc);
+
+    pixmaps_.emplace(name, px);
 }

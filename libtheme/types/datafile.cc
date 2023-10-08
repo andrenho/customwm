@@ -1,0 +1,62 @@
+#include "datafile.hh"
+#include "../exceptions.hh"
+
+#include <fstream>
+#include <sstream>
+#include <string>
+
+static std::string base64_decode(const std::string &in) {
+
+    std::string out;
+    out.reserve(8 * (1 + in.size() / 6));
+
+    std::vector<int> T(256,-1);
+    for (int i=0; i<64; i++) T["ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[i]] = i;
+
+    int val=0, valb=-8;
+    for (uint8_t c : in) {
+        if (T[c] == -1) break;
+        val = (val << 6) + T[c];
+        valb += 6;
+        if (valb >= 0) {
+            out.push_back(char((val>>valb)&0xFF));
+            valb -= 8;
+        }
+    }
+    return out;
+}
+
+template<> DataFile luaw_to(lua_State* L, int index)
+{
+    DataFile df;
+
+    luaL_checktype(L, index, LUA_TTABLE);
+
+    lua_getfield(L, -1, "format");
+    if (lua_type(L, -1) != LUA_TSTRING)
+        throw LuaException(L, "The format was not specified.");
+    df.format = lua_tostring(L, -1);
+
+    bool loaded = false;
+
+    lua_getfield(L, -1, "base64");
+    if (!lua_isnil(L, -1)) {
+        df.data = base64_decode(lua_tostring(L, -1));
+        loaded = true;
+    }
+    lua_pop(L, 1);
+
+    lua_getfield(L, -1, "file");
+    if (!lua_isnil(L, -1)) {
+        std::ifstream f(lua_tostring(L, -1));
+        std::stringstream buffer;
+        buffer << f.rdbuf();
+        df.data = buffer.str();
+    }
+    lua_pop(L, 1);
+
+    if (!loaded)
+        throw LuaException(L, "No images where presented to load. Use either `base64` or `file`");
+
+    return df;
+}
