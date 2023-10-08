@@ -15,7 +15,7 @@
 - [x] Draw rectangle
 - [x] Draw line
 - [x] Draw polygon
-- [ ] Load pixmap from theme file
+- [ ] Load image from theme file
 - [ ] Draw things on the screen
 - [ ] Load font
 - [ ] Write text on the screen

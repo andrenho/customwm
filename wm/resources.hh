@@ -19,7 +19,8 @@ public:
     Resources(Resources&&) = delete;
     Resources& operator=(Resources&&) = delete;
 
-    void load_resources(Theme const& theme);
+    void         load_resources(Theme const& theme);
+    std::pair<xcb_pixmap_t, Rectangle> image(std::string const& image, std::string const& slice) const;
 
 private:
     xcb_connection_t *dpy_;
@@ -32,6 +33,11 @@ private:
     std::unordered_map<std::string, Image> images_;
 
     void load_image(std::string const& name, DataFile const& df);
+};
+
+class ResourceNotFound : public std::runtime_error {
+public:
+    explicit ResourceNotFound(std::string const& what) : std::runtime_error(what) {}
 };
 
 #endif //RESOURCES_HH_

@@ -49,7 +49,7 @@ The programs are:
 * https://en.wikipedia.org/wiki/X_Window_System_core_protocol
 * https://www.x.org/wiki/guide/
 * https://www.x.org/releases/X11R7.5/doc/libxcb/tutorial/index.html
-* https://github.com/QMonkey/Xlib-demo/blob/master/src/draw-pixmap.c
+* https://github.com/QMonkey/Xlib-demo/blob/master/src/draw-image.c
 * https://stackoverflow.com/questions/43029489/how-to-display-an-image-into-an-xcb-window
 
 ## Architecture

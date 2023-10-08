@@ -1,5 +1,8 @@
-#include <xcb/xcb_image.h>
 #include "resources.hh"
+
+#include <algorithm>
+
+#include <xcb/xcb_image.h>
 
 #define STBI_NO_HDR
 #define STBI_NO_LINEAR
@@ -44,4 +47,19 @@ void Resources::load_image(std::string const& name, DataFile const &df)
     xcb_free_gc(dpy_, gc);
 
     images_.emplace(name, Image { px, df.slices });
+}
+
+std::pair<xcb_pixmap_t, Rectangle> Resources::image(
+        std::string const& image, std::string const& slice) const
+{
+    auto it_img = images_.find(image);
+    if (it_img == images_.end())
+        throw ResourceNotFound("Image '" + image + "' not found.");
+
+    auto& slices = it_img->second.slices;
+    auto it_slc = slices.find(slice);
+    if (it_slc == slices.end())
+        throw ResourceNotFound("Slice '" + slice + "' for image '" + image + "' not found.");
+
+    return {it_img->second.pixmap, it_slc->second };
 }

@@ -103,6 +103,8 @@ uint32_t Window::get_color(Color const& color)
 
 void Window::draw_image(Point p, std::string const &image_idx, std::string const &slice)
 {
-    // TODO
+    auto [pixmap, rect] = res_->image(image_idx, slice);
+    xcb_copy_area(dpy_, pixmap, id, gc_, rect.x, rect.y, p.x, p.y, rect.w, rect.h);
+    xcb_flush(dpy_);
 }
 

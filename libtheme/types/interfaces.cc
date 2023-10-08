@@ -37,7 +37,7 @@ static luaL_Reg iwindow_f[] = {
         { "draw_image", [](lua_State *L) {
             std::string image_slice = luaL_checkstring(L, 3);
             size_t pos = image_slice.find_first_of('.');
-            std::string image = image_slice.substr(pos + 1), slice = image_slice.substr(0, pos);
+            std::string slice = image_slice.substr(pos + 1), image = image_slice.substr(0, pos);
             get_window(L, 1).draw_image(luaw_to<Point>(L, 2), image, slice);
             return 0;
         } },
