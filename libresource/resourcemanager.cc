@@ -1,4 +1,4 @@
-#include "resources.hh"
+#include "resourcemanager.hh"
 
 #include <algorithm>
 
@@ -11,19 +11,28 @@
 #define STBI_FAILURE_USERMSG
 #include "contrib/stb_image.h"
 
-Resources::~Resources()
+ResourceManager::~ResourceManager()
 {
-
+    for (auto const& kv: images_)
+        xcb_free_pixmap(dpy_, kv.second.pixmap);
 }
 
-void Resources::load_resources(Theme const& theme)
+void ResourceManager::load_resources(Theme const& theme)
 {
-    for (std::string const& key : theme.keys("images")) {
-        load_image(key, theme.read<DataFile>("images." + key));
-    }
+    try {
+        for (std::string const& key : theme.keys("resources.images")) {
+            load_image(key, theme.read<ImageResource>("resources.images." + key));
+        }
+    } catch (PropertyNotFoundException& unused) {}
+
+    try {
+        for (std::string const& key : theme.keys("resources.fonts")) {
+            // load_font(key, theme.read<Font>("resources.fonts." + key));
+        }
+    } catch (PropertyNotFoundException& unused) {}
 }
 
-void Resources::load_image(std::string const& name, DataFile const &df)
+void ResourceManager::load_image(std::string const& name, ImageResource const &df)
 {
     int w, h;
     int comp;
@@ -49,7 +58,7 @@ void Resources::load_image(std::string const& name, DataFile const &df)
     images_.emplace(name, Image { px, df.slices });
 }
 
-std::pair<xcb_pixmap_t, Rectangle> Resources::image(
+std::pair<xcb_pixmap_t, Rectangle> ResourceManager::image(
         std::string const& image, std::string const& slice) const
 {
     auto it_img = images_.find(image);

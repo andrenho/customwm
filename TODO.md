@@ -15,11 +15,15 @@
 - [x] Draw rectangle
 - [x] Draw line
 - [x] Draw polygon
-- [ ] Load image from theme file
-- [ ] Draw things on the screen
-- [ ] Load font
-- [ ] Write text on the screen
-- [ ] Draw full window decoration
+- [x] Load image from theme file
+- [x] Draw things on the screen
+- [ ] Load font (X)
+- [ ] Write text on the screen (X)
+
+# Version 0.0.3
+
+- [ ] Draw full window decoration (emulate twm)
+- [ ] Automate decoration
 
 # Version 0.0.3
 

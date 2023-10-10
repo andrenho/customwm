@@ -1,5 +1,5 @@
-#ifndef DATAFILE_HH_
-#define DATAFILE_HH_
+#ifndef RESOURCE_HH_
+#define RESOURCE_HH_
 
 #include <string>
 
@@ -8,12 +8,12 @@
 
 #include <unordered_map>
 
-struct DataFile {
-    std::string format;
+struct ImageResource {
+    enum { PNG } format;
     std::string data;
     std::unordered_map<std::string, Rectangle> slices;
 };
 
-template<> DataFile luaw_to(lua_State* L, int index);
+template<> ImageResource luaw_to(lua_State* L, int index);
 
-#endif //DATAFILE_HH_
+#endif //RESOURCE_HH_

@@ -37,7 +37,7 @@ The programs are:
 - dark/light mode
 - bars
 
-## Resources
+## ResourceManager
 
 * https://magcius.github.io/xplain/article/x-basics.html
 * https://github.com/mcpcpc/xwm
@@ -51,6 +51,12 @@ The programs are:
 * https://www.x.org/releases/X11R7.5/doc/libxcb/tutorial/index.html
 * https://github.com/QMonkey/Xlib-demo/blob/master/src/draw-image.c
 * https://stackoverflow.com/questions/43029489/how-to-display-an-image-into-an-xcb-window
+
+Fonts:
+
+* https://gist.github.com/luser-dr00g/13b81dbf3d557a9a9671
+* https://venam.nixers.net/blog/unix/2018/09/02/fonts-xcb.html
+* https://xcb.freedesktop.org/tutorial/fonts/ ?
 
 ## Architecture
 

@@ -22,8 +22,14 @@ add_library(customwm-libtheme STATIC
         libtheme/theme.inl
         libtheme/types/interfaces.hh
         libtheme/types/interfaces.cc
-        libtheme/types/datafile.cc
-        libtheme/types/datafile.hh
+        libtheme/types/resource.cc
+        libtheme/types/resource.hh
+)
+
+add_library(customwm-libresource STATIC
+        libresource/resourcemanager.cc
+        libresource/resourcemanager.hh
+        libresource/contrib/stb_image.h
 )
 
 set(COMPILED_BASE_THEME ${CMAKE_CURRENT_SOURCE_DIR}/wm/base/base)
@@ -45,8 +51,5 @@ add_executable(customwm
         wm/wm.cc
         wm/wm.hh
         wm/window.cc
-        wm/resources.cc
-        wm/resources.hh
 )
-add_dependencies(customwm base)
-target_link_libraries(customwm customwm-libtheme)
+target_link_libraries(customwm customwm-libtheme customwm-libresource)

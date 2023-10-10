@@ -1,4 +1,4 @@
-#include "datafile.hh"
+#include "resource.hh"
 #include "../exceptions.hh"
 
 #include <fstream>
@@ -26,18 +26,22 @@ static std::string base64_decode(const std::string &in) {
     return out;
 }
 
-template<> DataFile luaw_to(lua_State* L, int index)
+template<> ImageResource luaw_to(lua_State* L, int index)
 {
     int top = lua_gettop(L);
 
-    DataFile df;
+    ImageResource df;
 
     luaL_checktype(L, index, LUA_TTABLE);
 
     lua_getfield(L, -1, "format");
     if (lua_type(L, -1) != LUA_TSTRING)
         throw LuaException(L, "The format was not specified.");
-    df.format = lua_tostring(L, -1);
+    std::string fmt = lua_tostring(L, -1);
+    if (fmt == "png")
+        df.format = ImageResource::PNG;
+    else
+        throw LuaException(L, "invalid image format `" + fmt + "`");
     lua_pop(L, 1);
 
     bool loaded = false;

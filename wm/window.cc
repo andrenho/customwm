@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-Window::Window(xcb_connection_t *dpy, xcb_screen_t* scr, Rectangle area, xcb_window_t child_id, Point child_pos, Resources* res)
+Window::Window(xcb_connection_t *dpy, xcb_screen_t* scr, Rectangle area, xcb_window_t child_id, Point child_pos, ResourceManager* res)
     : dpy_(dpy), child_id(child_id), scr_(scr), area_(area), id(xcb_generate_id(dpy)), res_(res)
 {
     uint32_t values = XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |

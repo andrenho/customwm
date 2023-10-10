@@ -14,7 +14,7 @@ WM::WM(std::string const& display, Theme& theme)
     scr = xcb_setup_roots_iterator(xcb_get_setup(dpy)).data;
 
     // load images
-    resources_ = std::make_unique<Resources>(dpy, scr);
+    resources_ = std::make_unique<ResourceManager>(dpy, scr);
     resources_->load_resources(theme_);
 
     // select event filter
