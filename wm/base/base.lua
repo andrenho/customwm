@@ -35,7 +35,7 @@ return {
             -- window:draw_rectangles({ { 0, 5, 10, 15 }, { 0, 40, 10, 15 } }, "#ffab12", true)
             -- window:draw_line({ 0, 0 }, { 20, 20 }, "#ff0000")
             -- window:draw_image({ 0, 0 }, "main.close")
-            window:write({ 0, 15 }, "Hello world", "fixed", "#ff8800")
+            window:write({ 0, 15 }, "Hello world", "fixed", "#ff8800", { width = 220, align = "center" })
         end
     }
 }

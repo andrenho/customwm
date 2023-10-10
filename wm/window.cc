@@ -86,10 +86,30 @@ void Window::write(Point p, std::string const &text, std::string const &font_nam
     ResourceManager::Font font = res_->font(font_name);
 
     if (font.type == FontType::X11) {
+
+        int16_t x = p.x;
+
+        if (attrib.align != TextAttributes::LEFT) {
+
+            size_t i = 0;
+            xcb_char2b_t wstr[text.length()];
+            for (char c: text)
+                wstr[i++] = { .byte1 = 0, .byte2 = (uint8_t) c };
+
+            xcb_generic_error_t *err = nullptr;
+            xcb_query_text_extents_reply_t* ext = xcb_query_text_extents_reply(
+                    dpy_, xcb_query_text_extents(dpy_, font.x11_font, text.length(), wstr), &err);
+
+            if (attrib.align == TextAttributes::RIGHT)
+                x += attrib.width - ext->overall_width;
+            else if (attrib.align == TextAttributes::CENTER)
+                x += (attrib.width / 2) - (ext->overall_width / 2);
+        }
+
         uint32_t vcolor = colors_->get_color(color);
         uint32_t values[] = { vcolor, font.x11_font };
         xcb_change_gc(dpy_, gc_, XCB_GC_FOREGROUND | XCB_GC_FONT, values);
-        xcb_image_text_8(dpy_, text.length(), id, gc_, p.x, p.y, text.c_str());
+        xcb_image_text_8(dpy_, text.length(), id, gc_, x, p.y, text.c_str());
         xcb_flush(dpy_);
         // TODO - attrib
     }

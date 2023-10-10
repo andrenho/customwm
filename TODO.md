@@ -20,7 +20,7 @@
 - [x] Move color management to resource management
 - [x] Load font (X)
 - [x] Write text on the screen (X)
-- [ ] Text attributes
+- [x] Text attributes
 - [ ] Test xcb cookies for errors
 - [ ] Check of unmapping errors
 

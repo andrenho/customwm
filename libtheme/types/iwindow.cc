@@ -91,7 +91,6 @@ template<> TextAttributes luaw_to(lua_State* L, int index)
             attr.align = TextAttributes::RIGHT;
         else
             throw LuaException(L, "Incorrect text alignment.");
-        attr.width = (int16_t) luaL_checkinteger(L, -1);
     }
     lua_pop(L, 1);
 
