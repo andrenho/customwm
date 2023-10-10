@@ -34,4 +34,5 @@
 
 # Someday
 
+- [ ] Error management
 - [ ] Restart application when user theme is rewritten

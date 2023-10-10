@@ -16,8 +16,10 @@ struct ImageResource {
 
 template<> ImageResource luaw_to(lua_State* L, int index);
 
+enum class FontType { X11 };
+
 struct FontResource {
-    enum { X11 } format;
+    FontType    format;
     std::string name;
 };
 

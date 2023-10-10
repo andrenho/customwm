@@ -20,7 +20,7 @@ return {
         },
 
         fonts = {
-            basic = {
+            fixed = {
                 format = "x11",
                 name = "-misc-fixed-bold-r-normal--14-130-75-75-c-70-iso8859-1",
             }

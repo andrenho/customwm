@@ -15,6 +15,10 @@ ResourceManager::~ResourceManager()
 {
     for (auto const& kv: images_)
         xcb_free_pixmap(dpy_, kv.second.pixmap);
+
+    for (auto const& kv: fonts_)
+        if (kv.second.type == FontType::X11)
+            xcb_close_font(dpy_, kv.second.x11_font);
 }
 
 void ResourceManager::load_resources(Theme const& theme)
@@ -75,5 +79,21 @@ std::pair<xcb_pixmap_t, Rectangle> ResourceManager::image(
 
 void ResourceManager::load_font(std::string const &basic_string, FontResource const &resource)
 {
+    if (resource.format == FontType::X11) {
+        xcb_font_t font = xcb_generate_id(dpy_);
+        xcb_void_cookie_t r = xcb_open_font_checked(dpy_, font, resource.name.length(), resource.name.c_str());
+        xcb_generic_error_t* err = xcb_request_check(dpy_, r);
+        if (err)
+            throw ResourceBroken("Can't open font: " + std::to_string(err->error_code));
 
+        fonts_.emplace(resource.name, Font { .type = FontType::X11, .x11_font = font });
+    }
+}
+
+ResourceManager::Font ResourceManager::font(std::string const& name) const
+{
+    auto it = fonts_.find(name);
+    if (it == fonts_.end())
+        throw ResourceNotFound("Font '" + name + "' not found.");
+    return it->second;
 }

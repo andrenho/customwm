@@ -95,7 +95,7 @@ template<> FontResource luaw_to(lua_State* L, int index)
         throw LuaException(L, "The font format was not specified.");
     std::string fmt = lua_tostring(L, -1);
     if (fmt == "x11")
-        fr.format = FontResource::X11;
+        fr.format = FontType::X11;
     else
         throw LuaException(L, "invalid font format `" + fmt + "`");
     lua_pop(L, 1);
