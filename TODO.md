@@ -21,8 +21,9 @@
 - [x] Load font (X)
 - [x] Write text on the screen (X)
 - [x] Text attributes
-- [ ] Test xcb cookies for errors
+- [x] Test xcb cookies for errors
 - [ ] Check of unmapping errors
+- [ ] Include existing windows on initialization
 
 # Version 0.0.3
 

@@ -32,9 +32,9 @@ Window::~Window()
 
     xcb_free_gc(dpy_, gc_);
 
+    xcb_reparent_window_checked(dpy_, child_id, scr_->root, 0, 0);      // checked to ignore errors if the window holder was killed
+    xcb_change_save_set_checked(dpy_, XCB_SET_MODE_DELETE, child_id);
     xcb_unmap_window(dpy_, id);
-    xcb_reparent_window(dpy_, child_id, scr_->root, 0, 0);
-    xcb_change_save_set(dpy_, XCB_SET_MODE_DELETE, child_id);
     xcb_destroy_window(dpy_, id);
 
     xcb_flush(dpy_);

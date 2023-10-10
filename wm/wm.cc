@@ -40,7 +40,8 @@ void WM::run()
             switch (ev->response_type & ~0x80) {
                 case 0: {
                     auto* e = reinterpret_cast<xcb_request_error_t *>(ev);
-                    fprintf(stderr, "X11 error: %s %s\n",
+                    fprintf(stderr, "X11 error: %s %s %s\n",
+                            xcb_errors_get_name_for_error(err_ctx, e->error_code, nullptr),
                             xcb_errors_get_name_for_major_code(err_ctx, e->major_opcode),
                             xcb_errors_get_name_for_minor_code(err_ctx, e->major_opcode, e->minor_opcode)
                             );
