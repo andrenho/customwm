@@ -33,6 +33,8 @@ private:
     std::unordered_map<std::string, Image> images_;
 
     void load_image(std::string const& name, ImageResource const& df);
+
+    void load_font(std::string const &basic_string, FontResource const &resource);
 };
 
 class ResourceNotFound : public std::runtime_error {

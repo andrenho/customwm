@@ -27,7 +27,7 @@ void ResourceManager::load_resources(Theme const& theme)
 
     try {
         for (std::string const& key : theme.keys("resources.fonts")) {
-            // load_font(key, theme.read<Font>("resources.fonts." + key));
+            load_font(key, theme.read<FontResource>("resources.fonts." + key));
         }
     } catch (PropertyNotFoundException& unused) {}
 }
@@ -71,4 +71,9 @@ std::pair<xcb_pixmap_t, Rectangle> ResourceManager::image(
         throw ResourceNotFound("Slice '" + slice + "' for image '" + image + "' not found.");
 
     return {it_img->second.pixmap, it_slc->second };
+}
+
+void ResourceManager::load_font(std::string const &basic_string, FontResource const &resource)
+{
+
 }

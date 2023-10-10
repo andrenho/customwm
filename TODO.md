@@ -19,6 +19,7 @@
 - [x] Draw things on the screen
 - [ ] Load font (X)
 - [ ] Write text on the screen (X)
+- [ ] Move color management to resource management (?)
 
 # Version 0.0.3
 

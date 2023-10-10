@@ -36,7 +36,7 @@ template<> ImageResource luaw_to(lua_State* L, int index)
 
     lua_getfield(L, -1, "format");
     if (lua_type(L, -1) != LUA_TSTRING)
-        throw LuaException(L, "The format was not specified.");
+        throw LuaException(L, "The image format was not specified.");
     std::string fmt = lua_tostring(L, -1);
     if (fmt == "png")
         df.format = ImageResource::PNG;
@@ -79,4 +79,35 @@ template<> ImageResource luaw_to(lua_State* L, int index)
     luaw_asserttop(L, top);
 
     return df;
+}
+
+
+template<> FontResource luaw_to(lua_State* L, int index)
+{
+    int top = lua_gettop(L);
+
+    FontResource fr;
+
+    luaL_checktype(L, index, LUA_TTABLE);
+
+    lua_getfield(L, -1, "format");
+    if (lua_type(L, -1) != LUA_TSTRING)
+        throw LuaException(L, "The font format was not specified.");
+    std::string fmt = lua_tostring(L, -1);
+    if (fmt == "x11")
+        fr.format = FontResource::X11;
+    else
+        throw LuaException(L, "invalid font format `" + fmt + "`");
+    lua_pop(L, 1);
+
+    lua_getfield(L, -1, "name");
+    if (lua_isnil(L, -1))
+        throw LuaException(L, "The font name was not specified");
+    fr.name = luaL_checkstring(L, -1);
+
+    lua_pop(L, 1);
+
+    luaw_asserttop(L, top);
+
+    return fr;
 }
