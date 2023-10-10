@@ -77,7 +77,7 @@ std::pair<xcb_pixmap_t, Rectangle> ResourceManager::image(
     return {it_img->second.pixmap, it_slc->second };
 }
 
-void ResourceManager::load_font(std::string const &basic_string, FontResource const &resource)
+void ResourceManager::load_font(std::string const &name, FontResource const &resource)
 {
     if (resource.format == FontType::X11) {
         xcb_font_t font = xcb_generate_id(dpy_);
@@ -86,7 +86,7 @@ void ResourceManager::load_font(std::string const &basic_string, FontResource co
         if (err)
             throw ResourceBroken("Can't open font: " + std::to_string(err->error_code));
 
-        fonts_.emplace(resource.name, Font { .type = FontType::X11, .x11_font = font });
+        fonts_.emplace(name, Font { .type = FontType::X11, .x11_font = font });
     }
 }
 

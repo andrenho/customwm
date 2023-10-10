@@ -1,5 +1,5 @@
-#ifndef RESOURCE_HH_
-#define RESOURCE_HH_
+#ifndef RESOURCES_HH_
+#define RESOURCES_HH_
 
 #include <string>
 
@@ -25,4 +25,4 @@ struct FontResource {
 
 template<> FontResource luaw_to(lua_State* L, int index);
 
-#endif //RESOURCE_HH_
+#endif //RESOURCES_HH_

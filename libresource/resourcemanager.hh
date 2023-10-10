@@ -6,7 +6,7 @@
 
 #include <xcb/xcb.h>
 #include "../libtheme/theme.hh"
-#include "../libtheme/types/resource.hh"
+#include "../libtheme/types/resources.hh"
 #include "../libtheme/types/types.hh"
 
 class ResourceManager {

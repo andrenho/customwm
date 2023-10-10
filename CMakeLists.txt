@@ -20,16 +20,18 @@ add_library(customwm-libtheme STATIC
         libtheme/types/types.cc
         libtheme/types/types.hh
         libtheme/theme.inl
-        libtheme/types/interfaces.hh
-        libtheme/types/interfaces.cc
-        libtheme/types/resource.cc
-        libtheme/types/resource.hh
+        libtheme/types/iwindow.hh
+        libtheme/types/iwindow.cc
+        libtheme/types/resources.cc
+        libtheme/types/resources.hh
 )
 
 add_library(customwm-libresource STATIC
         libresource/resourcemanager.cc
         libresource/resourcemanager.hh
         libresource/contrib/stb_image.h
+        libresource/colors.cc
+        libresource/colors.hh
 )
 
 set(COMPILED_BASE_THEME ${CMAKE_CURRENT_SOURCE_DIR}/wm/base/base)

@@ -4,7 +4,7 @@
 
 #include "exceptions.hh"
 #include "luaw.hh"
-#include "types/interfaces.hh"
+#include "types/iwindow.hh"
 
 Theme::Theme()
     : L(luaL_newstate())

@@ -6,8 +6,9 @@
 
 #include <xcb/xcb.h>
 
-#include "../libtheme/types/interfaces.hh"
+#include "../libtheme/types/iwindow.hh"
 #include "../libresource/resourcemanager.hh"
+#include "../libresource/colors.hh"
 
 struct Window : public IWindow {
     Window(xcb_connection_t *dpy, xcb_screen_t* scr, Rectangle area, xcb_window_t child_id, Point child_pos, ResourceManager* res);
@@ -33,11 +34,8 @@ private:
     Rectangle         area_;
     xcb_gcontext_t    gc_;
     xcb_colormap_t    colormap_;
-    ResourceManager*        res_;
-
-    std::map<Color, uint32_t> colors_;
-
-    uint32_t get_color(Color const& color);
+    ResourceManager*  res_;
+    std::unique_ptr<Colors> colors_;
 };
 
 #endif //WINDOW_HH_

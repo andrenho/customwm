@@ -1,4 +1,4 @@
-#include "interfaces.hh"
+#include "iwindow.hh"
 
 extern "C" {
 #include <lauxlib.h>

@@ -1,4 +1,4 @@
-#include "resource.hh"
+#include "resources.hh"
 #include "../exceptions.hh"
 
 #include <fstream>

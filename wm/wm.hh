@@ -8,7 +8,7 @@
 #include "../libtheme/theme.hh"
 #include "../libtheme/types/types.hh"
 #include "window.hh"
-#include "../libtheme/types/resource.hh"
+#include "../libtheme/types/resources.hh"
 #include "../libresource/resourcemanager.hh"
 
 class WM {

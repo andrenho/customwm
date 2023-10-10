@@ -1,5 +1,5 @@
-#ifndef INTERFACES_HH_
-#define INTERFACES_HH_
+#ifndef IWINDOW_HH_
+#define IWINDOW_HH_
 
 #include <string>
 #include <vector>
@@ -19,4 +19,4 @@ public:
 
 template<> void luaw_push(lua_State* L, IWindow* window);
 
-#endif //INTERFACES_HH_
+#endif //IWINDOW_HH_
