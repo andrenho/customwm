@@ -3,13 +3,14 @@ project(customwm)
 
 set(CMAKE_CXX_STANDARD 20)
 
+set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:/usr/X11/lib/pkgconfig")
 find_package(PkgConfig)
 find_package(Lua REQUIRED)
-pkg_check_modules(XCBIMAGE REQUIRED xcb xcb-image)
+pkg_check_modules(XCB REQUIRED xcb xcb-image xcb-errors)
 
-link_directories(${XCBIMAGE_LIBRARY_DIRS})
-link_libraries(${X11_xcb_LIB} ${LUA_LIBRARIES} ${XCBIMAGE_LIBRARIES})
-include_directories(${X11_xcb_INCLUDE_PATH} ${LUA_INCLUDE_DIR})
+link_directories(${XCB_LIBRARY_DIRS})
+link_libraries(${LUA_LIBRARIES} ${XCB_LIBRARIES})
+include_directories(${LUA_INCLUDE_DIR} ${XCB_INCLUDE_DIRS})
 
 add_library(customwm-libtheme STATIC
         libtheme/theme.hh

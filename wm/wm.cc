@@ -9,6 +9,7 @@ WM::WM(std::string const& display, Theme& theme)
     dpy = xcb_connect(display.c_str(), nullptr);
     if (xcb_connection_has_error(dpy))
         throw std::runtime_error("Could not connect to display " + display);
+    xcb_errors_context_new(dpy, &err_ctx);
 
     // get screen
     scr = xcb_setup_roots_iterator(xcb_get_setup(dpy)).data;
@@ -27,6 +28,7 @@ WM::WM(std::string const& display, Theme& theme)
 WM::~WM()
 {
     resources_.reset();
+    xcb_errors_context_free(err_ctx);
     xcb_disconnect(dpy);
 }
 
@@ -36,6 +38,14 @@ void WM::run()
         xcb_generic_event_t *ev = xcb_wait_for_event(dpy);
         if (ev != nullptr) {
             switch (ev->response_type & ~0x80) {
+                case 0: {
+                    auto* e = reinterpret_cast<xcb_request_error_t *>(ev);
+                    fprintf(stderr, "X11 error: %s %s\n",
+                            xcb_errors_get_name_for_major_code(err_ctx, e->major_opcode),
+                            xcb_errors_get_name_for_minor_code(err_ctx, e->major_opcode, e->minor_opcode)
+                            );
+                    break;
+                }
                 case XCB_MAP_REQUEST: {
                     auto* e = reinterpret_cast<xcb_map_request_event_t *>(ev);
                     on_map_request(e);

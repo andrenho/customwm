@@ -19,8 +19,10 @@
 - [x] Draw things on the screen
 - [x] Move color management to resource management
 - [x] Load font (X)
-- [ ] Write text on the screen (X)
+- [x] Write text on the screen (X)
+- [ ] Text attributes
 - [ ] Test xcb cookies for errors
+- [ ] Check of unmapping errors
 
 # Version 0.0.3
 

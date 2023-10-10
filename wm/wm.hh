@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <string>
 #include <xcb/xcb.h>
+#include <xcb/xcb_errors.h>
 
 #include "../libtheme/theme.hh"
 #include "../libtheme/types/types.hh"
@@ -24,10 +25,11 @@ public:
     void run();
 
 private:
-    xcb_connection_t* dpy = nullptr;
-    xcb_screen_t*     scr = nullptr;
-    Theme&            theme_;
-    mutable uint16_t  cascade_ = 0;     // used to calculate the position of the next window to be open
+    xcb_connection_t*     dpy = nullptr;
+    xcb_screen_t*         scr = nullptr;
+    xcb_errors_context_t* err_ctx;
+    Theme&                theme_;
+    mutable uint16_t      cascade_ = 0;     // used to calculate the position of the next window to be open
     std::unordered_map<uint32_t, std::unique_ptr<Window>> windows_;
     std::unique_ptr<ResourceManager> resources_;
 
