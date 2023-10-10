@@ -81,3 +81,17 @@ void Window::draw_image(Point p, std::string const &image_idx, std::string const
     xcb_flush(dpy_);
 }
 
+void Window::write(Point p, std::string const &text, std::string const &font_name, Color const &color, TextAttributes const &attrib)
+{
+    ResourceManager::Font font = res_->font(font_name);
+
+    if (font.type == FontType::X11) {
+        uint32_t vcolor = colors_->get_color(color);
+        uint32_t values[] = { vcolor, font.x11_font };
+        xcb_change_gc(dpy_, gc_, XCB_GC_FOREGROUND | XCB_GC_FONT, values);
+        xcb_image_text_8(dpy_, text.length(), id, gc_, p.x, p.y, text.c_str());
+        xcb_flush(dpy_);
+        // TODO - attrib
+    }
+}
+

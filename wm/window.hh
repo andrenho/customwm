@@ -25,8 +25,8 @@ struct Window : public IWindow {
     Rectangle area() const override { return area_; }
     void draw_rectangles(std::vector<Rectangle> const& rectangles, Color const& color, bool filled) override;
     void draw_polygon(std::vector<Point> const& points, const Color &color, bool filled) override;
-
     void draw_image(Point p, std::string const &image_idx, std::string const &slice) override;
+    void write(Point p, std::string const &text, std::string const &font, Color const &color, TextAttributes const &attrib) override;
 
 private:
     xcb_connection_t* dpy_;

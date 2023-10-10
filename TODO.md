@@ -17,9 +17,10 @@
 - [x] Draw polygon
 - [x] Load image from theme file
 - [x] Draw things on the screen
-- [ ] Load font (X)
+- [x] Move color management to resource management
+- [x] Load font (X)
 - [ ] Write text on the screen (X)
-- [ ] Move color management to resource management (?)
+- [ ] Test xcb cookies for errors
 
 # Version 0.0.3
 

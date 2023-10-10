@@ -1,4 +1,5 @@
 #include "iwindow.hh"
+#include "../exceptions.hh"
 
 extern "C" {
 #include <lauxlib.h>
@@ -41,6 +42,12 @@ static luaL_Reg iwindow_f[] = {
             get_window(L, 1).draw_image(luaw_to<Point>(L, 2), image, slice);
             return 0;
         } },
+        { "write", [](lua_State *L) {
+            get_window(L, 1).write(
+                    luaw_to<Point>(L, 2), luaL_checkstring(L, 3), luaL_checkstring(L, 4), luaw_to<Color>(L, 5),
+                    lua_gettop(L) >= 6 ? luaw_to<TextAttributes>(L, 6) : TextAttributes { 0, TextAttributes::LEFT });
+            return 0;
+        } },
         {nullptr, nullptr},
 };
 
@@ -58,4 +65,35 @@ template<> void luaw_push(lua_State* L, IWindow* window)
     IWindowUserData* ud = (IWindowUserData *) lua_newuserdata(L, sizeof(IWindowUserData));
     ud->iwindow = window;
     luaL_setmetatable(L, "__iwindow_mt");
+}
+
+template<> TextAttributes luaw_to(lua_State* L, int index)
+{
+    int top = lua_gettop(L);
+
+    TextAttributes attr = { .width = 0, .align = TextAttributes::LEFT };
+
+    luaL_checktype(L, index, LUA_TTABLE);
+
+    lua_getfield(L, index, "width");
+    if (!lua_isnil(L, -1))
+        attr.width = (int16_t) luaL_checkinteger(L, -1);
+    lua_pop(L, 1);
+
+    lua_getfield(L, index, "align");
+    if (!lua_isnil(L, -1)) {
+        std::string align = luaL_checkstring(L, -1);
+        if (align == "left")
+            attr.align = TextAttributes::LEFT;
+        else if (align == "center")
+            attr.align = TextAttributes::CENTER;
+        else if (align == "right")
+            attr.align = TextAttributes::RIGHT;
+        else
+            throw LuaException(L, "Incorrect text alignment.");
+        attr.width = (int16_t) luaL_checkinteger(L, -1);
+    }
+    lua_pop(L, 1);
+
+    return attr;
 }

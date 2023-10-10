@@ -10,6 +10,7 @@
 #include "../libtheme/types/types.hh"
 
 class ResourceManager {
+public:
     struct Font {
         FontType type;
         union {
@@ -17,7 +18,6 @@ class ResourceManager {
         };
     };
 
-public:
     ResourceManager(xcb_connection_t *dpy, xcb_screen_t *scr) : dpy_(dpy), scr_(scr) {}
     ~ResourceManager();
 
