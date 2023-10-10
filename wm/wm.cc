@@ -21,8 +21,15 @@ WM::WM(std::string const& display, Theme& theme)
     // select event filter
     uint32_t values = XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |
                       XCB_EVENT_MASK_STRUCTURE_NOTIFY;
-    xcb_change_window_attributes_checked(dpy, scr->root, XCB_CW_EVENT_MASK, &values);
+    xcb_change_window_attributes(dpy, scr->root, XCB_CW_EVENT_MASK, &values);
     xcb_flush(dpy);
+
+    // add existing windows to WM
+    auto r = xcb_query_tree_reply(dpy, xcb_query_tree(dpy, scr->root), nullptr);
+    if (r) {
+        for (size_t i = 0; i < xcb_query_tree_children_length(r); ++i)
+            on_map_request(xcb_query_tree_children(r)[i]);
+    }
 }
 
 WM::~WM()
@@ -40,16 +47,12 @@ void WM::run()
             switch (ev->response_type & ~0x80) {
                 case 0: {
                     auto* e = reinterpret_cast<xcb_request_error_t *>(ev);
-                    fprintf(stderr, "X11 error: %s %s %s\n",
-                            xcb_errors_get_name_for_error(err_ctx, e->error_code, nullptr),
-                            xcb_errors_get_name_for_major_code(err_ctx, e->major_opcode),
-                            xcb_errors_get_name_for_minor_code(err_ctx, e->major_opcode, e->minor_opcode)
-                            );
+                    on_error(e);
                     break;
                 }
                 case XCB_MAP_REQUEST: {
                     auto* e = reinterpret_cast<xcb_map_request_event_t *>(ev);
-                    on_map_request(e);
+                    on_map_request(e->window);
                     break;
                 }
                 case XCB_UNMAP_NOTIFY: {
@@ -69,10 +72,23 @@ void WM::run()
     }
 }
 
-void WM::on_map_request(xcb_map_request_event_t *e)
+void WM::on_error(xcb_request_error_t const *e) const
+{
+    if (e->error_code == XCB_ACCESS && e->major_opcode == 2 && e->minor_opcode == 0) {
+        fprintf(stderr, "Another window manager seems to be already running.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    fprintf(stderr, "X11 error: %s %s %s\n",
+        xcb_errors_get_name_for_error(err_ctx, e->error_code, nullptr),
+        xcb_errors_get_name_for_major_code(err_ctx, e->major_opcode),
+        xcb_errors_get_name_for_minor_code(err_ctx, e->major_opcode, e->minor_opcode));
+}
+
+void WM::on_map_request(xcb_window_t child_id)
 {
     // figure out information about the window
-    auto geo = xcb_get_geometry_reply(dpy, xcb_get_geometry(dpy, e->window), nullptr);
+    auto geo = xcb_get_geometry_reply(dpy, xcb_get_geometry(dpy, child_id), nullptr);
 
     // get configuration from theme
     Rectangle child_sz { geo->x, geo->y, geo->width, geo->height };
@@ -85,7 +101,7 @@ void WM::on_map_request(xcb_map_request_event_t *e)
     uint16_t h = geo->height + padding.top + padding.bottom + 1;
 
     // add window to list
-    auto window = std::make_unique<Window>(dpy, scr, Rectangle { x, y, w, h }, e->window,
+    auto window = std::make_unique<Window>(dpy, scr, Rectangle { x, y, w, h }, child_id,
                                            Point { padding.left, padding.top }, resources_.get());
     windows_.emplace(std::pair<uint32_t, std::unique_ptr<Window>> { window->id, std::move(window) });
 

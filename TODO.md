@@ -22,8 +22,9 @@
 - [x] Write text on the screen (X)
 - [x] Text attributes
 - [x] Test xcb cookies for errors
-- [ ] Check of unmapping errors
-- [ ] Include existing windows on initialization
+- [x] Check of unmapping errors
+- [x] Include existing windows on initialization
+- [x] Check for running window manager
 
 # Version 0.0.3
 

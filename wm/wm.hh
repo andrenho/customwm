@@ -33,13 +33,15 @@ private:
     std::unordered_map<uint32_t, std::unique_ptr<Window>> windows_;
     std::unique_ptr<ResourceManager> resources_;
 
-    void on_map_request(xcb_map_request_event_t *e);
+    void on_map_request(xcb_window_t child_id);
     void on_unmap_notify(xcb_unmap_notify_event_t *e);
     void on_expose(xcb_expose_event_t *e);
 
     std::pair<int16_t, int16_t> calculate_starting_position(WindowStartingPos const &pos, xcb_get_geometry_reply_t *geo);
 
     void load_image(std::string const& name, ImageResource const &df);
+
+    void on_error(xcb_request_error_t const *e) const;
 };
 
 
