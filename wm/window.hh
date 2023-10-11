@@ -23,6 +23,8 @@ struct Window : public IWindow {
     const uint32_t child_id;
 
     Rectangle area() const override { return area_; }
+    std::string name() const override;
+
     void draw_rectangles(std::vector<Rectangle> const& rectangles, Color const& color, bool filled) override;
     void draw_polygon(std::vector<Point> const& points, const Color &color, bool filled) override;
     void draw_image(Point p, std::string const &image_idx, std::string const &slice) override;

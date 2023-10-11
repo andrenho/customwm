@@ -133,3 +133,12 @@ void Window::write(Point p, std::string const &text, std::string const &font_nam
     }
 }
 
+std::string Window::name() const
+{
+    auto r = xcb_get_property_reply(dpy_, xcb_get_property(dpy_, 0, child_id, XCB_ATOM_WM_NAME, XCB_ATOM_STRING, 0, 256), nullptr);
+    const char* window_name = (const char *) xcb_get_property_value(r);
+    std::string name = window_name;
+    free(r);
+    return name;
+}
+

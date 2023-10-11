@@ -35,7 +35,7 @@ return {
             window:draw_rectangle({ 0, 0, 220, 24 } , "#bbbbbb", true)
             -- window:draw_line({ 0, 0 }, { 20, 20 }, "#ff0000")
             -- window:draw_image({ 0, 0 }, "main.close")
-            window:write({ 0, 0 }, "Hello world", "fixed", "#ff8800", { size = { 220, 24 }, halign = "center", valign = "bottom" })
+            window:write({ 0, 0 }, window:name(), "fixed", "#ff8800", { size = { 220, 24 }, halign = "center", valign = "bottom" })
         end
     }
 }

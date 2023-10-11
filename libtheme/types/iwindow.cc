@@ -19,6 +19,10 @@ static luaL_Reg iwindow_f[] = {
             luaw_push(L, get_window(L, 1).area());
             return 1;
         } },
+        { "name", [](lua_State *L) {
+            lua_pushstring(L, get_window(L, 1).name().c_str());
+            return 1;
+        } },
         { "draw_rectangle", [](lua_State *L) {
             get_window(L, 1).draw_rectangles({ luaw_to<Rectangle>(L, 2) }, luaw_to<Color>(L, 3), lua_toboolean(L, 4));
             return 0;

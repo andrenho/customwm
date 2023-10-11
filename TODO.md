@@ -29,8 +29,8 @@
 # Version 0.0.3
 
 - [ ] Draw full window decoration (emulate twm)
-  - [ ] Change text to write on a box
-  - [ ] Get window name
+  - [x] Change text to write on a box
+  - [x] Get window name
   - [ ] Draw decoration
     - [ ] Draw corners, buttons
     - [ ] Draw title
