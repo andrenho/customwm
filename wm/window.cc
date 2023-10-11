@@ -119,7 +119,16 @@ void Window::write(Point p, std::string const &text, std::string const &font_nam
         uint32_t vcolor = colors_->get_color(color);
         uint32_t values[] = { vcolor, font.x11_font };
         xcb_change_gc(dpy_, gc_, XCB_GC_FOREGROUND | XCB_GC_FONT, values);
-        xcb_image_text_8(dpy_, text.length(), id, gc_, x, y, text.c_str());
+
+        uint8_t len = std::min(text.length(), (size_t) 256);
+        struct {
+            uint8_t nchars;
+            int8_t delta;
+            char text[256];
+        } item = { len, 0 };
+        memcpy(item.text, text.c_str(), len);
+        xcb_poly_text_8(dpy_, id, gc_, x, y, item.nchars + 2, (const uint8_t*) &item);
+
         xcb_flush(dpy_);
     }
 }
