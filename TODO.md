@@ -29,6 +29,12 @@
 # Version 0.0.3
 
 - [ ] Draw full window decoration (emulate twm)
+  - [ ] Change text to write on a box
+  - [ ] Get window name
+  - [ ] Draw decoration
+    - [ ] Draw corners, buttons
+    - [ ] Draw title
+    - [ ] Draw borders
 - [ ] Automate decoration
 
 # Version 0.0.3
@@ -36,6 +42,12 @@
 - [ ] Move windows
 - [ ] Deal with button clicks
 - [ ] Minimize/maximize
+- [ ] Documentation
+
+# Version 0.0.4
+
+- [ ] ICCCM
+- [ ] EWMH
 
 # Someday
 
