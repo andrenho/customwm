@@ -1,5 +1,7 @@
 #include "luaw.hh"
 
+#include <optional>
+
 extern "C" {
 #include <lauxlib.h>
 }
@@ -27,4 +29,20 @@ template <Iterable T> T luaw_to(lua_State* L, int index)
     luaw_asserttop(L, top);
 
     return ts;
+}
+
+template <typename T>
+std::optional<T> luaw_to_opt(lua_State* L, int index)
+{
+    if (lua_isnil(L, index))
+        return {};
+    return luaw_to<T>(L, index);
+}
+
+template <typename T>
+T luaw_to(lua_State* L, int index, T const& default_)
+{
+    if (lua_isnil(L, index))
+        return default_;
+    return luaw_to<T>(L, index);
 }

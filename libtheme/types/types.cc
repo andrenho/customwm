@@ -30,6 +30,24 @@ template<> Point luaw_to(lua_State* L, int index)
     return { x, y };
 }
 
+template<> Size luaw_to(lua_State* L, int index)
+{
+    int top = lua_gettop(L);
+
+    auto get_idx = [L, index](int idx) {
+        lua_geti(L, index, idx);
+        uint16_t n = (uint16_t) luaL_checkinteger(L, -1);
+        lua_pop(L, 1);
+        return n;
+    };
+    uint16_t w = get_idx(1);
+    uint16_t h = get_idx(2);
+
+    luaw_asserttop(L, top);
+
+    return { w, h };
+}
+
 template<> WindowStartingPos luaw_to(lua_State* L, int index)
 {
     int top = lua_gettop(L);

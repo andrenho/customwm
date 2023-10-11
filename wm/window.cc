@@ -81,37 +81,46 @@ void Window::draw_image(Point p, std::string const &image_idx, std::string const
     xcb_flush(dpy_);
 }
 
-void Window::write(Point p, std::string const &text, std::string const &font_name, Color const &color, TextAttributes const &attrib)
+void Window::write(Point p, std::string const &text, std::string const &font_name, Color const &color, std::optional<TextBoundingBox> attrib)
 {
     ResourceManager::Font font = res_->font(font_name);
 
     if (font.type == FontType::X11) {
 
         int16_t x = p.x;
+        int16_t y = p.y;
 
-        if (attrib.align != TextAttributes::LEFT) {
+        size_t i = 0;
+        xcb_char2b_t wstr[text.length()];
+        for (char c: text)
+            wstr[i++] = { .byte1 = 0, .byte2 = (uint8_t) c };
 
-            size_t i = 0;
-            xcb_char2b_t wstr[text.length()];
-            for (char c: text)
-                wstr[i++] = { .byte1 = 0, .byte2 = (uint8_t) c };
+        xcb_generic_error_t *err = nullptr;
+        xcb_query_text_extents_reply_t* ext = xcb_query_text_extents_reply(
+                dpy_, xcb_query_text_extents(dpy_, font.x11_font, text.length(), wstr), &err);
 
-            xcb_generic_error_t *err = nullptr;
-            xcb_query_text_extents_reply_t* ext = xcb_query_text_extents_reply(
-                    dpy_, xcb_query_text_extents(dpy_, font.x11_font, text.length(), wstr), &err);
+        if (attrib) {
 
-            if (attrib.align == TextAttributes::RIGHT)
-                x += attrib.width - ext->overall_width;
-            else if (attrib.align == TextAttributes::CENTER)
-                x += (attrib.width / 2) - (ext->overall_width / 2);
+            if (attrib->halign == TextBoundingBox::HAlignment::RIGHT)
+                x += attrib->size.w - ext->overall_width;
+            else if (attrib->halign == TextBoundingBox::HAlignment::CENTER)
+                x += (attrib->size.w / 2) - (ext->overall_width / 2);
+
+            if (attrib->valign == TextBoundingBox::VAlignment::TOP)
+                y += ext->overall_ascent;
+            else if (attrib->valign == TextBoundingBox::VAlignment::CENTER)
+                y += (attrib->size.h / 2) + (ext->overall_ascent / 2);
+            else if (attrib->valign == TextBoundingBox::VAlignment::BOTTOM)
+                y += (attrib->size.h / 2) + ext->overall_ascent;
+        } else {
+            y += ext->overall_ascent;
         }
 
         uint32_t vcolor = colors_->get_color(color);
         uint32_t values[] = { vcolor, font.x11_font };
         xcb_change_gc(dpy_, gc_, XCB_GC_FOREGROUND | XCB_GC_FONT, values);
-        xcb_image_text_8(dpy_, text.length(), id, gc_, x, p.y, text.c_str());
+        xcb_image_text_8(dpy_, text.length(), id, gc_, x, y, text.c_str());
         xcb_flush(dpy_);
-        // TODO - attrib
     }
 }
 

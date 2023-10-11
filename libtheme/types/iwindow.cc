@@ -45,7 +45,7 @@ static luaL_Reg iwindow_f[] = {
         { "write", [](lua_State *L) {
             get_window(L, 1).write(
                     luaw_to<Point>(L, 2), luaL_checkstring(L, 3), luaL_checkstring(L, 4), luaw_to<Color>(L, 5),
-                    lua_gettop(L) >= 6 ? luaw_to<TextAttributes>(L, 6) : TextAttributes { 0, TextAttributes::LEFT });
+                    lua_gettop(L) >= 6 ? luaw_to<TextBoundingBox>(L, 6) : std::optional<TextBoundingBox> {});
             return 0;
         } },
         {nullptr, nullptr},
@@ -67,30 +67,47 @@ template<> void luaw_push(lua_State* L, IWindow* window)
     luaL_setmetatable(L, "__iwindow_mt");
 }
 
-template<> TextAttributes luaw_to(lua_State* L, int index)
+template<> TextBoundingBox luaw_to(lua_State* L, int index)
 {
     int top = lua_gettop(L);
 
-    TextAttributes attr = { .width = 0, .align = TextAttributes::LEFT };
+    TextBoundingBox attr = {
+            .size = { 0, 0 },
+            .halign = TextBoundingBox::HAlignment::LEFT,
+            .valign = TextBoundingBox::VAlignment::BOTTOM
+    };
 
     luaL_checktype(L, index, LUA_TTABLE);
 
-    lua_getfield(L, index, "width");
-    if (!lua_isnil(L, -1))
-        attr.width = (int16_t) luaL_checkinteger(L, -1);
+    lua_getfield(L, index, "size");
+    attr.size = luaw_to<Size>(L, -1, { 0, 0 });
     lua_pop(L, 1);
 
-    lua_getfield(L, index, "align");
+    lua_getfield(L, index, "halign");
     if (!lua_isnil(L, -1)) {
         std::string align = luaL_checkstring(L, -1);
         if (align == "left")
-            attr.align = TextAttributes::LEFT;
+            attr.halign = TextBoundingBox::HAlignment::LEFT;
         else if (align == "center")
-            attr.align = TextAttributes::CENTER;
+            attr.halign = TextBoundingBox::HAlignment::CENTER;
         else if (align == "right")
-            attr.align = TextAttributes::RIGHT;
+            attr.halign = TextBoundingBox::HAlignment::RIGHT;
         else
-            throw LuaException(L, "Incorrect text alignment.");
+            throw LuaException(L, "Incorrect horizontal alignment.");
+    }
+    lua_pop(L, 1);
+
+    lua_getfield(L, index, "valign");
+    if (!lua_isnil(L, -1)) {
+        std::string align = luaL_checkstring(L, -1);
+        if (align == "top")
+            attr.valign = TextBoundingBox::VAlignment::TOP;
+        else if (align == "center")
+            attr.valign = TextBoundingBox::VAlignment::CENTER;
+        else if (align == "bottom")
+            attr.valign = TextBoundingBox::VAlignment::BOTTOM;
+        else
+            throw LuaException(L, "Incorrect horizontal alignment.");
     }
     lua_pop(L, 1);
 

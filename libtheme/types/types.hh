@@ -3,8 +3,6 @@
 
 #include <cstdio>
 #include <cstdint>
-#include <vector>
-
 extern "C" {
 #include <lua.h>
 }
@@ -19,6 +17,7 @@ template<> Point luaw_to(lua_State* L, int index);
 struct Size {
     uint16_t w, h;
 };
+template<> Size luaw_to(lua_State* L, int index);
 
 struct Rectangle {
     int16_t x, y;

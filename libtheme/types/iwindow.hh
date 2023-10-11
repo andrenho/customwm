@@ -7,12 +7,13 @@
 #include "types.hh"
 #include "../luaw.hh"
 
-struct TextAttributes {
-    int16_t width;
-    enum { LEFT, CENTER, RIGHT } align;
+struct TextBoundingBox {
+    Size size;
+    enum class HAlignment { LEFT, CENTER, RIGHT } halign;
+    enum class VAlignment { TOP, CENTER, BOTTOM } valign;
 };
 
-template<> TextAttributes luaw_to(lua_State* L, int index);
+template<> TextBoundingBox luaw_to(lua_State* L, int index);
 
 class IWindow {
 public:
@@ -20,7 +21,8 @@ public:
     virtual void draw_rectangles(std::vector<Rectangle> const& rectangles, Color const& color, bool filled) = 0;
     virtual void draw_polygon(std::vector<Point> const& points, Color const& color, bool filled) = 0;
     virtual void draw_image(Point p, std::string const& image_idx, std::string const& slice) = 0;
-    virtual void write(Point p, std::string const& text, std::string const& font, Color const& color, TextAttributes const& attrib) = 0;
+    virtual void write(Point p, std::string const& text, std::string const& font, Color const& color,
+                       std::optional<TextBoundingBox> attrib) = 0;
 
     static void create_metatable(lua_State* L);
 };
