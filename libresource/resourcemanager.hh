@@ -37,6 +37,7 @@ private:
 
     struct Image {
         xcb_pixmap_t pixmap;
+        xcb_pixmap_t mask_pixmap;
         std::unordered_map<std::string, Rectangle> slices;
     };
     std::unordered_map<std::string, Image> images_;

@@ -4,7 +4,6 @@
 
 #include <thread>
 
-#include "base/base.hh"
 #include "../libtheme/theme.hh"
 #include "options.hh"
 #include "wm.hh"
@@ -23,7 +22,6 @@ start:
    try {
        Theme theme;
 
-       theme.load_from_ram("base", base_lua, base_lua_len);
        if (options.theme_file)
            theme.load_from_file(*options.theme_file);
 

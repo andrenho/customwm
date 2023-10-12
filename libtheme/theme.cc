@@ -6,6 +6,8 @@
 #include "luaw.hh"
 #include "types/iwindow.hh"
 
+#include "base/base.hh"
+
 Theme::Theme()
     : L(luaL_newstate())
 {
@@ -13,8 +15,7 @@ Theme::Theme()
 
     IWindow::create_metatable(L);
 
-    lua_newtable(L);
-    lua_setglobal(L, "theme");
+    load_from_ram("base", base_lua, base_lua_len);
 }
 
 Theme::~Theme()
@@ -30,7 +31,9 @@ void Theme::load_from_ram(std::string const& name, uint8_t const* data, unsigned
     if (lua_pcall(L, 0, 1, 0) != LUA_OK)
         throw LuaException(L, "error running " + name + " file");
 
-    merge_theme();
+    lua_setglobal(L, "theme");
+
+    luaw_asserttop(L, 0);
 }
 
 void Theme::load_from_file(std::string const& file)

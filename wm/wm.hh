@@ -39,8 +39,6 @@ private:
 
     std::pair<int16_t, int16_t> calculate_starting_position(WindowStartingPos const &pos, xcb_get_geometry_reply_t *geo);
 
-    void load_image(std::string const& name, ImageResource const &df);
-
     void on_error(xcb_request_error_t const *e) const;
 };
 

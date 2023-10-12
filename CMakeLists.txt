@@ -12,6 +12,15 @@ link_directories(${XCB_LIBRARY_DIRS})
 link_libraries(${LUA_LIBRARIES} ${XCB_LIBRARIES})
 include_directories(${LUA_INCLUDE_DIR} ${XCB_INCLUDE_DIRS})
 
+set(COMPILED_BASE_THEME ${CMAKE_CURRENT_SOURCE_DIR}/libtheme/base/base)
+add_custom_command(
+        OUTPUT ${COMPILED_BASE_THEME}.hh
+        COMMAND luac -o ${COMPILED_BASE_THEME}.luac ${COMPILED_BASE_THEME}.lua
+        COMMAND xxd -i -n base_lua ${COMPILED_BASE_THEME}.luac > ${COMPILED_BASE_THEME}.hh
+        COMMAND rm ${COMPILED_BASE_THEME}.luac
+        DEPENDS ${COMPILED_BASE_THEME}.lua
+)
+
 add_library(customwm-libtheme STATIC
         libtheme/theme.hh
         libtheme/theme.cc
@@ -25,6 +34,7 @@ add_library(customwm-libtheme STATIC
         libtheme/types/iwindow.cc
         libtheme/types/resources.cc
         libtheme/types/resources.hh
+        ${COMPILED_BASE_THEME}.hh
 )
 
 add_library(customwm-libresource STATIC
@@ -35,21 +45,10 @@ add_library(customwm-libresource STATIC
         libresource/colors.hh
 )
 
-set(COMPILED_BASE_THEME ${CMAKE_CURRENT_SOURCE_DIR}/wm/base/base)
-add_custom_command(
-        OUTPUT ${COMPILED_BASE_THEME}.hh
-        COMMAND luac -o ${COMPILED_BASE_THEME}.luac ${COMPILED_BASE_THEME}.lua
-        COMMAND xxd -i -n base_lua ${COMPILED_BASE_THEME}.luac > ${COMPILED_BASE_THEME}.hh
-        COMMAND rm ${COMPILED_BASE_THEME}.luac
-        DEPENDS ${COMPILED_BASE_THEME}.lua
-)
-add_custom_target(base DEPENDS ${COMPILED_BASE_THEME}.hh)
-
 add_executable(customwm
         wm/main.cc
         wm/options.cc
         wm/options.hh
-        wm/base/base.hh
         wm/window.hh
         wm/wm.cc
         wm/wm.hh

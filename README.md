@@ -58,6 +58,11 @@ Fonts:
 * https://venam.nixers.net/blog/unix/2018/09/02/fonts-xcb.html
 * https://xcb.freedesktop.org/tutorial/fonts/ ?
 
+Composite:
+* https://www.talisman.org/~erlkonig/misc/x11-composite-tutorial/
+* https://gitlab.freedesktop.org/xorg/app/xcompmgr/-/blob/master/xcompmgr.c?ref_type=heads&_sm_au_=iHVR3rZQP1n5DFq6L321jK0f1JH33
+* https://stackoverflow.com/questions/54505795/request-image-from-x11-compositing-wm-in-c-or-c
+
 ## Architecture
 
 1. User provided theme file

@@ -31,6 +31,7 @@
 - [ ] Draw full window decoration (emulate twm)
   - [x] Change text to write on a box
   - [x] Get window name
+  - [ ] Image transparency
   - [ ] Draw decoration
     - [ ] Draw corners, buttons
     - [ ] Draw title

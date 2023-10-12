@@ -44,22 +44,34 @@ void ResourceManager::load_image(std::string const& name, ImageResource const &d
                                           &w, &h, &comp, 4);
 
     unsigned* dp = (unsigned*) data;
-    for(size_t i = 0, len = w * h; i < len; i++) //rgba to bgra
+    unsigned* mask_dp = (unsigned *) malloc(w * h);
+    for(size_t i = 0, len = w * h; i < len; i++) {
+        mask_dp[i] = (dp[i] >> 24) ? 0xffffff : 0x0;
         dp[i] = dp[i] & 0xff00ff00 | ((dp[i] >> 16) & 0xFF) | ((dp[i] << 16) & 0xFF0000);
+    }
 
-    xcb_pixmap_t px = xcb_generate_id(dpy_);
+
+    // create image
     xcb_gcontext_t gc = xcb_generate_id(dpy_);
-
+    xcb_pixmap_t px = xcb_generate_id(dpy_);
     xcb_create_pixmap(dpy_, scr_->root_depth, px, scr_->root, w, h);
     xcb_create_gc(dpy_, gc, px, 0, nullptr);
-
-    xcb_image_t* image = xcb_image_create_native(dpy_, w, h, XCB_IMAGE_FORMAT_Z_PIXMAP, scr_->root_depth, data, w * h * 4, data);
+    xcb_image_t* image = xcb_image_create_native(dpy_, w, h, XCB_IMAGE_FORMAT_Z_PIXMAP, scr_->root_depth, (uint8_t *) dp, w * h * 4, (uint8_t *) dp);
     xcb_image_put(dpy_, px, gc, image, 0, 0, 0);
-
     xcb_image_destroy(image);
     xcb_free_gc(dpy_, gc);
 
-    images_.emplace(name, Image { px, df.slices });
+    // create mask
+    gc = xcb_generate_id(dpy_);
+    xcb_pixmap_t mask_px = xcb_generate_id(dpy_);
+    xcb_create_pixmap(dpy_, scr_->root_depth, mask_px, scr_->root, w, h);
+    xcb_create_gc(dpy_, gc, mask_px, 0, nullptr);
+    image = xcb_image_create_native(dpy_, w, h, XCB_IMAGE_FORMAT_Z_PIXMAP, scr_->root_depth, (uint8_t *) mask_dp, w * h * 4, (uint8_t *) mask_dp);
+    xcb_image_put(dpy_, mask_px, gc, image, 0, 0, 0);
+    xcb_image_destroy(image);
+    xcb_free_gc(dpy_, gc);
+
+    images_.emplace(name, Image { px, mask_px, df.slices });
 }
 
 std::pair<xcb_pixmap_t, Rectangle> ResourceManager::image(
