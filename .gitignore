@@ -1,4 +1,6 @@
 old/libtheme/base/base.hh
+customwm-x11
+customwm-wayland
 
 # Prerequisites
 *.d
