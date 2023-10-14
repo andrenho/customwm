@@ -24,27 +24,19 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1838465-2e71-4bdd-b728-c9f3548d0934" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/customwm.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customwm/options.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customwm/options.hh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libroot/root.hh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libroot/wayland/rootwayland.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libroot/wayland/rootwayland.hh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libroot/wm.hh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libroot/x11/root_x11.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libroot/x11/root_x11.hh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libroot/x11/wm_x11.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libroot/x11/wm_x11.hh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libtheme/theme.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libtheme/theme.hh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="d1838465-2e71-4bdd-b728-c9f3548d0934" name="Changes" comment=".">
+      <change afterPath="$PROJECT_DIR$/customwm/windowmanager.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customwm/windowmanager.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libroot/eventlistener.hh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GNUmakefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customwm/main.cc" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/main.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/root.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/root.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/wm.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/x11/root_x11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/x11/root_x11.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/x11/root_x11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/x11/root_x11.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/x11/wm_x11.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/x11/wm_x11.hh" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,8 +136,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1697319324880</updated>
-      <workItem from="1697319325901" duration="1813000" />
+      <workItem from="1697319325901" duration="3494000" />
     </task>
+    <task id="LOCAL-00001" summary=".">
+      <option name="closed" value="true" />
+      <created>1697321193097</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1697321193097</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,5 +157,9 @@
     <isAutomaticCheckingOnLaunch value="false" />
     <isAutomaticFoundErrors value="true" />
     <isAutomaticFoundErrors value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
   </component>
 </project>

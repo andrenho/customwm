@@ -19,8 +19,9 @@ set (CMAKE_CXX_FLAGS_RELEASE "-Ofast")
 # Dependencies
 #
 
+set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:/usr/X11/lib/pkgconfig")
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(X11 xcb xcb-image)
+pkg_check_modules(X11 xcb xcb-image xcb-errors)
 
 #
 # Libraries
@@ -33,20 +34,18 @@ add_library(theme STATIC
 
 add_library(root-x11 STATIC EXCLUDE_FROM_ALL
         libroot/root.hh
-        libroot/wm.hh
         libroot/x11/root_x11.hh
         libroot/x11/root_x11.cc
-        libroot/x11/wm_x11.hh
-        libroot/x11/wm_x11.cc
+        libroot/eventlistener.hh
 )
 target_compile_options(root-x11 PUBLIC ${X11_CFLAGS_OTHER})
 target_include_directories(root-x11 PUBLIC ${X11_INCLUDE_DIRS})
 
 add_library(root-wayland STATIC EXCLUDE_FROM_ALL
         libroot/root.hh
-        libroot/wm.hh
         libroot/wayland/rootwayland.hh
         libroot/wayland/rootwayland.cc
+        libroot/eventlistener.hh
 )
 
 #
@@ -57,6 +56,8 @@ set(SRC_CUSTOM_WM
         customwm/main.cc
         customwm/options.hh
         customwm/options.cc
+        customwm/windowmanager.hh
+        customwm/windowmanager.cc
 )
 
 add_executable(customwm-x11 EXCLUDE_FROM_ALL ${SRC_CUSTOM_WM})

@@ -3,6 +3,8 @@
 #if (BACKEND == X11)
 #  include "../libroot/x11/root_x11.hh"
 #include "options.hh"
+#include "../libtheme/theme.hh"
+#include "windowmanager.hh"
 
 #elif (BACKEND == WAYLAND)
 #  include "../libroot/wayland/rootwayland.hh"
@@ -14,6 +16,7 @@ int main(int argc, char* argv[])
 {
     Options options(argc, argv);
 
+    Theme theme;
     // TODO - load theme
 
 #if (BACKEND == X11)
@@ -21,8 +24,8 @@ int main(int argc, char* argv[])
 #elif (BACKEND == WAYLAND)
     std::unique_ptr<Root> root = std::make_unique<RootWayland>();
 #endif
-
     std::cout << "Backend: " << root->interface_name() << "...\n";
-    std::unique_ptr<WM> wm = root->create_wm();
-    wm->run();
+
+    WindowManager wm(theme, *root);
+    wm.run_event_loop();
 }
