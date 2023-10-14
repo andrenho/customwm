@@ -1,4 +1,4 @@
-libtheme/base/base.hh
+old/libtheme/base/base.hh
 
 # Prerequisites
 *.d

@@ -12,7 +12,7 @@ link_directories(${XCB_LIBRARY_DIRS})
 link_libraries(${LUA_LIBRARIES} ${XCB_LIBRARIES})
 include_directories(${LUA_INCLUDE_DIR} ${XCB_INCLUDE_DIRS})
 
-set(COMPILED_BASE_THEME ${CMAKE_CURRENT_SOURCE_DIR}/libtheme/base/base)
+set(COMPILED_BASE_THEME libtheme/base/base)
 add_custom_command(
         OUTPUT ${COMPILED_BASE_THEME}.hh
         COMMAND luac -o ${COMPILED_BASE_THEME}.luac ${COMPILED_BASE_THEME}.lua
