@@ -1,5 +1,7 @@
 #include "colors.hh"
 
+#include <vector>
+
 Colors::Colors(xcb_connection_t *dpy, xcb_screen_t *scr, xcb_window_t window)
     : dpy_(dpy), scr_(scr)
 {

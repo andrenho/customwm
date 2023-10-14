@@ -10,6 +10,8 @@
 #include "../libresource/resourcemanager.hh"
 #include "../libresource/colors.hh"
 
+#include <memory>
+
 struct Window : public IWindow {
     Window(xcb_connection_t *dpy, xcb_screen_t* scr, Rectangle area, xcb_window_t child_id, Point child_pos, ResourceManager* res);
     ~Window();

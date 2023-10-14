@@ -151,5 +151,7 @@ std::pair<int16_t, int16_t> WM::calculate_starting_position(WindowStartingPos co
             return { geo->x, geo->y };
         case WindowStartingPos::Custom:
             return { wsp.point.x, wsp.point.y };
+        default:
+            return { 0, 0 };
     }
 }

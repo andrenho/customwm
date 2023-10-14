@@ -5,6 +5,8 @@
 #include <sstream>
 #include <string>
 
+#include <vector>
+
 static std::string base64_decode(const std::string &in) {
 
     std::string out;

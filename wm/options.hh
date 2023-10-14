@@ -1,6 +1,7 @@
 #ifndef OPTIONS_HH_
 #define OPTIONS_HH_
 
+#include <optional>
 #include <string>
 
 class Options {

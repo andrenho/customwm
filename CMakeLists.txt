@@ -16,7 +16,7 @@ set(COMPILED_BASE_THEME ${CMAKE_CURRENT_SOURCE_DIR}/libtheme/base/base)
 add_custom_command(
         OUTPUT ${COMPILED_BASE_THEME}.hh
         COMMAND luac -o ${COMPILED_BASE_THEME}.luac ${COMPILED_BASE_THEME}.lua
-        COMMAND xxd -i -n base_lua ${COMPILED_BASE_THEME}.luac > ${COMPILED_BASE_THEME}.hh
+        COMMAND xxd -i ${COMPILED_BASE_THEME}.luac > ${COMPILED_BASE_THEME}.hh
         COMMAND rm ${COMPILED_BASE_THEME}.luac
         DEPENDS ${COMPILED_BASE_THEME}.lua
 )

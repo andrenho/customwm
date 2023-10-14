@@ -1,5 +1,6 @@
 #include "window.hh"
 
+#include <cstring>
 #include <algorithm>
 
 Window::Window(xcb_connection_t *dpy, xcb_screen_t* scr, Rectangle area, xcb_window_t child_id, Point child_pos, ResourceManager* res)
