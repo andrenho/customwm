@@ -3,30 +3,48 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="CMakePresetLoader"><![CDATA[{
+  "useNewFormat": true
+}]]></component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
   <component name="CMakeRunConfigurationManager">
     <generated>
+      <config projectName="customwm" targetName="theme" />
+      <config projectName="customwm" targetName="root-wayland" />
       <config projectName="customwm" targetName="customwm-x11" />
       <config projectName="customwm" targetName="customwm-wayland" />
-      <config projectName="customwm" targetName="all" />
-      <config projectName="customwm" targetName="customwm-dummy" />
+      <config projectName="customwm" targetName="root-x11" />
     </generated>
   </component>
-  <component name="CMakeSettings">
+  <component name="CMakeSettings" AUTO_RELOAD="true">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af899406-3b1e-43c0-8087-46fe163d99a7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/GNUmakefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customwm/main.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/customwm.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+    <list default="true" id="d1838465-2e71-4bdd-b728-c9f3548d0934" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/customwm.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customwm/options.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customwm/options.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libroot/root.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libroot/wayland/rootwayland.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libroot/wayland/rootwayland.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libroot/wm.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libroot/x11/root_x11.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libroot/x11/root_x11.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libroot/x11/wm_x11.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libroot/x11/wm_x11.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libtheme/theme.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libtheme/theme.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/temp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GNUmakefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customwm/main.cc" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/main.cc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,40 +54,9 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExternalProjectsData">
-    <projectState path="$PROJECT_DIR$">
-      <ProjectState />
-    </projectState>
-  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="MakefileLocalSettings">
-    <option name="availableProjects">
-      <map>
-        <entry>
-          <key>
-            <ExternalProjectPojo>
-              <option name="name" value="customwm" />
-              <option name="path" value="$PROJECT_DIR$" />
-            </ExternalProjectPojo>
-          </key>
-          <value>
-            <list>
-              <ExternalProjectPojo>
-                <option name="name" value="customwm" />
-                <option name="path" value="$PROJECT_DIR$" />
-              </ExternalProjectPojo>
-            </list>
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="projectSyncType">
-      <map>
-        <entry key="$PROJECT_DIR$" value="RE_IMPORT" />
-      </map>
-    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -82,7 +69,7 @@
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 6
 }]]></component>
-  <component name="ProjectId" id="2Wl1k8ZI2RfMivMnYaP1EVHpbZk" />
+  <component name="ProjectId" id="2Wlu84zn8tKbGTWcncKz5E8EMmR" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -92,87 +79,82 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "refactor",
+    "last_opened_file_path": "/Users/aw98156/prj/customwm/customwm",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "MakefileSettings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Makefile Application.customwm-x11">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/customwm" />
+    </key>
+  </component>
+  <component name="RunManager" selected="CMake Application.customwm-x11">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="all" CONFIG_NAME="all" version="1">
+    <configuration name="customwm-wayland" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="customwm-wayland" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="customwm" RUN_TARGET_NAME="customwm-wayland">
       <method v="2">
-        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="customwm-dummy" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="customwm-dummy" CONFIG_NAME="customwm-dummy" version="1">
+    <configuration name="customwm-x11" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="customwm-x11" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="customwm" RUN_TARGET_NAME="customwm-x11">
       <method v="2">
-        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="customwm-wayland" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="customwm-wayland" CONFIG_NAME="customwm-wayland" version="1">
+    <configuration name="root-wayland" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="root-wayland" CONFIG_NAME="Debug">
       <method v="2">
-        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="customwm-x11" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="customwm-x11" CONFIG_NAME="customwm-x11" version="1">
+    <configuration name="root-x11" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="root-x11" CONFIG_NAME="Debug">
       <method v="2">
-        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="customwm-x11" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
-      <makefile filename="$PROJECT_DIR$/GNUMakefile" target="" workingDirectory="" arguments="">
-        <envs>
-          <env name="BACKEND" value="x11" />
-        </envs>
-      </makefile>
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="lua.app" factoryName="Lua Application">
-      <option name="program" value="/opt/homebrew/bin/lua" />
-      <option name="file" value="" />
-      <option name="workingDir" value="$PROJECT_DIR$/customwm/main.cc" />
-      <option name="debuggerType" value="2" />
-      <option name="params" value="" />
-      <option name="charset" value="UTF-8" />
-      <option name="showConsole" value="true" />
-      <method v="2" />
+    <configuration name="theme" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="theme" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
     </configuration>
     <list>
-      <item itemvalue="Makefile Application.all" />
-      <item itemvalue="Makefile Application.customwm-dummy" />
-      <item itemvalue="Makefile Application.customwm-wayland" />
-      <item itemvalue="Makefile Application.customwm-x11" />
-      <item itemvalue="Makefile Target.customwm-x11" />
+      <item itemvalue="CMake Application.customwm-wayland" />
+      <item itemvalue="CMake Application.customwm-x11" />
+      <item itemvalue="CMake Application.root-wayland" />
+      <item itemvalue="CMake Application.root-x11" />
+      <item itemvalue="CMake Application.theme" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Makefile Target.customwm-x11" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="af899406-3b1e-43c0-8087-46fe163d99a7" name="Changes" comment="" />
-      <created>1697292492292</created>
+      <changelist id="d1838465-2e71-4bdd-b728-c9f3548d0934" name="Changes" comment="" />
+      <created>1697319324880</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1697292492292</updated>
-      <workItem from="1697292493340" duration="1624000" />
+      <updated>1697319324880</updated>
+      <workItem from="1697319325901" duration="1813000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticEditVcpkgJson value="false" />
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticFoundErrors value="true" />
   </component>
 </project>

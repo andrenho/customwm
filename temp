@@ -1,0 +1,74 @@
+CXXFLAGS += -std=c++20
+
+#
+# Objects
+#
+
+OBJ_LIBTHEME := libtheme/theme.o
+
+OBJ_CUSTOMWM := customwm/main.o
+
+OBJ_ROOT_X11 := \
+	libroot/x11/root_x11.o \
+	libroot/x11/wm_x11.o
+
+OBJ_ROOT_WAYLAND := libroot/wayland/rootwayland.o
+
+#
+# Flags
+#
+
+CPPFLAGS :=
+
+#
+# Environment variables
+#
+TARGETS :=
+ifeq ($(BACKEND),x11)
+  TARGETS += customwm-x11
+  CPPFLAGS += -DBACKEND=X11
+endif
+ifeq ($(BACKEND),wayland)
+  TARGETS += customwm-wayland
+  CPPFLAGS += -DBACKEND=WAYLAND
+endif
+
+ifeq (${TARGETS},)
+  TARGETS = customwm-dummy
+endif
+
+ifdef RELEASE
+  CPPFLAGS += -Ofast
+else
+  WARNINGS := -Wall -Wextra -Wnull-dereference -Woverloaded-virtual -fasynchronous-unwind-tables \
+  			  -D_FORTIFY_SOURCE=2 -D_GLIBCXX_ASSERTIONS -fstack-protector-strong
+  CPPFLAGS += -ggdb -Og ${WARNINGS}
+endif
+
+#
+# Rules
+#
+
+all: ${TARGETS}
+
+customwm-dummy:
+	echo "Please choose a backend (x11 or wayland). Example: make BACKEND=x11"
+
+customwm-x11: ${OBJ_CUSTOMWM} libtheme.a libroot-x11.a
+	$(CXX) -o $@ $^ ${LDFLAGS}
+
+customwm-wayland: ${OBJ_CUSTOMWM} libtheme.a libroot-wayland.a
+	$(CXX) -o $@ $^ ${LDFLAGS}
+
+libtheme.a: ${OBJ_LIBTHEME}
+	ar rcs $@ $^
+
+libroot-x11.a: ${OBJ_ROOT_X11}
+	ar rcs $@ $^
+
+libroot-wayland.a: ${OBJ_ROOT_WAYLAND}
+	ar rcs $@ $^
+
+clean:
+	rm -f customwm-x11 customwm-wayland libtheme.a libroot-x11.a libroot-wayland.a \
+	 	${OBJ_CUSTOMWM} ${OBJ_LIBTHEME} ${OBJ_ROOT_X11} ${OBJ_ROOT_WAYLAND}
