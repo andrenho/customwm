@@ -8,16 +8,25 @@ Output::Output(wlr_output* output, wlr_renderer* renderer, wlr_allocator* alloca
 {
     clock_gettime(CLOCK_MONOTONIC, &last_frame_);
 
+    wlr_output_init_render(wlr_output_, allocator_, renderer_);
+
     frame_listener_.notify = [](wl_listener* listener, void* data) {
         Output* output = wl_container_of(listener, output, frame_listener_);
         output->on_frame();
     };
     wl_signal_add(&wlr_output_->events.frame, &frame_listener_);
+
+    wlr_output_state state {};
+    wlr_output_state_set_enabled(&state, true);
+    struct wlr_output_mode *mode = wlr_output_preferred_mode(output);
+    if (mode != NULL) {
+        wlr_output_state_set_mode(&state, mode);
+    }
+    wlr_output_commit_state(output, &state);
 }
 
 void Output::on_frame()
 {
-    wlr_output_init_render(wlr_output_, allocator_, renderer_);
 
     wlr_output_attach_render(wlr_output_, nullptr);
 

@@ -5,12 +5,15 @@
 
 extern "C" {
 #include <wayland-server.h>
+#include <wlr/util/log.h>
 #include <wlr/backend.h>
 #include <wlr/types/wlr_output.h>
 }
 
 ServerWayland::ServerWayland()
 {
+    wlr_log_init(WLR_DEBUG, nullptr);
+
     // initialize display
     display_ = wl_display_create();
     if (!display_)
@@ -20,7 +23,7 @@ ServerWayland::ServerWayland()
     if (!event_loop_)
         throw std::runtime_error("Error initializing event loop.");
 
-    backend_ = wlr_backend_autocreate(display_);
+    backend_ = wlr_backend_autocreate(display_, nullptr);
     if (!backend_)
         throw std::runtime_error("Failed to create backend.");
 

@@ -10,9 +10,7 @@ extern "C" {
 #include <wayland-server.h>
 #include <wlr/types/wlr_output.h>
 #include <wlr/render/allocator.h>
-#define static
 #include <wlr/render/wlr_renderer.h>
-#undef static
 }
 
 #include "../server.hh"

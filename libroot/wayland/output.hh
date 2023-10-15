@@ -3,9 +3,7 @@
 
 extern "C" {
 #include <wlr/types/wlr_output.h>
-#define static
 #include <wlr/render/wlr_renderer.h>
-#undef static
 }
 
 class Output {
