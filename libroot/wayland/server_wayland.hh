@@ -39,7 +39,7 @@ private:
     // event listeners
     wl_listener new_output_listener_;
 
-    void new_output_event(wlr_output* output);
+    void on_new_output(wlr_output* output);
 };
 
 #endif //SERVER_WAYLAND_HH_

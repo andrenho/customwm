@@ -18,7 +18,10 @@ private:
     wlr_allocator *allocator_;
     timespec      last_frame_ = { 0, 0 };
 
-    wl_listener frame_listener_;
+    wl_listener   frame_listener_;
+
+    void on_frame();
+
 };
 
 #endif //OUTPUT_HH_

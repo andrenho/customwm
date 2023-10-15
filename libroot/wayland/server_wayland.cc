@@ -42,7 +42,7 @@ void ServerWayland::setup_event_listeners()
 {
     new_output_listener_.notify = [](wl_listener* listener, void* data) {
         ServerWayland* server = wl_container_of(listener, server, new_output_listener_);
-        server->new_output_event((wlr_output *) data);
+        server->on_new_output((wlr_output*) data);
     };
     wl_signal_add(&backend_->events.new_output, &new_output_listener_);
 }
@@ -56,7 +56,7 @@ void ServerWayland::run_event_loop()
     wl_display_run(display_);
 }
 
-void ServerWayland::new_output_event(wlr_output* output)
+void ServerWayland::on_new_output(wlr_output* output)
 {
     if (!wl_list_empty(&output->modes)) {
         wlr_output_mode* mode = wl_container_of(output->modes.prev, mode, link);

@@ -23,7 +23,7 @@ set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:/usr/X11/lib/pkgconfig")
 find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(X11 xcb xcb-image xcb-errors)
-pkg_check_modules(WAYLAND wayland-server wlroots)
+pkg_check_modules(WAYLAND wayland-server wlroots pixman-1)
 
 #
 # Libraries
