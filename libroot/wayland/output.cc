@@ -30,9 +30,9 @@ Output::Output(wlr_output* output, wlr_renderer* renderer, wlr_allocator* alloca
 
 void Output::on_frame()
 {
-
     wlr_output_attach_render(wlr_output_, nullptr);
 
+    /*
     if (!wlr_renderer_begin(renderer_, 200, 200))
         throw std::runtime_error("Can't start rendering");
 
@@ -43,6 +43,7 @@ void Output::on_frame()
     pixman_region32_init_rect(&r, 0, 0, 200, 200);
     wlr_output_set_damage(wlr_output_, &r);
     wlr_renderer_end(renderer_);
+     */
 
     wlr_output_commit(wlr_output_);
 }
