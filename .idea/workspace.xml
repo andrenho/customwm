@@ -27,9 +27,6 @@
     <list default="true" id="d1838465-2e71-4bdd-b728-c9f3548d0934" name="Changes" comment=".">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libroot/wayland/output.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/wayland/output.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/wayland/output.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/wayland/output.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/wayland/server_wayland.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/wayland/server_wayland.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/wayland/server_wayland.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/wayland/server_wayland.hh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +134,7 @@
       <workItem from="1697369677418" duration="3120000" />
       <workItem from="1697376760123" duration="3435000" />
       <workItem from="1697380279270" duration="247000" />
-      <workItem from="1697380535094" duration="4560000" />
+      <workItem from="1697380535094" duration="4932000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -195,7 +192,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697383185610</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary=".">
+      <option name="closed" value="true" />
+      <created>1697385200362</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1697385200362</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,6 +215,22 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="." />
     <option name="LAST_COMMIT_MESSAGE" value="." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/libroot/wayland/output.cc</url>
+          <line>21</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/libroot/wayland/output.cc</url>
+          <line>33</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
