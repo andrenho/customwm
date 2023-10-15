@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "../root.hh"
+#include "server_x11.hh"
 
 #include <xcb/xcb.h>
 #include <xcb/xcb_errors.h>
@@ -14,15 +15,13 @@ public:
     ~RootX11() override;
 
     std::string interface_name() const override { return "x11"; }
-
-    void setup_event_listeners(EventListener &event_listener) override;
-    void capture_existing_windows() override;
-    void run_event_loop() override;
+    Server& server() override { return *server_; }
 
 private:
     xcb_connection_t*     dpy_ = nullptr;
     xcb_screen_t*         scr_ = nullptr;
     xcb_errors_context_t* err_ctx;
+    std::unique_ptr<ServerX11> server_;
 };
 
 #endif //ROOT_X11_HH_

@@ -1,3 +1,6 @@
+#include <cstdio>
+#include <cstdlib>
+
 #include <memory>
 
 #if (BACKEND == X11)
@@ -10,8 +13,6 @@
 #  include "../libroot/wayland/rootwayland.hh"
 #endif
 
-#include <iostream>
-
 int main(int argc, char* argv[])
 {
     Options options(argc, argv);
@@ -19,12 +20,18 @@ int main(int argc, char* argv[])
     Theme theme;
     // TODO - load theme
 
+    std::unique_ptr<Root> root;
+    try {
 #if (BACKEND == X11)
-    std::unique_ptr<Root> root = std::make_unique<RootX11>(options.display);
+        root = std::make_unique<RootX11>(options.display);
 #elif (BACKEND == WAYLAND)
-    std::unique_ptr<Root> root = std::make_unique<RootWayland>();
+        root = std::make_unique<RootWayland>();
 #endif
-    std::cout << "Backend: " << root->interface_name() << "\n";
+        printf("Backend: %s\n", root->interface_name().c_str());
+    } catch (std::exception& e) {
+        fprintf(stderr, "Error initializing customwm: %s\n", e.what());
+        exit(EXIT_FAILURE);
+    }
 
     WindowManager wm(theme, *root);
     wm.run_event_loop();

@@ -36,7 +36,8 @@ add_library(root-x11 STATIC EXCLUDE_FROM_ALL
         libroot/root.hh
         libroot/x11/root_x11.hh
         libroot/x11/root_x11.cc
-        libroot/eventlistener.hh
+        libroot/x11/server_x11.cc
+        libroot/x11/server_x11.hh
 )
 target_compile_options(root-x11 PUBLIC ${X11_CFLAGS_OTHER})
 target_include_directories(root-x11 PUBLIC ${X11_INCLUDE_DIRS})
@@ -45,7 +46,6 @@ add_library(root-wayland STATIC EXCLUDE_FROM_ALL
         libroot/root.hh
         libroot/wayland/rootwayland.hh
         libroot/wayland/rootwayland.cc
-        libroot/eventlistener.hh
 )
 
 #
@@ -64,5 +64,6 @@ add_executable(customwm-x11 EXCLUDE_FROM_ALL ${SRC_CUSTOM_WM})
 target_link_directories(customwm-x11 PUBLIC ${X11_LIBRARY_DIRS})
 target_link_libraries(customwm-x11 theme root-x11 ${X11_LIBRARIES})
 
-add_executable(customwm-wayland EXCLUDE_FROM_ALL ${SRC_CUSTOM_WM})
+add_executable(customwm-wayland EXCLUDE_FROM_ALL ${SRC_CUSTOM_WM}
+        libroot/server.hh)
 target_link_libraries(customwm-wayland theme root-wayland)

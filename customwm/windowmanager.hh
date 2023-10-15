@@ -3,9 +3,8 @@
 
 #include "../libtheme/theme.hh"
 #include "../libroot/root.hh"
-#include "../libroot/eventlistener.hh"
 
-class WindowManager : public EventListener {
+class WindowManager {
 public:
     WindowManager(Theme& theme, Root& root);
 
