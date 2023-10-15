@@ -6,7 +6,7 @@
 
 class RootWayland : public Root {
 public:
-    RootWayland(std::optional<std::string> const& display);
+    RootWayland();
     ~RootWayland() override;
 
     std::string interface_name() const override { return "wayland"; }

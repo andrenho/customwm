@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
         root = std::make_unique<RootX11>(options.display);
 #endif
 #ifdef BACKEND_WAYLAND
-        root = std::make_unique<RootWayland>(options.display);
+        root = std::make_unique<RootWayland>();
 #endif
         printf("Backend: %s\n", root->interface_name().c_str());
     } catch (std::exception& e) {

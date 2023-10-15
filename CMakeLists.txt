@@ -52,6 +52,8 @@ add_library(root-wayland STATIC EXCLUDE_FROM_ALL
         libroot/wayland/root_wayland.cc
         libroot/wayland/server_wayland.cc
         libroot/wayland/server_wayland.hh
+        libroot/wayland/output.cc
+        libroot/wayland/output.hh
 )
 target_compile_definitions(root-wayland PUBLIC WLR_USE_UNSTABLE)
 target_compile_options(root-wayland PUBLIC ${WAYLAND_CFLAGS_OTHER})
