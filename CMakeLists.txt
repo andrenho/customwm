@@ -44,8 +44,10 @@ target_include_directories(root-x11 PUBLIC ${X11_INCLUDE_DIRS})
 
 add_library(root-wayland STATIC EXCLUDE_FROM_ALL
         libroot/root.hh
-        libroot/wayland/rootwayland.hh
-        libroot/wayland/rootwayland.cc
+        libroot/wayland/root_wayland.hh
+        libroot/wayland/root_wayland.cc
+        libroot/wayland/server_wayland.cc
+        libroot/wayland/server_wayland.hh
 )
 
 #
@@ -63,7 +65,9 @@ set(SRC_CUSTOM_WM
 add_executable(customwm-x11 EXCLUDE_FROM_ALL ${SRC_CUSTOM_WM})
 target_link_directories(customwm-x11 PUBLIC ${X11_LIBRARY_DIRS})
 target_link_libraries(customwm-x11 theme root-x11 ${X11_LIBRARIES})
+target_compile_definitions(customwm-x11 PUBLIC BACKEND_X11)
 
 add_executable(customwm-wayland EXCLUDE_FROM_ALL ${SRC_CUSTOM_WM}
         libroot/server.hh)
 target_link_libraries(customwm-wayland theme root-wayland)
+target_compile_definitions(customwm-wayland PUBLIC BACKEND_WAYLAND)

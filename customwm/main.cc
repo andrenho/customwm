@@ -3,15 +3,16 @@
 
 #include <memory>
 
-#if (BACKEND == X11)
+#ifdef BACKEND_X11
 #  include "../libroot/x11/root_x11.hh"
+#endif
+#ifdef BACKEND_WAYLAND
+#  include "../libroot/wayland/root_wayland.hh"
+#endif
+
 #include "options.hh"
 #include "../libtheme/theme.hh"
 #include "windowmanager.hh"
-
-#elif (BACKEND == WAYLAND)
-#  include "../libroot/wayland/rootwayland.hh"
-#endif
 
 int main(int argc, char* argv[])
 {
@@ -22,10 +23,11 @@ int main(int argc, char* argv[])
 
     std::unique_ptr<Root> root;
     try {
-#if (BACKEND == X11)
+#ifdef BACKEND_X11
         root = std::make_unique<RootX11>(options.display);
-#elif (BACKEND == WAYLAND)
-        root = std::make_unique<RootWayland>();
+#endif
+#ifdef BACKEND_WAYLAND
+        root = std::make_unique<RootWayland>(options.display);
 #endif
         printf("Backend: %s\n", root->interface_name().c_str());
     } catch (std::exception& e) {
