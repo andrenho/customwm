@@ -21,7 +21,9 @@ set (CMAKE_CXX_FLAGS_RELEASE "-Ofast")
 
 set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:/usr/X11/lib/pkgconfig")
 find_package(PkgConfig REQUIRED)
+
 pkg_check_modules(X11 xcb xcb-image xcb-errors)
+pkg_check_modules(WAYLAND wayland-server wlroots)
 
 #
 # Libraries
@@ -34,6 +36,7 @@ add_library(theme STATIC
 
 add_library(root-x11 STATIC EXCLUDE_FROM_ALL
         libroot/root.hh
+        libroot/server.hh
         libroot/x11/root_x11.hh
         libroot/x11/root_x11.cc
         libroot/x11/server_x11.cc
@@ -44,11 +47,15 @@ target_include_directories(root-x11 PUBLIC ${X11_INCLUDE_DIRS})
 
 add_library(root-wayland STATIC EXCLUDE_FROM_ALL
         libroot/root.hh
+        libroot/server.hh
         libroot/wayland/root_wayland.hh
         libroot/wayland/root_wayland.cc
         libroot/wayland/server_wayland.cc
         libroot/wayland/server_wayland.hh
 )
+target_compile_definitions(root-wayland PUBLIC WLR_USE_UNSTABLE)
+target_compile_options(root-wayland PUBLIC ${WAYLAND_CFLAGS_OTHER})
+target_include_directories(root-wayland PUBLIC ${WAYLAND_INCLUDE_DIRS})
 
 #
 # Executables
@@ -67,7 +74,7 @@ target_link_directories(customwm-x11 PUBLIC ${X11_LIBRARY_DIRS})
 target_link_libraries(customwm-x11 theme root-x11 ${X11_LIBRARIES})
 target_compile_definitions(customwm-x11 PUBLIC BACKEND_X11)
 
-add_executable(customwm-wayland EXCLUDE_FROM_ALL ${SRC_CUSTOM_WM}
-        libroot/server.hh)
-target_link_libraries(customwm-wayland theme root-wayland)
+add_executable(customwm-wayland EXCLUDE_FROM_ALL ${SRC_CUSTOM_WM})
+target_link_directories(customwm-wayland PUBLIC ${WAYLAND_LIBRARY_DIRS})
+target_link_libraries(customwm-wayland theme root-wayland ${WAYLAND_LIBRARIES})
 target_compile_definitions(customwm-wayland PUBLIC BACKEND_WAYLAND)
