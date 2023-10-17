@@ -1,6 +1,7 @@
 customwm/customwm.hh
 customwm-x11
 customwm-wayland
+/build/
 
 # Prerequisites
 *.d
@@ -36,4 +37,3 @@ customwm-wayland
 *.app
 
 cmake-build-debug
-/customwm/customwm.hh

@@ -9,7 +9,7 @@ void Options::display_help(int exit_status)
     printf("    -d, --display   Sets the display (default: $DISPLAY)\n");
     printf("    -t, --theme     Sets the theme (default: default)\n");
     printf("    -h, --help      Prints this help\n");
-    exit(EXIT_FAILURE);
+    exit(exit_status);
 }
 
 Options::Options(int argc, char **argv)
