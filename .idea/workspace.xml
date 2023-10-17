@@ -3,19 +3,19 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="CMakePresetLoader"><![CDATA[{
-  "useNewFormat": true
-}]]></component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
   <component name="CMakeReloadState">
     <option name="reloaded" value="true" />
   </component>
   <component name="CMakeRunConfigurationManager">
     <generated>
-      <config projectName="customwm" targetName="theme" />
       <config projectName="customwm" targetName="root-wayland" />
       <config projectName="customwm" targetName="customwm-x11" />
       <config projectName="customwm" targetName="customwm-wayland" />
       <config projectName="customwm" targetName="root-x11" />
+      <config projectName="customwm" targetName="engine" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -25,18 +25,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1838465-2e71-4bdd-b728-c9f3548d0934" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/libroot/server.hh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libroot/x11/server_x11.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libroot/x11/server_x11.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libengine/engine.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libroot/root.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customwm/main.cc" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/main.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customwm/windowmanager.cc" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/windowmanager.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customwm/windowmanager.hh" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/windowmanager.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/eventlistener.hh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/libroot/root.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/root.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/x11/root_x11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/x11/root_x11.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libroot/x11/root_x11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/x11/root_x11.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libtheme/theme.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libtheme/theme.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libengine/engine.hh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,9 +59,9 @@
     <option name="majorVersion" value="2023" />
     <option name="minorVersion" value="2.2" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2Wlu84zn8tKbGTWcncKz5E8EMmR" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -81,6 +82,8 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -90,9 +93,9 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.customwm-x11">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="customwm-wayland" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="customwm-wayland" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="customwm" RUN_TARGET_NAME="customwm-wayland">
@@ -101,6 +104,11 @@
       </method>
     </configuration>
     <configuration name="customwm-x11" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-d :1" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="customwm-x11" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="customwm" RUN_TARGET_NAME="customwm-x11">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="engine" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="engine" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -115,17 +123,22 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="theme" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="theme" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
+    <configuration default="true" type="lua.app" factoryName="Lua Application">
+      <option name="program" value="/opt/homebrew/bin/lua" />
+      <option name="file" value="" />
+      <option name="workingDir" value="$PROJECT_DIR$/CMakeLists.txt" />
+      <option name="debuggerType" value="2" />
+      <option name="params" value="" />
+      <option name="charset" value="UTF-8" />
+      <option name="showConsole" value="true" />
+      <method v="2" />
     </configuration>
     <list>
       <item itemvalue="CMake Application.customwm-wayland" />
       <item itemvalue="CMake Application.customwm-x11" />
+      <item itemvalue="CMake Application.engine" />
       <item itemvalue="CMake Application.root-wayland" />
       <item itemvalue="CMake Application.root-x11" />
-      <item itemvalue="CMake Application.theme" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -136,7 +149,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1697319324880</updated>
-      <workItem from="1697319325901" duration="7584000" />
+      <workItem from="1697319325901" duration="8249000" />
+      <workItem from="1697507834160" duration="3789000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -162,7 +176,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697329002341</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary=".">
+      <option name="closed" value="true" />
+      <created>1697369425698</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1697369425698</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,5 +199,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="." />
     <option name="LAST_COMMIT_MESSAGE" value="." />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

@@ -1,4 +1,4 @@
-old/libtheme/base/base.hh
+customwm/customwm.hh
 customwm-x11
 customwm-wayland
 
@@ -36,3 +36,4 @@ customwm-wayland
 *.app
 
 cmake-build-debug
+/customwm/customwm.hh

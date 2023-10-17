@@ -11,7 +11,7 @@
 
 class RootX11 : public Root {
 public:
-    RootX11(std::optional<std::string> const& display);
+    explicit RootX11(std::optional<std::string> const& display);
     ~RootX11() override;
 
     std::string interface_name() const override { return "x11"; }

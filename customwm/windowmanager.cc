@@ -1,7 +1,7 @@
 #include "windowmanager.hh"
 
-WindowManager::WindowManager(Theme &theme, Root &root)
-    : theme_(theme), root_(root)
+WindowManager::WindowManager(Engine &engine, Root &root)
+    : theme_(engine), root_(root)
 {
     root.server().setup_event_listeners();
     root.server().capture_existing_windows();

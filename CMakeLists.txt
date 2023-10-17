@@ -27,13 +27,14 @@ pkg_check_modules(X11 xcb xcb-image xcb-errors)
 # Libraries
 #
 
-add_library(theme STATIC
-        libtheme/theme.hh
-        libtheme/theme.cc
+add_library(engine STATIC
+        libengine/engine.hh
+        libengine/engine.cc
 )
 
 add_library(root-x11 STATIC EXCLUDE_FROM_ALL
         libroot/root.hh
+        libroot/root.cc
         libroot/x11/root_x11.hh
         libroot/x11/root_x11.cc
         libroot/x11/server_x11.cc
@@ -44,8 +45,22 @@ target_include_directories(root-x11 PUBLIC ${X11_INCLUDE_DIRS})
 
 add_library(root-wayland STATIC EXCLUDE_FROM_ALL
         libroot/root.hh
+        libroot/root.cc
         libroot/wayland/rootwayland.hh
         libroot/wayland/rootwayland.cc
+)
+
+#
+# Lua bytecode -> Header
+#
+
+set(CUSTOMWM_LUA_BYTECODE ${PROJECT_SOURCE_DIR}/customwm/customwm)
+add_custom_command(
+        OUTPUT ${CUSTOMWM_LUA_BYTECODE}.hh
+        COMMAND luac -o ${CUSTOMWM_LUA_BYTECODE}.luac ${CUSTOMWM_LUA_BYTECODE}.lua
+        COMMAND xxd -n customwm -i ${CUSTOMWM_LUA_BYTECODE}.luac > ${CUSTOMWM_LUA_BYTECODE}.hh
+        COMMAND rm ${CUSTOMWM_LUA_BYTECODE}.luac
+        DEPENDS ${CUSTOMWM_LUA_BYTECODE}.lua
 )
 
 #
@@ -54,6 +69,7 @@ add_library(root-wayland STATIC EXCLUDE_FROM_ALL
 
 set(SRC_CUSTOM_WM
         customwm/main.cc
+        ${CUSTOMWM_LUA_BYTECODE}.hh
         customwm/options.hh
         customwm/options.cc
         customwm/windowmanager.hh
@@ -62,8 +78,7 @@ set(SRC_CUSTOM_WM
 
 add_executable(customwm-x11 EXCLUDE_FROM_ALL ${SRC_CUSTOM_WM})
 target_link_directories(customwm-x11 PUBLIC ${X11_LIBRARY_DIRS})
-target_link_libraries(customwm-x11 theme root-x11 ${X11_LIBRARIES})
+target_link_libraries(customwm-x11 engine root-x11 ${X11_LIBRARIES})
 
-add_executable(customwm-wayland EXCLUDE_FROM_ALL ${SRC_CUSTOM_WM}
-        libroot/server.hh)
+add_executable(customwm-wayland EXCLUDE_FROM_ALL ${SRC_CUSTOM_WM})
 target_link_libraries(customwm-wayland theme root-wayland)

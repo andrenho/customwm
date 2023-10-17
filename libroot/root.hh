@@ -4,10 +4,13 @@
 #include <memory>
 #include <optional>
 #include <string>
+
 #include "server.hh"
 
 class Root {
 public:
+    static std::unique_ptr<Root> build(std::optional<std::string> const& display);
+
     virtual ~Root() = default;
 
     virtual std::string interface_name() const = 0;

@@ -1,17 +1,17 @@
 #ifndef WINDOWMANAGER_HH_
 #define WINDOWMANAGER_HH_
 
-#include "../libtheme/theme.hh"
+#include "../libengine/engine.hh"
 #include "../libroot/root.hh"
 
 class WindowManager {
 public:
-    WindowManager(Theme& theme, Root& root);
+    WindowManager(Engine& engine, Root& root);
 
     void run_event_loop();
 
 private:
-    Theme& theme_;
+    Engine& theme_;
     Root& root_;
 };
 
