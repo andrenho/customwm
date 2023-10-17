@@ -10,7 +10,10 @@ extern "C" {
 #include <wlr/types/wlr_output.h>
 }
 
-ServerWayland::ServerWayland()
+#include "../../libengine/engine.hh"
+
+ServerWayland::ServerWayland(Engine& engine)
+    : Server(engine)
 {
     wlr_log_init(WLR_DEBUG, nullptr);
 
@@ -39,6 +42,13 @@ ServerWayland::ServerWayland()
 ServerWayland::~ServerWayland()
 {
     wl_display_destroy(display_);
+}
+
+void ServerWayland::run()
+{
+    setup_event_listeners();
+    engine_.call_opt("wm.after_start");
+    run_event_loop();
 }
 
 void ServerWayland::setup_event_listeners()

@@ -11,7 +11,7 @@
 
 class RootX11 : public Root {
 public:
-    explicit RootX11(std::optional<std::string> const& display);
+    explicit RootX11(std::optional<std::string> const& display, Engine& engine);
     ~RootX11() override;
 
     std::string interface_name() const override { return "x11"; }
@@ -20,7 +20,7 @@ public:
 private:
     xcb_connection_t*     dpy_ = nullptr;
     xcb_screen_t*         scr_ = nullptr;
-    xcb_errors_context_t* err_ctx;
+    xcb_errors_context_t* err_ctx = nullptr;
     std::unique_ptr<ServerX11> server_;
 };
 

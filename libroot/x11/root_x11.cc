@@ -1,6 +1,7 @@
 #include "root_x11.hh"
 
-RootX11::RootX11(std::optional<std::string> const &display)
+RootX11::RootX11(std::optional<std::string> const &display, Engine& engine)
+    : Root(engine)
 {
     std::string display_var = getenv("DISPLAY");
     if (display_var.empty())
@@ -14,7 +15,7 @@ RootX11::RootX11(std::optional<std::string> const &display)
 
     scr_ = xcb_setup_roots_iterator(xcb_get_setup(dpy_)).data;
 
-    server_ = std::make_unique<ServerX11>(dpy_, scr_, err_ctx);
+    server_ = std::make_unique<ServerX11>(engine, dpy_, scr_, err_ctx);
 }
 
 RootX11::~RootX11()

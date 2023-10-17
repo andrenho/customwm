@@ -6,11 +6,11 @@
 #  include "wayland/rootwayland.hh"
 #endif
 
-std::unique_ptr<Root> Root::build([[maybe_unused]] std::optional<std::string> const& display)
+std::unique_ptr<Root> Root::build([[maybe_unused]] std::optional<std::string> const& display, Engine& engine)
 {
 #if (BACKEND == X11)
-    return std::make_unique<RootX11>(display);
+    return std::make_unique<RootX11>(display, engine);
 #elif (BACKEND == WAYLAND)
-    return std::make_unique<RootWayland>();
+    return std::make_unique<RootWayland>(engine);
 #endif
 }

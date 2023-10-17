@@ -18,12 +18,10 @@ extern "C" {
 
 class ServerWayland : public Server {
 public:
-    ServerWayland();
+    ServerWayland(Engine& engine);
     ~ServerWayland() override;
 
-    void setup_event_listeners() override;
-    void capture_existing_windows() override { /* wayland compositors always start empty (?) */ }
-    void run_event_loop() override;
+    void run() override;
 
 private:
     wl_display*    display_    = nullptr;
@@ -38,6 +36,9 @@ private:
     wl_listener new_output_listener_;
 
     void on_new_output(wlr_output* output);
+
+    void setup_event_listeners();
+    void run_event_loop();
 };
 
 #endif //SERVER_WAYLAND_HH_

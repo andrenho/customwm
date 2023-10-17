@@ -7,6 +7,7 @@
 #include <string>
 
 #include "customwm.hh"
+#include "../libroot/root.hh"
 #include "../libengine/engine.hh"
 
 struct Options {
@@ -72,17 +73,16 @@ int main(int argc, char* argv[])
     Options options = get_options(argc, argv);
 
     Engine engine;
-    engine.load_from_memory(customwm, customwm_len);
+    std::unique_ptr<Root> root;
+
+    engine.load_from_memory("customwm", customwm, customwm_len);
 
     if (options.theme_file)
-        engine.override_with_theme_file(*options.theme_file);
+        engine.override_with_theme(*options.theme_file);
 
-    std::unique_ptr<Root> root;
-    try {
-        root = Root::build(options.display);
-        printf("Backend: %s\n", root->interface_name().c_str());
-    } catch (std::exception& e) {
-        fprintf(stderr, "Error initializing customwm: %s\n", e.what());
-        exit(EXIT_FAILURE);
-    }
+    root = Root::build(options.display, engine);
+
+    engine.setup_root_object(root.get());
+
+    root->server().run();
 }

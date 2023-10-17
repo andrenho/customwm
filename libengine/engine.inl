@@ -1,0 +1,48 @@
+#ifndef ENGINE_INL_
+#define ENGINE_INL_
+
+#include <string>
+
+#include "luaw.hh"
+#include "exceptions.hh"
+
+extern "C" {
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+}
+
+template<typename... Types>
+void Engine::call(std::string const& prop_name, Types&... args)
+{
+    int top = lua_gettop(L);
+
+    lua_getglobal(L, "theme");
+
+    // get the property
+    if (!luaw_getproperty(L, -1, prop_name.c_str()))
+        throw PropertyNotFoundException(prop_name);
+    if (lua_type(L, -1) != LUA_TFUNCTION)
+        throw LuaException(L, "expected function for property '" + prop_name + "'");
+
+    // push arguments
+    ([&] {
+        luaw_push(L, args);
+    } (), ...);
+
+    // execute function
+    lua_call(L, sizeof...(args), 0);
+
+    lua_pop(L, 1);
+
+    luaw_asserttop(L, top);
+}
+
+template<typename... Types>
+void Engine::call_opt(std::string const& prop_name, Types&... args) {
+    try {
+        call(prop_name, args...);
+    } catch (PropertyNotFoundException& e) {}
+}
+
+#endif

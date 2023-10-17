@@ -9,12 +9,17 @@
 
 class Root {
 public:
-    static std::unique_ptr<Root> build(std::optional<std::string> const& display);
+    static std::unique_ptr<Root> build(std::optional<std::string> const& display, class Engine& engine);
 
     virtual ~Root() = default;
 
     virtual std::string interface_name() const = 0;
     virtual Server& server() = 0;
+
+protected:
+    Root(class Engine& engine) : engine_(engine) {}
+
+    class Engine& engine_;
 };
 
 #endif //ROOT_HH_

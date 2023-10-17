@@ -3,6 +3,17 @@
 #include <cstdio>
 #include <cstdlib>
 
+#include "../../libengine/engine.hh"
+
+void ServerX11::run()
+{
+    setup_event_listeners();
+    capture_existing_windows();
+    engine_.call_opt("wm.after_start");
+
+    run_event_loop();
+}
+
 void ServerX11::setup_event_listeners()
 {
     uint32_t values = XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |

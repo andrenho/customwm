@@ -25,19 +25,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1838465-2e71-4bdd-b728-c9f3548d0934" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libengine/engine.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libroot/root.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libengine/engine.inl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libengine/exceptions.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libengine/luaw.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libengine/luaw.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libengine/luaw.inl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libengine/metatables.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libengine/metatables.hh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customwm/main.cc" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/main.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/windowmanager.cc" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/windowmanager.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/windowmanager.hh" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/windowmanager.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libengine/engine.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libengine/engine.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libengine/engine.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libengine/engine.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/root.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/root.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libroot/root.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/root.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/server.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/server.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/wayland/root_wayland.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/wayland/root_wayland.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/wayland/root_wayland.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/wayland/root_wayland.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/wayland/server_wayland.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/wayland/server_wayland.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/wayland/server_wayland.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/wayland/server_wayland.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/x11/root_x11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/x11/root_x11.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libroot/x11/root_x11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/x11/root_x11.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libtheme/theme.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/libtheme/theme.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libengine/engine.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/x11/server_x11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/x11/server_x11.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/x11/server_x11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/x11/server_x11.hh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +88,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "refactor",
-    "last_opened_file_path": "/Users/aw98156/prj/customwm/customwm",
+    "last_opened_file_path": "/Users/aw98156/prj/customwm/libengine",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -89,6 +100,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/libengine" />
       <recent name="$PROJECT_DIR$/customwm" />
     </key>
   </component>
@@ -150,7 +162,7 @@
       <option name="presentableId" value="Default" />
       <updated>1697319324880</updated>
       <workItem from="1697319325901" duration="8249000" />
-      <workItem from="1697507834160" duration="3789000" />
+      <workItem from="1697507834160" duration="7907000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -184,7 +196,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697369425698</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary=".">
+      <option name="closed" value="true" />
+      <created>1697512217758</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1697512217758</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

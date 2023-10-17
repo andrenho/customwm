@@ -21,7 +21,12 @@ set (CMAKE_CXX_FLAGS_RELEASE "-Ofast")
 
 set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:/usr/X11/lib/pkgconfig")
 find_package(PkgConfig REQUIRED)
+
+pkg_check_modules(LUA REQUIRED lua5.4)
 pkg_check_modules(X11 xcb xcb-image xcb-errors)
+pkg_check_modules(WAYLAND wayland-server wlroots pixman-1)
+
+include_directories(${LUA_INCLUDE_DIRS})
 
 #
 # Libraries
@@ -30,7 +35,15 @@ pkg_check_modules(X11 xcb xcb-image xcb-errors)
 add_library(engine STATIC
         libengine/engine.hh
         libengine/engine.cc
+        libengine/luaw.hh
+        libengine/luaw.inl
+        libengine/luaw.cc
+        libengine/metatables.cc
+        libengine/metatables.hh
+        libengine/engine.inl
+        libengine/exceptions.hh
 )
+target_compile_options(engine PUBLIC ${LUA_CFLAGS_OTHER})
 
 add_library(root-x11 STATIC EXCLUDE_FROM_ALL
         libroot/root.hh
@@ -46,8 +59,12 @@ target_include_directories(root-x11 PUBLIC ${X11_INCLUDE_DIRS})
 add_library(root-wayland STATIC EXCLUDE_FROM_ALL
         libroot/root.hh
         libroot/root.cc
-        libroot/wayland/rootwayland.hh
-        libroot/wayland/rootwayland.cc
+        libroot/wayland/root_wayland.hh
+        libroot/wayland/root_wayland.cc
+        libroot/wayland/server_wayland.hh
+        libroot/wayland/server_wayland.cc
+        libroot/wayland/output.hh
+        libroot/wayland/output.cc
 )
 target_compile_definitions(root-wayland PUBLIC WLR_USE_UNSTABLE)
 target_compile_options(root-wayland PUBLIC ${WAYLAND_CFLAGS_OTHER})
@@ -72,21 +89,14 @@ add_custom_command(
 
 set(SRC_CUSTOM_WM
         customwm/main.cc
-        customwm/options.hh
-        customwm/options.cc
-        customwm/windowmanager.hh
-        customwm/windowmanager.cc
-)
+        customwm/customwm.hh)
 
 add_executable(customwm-x11 EXCLUDE_FROM_ALL ${SRC_CUSTOM_WM})
-target_link_directories(customwm-x11 PUBLIC ${X11_LIBRARY_DIRS})
-target_link_libraries(customwm-x11 engine root-x11 ${X11_LIBRARIES})
-target_link_libraries(customwm-x11 theme root-x11 ${X11_LIBRARIES})
+target_link_directories(customwm-x11 PUBLIC ${X11_LIBRARY_DIRS} ${LUA_LIBRARY_DIRS})
+target_link_libraries(customwm-x11 engine root-x11 ${X11_LIBRARIES} ${LUA_LIBRARIES})
 target_compile_definitions(customwm-x11 PUBLIC BACKEND_X11)
 
 add_executable(customwm-wayland EXCLUDE_FROM_ALL ${SRC_CUSTOM_WM})
-target_link_libraries(customwm-wayland theme root-wayland)
-add_executable(customwm-wayland EXCLUDE_FROM_ALL ${SRC_CUSTOM_WM})
-target_link_directories(customwm-wayland PUBLIC ${WAYLAND_LIBRARY_DIRS})
-target_link_libraries(customwm-wayland theme root-wayland ${WAYLAND_LIBRARIES})
+target_link_directories(customwm-wayland PUBLIC ${WAYLAND_LIBRARY_DIRS} ${LUA_LIBRARY_DIRS})
+target_link_libraries(customwm-wayland theme root-wayland ${WAYLAND_LIBRARIES} ${LUA_LIBRARIES})
 target_compile_definitions(customwm-wayland PUBLIC BACKEND_WAYLAND)

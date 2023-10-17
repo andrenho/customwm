@@ -6,7 +6,7 @@
 
 class RootWayland : public Root {
 public:
-    RootWayland();
+    explicit RootWayland(Engine& engine);
     ~RootWayland() override;
 
     std::string interface_name() const override { return "wayland"; }

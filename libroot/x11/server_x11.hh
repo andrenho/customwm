@@ -8,17 +8,19 @@
 
 class ServerX11 : public Server {
 public:
-    ServerX11(xcb_connection_t* dpy, xcb_screen_t* scr, xcb_errors_context_t* err_ctx)
-        : dpy_(dpy), scr_(scr), err_ctx_(err_ctx) {}
+    ServerX11(Engine& engine, xcb_connection_t* dpy, xcb_screen_t* scr, xcb_errors_context_t* err_ctx)
+        : Server(engine), dpy_(dpy), scr_(scr), err_ctx_(err_ctx) {}
 
-    void setup_event_listeners() override;
-    void capture_existing_windows() override;
-    void run_event_loop() override;
+    void run() override;
 
 private:
     xcb_connection_t*     dpy_ = nullptr;
     xcb_screen_t*         scr_ = nullptr;
     xcb_errors_context_t* err_ctx_ = nullptr;
+
+    void setup_event_listeners();
+    void capture_existing_windows();
+    void run_event_loop();
 
     void on_error(xcb_request_error_t *e);
 };

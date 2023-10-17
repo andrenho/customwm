@@ -5,9 +5,12 @@ class Server {
 public:
     virtual ~Server() = default;
 
-    virtual void setup_event_listeners() = 0;
-    virtual void capture_existing_windows() = 0;
-    virtual void run_event_loop() = 0;
+    virtual void run() = 0;
+
+protected:
+    explicit Server(class Engine& engine) : engine_(engine) {}
+
+    class Engine& engine_;
 };
 
 #endif //SERVER_HH_
