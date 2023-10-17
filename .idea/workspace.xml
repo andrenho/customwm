@@ -25,30 +25,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1838465-2e71-4bdd-b728-c9f3548d0934" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/libengine/engine.inl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libengine/exceptions.hh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libengine/luaw.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libengine/luaw.hh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libengine/luaw.inl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libengine/metatables.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libengine/metatables.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/main.cc" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/main.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libengine/engine.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libengine/engine.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/THEME" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libengine/engine.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libengine/engine.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/root.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/root.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/root.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/root.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/server.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/server.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/wayland/root_wayland.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/wayland/root_wayland.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/wayland/root_wayland.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/wayland/root_wayland.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/wayland/server_wayland.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/wayland/server_wayland.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/wayland/server_wayland.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/wayland/server_wayland.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/x11/root_x11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/x11/root_x11.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/x11/root_x11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/x11/root_x11.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/x11/server_x11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/x11/server_x11.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/x11/server_x11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/x11/server_x11.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libengine/engine.inl" beforeDir="false" afterPath="$PROJECT_DIR$/libengine/engine.inl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +141,7 @@
       <option name="presentableId" value="Default" />
       <updated>1697319324880</updated>
       <workItem from="1697319325901" duration="8249000" />
-      <workItem from="1697507834160" duration="7907000" />
+      <workItem from="1697507834160" duration="8139000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -204,7 +183,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697512217758</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary=".">
+      <option name="closed" value="true" />
+      <created>1697516355952</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1697516355952</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

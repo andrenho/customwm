@@ -1,0 +1,12 @@
+Theme files
+-----------
+
+Events:
+
+wm.after_start()
+
+
+Globals
+-------
+
+root:interface_name() : str

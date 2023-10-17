@@ -14,8 +14,9 @@ public:
 
     void setup_root_object(class Root* root);
 
-    template<typename... Types> void call(std::string const& prop_name, Types&... args);
-    template<typename... Types> void call_opt(std::string const& prop_name, Types&... args);
+    template<typename T, typename... Types> T read(std::string const &prop_name, Types&... args) const;
+    template<typename... Types> void          call(std::string const& prop_name, Types&... args);
+    template<typename... Types> void          call_opt(std::string const& prop_name, Types&... args);
 
 private:
     struct lua_State *L = nullptr;
