@@ -20,7 +20,7 @@ Engine::Engine()
 
     metatable_root_create(L);
 
-    load_from_memory("helper", helper, helper_len);
+    load_script_from_memory("helper", helper, helper_len);
 }
 
 Engine::~Engine()
@@ -28,7 +28,18 @@ Engine::~Engine()
     lua_close(L);
 }
 
-void Engine::load_from_memory(std::string const& name, uint8_t *data, unsigned int len)
+void Engine::load_script_from_memory(std::string const& name, uint8_t *data, unsigned int sz)
+{
+    if (luaL_loadbufferx(L, (const char *) data, sz, name.c_str(), "b") != LUA_OK)
+        throw std::runtime_error("error loading " + name + " from memory");
+
+    if (lua_pcall(L, 0, 0, 0) != LUA_OK)
+        throw std::runtime_error("error running " + name + " from memory");
+
+    luaw_asserttop(L, 0);
+}
+
+void Engine::load_theme_from_memory(const std::string &name, uint8_t *data, unsigned int len)
 {
     if (luaL_loadbufferx(L, (const char *) data, len, name.c_str(), "b") != LUA_OK)
         throw std::runtime_error("error loading " + name + " from memory");

@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
     Engine engine;
     std::unique_ptr<Root> root;
 
-    engine.load_from_memory("customwm", customwm, customwm_len);
+    engine.load_theme_from_memory("customwm", customwm, customwm_len);
 
     if (options.theme_file)
         engine.override_with_theme(*options.theme_file);

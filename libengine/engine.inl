@@ -38,32 +38,25 @@ void Engine::call(std::string const& prop_name, Types&... args)
 {
     int top = lua_gettop(L);
 
-    lua_getglobal(L, "theme");
-
-    // get the property
-    if (!luaw_getproperty(L, -1, prop_name.c_str()))
-        throw PropertyNotFoundException(prop_name);
-    if (lua_type(L, -1) != LUA_TFUNCTION)
-        throw LuaException(L, "expected function for property '" + prop_name + "'");
-
-    // push arguments
-    ([&] {
-        luaw_push(L, args);
-    } (), ...);
-
-    // execute function
-    lua_call(L, sizeof...(args), 0);
-
-    lua_pop(L, 1);
+    lua_getglobal(L, "call_property");
+    lua_pushstring(L, prop_name.c_str());
+    ([&] { luaw_push(L, args); } (), ...);
+    lua_call(L, sizeof...(args) + 1, 0);
 
     luaw_asserttop(L, top);
 }
 
 template<typename... Types>
 void Engine::call_opt(std::string const& prop_name, Types&... args) {
-    try {
-        call(prop_name, args...);
-    } catch (PropertyNotFoundException& e) {}
+
+    int top = lua_gettop(L);
+
+    lua_getglobal(L, "call_property_opt");
+    lua_pushstring(L, prop_name.c_str());
+    ([&] { luaw_push(L, args); } (), ...);
+    lua_call(L, sizeof...(args) + 1, 0);
+
+    luaw_asserttop(L, top);
 }
 
 #endif

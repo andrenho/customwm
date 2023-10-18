@@ -9,7 +9,8 @@ public:
     Engine();
     ~Engine();
 
-    void load_from_memory(std::string const& name, uint8_t *data, unsigned int sz);
+    void load_script_from_memory(std::string const& name, uint8_t *data, unsigned int sz);
+    void load_theme_from_memory(std::string const& name, uint8_t *data, unsigned int sz);
     void override_with_theme(std::string const& filename);
 
     void setup_root_object(class Root* root);
