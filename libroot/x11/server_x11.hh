@@ -23,6 +23,10 @@ private:
     void run_event_loop();
 
     void on_error(xcb_request_error_t *e);
+
+    void on_map_request(xcb_window_t window);
+
+    void on_unmap_notify(xcb_unmap_notify_event_t *p_event);
 };
 
 #endif //SERVER_X11_HH_

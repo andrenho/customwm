@@ -42,6 +42,8 @@ add_library(engine STATIC
         libengine/metatables.hh
         libengine/engine.inl
         libengine/exceptions.hh
+        libengine/types/types.hh
+        libengine/types/types.cc
 )
 target_compile_options(engine PUBLIC ${LUA_CFLAGS_OTHER})
 

@@ -21,8 +21,6 @@ template <typename T> T                luaw_to(lua_State* L, int index, T const&
 template <typename T> std::optional<T> luaw_to_opt(lua_State* L, int index);
 
 template <typename T> void luaw_push(lua_State* L, T const& t);
-template <typename T> void luaw_push(lua_State* L, T* t);
-
 
 #include "luaw.inl"
 

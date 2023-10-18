@@ -28,7 +28,7 @@ T Engine::read(std::string const &prop_name, Types&... args) const
         ([&] {
             luaw_push(L, args);
         } (), ...);
-        lua_call(L, sizeof...(args), 0);
+        lua_call(L, sizeof...(args), 1);
     }
 
     // read the value
