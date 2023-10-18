@@ -1,3 +1,20 @@
+--
+-- GLOBAL FUNCTIONS
+--
+
+function get_property(property, ...)
+    local cur = theme
+    for part in string.gmatch(property, "([^%.]+)") do
+        if cur[part] == nil then error("Property " .. property .. " not found.") end
+        cur = cur[part]
+    end
+    if type(cur) == "function" then
+        return cur(...)
+    else
+        return cur
+    end
+end
+
 local theme = {
 
     wm = {
@@ -6,13 +23,23 @@ local theme = {
         -- PROPERTIES
         --
 
-        starting_location = function(outer_rect)
-            -- TODO
-            return { { 0, 0, 400, 400 }, { 50, 50 } }
+        padding = { top = 24, bottom = 3, left = 3, right = 3 },
+
+        position_strategy = "cascade",   -- cascade, center, random, maximized, requested
+
+        starting_location = function(outer_rect, screen_size)
+            return { { 0, 0, 200, 200 }, { 50, 50 } }
+            --[[
+            local pos = window_starting_position(outer_rect, screen_size)
+            local padding = get_property("wm.padding", outer_rect)
+            local w = outer_rect.w + padding.left + padding.right + 1
+            local h = outer_rect.h + padding.top + padding.bottom + 1
+            return { { pos.x, pos.y, w, h }, { padding.left, padding.top } }
+            ]]
         end,
 
         --
-        -- EVENTS
+        -- EVENTS (overwriteable)
         --
 
         after_start = function()

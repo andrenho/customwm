@@ -17,6 +17,12 @@ T Engine::read(std::string const &prop_name, Types&... args) const
 {
     int top = lua_gettop(L);
 
+    lua_getglobal(L, "get_property");
+    lua_pushstring(L, prop_name.c_str());
+    ([&] { luaw_push(L, args); } (), ...);
+    lua_call(L, sizeof...(args) + 1, 1);
+
+    /*
     lua_getglobal(L, "theme");
 
     // get the property
@@ -30,11 +36,12 @@ T Engine::read(std::string const &prop_name, Types&... args) const
         } (), ...);
         lua_call(L, sizeof...(args), 1);
     }
+     */
 
     // read the value
     try {
         T t = luaw_to<T>(L, -1);
-        lua_pop(L, 2);
+        lua_pop(L, 1);
         luaw_asserttop(L, top);
         return t;
     } catch (LuaException& e) {

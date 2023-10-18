@@ -25,22 +25,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1838465-2e71-4bdd-b728-c9f3548d0934" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/libengine/types/types.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libengine/types/types.hh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/THEME" beforeDir="false" afterPath="$PROJECT_DIR$/THEME" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/options.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/options.hh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/windowmanager.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/windowmanager.hh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/libengine/engine.inl" beforeDir="false" afterPath="$PROJECT_DIR$/libengine/engine.inl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libengine/luaw.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libengine/luaw.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libengine/luaw.inl" beforeDir="false" afterPath="$PROJECT_DIR$/libengine/luaw.inl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/x11/server_x11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/x11/server_x11.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/x11/server_x11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/x11/server_x11.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old/libtheme/luaw.hh" beforeDir="false" afterPath="$PROJECT_DIR$/old/libtheme/luaw.hh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +143,7 @@
       <updated>1697319324880</updated>
       <workItem from="1697319325901" duration="8249000" />
       <workItem from="1697507834160" duration="9093000" />
-      <workItem from="1697596180975" duration="10002000" />
+      <workItem from="1697596180975" duration="11515000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -214,7 +201,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697516586777</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary=".">
+      <option name="closed" value="true" />
+      <created>1697659442698</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1697659442698</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -245,18 +240,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/libroot/x11/server_x11.cc</url>
-          <line>47</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/libroot/x11/server_x11.cc</url>
-          <line>86</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/libroot/x11/server_x11.cc</url>
           <line>114</line>
           <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/libengine/engine.inl</url>
+          <line>17</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
