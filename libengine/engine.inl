@@ -22,22 +22,6 @@ T Engine::read(std::string const &prop_name, Types&... args) const
     ([&] { luaw_push(L, args); } (), ...);
     lua_call(L, sizeof...(args) + 1, 1);
 
-    /*
-    lua_getglobal(L, "theme");
-
-    // get the property
-    if (!luaw_getproperty(L, -1, prop_name.c_str()))
-        throw PropertyNotFoundException(prop_name);
-
-    // if the property is a function, run it, put the result back on the stack
-    if (lua_type(L, -1) == LUA_TFUNCTION) {
-        ([&] {
-            luaw_push(L, args);
-        } (), ...);
-        lua_call(L, sizeof...(args), 1);
-    }
-     */
-
     // read the value
     try {
         T t = luaw_to<T>(L, -1);

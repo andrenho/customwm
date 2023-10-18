@@ -11,6 +11,7 @@ extern "C" {
 
 #include "metatables.hh"
 #include "luaw.hh"
+#include "helper.hh"
 
 Engine::Engine()
         : L(luaL_newstate())
@@ -18,6 +19,8 @@ Engine::Engine()
     luaL_openlibs(L);
 
     metatable_root_create(L);
+
+    load_from_memory("helper", helper, helper_len);
 }
 
 Engine::~Engine()

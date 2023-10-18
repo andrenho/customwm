@@ -29,12 +29,30 @@ pkg_check_modules(WAYLAND wayland-server wlroots pixman-1)
 include_directories(${LUA_INCLUDE_DIRS})
 
 #
+# Lua bytecode -> Header
+#
+
+macro(LuaBytecodeHeader base_path struct_name)
+    add_custom_command(
+            OUTPUT ${base_path}.hh
+            COMMAND luac -o ${base_path}.luac ${base_path}.lua
+            COMMAND xxd -n ${struct_name} -i ${base_path}.luac > ${base_path}.hh
+            COMMAND rm ${base_path}.luac
+            DEPENDS ${base_path}.lua
+    )
+endmacro()
+
+LuaBytecodeHeader(${PROJECT_SOURCE_DIR}/customwm/customwm customwm)
+LuaBytecodeHeader(${PROJECT_SOURCE_DIR}/libengine/helper helper)
+
+#
 # Libraries
 #
 
 add_library(engine STATIC
         libengine/engine.hh
         libengine/engine.cc
+        libengine/helper.hh
         libengine/luaw.hh
         libengine/luaw.inl
         libengine/luaw.cc
@@ -71,19 +89,6 @@ add_library(root-wayland STATIC EXCLUDE_FROM_ALL
 target_compile_definitions(root-wayland PUBLIC WLR_USE_UNSTABLE)
 target_compile_options(root-wayland PUBLIC ${WAYLAND_CFLAGS_OTHER})
 target_include_directories(root-wayland PUBLIC ${WAYLAND_INCLUDE_DIRS})
-
-#
-# Lua bytecode -> Header
-#
-
-set(CUSTOMWM_LUA_BYTECODE ${PROJECT_SOURCE_DIR}/customwm/customwm)
-add_custom_command(
-        OUTPUT ${CUSTOMWM_LUA_BYTECODE}.hh
-        COMMAND luac -o ${CUSTOMWM_LUA_BYTECODE}.luac ${CUSTOMWM_LUA_BYTECODE}.lua
-        COMMAND xxd -n customwm -i ${CUSTOMWM_LUA_BYTECODE}.luac > ${CUSTOMWM_LUA_BYTECODE}.hh
-        COMMAND rm ${CUSTOMWM_LUA_BYTECODE}.luac
-        DEPENDS ${CUSTOMWM_LUA_BYTECODE}.lua
-)
 
 #
 # Executables

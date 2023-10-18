@@ -1,4 +1,5 @@
 customwm/customwm.hh
+libengine/helper.hh
 customwm-x11
 customwm-wayland
 /build/
