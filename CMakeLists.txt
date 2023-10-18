@@ -43,7 +43,7 @@ macro(LuaBytecodeHeader base_path struct_name)
 endmacro()
 
 LuaBytecodeHeader(${PROJECT_SOURCE_DIR}/customwm/customwm customwm)
-LuaBytecodeHeader(${PROJECT_SOURCE_DIR}/libengine/helper helper)
+LuaBytecodeHeader(${PROJECT_SOURCE_DIR}/libengine/helper/helper helper)
 
 #
 # Libraries
@@ -52,7 +52,6 @@ LuaBytecodeHeader(${PROJECT_SOURCE_DIR}/libengine/helper helper)
 add_library(engine STATIC
         libengine/engine.hh
         libengine/engine.cc
-        libengine/helper.hh
         libengine/luaw.hh
         libengine/luaw.inl
         libengine/luaw.cc
@@ -62,6 +61,7 @@ add_library(engine STATIC
         libengine/exceptions.hh
         libengine/types/types.hh
         libengine/types/types.cc
+        libengine/helper/helper.hh
 )
 target_compile_options(engine PUBLIC ${LUA_CFLAGS_OTHER})
 

@@ -11,7 +11,7 @@ extern "C" {
 
 #include "metatables.hh"
 #include "luaw.hh"
-#include "helper.hh"
+#include "helper/helper.hh"
 
 Engine::Engine()
         : L(luaL_newstate())
