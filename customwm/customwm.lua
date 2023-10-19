@@ -1,3 +1,31 @@
+local cascade_ = 0
+
+local function window_starting_position(outer_rect, screen_size)
+    local strategy = get_property("wm.position_strategy")
+    if type(strategy) == "table" then
+        return { x = outer_rect.x, y = outer_rect.y }
+    elseif strategy == "cascade" then
+        local x = cascade_ * 24
+        local y = cascade_ * 24
+        cascade_ = cascade_ + 1
+        if cascade_ == 5 then cascade_ = 0 end
+        return { x=x, y=y }
+    elseif strategy == "center" then
+        return {
+            x = (screen_size.w / 2) - (outer_rect.w / 2),
+            y = (screen_size.h / 2) - (outer_rect.h / 2),
+        }
+    elseif strategy == "random" then
+        return { x = math.random(screen_size.w // 3), y = math.random(screen_size.h // 3) }
+    elseif strategy == "maximized" then
+        error("Not implemented")
+    elseif strategy == "requested" then
+        return { x = outer_rect.x, y = outer_rect.y }
+    else
+        error("Invalid value '"..strategy.."' for wm.position_strategy.")
+    end
+end
+
 local theme = {
 
     wm = {
@@ -8,17 +36,17 @@ local theme = {
 
         padding = { top = 24, bottom = 3, left = 3, right = 3 },
 
-        position_strategy = "cascade",   -- cascade, center, random, maximized, requested
+        position_strategy = "center",   -- cascade, center, random, maximized, requested
 
         starting_location = function(outer_rect, screen_size)
-            return { { 0, 0, 200, 200 }, { 50, 50 } }
-            --[[
             local pos = window_starting_position(outer_rect, screen_size)
             local padding = get_property("wm.padding", outer_rect)
             local w = outer_rect.w + padding.left + padding.right + 1
             local h = outer_rect.h + padding.top + padding.bottom + 1
-            return { { pos.x, pos.y, w, h }, { padding.left, padding.top } }
-            ]]
+            return {
+                { x = pos.x, y = pos.y, w = w, h = h },
+                { w = padding.left, h = padding.top }
+            }
         end,
 
         --

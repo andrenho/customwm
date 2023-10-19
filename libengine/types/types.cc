@@ -12,40 +12,33 @@ extern "C" {
 // TO
 //
 
+template <typename T = long long>
+static T to_int(lua_State* L, int index, const char* field)
+{
+    lua_getfield(L, index, field);
+    T value = (T) lua_tointeger(L, -1);
+    lua_pop(L, 1);
+    return value;
+}
+
 template<> Point luaw_to(lua_State* L, int index)
 {
-    int top = lua_gettop(L);
+    luaL_checktype(L, index, LUA_TTABLE);
 
-    auto get_idx = [L, index](int idx) {
-        lua_geti(L, index, idx);
-        int16_t n = (int16_t) luaL_checkinteger(L, -1);
-        lua_pop(L, 1);
-        return n;
+    return {
+        .x = to_int<int16_t>(L, index, "x"),
+        .y = to_int<int16_t>(L, index, "y"),
     };
-    int16_t x = get_idx(1);
-    int16_t y = get_idx(2);
-
-    luaw_asserttop(L, top);
-
-    return { x, y };
 }
 
 template<> Size luaw_to(lua_State* L, int index)
 {
-    int top = lua_gettop(L);
+    luaL_checktype(L, index, LUA_TTABLE);
 
-    auto get_idx = [L, index](int idx) {
-        lua_geti(L, index, idx);
-        uint16_t n = (uint16_t) luaL_checkinteger(L, -1);
-        lua_pop(L, 1);
-        return n;
+    return {
+        .w = to_int<uint16_t>(L, index, "w"),
+        .h = to_int<uint16_t>(L, index, "h"),
     };
-    uint16_t w = get_idx(1);
-    uint16_t h = get_idx(2);
-
-    luaw_asserttop(L, top);
-
-    return { w, h };
 }
 
 template<> Color luaw_to(lua_State* L, int index)
@@ -68,32 +61,27 @@ template<> Color luaw_to(lua_State* L, int index)
 
 template<> Rectangle luaw_to(lua_State* L, int index)
 {
-    int top = lua_gettop(L);
-
     luaL_checktype(L, index, LUA_TTABLE);
 
-    auto get_idx = [L, index](int idx) {
-        lua_geti(L, index, idx);
-        int16_t n = (int16_t) luaL_checkinteger(L, -1);
-        lua_pop(L, 1);
-        return n;
+    return {
+            .x = to_int<int16_t>(L, index, "x"),
+            .y = to_int<int16_t>(L, index, "y"),
+            .w = to_int<uint16_t>(L, index, "w"),
+            .h = to_int<uint16_t>(L, index, "h"),
     };
-    Rectangle r = { get_idx(1), get_idx(2), (uint16_t) get_idx(3), (uint16_t) get_idx(4) };
-    luaw_asserttop(L, top);
-    return r;
 }
 
 template<> Window luaw_to(lua_State* L, int index)
 {
-    int top = lua_gettop(L);
-
     luaL_checktype(L, index, LUA_TTABLE);
 
-    Window window {};
+    Window window {
+        .outer_id = to_int<uintptr_t>(L, index, "outer_id"),
+        .child_id = to_int<uintptr_t>(L, index, "child_id"),
+    };
     lua_getfield(L, -1, "outer_id"); window.outer_id = lua_tointeger(L, -1); lua_pop(L, 1);
     lua_getfield(L, -1, "child_id"); window.child_id = lua_tointeger(L, -1); lua_pop(L, 1);
 
-    luaw_asserttop(L, top);
     return window;
 }
 
@@ -110,3 +98,9 @@ template<> void luaw_push(lua_State* L, Rectangle const& r)
     lua_pushinteger(L, r.h); lua_setfield(L, -2, "h");
 }
 
+template<> void luaw_push(lua_State* L, Size const& s)
+{
+    lua_newtable(L);
+    lua_pushinteger(L, s.w); lua_setfield(L, -2, "w");
+    lua_pushinteger(L, s.h); lua_setfield(L, -2, "h");
+}

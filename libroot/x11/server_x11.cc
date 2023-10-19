@@ -86,7 +86,8 @@ void ServerX11::on_map_request(xcb_window_t child_id)
     // figure out information about the window
     auto geo = xcb_get_geometry_reply(dpy_, xcb_get_geometry(dpy_, child_id), nullptr);
     Rectangle child_geometry { geo->x, geo->y, geo->width, geo->height };
-    auto [outer_pos, inner_pos] = engine_.read<std::pair<Rectangle, Point>>("wm.starting_location", child_geometry);
+    Size screen_size { scr_->width_in_pixels, scr_->height_in_pixels };
+    auto [outer_pos, inner_pos] = engine_.read<std::pair<Rectangle, Point>>("wm.starting_location", child_geometry, screen_size);
 
     // create window
     uint32_t values = XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |
