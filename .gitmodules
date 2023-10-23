@@ -1,0 +1,3 @@
+[submodule "luaw"]
+	path = luaw
+	url = https://github.com/andrenho/luaw.git

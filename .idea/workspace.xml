@@ -3,33 +3,96 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="CMakePresetLoader">{
-  &quot;useNewFormat&quot;: true
-}</component>
-  <component name="CMakeReloadState">
-    <option name="reloaded" value="true" />
-  </component>
   <component name="CMakeRunConfigurationManager">
     <generated>
-      <config projectName="customwm" targetName="root-wayland" />
+      <config projectName="customwm" targetName="dist-clean" />
       <config projectName="customwm" targetName="customwm-x11" />
-      <config projectName="customwm" targetName="customwm-wayland" />
-      <config projectName="customwm" targetName="root-x11" />
-      <config projectName="customwm" targetName="engine" />
+      <config projectName="customwm" targetName="all" />
+      <config projectName="customwm" targetName="libtheme.a" />
     </generated>
   </component>
-  <component name="CMakeSettings" AUTO_RELOAD="true">
+  <component name="CMakeSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1838465-2e71-4bdd-b728-c9f3548d0934" name="Changes" comment=".">
+    <list default="true" id="1cc7df54-2364-4ae3-8a48-8486bd8e132e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.old2/customwm/customwm.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.old2/libengine/helper/helper.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/luaw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/theme/theme-helper.lua" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/theme/theme.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/theme/theme.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/theme/themeexception.hh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/customwm.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libengine/types/types.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libengine/types/types.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libroot/x11/server_x11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/libroot/x11/server_x11.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/__CMakeLists.txt__" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/THEME" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/THEME" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/customwm/customwm.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customwm/main.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/customwm/main.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libengine/engine.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libengine/engine.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libengine/engine.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libengine/engine.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libengine/engine.inl" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libengine/engine.inl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libengine/exceptions.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libengine/exceptions.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libengine/helper/helper.lua" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libengine/helper/helper.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libengine/luaw.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libengine/luaw.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libengine/luaw.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libengine/luaw.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libengine/luaw.inl" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libengine/luaw.inl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libengine/metatables.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libengine/metatables.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libengine/metatables.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libengine/metatables.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libengine/types/types.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libengine/types/types.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libengine/types/types.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libengine/types/types.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/root.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libroot/root.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/root.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libroot/root.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/server.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libroot/server.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/wayland/output.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libroot/wayland/output.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/wayland/output.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libroot/wayland/output.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/wayland/root_wayland.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libroot/wayland/root_wayland.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/wayland/root_wayland.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libroot/wayland/root_wayland.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/wayland/server_wayland.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libroot/wayland/server_wayland.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/wayland/server_wayland.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libroot/wayland/server_wayland.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/x11/root_x11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libroot/x11/root_x11.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/x11/root_x11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libroot/x11/root_x11.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/x11/server_x11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libroot/x11/server_x11.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libroot/x11/server_x11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old2/libroot/x11/server_x11.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/.old/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/THEME.md" beforeDir="false" afterPath="$PROJECT_DIR$/.old/THEME.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/.old/TODO.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libresource/colors.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libresource/colors.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libresource/colors.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libresource/colors.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libresource/contrib/stb_image.h" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libresource/contrib/stb_image.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libresource/resourcemanager.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libresource/resourcemanager.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libresource/resourcemanager.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libresource/resourcemanager.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libtheme/base/base.lua" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libtheme/base/base.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libtheme/base/base.png" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libtheme/base/base.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libtheme/exceptions.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libtheme/exceptions.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libtheme/luaw.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libtheme/luaw.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libtheme/luaw.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libtheme/luaw.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libtheme/luaw.inl" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libtheme/luaw.inl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libtheme/theme.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libtheme/theme.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libtheme/theme.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libtheme/theme.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libtheme/theme.inl" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libtheme/theme.inl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libtheme/types/iwindow.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libtheme/types/iwindow.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libtheme/types/iwindow.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libtheme/types/iwindow.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libtheme/types/resources.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libtheme/types/resources.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libtheme/types/resources.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libtheme/types/resources.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libtheme/types/types.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libtheme/types/types.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/libtheme/types/types.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old/libtheme/types/types.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/sample.lua" beforeDir="false" afterPath="$PROJECT_DIR$/.old/sample.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/wm/main.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old/wm/main.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/wm/options.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old/wm/options.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/wm/options.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old/wm/options.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/wm/window.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old/wm/window.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/wm/window.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old/wm/window.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/wm/wm.cc" beforeDir="false" afterPath="$PROJECT_DIR$/.old/wm/wm.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old/wm/wm.hh" beforeDir="false" afterPath="$PROJECT_DIR$/.old/wm/wm.hh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,9 +102,40 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MakefileLocalSettings">
+    <option name="availableProjects">
+      <map>
+        <entry>
+          <key>
+            <ExternalProjectPojo>
+              <option name="name" value="customwm" />
+              <option name="path" value="$PROJECT_DIR$" />
+            </ExternalProjectPojo>
+          </key>
+          <value>
+            <list>
+              <ExternalProjectPojo>
+                <option name="name" value="customwm" />
+                <option name="path" value="$PROJECT_DIR$" />
+              </ExternalProjectPojo>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$" value="RE_IMPORT" />
+      </map>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -52,226 +146,79 @@
     <option name="minorVersion" value="2.2" />
   </component>
   <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 6
 }</component>
-  <component name="ProjectId" id="2Wlu84zn8tKbGTWcncKz5E8EMmR" />
+  <component name="ProjectId" id="2XBJPPtfI6sHfp2dRa76BJ5GMR3" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "refactor",
-    "last_opened_file_path": "/Users/aw98156/prj/customwm/libengine/types",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MakefileSettings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/libengine/types" />
-      <recent name="$PROJECT_DIR$/libengine" />
-      <recent name="$PROJECT_DIR$/customwm" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/libengine/helper" />
-    </key>
-  </component>
-  <component name="RunManager" selected="CMake Application.customwm-x11">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+}</component>
+  <component name="RunManager" selected="Makefile Application.customwm-x11">
+    <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="all" CONFIG_NAME="all" version="1">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration name="customwm-wayland" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="customwm-wayland" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="customwm" RUN_TARGET_NAME="customwm-wayland">
+    <configuration name="customwm-x11" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="customwm-x11" CONFIG_NAME="customwm-x11" version="1" RUN_PATH="$PROJECT_DIR$/customwm-x11">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration name="customwm-x11" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-d :1" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="customwm-x11" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="customwm" RUN_TARGET_NAME="customwm-x11">
+    <configuration name="dist-clean" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="dist-clean" CONFIG_NAME="dist-clean" version="1">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration name="engine" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="engine" CONFIG_NAME="Debug">
+    <configuration name="libtheme.a" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="libtheme.a" CONFIG_NAME="libtheme.a" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
-    </configuration>
-    <configuration name="root-wayland" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="root-wayland" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="root-x11" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="root-x11" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="lua.app" factoryName="Lua Application">
-      <option name="program" value="/opt/homebrew/bin/lua" />
-      <option name="file" value="" />
-      <option name="workingDir" value="$PROJECT_DIR$/CMakeLists.txt" />
-      <option name="debuggerType" value="2" />
-      <option name="params" value="" />
-      <option name="charset" value="UTF-8" />
-      <option name="showConsole" value="true" />
-      <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="CMake Application.customwm-wayland" />
-      <item itemvalue="CMake Application.customwm-x11" />
-      <item itemvalue="CMake Application.engine" />
-      <item itemvalue="CMake Application.root-wayland" />
-      <item itemvalue="CMake Application.root-x11" />
+      <item itemvalue="Makefile Application.all" />
+      <item itemvalue="Makefile Application.customwm-x11" />
+      <item itemvalue="Makefile Application.dist-clean" />
+      <item itemvalue="Makefile Application.libtheme.a" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d1838465-2e71-4bdd-b728-c9f3548d0934" name="Changes" comment="" />
-      <created>1697319324880</created>
+      <changelist id="1cc7df54-2364-4ae3-8a48-8486bd8e132e" name="Changes" comment="" />
+      <created>1698096515036</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1697319324880</updated>
-      <workItem from="1697319325901" duration="8249000" />
-      <workItem from="1697507834160" duration="9093000" />
-      <workItem from="1697596180975" duration="16339000" />
+      <updated>1698096515036</updated>
+      <workItem from="1698096516660" duration="1819000" />
+      <workItem from="1698098530969" duration="946000" />
     </task>
-    <task id="LOCAL-00001" summary=".">
-      <option name="closed" value="true" />
-      <created>1697321193097</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1697321193097</updated>
-    </task>
-    <task id="LOCAL-00002" summary=".">
-      <option name="closed" value="true" />
-      <created>1697325853918</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1697325853918</updated>
-    </task>
-    <task id="LOCAL-00003" summary=".">
-      <option name="closed" value="true" />
-      <created>1697329002341</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1697329002341</updated>
-    </task>
-    <task id="LOCAL-00004" summary=".">
-      <option name="closed" value="true" />
-      <created>1697369425698</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1697369425698</updated>
-    </task>
-    <task id="LOCAL-00005" summary=".">
-      <option name="closed" value="true" />
-      <created>1697512217758</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1697512217758</updated>
-    </task>
-    <task id="LOCAL-00006" summary=".">
-      <option name="closed" value="true" />
-      <created>1697516355952</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1697516355952</updated>
-    </task>
-    <task id="LOCAL-00007" summary=".">
-      <option name="closed" value="true" />
-      <created>1697516586777</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1697516586777</updated>
-    </task>
-    <task id="LOCAL-00008" summary=".">
-      <option name="closed" value="true" />
-      <created>1697659442698</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1697659442698</updated>
-    </task>
-    <task id="LOCAL-00009" summary=".">
-      <option name="closed" value="true" />
-      <created>1697660958347</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1697660958348</updated>
-    </task>
-    <task id="LOCAL-00010" summary=".">
-      <option name="closed" value="true" />
-      <created>1697661581294</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1697661581294</updated>
-    </task>
-    <task id="LOCAL-00011" summary=".">
-      <option name="closed" value="true" />
-      <created>1697662487460</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1697662487460</updated>
-    </task>
-    <task id="LOCAL-00012" summary=".">
-      <option name="closed" value="true" />
-      <created>1697665581242</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1697665581242</updated>
-    </task>
-    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VCPKGProject">
-    <isAutomaticEditVcpkgJson value="false" />
-    <isAutomaticCheckingOnLaunch value="false" />
-    <isAutomaticFoundErrors value="true" />
-    <isAutomaticFoundErrors value="true" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="." />
-    <option name="LAST_COMMIT_MESSAGE" value="." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/old/wm/wm.cc</url>
-          <line>144</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

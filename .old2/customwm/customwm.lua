@@ -65,6 +65,10 @@ local theme = {
             print("Window unregistered: ", window.outer_id, window.child_id)
         end,
 
+        on_expose = function(window, exposed_area)
+            window:fill("#ff0000")
+        end,
+
         --
         -- INTERNAL FUNCTIONS
         --
