@@ -48,6 +48,7 @@ libtheme.a: theme/theme.o
 # libgraphics-x11
 #
 
+libgraphics-x11.a: CPPFLAGS += `pkg-config --cflags xcb xcb xcb-image xcb-errors`
 libgraphics-x11.a: graphics/graphics.o graphics/x11/graphicsx11.o graphics/x11/wmx11.o
 	ar -rc $@ $^
 

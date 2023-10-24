@@ -23,6 +23,7 @@ int main(int argc, char* argv[])
 #if GRAPHICS==X11
     graphics = std::make_unique<GraphicsX11>(options.display);
 #endif
+
     WM* wm = graphics->create_wm();
     wm->run();
 }
