@@ -2,12 +2,12 @@
 
 #include "themeexception.hh"
 
-#include "theme-helper.embed"
+#include "themehelper.embed"
 
 Theme::Theme()
     : Lptr(luaw_newstate(), [](lua_State* LL) { lua_close(LL); }), L(Lptr.get())
 {
-    luaw_do_z(L, theme_helper);
+    luaw_do_z(L, themehelper_lua);
 }
 
 void Theme::load_theme(LuaCompressedBytecode lsb[])
@@ -36,7 +36,7 @@ void Theme::load_theme_code(std::string const &code)
 
 void Theme::print_effective_theme() const
 {
-    lua_getglobal(L, "theme");
+    lua_getglobal(L, THEME_GLOBAL);
     printf("%s\n", luaw_dump(L, -1, true, 10).c_str());
     lua_pop(L, 1);
 }

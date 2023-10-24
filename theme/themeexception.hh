@@ -5,7 +5,7 @@
 
 class ThemeException : public std::runtime_error {
 public:
-    explicit ThemeException(const char* what) : std::runtime_error(what) {}
+    explicit ThemeException(std::string const& what) : std::runtime_error(what) {}
 };
 
 #endif //THEMEEXCEPTION_HH_

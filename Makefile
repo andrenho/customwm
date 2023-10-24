@@ -2,60 +2,84 @@
 # configuration
 #
 
-CPPFLAGS = -Wall -Wextra -I luaw/luaw -I. `pkg-config --cflags zlib`
+CPPFLAGS = -Wall -Wextra -I. -I contrib/luaw/luaw
 CXXFLAGS = -std=c++20
 
 ifdef DEBUG
 	CPPFLAGS += -O0 -Og -ggdb
 else
 	CPPFLAGS += -Ofast
+	LUAHZ_FLAGS = -s
 endif
 
 LDFLAGS = `pkg-config --libs zlib`
 
+LUAW_PATH=contrib/luaw
+
 #
-# main targets
+# targets
 #
 
-TARGETS = customwm-x11
-all: ${TARGETS} test-theme
+all: customwm-x11
 
-customwm-x11: customwm/main.o libtheme.a luaw/libluaw-jit.a
+customwm/main-x11.o: customwm/main.cc customwm/customwm.embed
+	$(CXX) -c -o $@ $< ${CXXFLAGS} ${CPPFLAGS} -DGRAPHICS=X11
+
+customwm-x11: customwm/main-x11.o customwm/options.o libluaw-jit.a libtheme.a libgraphics-x11.a
 	$(CXX) -o $@ $^ ${LDFLAGS}
 
 #
-# dependencies
+# lua bytecode compilation
 #
 
-theme/theme.o: theme/theme-helper.embed
+%.embed: %.lua luazh-jit
+	./luazh-jit $(basename $(notdir $<))_lua ${LUASZ_FLAGS} $< > $@
 
-theme/theme-helper.embed: theme/theme-helper.lua luaw/luazh-jit
-	luaw/luazh-jit theme_helper $< > $@
+#
+# libtheme
+#
 
-libtheme.a: theme/theme.o
+theme/theme.o: theme/themehelper.embed
+
+libtheme.a: theme/theme.o libluaw-jit.a
 	ar -rc $@ $<
 
-luaw/luazh-jit:
-	$(MAKE) -C luaw luazh-jit
+#
+# libgraphics-x11
+#
 
-luaw/libluaw-jit.a:
-	$(MAKE) -C luaw libluaw-jit.a
+libgraphics-x11.a: graphics/x11/graphicsx11.o
+	ar -rc $@ $<
+
+#
+# external static libraries / programs
+#
+
+luazh-jit:
+	$(MAKE) -C ${LUAW_PATH} $@
+	cp ${LUAW_PATH}/$@ $@
+
+libluaw-jit.a:
+	$(MAKE) -C ${LUAW_PATH} $@ DEBUG=${DEBUG}
+	cp ${LUAW_PATH}/$@ $@
 
 #
 # tests
 #
-test-theme: theme/test/test.o libtheme.a luaw/libluaw-jit.a
+
+test-theme: theme/test/test.o libtheme.a libluaw-jit.a
 	$(CXX) -o $@ $^ ${LDFLAGS}
 
 check: test-theme
 	./test-theme
 
 #
-# other targets
+# clean targets
 #
 
 clean:
-	rm -rf *.a *.o **/*.o **/*.embed ${TARGETS}
+	find . -name '*.embed' -delete
+	rm -f *.a theme/*.o customwm/*.o graphics/x11/*.o graphics/wayland/*.o luazh-jit customwm-x11 customwm-wayland
 
 dist-clean: clean
-	$(MAKE) -C luaw clean
+	$(MAKE) -C ${LUAW_PATH} clean
