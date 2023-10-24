@@ -22,34 +22,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cfc984dc-ed70-415c-909c-ea033a92ff6e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Makefile_" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customwm/options.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customwm/options.hh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graphics/graphics.hh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graphics/x11/graphicsx11.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graphics/x11/graphicsx11.hh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/theme/theme.inl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contrib/luaw/lua" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw/lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contrib/luaw/lua/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw/lua/makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contrib/luaw/luajit" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw/luajit" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contrib/luaw/luajit/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw/luajit/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contrib/luaw/luajit/src/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw/luajit/src/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contrib/luaw/luajit/src/lj_err.c" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw/luajit/src/lj_err.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contrib/luaw/luajit/src/lj_gdbjit.c" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw/luajit/src/lj_gdbjit.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/main.cc" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/main.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/luaw" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/test/test.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/test/test.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/theme-helper.lua" beforeDir="false" afterPath="$PROJECT_DIR$/theme/themehelper.lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/theme.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/theme.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/theme.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/theme.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/themeexception.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/themeexception.hh" afterDir="false" />
+    <list default="true" id="cfc984dc-ed70-415c-909c-ea033a92ff6e" name="Changes" comment=".">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,11 +180,32 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1698163233994</updated>
-      <workItem from="1698163235016" duration="1199000" />
+      <workItem from="1698163235016" duration="1340000" />
     </task>
+    <task id="LOCAL-00001" summary=".">
+      <option name="closed" value="true" />
+      <created>1698164504675</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1698164504675</updated>
+    </task>
+    <task id="LOCAL-00002" summary=".">
+      <option name="closed" value="true" />
+      <created>1698164550204</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1698164550204</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
   </component>
 </project>

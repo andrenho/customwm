@@ -1,6 +1,10 @@
 customwm-x11
 customwm-wayland
 *.embed
+*.plist
+luazh-jit
+luazh-jit.yml
+test-theme
 
 # Prerequisites
 *.d
