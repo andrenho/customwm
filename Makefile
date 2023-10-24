@@ -39,17 +39,17 @@ customwm-x11: customwm/main-x11.o customwm/options.o libluaw-jit.a libtheme.a li
 # libtheme
 #
 
-theme/theme.o: theme/themehelper.embed
+theme/theme.o: theme/themehelper.embed libluaw-jit.a
 
-libtheme.a: theme/theme.o libluaw-jit.a
-	ar -rc $@ $<
+libtheme.a: theme/theme.o
+	ar -rc $@ $^
 
 #
 # libgraphics-x11
 #
 
-libgraphics-x11.a: graphics/x11/graphicsx11.o
-	ar -rc $@ $<
+libgraphics-x11.a: graphics/graphics.o graphics/x11/graphicsx11.o graphics/x11/wmx11.o
+	ar -rc $@ $^
 
 #
 # external static libraries / programs
@@ -79,7 +79,7 @@ check: test-theme
 
 clean:
 	find . -name '*.embed' -delete
-	rm -f *.a theme/*.o customwm/*.o graphics/x11/*.o graphics/wayland/*.o luazh-jit customwm-x11 customwm-wayland
+	rm -f *.a theme/*.o customwm/*.o graphics/*.o graphics/x11/*.o graphics/wayland/*.o luazh-jit customwm-x11 customwm-wayland
 
-dist-clean: clean
+distclean: clean
 	$(MAKE) -C ${LUAW_PATH} clean

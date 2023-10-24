@@ -5,12 +5,12 @@
   </component>
   <component name="CMakeRunConfigurationManager">
     <generated>
-      <config projectName="customwm" targetName="dist-clean" />
       <config projectName="customwm" targetName="libluaw-jit.a" />
       <config projectName="customwm" targetName="check" />
       <config projectName="customwm" targetName="customwm-x11" />
       <config projectName="customwm" targetName="luazh-jit" />
       <config projectName="customwm" targetName="libgraphics-x11.a" />
+      <config projectName="customwm" targetName="distclean" />
       <config projectName="customwm" targetName="all" />
       <config projectName="customwm" targetName="test-theme" />
       <config projectName="customwm" targetName="libtheme.a" />
@@ -23,7 +23,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cfc984dc-ed70-415c-909c-ea033a92ff6e" name="Changes" comment=".">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphics/graphics.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphics/wm.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphics/x11/wmx11.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphics/x11/wmx11.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customwm/main.cc" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/main.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/graphics.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/graphics.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/graphicsx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/graphicsx11.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/graphicsx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/graphicsx11.hh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,9 +106,16 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "MakefileSettings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/graphics" />
+    </key>
+  </component>
   <component name="RunManager" selected="Makefile Application.customwm-x11">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
@@ -120,7 +137,7 @@
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration name="dist-clean" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="dist-clean" CONFIG_NAME="dist-clean" version="1">
+    <configuration name="distclean" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="distclean" CONFIG_NAME="distclean" version="1">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
       </method>
@@ -164,7 +181,7 @@
       <item itemvalue="Makefile Application.all" />
       <item itemvalue="Makefile Application.check" />
       <item itemvalue="Makefile Application.customwm-x11" />
-      <item itemvalue="Makefile Application.dist-clean" />
+      <item itemvalue="Makefile Application.distclean" />
       <item itemvalue="Makefile Application.libgraphics-x11.a" />
       <item itemvalue="Makefile Application.libluaw-jit.a" />
       <item itemvalue="Makefile Application.libtheme.a" />
@@ -180,7 +197,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1698163233994</updated>
-      <workItem from="1698163235016" duration="1340000" />
+      <workItem from="1698163235016" duration="3187000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -198,7 +215,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698164550204</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary=".">
+      <option name="closed" value="true" />
+      <created>1698164600234</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1698164600234</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,5 +232,21 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="." />
     <option name="LAST_COMMIT_MESSAGE" value="." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/graphics/graphics.cc</url>
+          <line>4</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/customwm/main.cc</url>
+          <line>18</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
