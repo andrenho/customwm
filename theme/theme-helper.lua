@@ -1,10 +1,29 @@
-function merge_theme(new_theme)
+theme = {}
 
-    function merge_child(old, new)
-        if not old or not new then return end
-        for k,v in pairs(old) do new[k] = v end
+local function merge_tables(original_tbl, new_tbl)
+
+    if type(original_tbl) ~= 'table' or type(new_tbl) ~= 'table' then
+        error('Expected table')
     end
 
-    merge_child(theme.wm, new_theme.wm)
+    local function merge_keys(original, new)
 
+        for k,v in pairs(new) do
+            if type(v) == 'table' and original[k] then
+                merge_keys(original[k], v)
+            else
+                original[k] = v
+            end
+        end
+
+        return original
+    end
+
+    return merge_keys(original_tbl, new_tbl)
+
+end
+
+
+function merge_theme(new_theme)
+    theme = merge_tables(theme, new_theme)
 end

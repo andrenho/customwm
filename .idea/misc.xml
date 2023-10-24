@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="CidrRootsConfiguration">
+    <sourceRoots>
+      <file path="$PROJECT_DIR$/customwm" />
+      <file path="$PROJECT_DIR$/graphics-wayland" />
+      <file path="$PROJECT_DIR$/graphics-x11" />
+      <file path="$PROJECT_DIR$/theme" />
+    </sourceRoots>
+    <libraryRoots>
+      <file path="$PROJECT_DIR$/luaw" />
+    </libraryRoots>
+    <excludeRoots>
+      <file path="$PROJECT_DIR$/.old" />
+      <file path="$PROJECT_DIR$/.old2" />
+    </excludeRoots>
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MakefileSettings">
     <option name="linkedExternalProjectsSettings">
