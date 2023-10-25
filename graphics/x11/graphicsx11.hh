@@ -6,19 +6,17 @@
 #include <optional>
 #include <string>
 
-#include <xcb/xcb.h>
-#include <xcb/xcb_errors.h>
+#include <X11/Xlib.h>
 
 class GraphicsX11 : public Graphics {
 public:
     explicit GraphicsX11(std::optional<std::string> display);
+    ~GraphicsX11() override;
 
     std::unique_ptr<WM> create_wm_() override;
 
 private:
-    xcb_connection_t*     dpy_ = nullptr;
-    xcb_screen_t*         scr_ = nullptr;
-    xcb_errors_context_t* err_ctx = nullptr;
+    Display* dsp_;
 };
 
 #endif //GRAPHICSX11_HH_

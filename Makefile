@@ -2,7 +2,8 @@
 # configuration
 #
 
-CPPFLAGS = -Wall -Wextra -I. -I contrib/luaw/luaw
+LIBS_CFLAGS = $(shell pkg-config --silence-errors --cflags x11 zlib)
+CPPFLAGS = -Wall -Wextra -I. -I contrib/luaw/luaw ${LIBS_CFLAGS}
 CXXFLAGS = -std=c++20
 
 ifdef DEBUG
@@ -12,7 +13,7 @@ else
 	LUAHZ_FLAGS = -s
 endif
 
-LDFLAGS = `pkg-config --libs zlib`
+LDFLAGS = $(shell pkg-config --libs x11 zlib)
 
 LUAW_PATH=contrib/luaw
 
@@ -25,6 +26,7 @@ all: customwm-x11
 customwm/main-x11.o: customwm/main.cc customwm/customwm.embed
 	$(CXX) -c -o $@ $< ${CXXFLAGS} ${CPPFLAGS} -DGRAPHICS=X11
 
+customwm-x11: CPPFLAGS += ${X11_CPPFLAGS}
 customwm-x11: customwm/main-x11.o customwm/options.o libluaw-jit.a libtheme.a libgraphics-x11.a
 	$(CXX) -o $@ $^ ${LDFLAGS}
 
@@ -48,7 +50,7 @@ libtheme.a: theme/theme.o
 # libgraphics-x11
 #
 
-libgraphics-x11.a: CPPFLAGS += `pkg-config --cflags xcb xcb xcb-image xcb-errors`
+libgraphics-x11.a: CPPFLAGS += ${X11_CPPFLAGS}
 libgraphics-x11.a: graphics/graphics.o graphics/x11/graphicsx11.o graphics/x11/wmx11.o
 	ar -rc $@ $^
 
