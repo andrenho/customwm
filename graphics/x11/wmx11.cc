@@ -1,24 +1,26 @@
 #include "wmx11.hh"
 #include "theme/logger.hh"
+#include "theme/theme.hh"
 
 #include <X11/Xlib.h>
-#include <X11/extensions/Xcomposite.h>
 #include <cstdio>
 #include <cstdlib>
 
-WMX11::WMX11(Display* dpy) : dpy_(dpy)
+WMX11::WMX11(Theme& theme, Display* dpy)
+    : theme_(theme), dpy_(dpy)
 {
     root_ = DefaultRootWindow(dpy_);
 }
 
 void WMX11::run()
 {
-    initialize_xcomposite();
     setup_event_filter();
     add_existing_windows();
+    theme_.call_opt("wm.after_start");
     main_loop();
 }
 
+/*
 void WMX11::initialize_xcomposite()
 {
     int ev_base, err_base;
@@ -35,6 +37,7 @@ void WMX11::initialize_xcomposite()
 
     LOG.debug("Composite initialized.");
 }
+ */
 
 void WMX11::setup_event_filter()
 {
@@ -147,6 +150,5 @@ void WMX11::on_unmap_notify(XUnmapEvent const &e)
 
 void WMX11::on_expose(XExposeEvent const &e)
 {
-
+    (void) e;
 }
-

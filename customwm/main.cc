@@ -23,9 +23,10 @@ int main(int argc, char* argv[])
 
     std::unique_ptr<Graphics> graphics;
 #if GRAPHICS==X11
-    graphics = std::make_unique<GraphicsX11>(options.display);
+    graphics = std::make_unique<GraphicsX11>(theme, options.display);
 #endif
 
     WM* wm = graphics->create_wm();
+    theme.create_global_object("wm", wm);
     wm->run();
 }

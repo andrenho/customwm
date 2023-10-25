@@ -23,18 +23,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cfc984dc-ed70-415c-909c-ea033a92ff6e" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/graphics/wm_window.hh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/theme/logger.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/theme/logger.hh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/theme/types/l_wm.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/theme/types/l_wm.hh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contrib/luaw/luaw/luaw.inl" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw/luaw/luaw.inl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customwm/main.cc" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/main.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/options.cc" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/options.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/graphics.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/graphics.hh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/wm.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/wm.hh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/graphicsx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/graphicsx11.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/graphicsx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/graphicsx11.hh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/wmx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmx11.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/wmx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmx11.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/theme.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/theme.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/theme.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/theme.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/theme.inl" beforeDir="false" afterPath="$PROJECT_DIR$/theme/theme.inl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/themehelper.lua" beforeDir="false" afterPath="$PROJECT_DIR$/theme/themehelper.lua" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +55,7 @@
     </projectState>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/contrib/luaw" />
   </component>
   <component name="MakefileLocalSettings">
     <option name="availableProjects">
@@ -132,11 +137,6 @@
       <option name="charset" value="UTF-8" />
       <option name="showConsole" value="true" />
       <method v="2" />
-    </configuration>
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
     </configuration>
     <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="all" CONFIG_NAME="all" version="1">
       <method v="2">
@@ -261,7 +261,9 @@
       <workItem from="1698163235016" duration="10561000" />
       <workItem from="1698199686337" duration="4464000" />
       <workItem from="1698231163968" duration="36000" />
-      <workItem from="1698231205491" duration="3066000" />
+      <workItem from="1698231205491" duration="8333000" />
+      <workItem from="1698249032242" duration="1833000" />
+      <workItem from="1698254947249" duration="1573000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -319,7 +321,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698199830056</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary=".">
+      <option name="closed" value="true" />
+      <created>1698234318844</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1698234318844</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -328,5 +338,21 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="." />
     <option name="LAST_COMMIT_MESSAGE" value="." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/theme/theme.inl</url>
+          <line>29</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/theme/types/l_wm.cc</url>
+          <line>7</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

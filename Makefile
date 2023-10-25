@@ -4,7 +4,7 @@
 
 # TODO - check for libs
 
-LIBS_CFLAGS = $(shell pkg-config --silence-errors --cflags x11 xcomposite zlib)
+LIBS_CFLAGS = $(shell pkg-config --silence-errors --cflags x11 zlib)
 CPPFLAGS = -Wall -Wextra -I. -I contrib/luaw/luaw ${LIBS_CFLAGS}
 CXXFLAGS = -std=c++20
 
@@ -15,7 +15,7 @@ else
 	LUAHZ_FLAGS = -s
 endif
 
-LDFLAGS = $(shell pkg-config --libs x11 xcomposite zlib)
+LDFLAGS = $(shell pkg-config --libs x11 zlib)
 
 LUAW_PATH=contrib/luaw
 
@@ -44,7 +44,7 @@ customwm-x11: customwm/main-x11.o customwm/options.o libluaw-jit.a libtheme.a li
 
 theme/theme.o: theme/themehelper.embed libluaw-jit.a
 
-libtheme.a: theme/theme.o theme/logger.o
+libtheme.a: theme/theme.o theme/logger.o theme/types/l_wm.o
 	ar -rc $@ $^
 
 #

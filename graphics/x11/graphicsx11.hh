@@ -10,7 +10,7 @@
 
 class GraphicsX11 : public Graphics {
 public:
-    explicit GraphicsX11(std::optional<std::string> const& display);
+    explicit GraphicsX11(Theme& theme, std::optional<std::string> const& display);
     ~GraphicsX11() override;
 
     std::unique_ptr<WM> create_wm_() override;

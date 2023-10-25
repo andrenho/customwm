@@ -2,16 +2,19 @@
 #define WMX11_HH_
 
 #include "../wm.hh"
+#include "theme/theme.hh"
 
 #include <X11/Xlib.h>
 
 class WMX11 : public WM {
 public:
-    explicit WMX11(Display* dpy);
+    explicit WMX11(Theme& theme, Display* dpy);
 
     void run() override;
+    [[nodiscard]] std::string interface_name() const override { return "X11"; }
 
 private:
+    Theme&   theme_;
     Display* dpy_;
     Window   root_;
 

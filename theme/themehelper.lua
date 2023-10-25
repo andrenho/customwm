@@ -27,3 +27,12 @@ end
 function merge_theme(new_theme)
     theme = merge_tables(theme, new_theme)
 end
+
+
+function getprop(key, ...)
+    if type(key) == 'function' then
+        return key(...)
+    else
+        return key
+    end
+end

@@ -15,6 +15,8 @@ public:
     template <typename T> T get_prop(std::string const& prop, auto&&... args) const;
     void call_opt(std::string const& prop, auto&&... args);
 
+    template <typename T> void create_global_object(std::string const& lua_name, T* object);
+
     void print_effective_theme() const;
 
 private:

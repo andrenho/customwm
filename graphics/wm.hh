@@ -4,11 +4,10 @@
 #include <unordered_map>
 
 #include "wm_window.hh"
+#include "theme/types/l_wm.hh"
 
-class WM {
+class WM : public L_WM {
 public:
-    virtual ~WM() = default;
-
     virtual void run() = 0;
 
 protected:
