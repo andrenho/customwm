@@ -3,7 +3,7 @@
 #include "themeexception.hh"
 #include "themehelper.embed"
 #include "types/l_wm.hh"
-#include "theme/types/l_window.hh"
+#include "types/l_window.hh"
 
 Theme::Theme()
     : Lptr(luaw_newstate(), [](lua_State* LL) { lua_close(LL); }), L(Lptr.get())

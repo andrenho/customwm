@@ -1,6 +1,7 @@
 #include "wmx11.hh"
 #include "theme/logger.hh"
 #include "theme/theme.hh"
+#include "theme/types/types.hh"
 
 #include <X11/Xlib.h>
 #include <cstdio>
@@ -103,6 +104,7 @@ void WMX11::on_map_request(Window child_id)
     XGetGeometry(dpy_, child_id, &root, &requested_x, &requested_y, &child_w, &child_h, &border, &depth);
 
     // figure out information about the parent window (TODO)
+    auto w = theme_.get_prop<WindowStartingLocation>("wm.window_starting_location", /* ... */);
     int parent_x = 100, parent_y = 100;
     unsigned int parent_w = child_w, parent_h = child_h;
     int x_in_parent = 0, y_in_parent = 0;
@@ -128,14 +130,14 @@ void WMX11::on_map_request(Window child_id)
             .w = parent_w, .h = parent_h
     };
     windows_.insert({ parent_id, window });
-    theme_.call_opt("wm.after_window_registered", window);
+    theme_.call_opt("wm.after_window_registered", &window);
 
     LOG.info("Reparented window %d (parent %d)", child_id, parent_id);
 }
 
 void WMX11::on_unmap_notify(XUnmapEvent const &e)
 {
-    for (auto const& kv: windows_) {
+    for (auto& kv: windows_) {
         if (kv.second.child_id == e.window) {
             XReparentWindow(dpy_, e.window, root_, 0, 0);
             XRemoveFromSaveSet(dpy_, e.window);
@@ -143,7 +145,7 @@ void WMX11::on_unmap_notify(XUnmapEvent const &e)
             XDestroyWindow(dpy_, kv.first);
             XFlush(dpy_);
 
-            // theme_.call_opt("wm.after_window_unregistered", kv.second);
+            theme_.call_opt("wm.after_window_unregistered", &kv.second);
 
             LOG.info("Unmapped window %d", kv.first);
             windows_.erase(kv.first);

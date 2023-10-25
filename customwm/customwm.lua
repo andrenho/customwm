@@ -38,14 +38,14 @@ local theme = {
 
         position_strategy = "center",   -- cascade, center, random, maximized, requested
 
-        starting_location = function(child_rect, screen_size)
+        window_starting_location = function(child_rect, screen_size)
             local starting_pos = window_starting_position(child_rect, screen_size)
             local padding = getprop(theme.wm.padding, child_rect, screen_size)
             local w = child_rect.w + padding.left + padding.right + 1
             local h = child_rect.h + padding.top + padding.bottom + 1
             return {
                 parent_rect = { x = starting_pos.x, y = starting_pos.y, w = w, h = h },
-                child_offset = { w = padding.left, h = padding.top }
+                child_offset = { x = padding.left, y = padding.top }
             }
         end,
 

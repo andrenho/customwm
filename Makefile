@@ -44,7 +44,7 @@ customwm-x11: customwm/main-x11.o customwm/options.o libluaw-jit.a libtheme.a li
 
 theme/theme.o: theme/themehelper.embed libluaw-jit.a
 
-libtheme.a: theme/theme.o theme/logger.o theme/types/l_wm.o theme/types/l_window.o
+libtheme.a: theme/theme.o theme/logger.o theme/types/l_wm.o theme/types/l_window.o theme/types/types.o
 	ar -rc $@ $^
 
 #

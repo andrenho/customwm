@@ -25,7 +25,13 @@ std::string L_Window::to_string() const
 void l_window_create_metadata(lua_State* L)
 {
     std::string mt = luaw_set_metatable<L_Window>(L, {
-        { "__tostring", [](lua_State *L) { return luaw_push(L, luaw_to<L_Window*>(L, 1)->to_string()); } },
+        { "parent_id", [](lua_State *L) { return luaw_push(L, luaw_to<L_Window *>(L, 1)->parent_id); } },
+        { "child_id", [](lua_State *L) { return luaw_push(L, luaw_to<L_Window *>(L, 1)->child_id); } },
+        { "x", [](lua_State *L) { return luaw_push(L, luaw_to<L_Window *>(L, 1)->x); } },
+        { "y", [](lua_State *L) { return luaw_push(L, luaw_to<L_Window *>(L, 1)->y); } },
+        { "w", [](lua_State *L) { return luaw_push(L, luaw_to<L_Window *>(L, 1)->w); } },
+        { "h", [](lua_State *L) { return luaw_push(L, luaw_to<L_Window *>(L, 1)->h); } },
+        { "__tostring", [](lua_State *L) { return luaw_push(L, luaw_to<L_Window *>(L, 1)->to_string()); } },
     });
     LOG.debug("Metatable setup for Window as '%s'", mt.c_str());
 }
