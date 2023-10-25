@@ -121,12 +121,14 @@ void WMX11::on_map_request(Window child_id)
     XMapWindow(dpy_, child_id);
     XFlush(dpy_);
 
-    windows_.insert({ parent_id, WM_Window {
-        .parent_id = parent_id,
-        .child_id = child_id,
-        .x = parent_x, .y = parent_y,
-        .w = parent_w, .h = parent_h
-    }});
+    L_Window window {
+            .parent_id = parent_id,
+            .child_id = child_id,
+            .x = parent_x, .y = parent_y,
+            .w = parent_w, .h = parent_h
+    };
+    windows_.insert({ parent_id, window });
+    theme_.call_opt("wm.after_window_registered", window);
 
     LOG.info("Reparented window %d (parent %d)", child_id, parent_id);
 }
@@ -140,6 +142,8 @@ void WMX11::on_unmap_notify(XUnmapEvent const &e)
             XUnmapWindow(dpy_, kv.first);
             XDestroyWindow(dpy_, kv.first);
             XFlush(dpy_);
+
+            // theme_.call_opt("wm.after_window_unregistered", kv.second);
 
             LOG.info("Unmapped window %d", kv.first);
             windows_.erase(kv.first);

@@ -2,6 +2,7 @@
 #define L_WINDOW_HH_
 
 #include <cstdint>
+#include <string>
 
 struct L_Window {
     uintptr_t parent_id;
@@ -10,6 +11,10 @@ struct L_Window {
     uint32_t w, h;
 
     void to_lua(struct lua_State* L) const;
+
+    [[nodiscard]] std::string to_string() const;
 };
+
+void l_window_create_metadata(lua_State* L);
 
 #endif //L_WINDOW_HH_

@@ -27,6 +27,6 @@ void Theme::call_opt(std::string const& prop, auto&&... args)
 
 template <typename T> void Theme::create_global_object(std::string const& lua_name, T* object)
 {
-    luaw_push_wrapped_userdata(L, object);
+    luaw_push(L, object);
     lua_setglobal(L, lua_name.c_str());
 }

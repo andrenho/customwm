@@ -58,11 +58,11 @@ local theme = {
         end,
 
         after_window_registered = function(window)
-            print("Window registered: ", window.outer_id, window.child_id)
+            print("Window registered: ", window)
         end,
 
         after_window_unregistered = function(window)
-            print("Window unregistered: ", window.outer_id, window.child_id)
+            print("Window unregistered: ", window)
         end,
 
         on_expose = function(window, exposed_area)
