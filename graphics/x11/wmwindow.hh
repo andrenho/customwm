@@ -1,6 +1,7 @@
 #ifndef WMWINDOW_HH_
 #define WMWINDOW_HH_
 
+#include <X11/X.h>
 #include "theme/types/l_window.hh"
 
 class WM_Window : public L_Window {

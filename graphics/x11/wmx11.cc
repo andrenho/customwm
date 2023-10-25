@@ -108,11 +108,11 @@ void WMX11::on_map_request(Window child_id)
     int snum = DefaultScreen(dpy_);
     Rectangle child_rect = { requested_x, requested_y, child_w, child_h };
     Size screen_size = { (uint32_t) DisplayWidth(dpy_, snum), (uint32_t) DisplayHeight(dpy_, snum) };
-    auto [parent, offset] = theme_.get_prop<WindowStartingLocation>("wm.window_starting_location", child_rect, screen_size);
+    auto [parent_rect, offset] = theme_.get_prop<WindowStartingLocation>("wm.window_starting_location", child_rect, screen_size);
 
     // create window
-    Window parent_id = XCreateWindow(dpy_, root, parent.x, parent.y, parent.w, parent.h, 0, CopyFromParent,
-                                        InputOutput, CopyFromParent, 0, nullptr);
+    Window parent_id = XCreateWindow(dpy_, root, parent_rect.x, parent_rect.y, parent_rect.w, parent_rect.h, 0,
+                                     CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);
     XSelectInput(dpy_, parent_id, SubstructureNotifyMask | StructureNotifyMask | ExposureMask);
 
     // manage child
@@ -124,8 +124,8 @@ void WMX11::on_map_request(Window child_id)
     XMapWindow(dpy_, child_id);
     XFlush(dpy_);
 
-    auto window = std::make_unique<WM_Window>(parent_id, child_id, parent);
-    theme_.call_opt("wm.after_window_registered", window.get());
+    WM_Window window(parent_id, child_id, parent_rect);
+    theme_.call_opt("wm.after_window_registered", &window);
     windows_.insert({ parent_id, std::move(window) });
 
     LOG.info("Reparented window %d (parent %d)", child_id, parent_id);
@@ -134,15 +134,14 @@ void WMX11::on_map_request(Window child_id)
 void WMX11::on_unmap_notify(XUnmapEvent const &e)
 {
     for (auto& kv: windows_) {
-        auto window = (WM_Window *) kv.second.get();
-        if (window->child_id == e.window) {
+        if (kv.second.child_id == e.window) {
             XReparentWindow(dpy_, e.window, root_, 0, 0);
             XRemoveFromSaveSet(dpy_, e.window);
             XUnmapWindow(dpy_, kv.first);
             XDestroyWindow(dpy_, kv.first);
             XFlush(dpy_);
 
-            theme_.call_opt("wm.after_window_unregistered", window);
+            theme_.call_opt("wm.after_window_unregistered", &kv.second);
 
             LOG.info("Unmapped window %d", kv.first);
             windows_.erase(kv.first);
