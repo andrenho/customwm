@@ -1,6 +1,8 @@
 #include "graphicsx11.hh"
 #include "wmx11.hh"
 
+#include "theme/logger.hh"
+
 GraphicsX11::GraphicsX11(std::optional<std::string> const& display)
 {
     std::string sdisplay = display.value_or(getenv("DISPLAY"));
@@ -8,6 +10,7 @@ GraphicsX11::GraphicsX11(std::optional<std::string> const& display)
     dpy_ = XOpenDisplay(cdisplay);
     if (!dpy_)
         throw std::runtime_error("Failed to open display.");
+    LOG.debug("Connected to display %p.", dpy_);
 }
 
 GraphicsX11::~GraphicsX11()

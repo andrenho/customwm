@@ -9,6 +9,8 @@
 
 #include <memory>
 
+#include "theme/logger.hh"
+
 int main(int argc, char* argv[])
 {
     Options options(argc, argv);

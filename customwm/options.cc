@@ -1,4 +1,5 @@
 #include "options.hh"
+#include "theme/logger.hh"
 
 #include <cstdio>
 #include <cstdlib>
@@ -8,6 +9,7 @@ void Options::display_help(int exit_status)
 {
     printf("    -d, --display   Sets the display (default: $DISPLAY)\n");
     printf("    -t, --theme     Sets the theme (default: default)\n");
+    printf("    -v, --verbose   Print debugging logs\n");
     printf("    -h, --help      Prints this help\n");
     exit(exit_status);
 }
@@ -22,11 +24,12 @@ Options::Options(int argc, char **argv)
         static struct option long_options[] = {
                 { "display", required_argument, nullptr, 'd' },
                 { "theme", required_argument, nullptr, 't' },
+                { "verbose", no_argument, nullptr, 'v' },
                 { "help", required_argument, nullptr, 'h' },
         };
 
         int idx;
-        int c = getopt_long(argc, argv, "d:t:h", long_options, &idx);
+        int c = getopt_long(argc, argv, "d:t:hv", long_options, &idx);
         if (c == -1)
             break;
 
@@ -39,6 +42,9 @@ Options::Options(int argc, char **argv)
                 break;
             case 'h':
                 display_help(EXIT_SUCCESS);
+                break;
+            case 'v':
+                LOG.level = Logger::Debug;
                 break;
             case '?':
                 display_help(EXIT_FAILURE);
