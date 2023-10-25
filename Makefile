@@ -82,7 +82,7 @@ check: test-theme
 
 clean:
 	find . -name '*.embed' -delete
-	rm -f *.a theme/*.o customwm/*.o graphics/*.o graphics/x11/*.o graphics/wayland/*.o luazh-jit customwm-x11 customwm-wayland
+	rm -f *.a theme/*.o theme/**/*.o customwm/*.o graphics/*.o graphics/x11/*.o graphics/wayland/*.o luazh-jit customwm-x11 customwm-wayland
 
 distclean: clean
 	$(MAKE) -C ${LUAW_PATH} clean
