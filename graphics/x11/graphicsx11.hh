@@ -10,13 +10,13 @@
 
 class GraphicsX11 : public Graphics {
 public:
-    explicit GraphicsX11(std::optional<std::string> display);
+    explicit GraphicsX11(std::optional<std::string> const& display);
     ~GraphicsX11() override;
 
     std::unique_ptr<WM> create_wm_() override;
 
 private:
-    Display* dsp_;
+    Display* dpy_;
 };
 
 #endif //GRAPHICSX11_HH_
