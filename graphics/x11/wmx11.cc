@@ -152,5 +152,7 @@ void WMX11::on_unmap_notify(XUnmapEvent const &e)
 
 void WMX11::on_expose(XExposeEvent const &e)
 {
-    (void) e;
+    auto it = windows_.find(e.window);
+    if (it != windows_.end())
+        theme_.call_opt("wm.on_expose", &it->second, Rectangle { e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
 }

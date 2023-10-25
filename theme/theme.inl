@@ -16,7 +16,11 @@ template <typename T> T Theme::get_prop(std::string const& prop, auto&&... args)
 void Theme::call_opt(std::string const& prop, auto&&... args)
 {
     lua_getglobal(L, THEME_GLOBAL);
-    luaw_getfield(L, -1, prop);
+    try {
+        luaw_getfield(L, -1, prop);
+    } catch (LuaException&) {
+        return;  // field not found, ignore
+    }
 
     if (lua_type(L, -1) == LUA_TFUNCTION) {
         luaw_call(L, args...);

@@ -66,7 +66,7 @@ local theme = {
         end,
 
         on_expose = function(window, exposed_area)
-            -- window:fill("#ff0000")
+            window:fill("#ff0000")
         end,
     }
 
