@@ -1,7 +1,7 @@
 local __cascade = 0
 
 local function window_starting_position(child_rect, screen_size)
-    local strategy = get_property("wm.position_strategy")
+    local strategy = getprop(theme.wm.position_strategy)
     if type(strategy) == "table" then
         return { x = child_rect.x, y = child_rect.y }
     elseif strategy == "cascade" then
@@ -22,7 +22,7 @@ local function window_starting_position(child_rect, screen_size)
     elseif strategy == "requested" then
         return { x = child_rect.x, y = child_rect.y }
     else
-        error("Invalid value '"..strategy.."' for wm.position_strategy.")
+        error("Invalid value '"..(strategy or 'nil').."' for wm.position_strategy.")
     end
 end
 
@@ -36,7 +36,7 @@ local theme = {
 
         padding = { top = 24, bottom = 3, left = 3, right = 3 },
 
-        position_strategy = "center",   -- cascade, center, random, maximized, requested
+        position_strategy = "cascade",   -- cascade, center, random, maximized, requested
 
         window_starting_location = function(child_rect, screen_size)
             local starting_pos = window_starting_position(child_rect, screen_size)

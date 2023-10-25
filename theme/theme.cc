@@ -9,6 +9,7 @@ Theme::Theme()
     : Lptr(luaw_newstate(), [](lua_State* LL) { lua_close(LL); }), L(Lptr.get())
 {
     luaw_do_z(L, themehelper_lua);
+
     l_wm_create_metadata(L);
     l_window_create_metadata(L);
 }

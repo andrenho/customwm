@@ -104,19 +104,19 @@ void WMX11::on_map_request(Window child_id)
     XGetGeometry(dpy_, child_id, &root, &requested_x, &requested_y, &child_w, &child_h, &border, &depth);
 
     // figure out information about the parent window (TODO)
-    auto w = theme_.get_prop<WindowStartingLocation>("wm.window_starting_location", /* ... */);
-    int parent_x = 100, parent_y = 100;
-    unsigned int parent_w = child_w, parent_h = child_h;
-    int x_in_parent = 0, y_in_parent = 0;
+    int snum = DefaultScreen(dpy_);
+    Rectangle child_rect = { requested_x, requested_y, child_w, child_h };
+    Size screen_size = { (uint32_t) DisplayWidth(dpy_, snum), (uint32_t) DisplayHeight(dpy_, snum) };
+    auto [parent, offset] = theme_.get_prop<WindowStartingLocation>("wm.window_starting_location", child_rect, screen_size);
 
     // create window
-    Window parent_id = XCreateWindow(dpy_, root, parent_x, parent_y, parent_w, parent_h, 0, CopyFromParent,
+    Window parent_id = XCreateWindow(dpy_, root, parent.x, parent.y, parent.w, parent.h, 0, CopyFromParent,
                                         InputOutput, CopyFromParent, 0, nullptr);
     XSelectInput(dpy_, parent_id, SubstructureNotifyMask | StructureNotifyMask | ExposureMask);
 
     // manage child
     XAddToSaveSet(dpy_, child_id);
-    XReparentWindow(dpy_, child_id, parent_id, x_in_parent, y_in_parent);
+    XReparentWindow(dpy_, child_id, parent_id, offset.x, offset.y);
 
     // map windows
     XMapWindow(dpy_, parent_id);
@@ -126,8 +126,8 @@ void WMX11::on_map_request(Window child_id)
     L_Window window {
             .parent_id = parent_id,
             .child_id = child_id,
-            .x = parent_x, .y = parent_y,
-            .w = parent_w, .h = parent_h
+            .x = parent.x , .y = parent.y,
+            .w = parent.w, .h = parent.h
     };
     windows_.insert({ parent_id, window });
     theme_.call_opt("wm.after_window_registered", &window);
