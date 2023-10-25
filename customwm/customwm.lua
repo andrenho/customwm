@@ -50,7 +50,7 @@ local theme = {
         end,
 
         --
-        -- EVENTS (overwriteable)
+        -- EVENTS (overrideable)
         --
 
         after_start = function()

@@ -11,7 +11,7 @@ public:
     virtual void run() = 0;
 
 protected:
-    std::unordered_map<intptr_t, L_Window> windows_;
+    std::unordered_map<intptr_t, std::unique_ptr<L_Window>> windows_;
 };
 
 #endif //WM_HH_

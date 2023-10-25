@@ -3,16 +3,14 @@
 
 #include <cstdint>
 #include <string>
+#include "types.hh"
 
 struct L_Window {
-    uintptr_t parent_id;
-    uintptr_t child_id;
-    int32_t  x, y;
-    uint32_t w, h;
+    virtual ~L_Window() = default;
 
-    void to_lua(struct lua_State* L) const;
+    [[nodiscard]] virtual Rectangle rect() const = 0;
 
-    [[nodiscard]] std::string to_string() const;
+    static constexpr const char* mt_identifier = "Window";
 };
 
 void l_window_create_metadata(lua_State* L);
