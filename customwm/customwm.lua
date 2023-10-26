@@ -1,7 +1,7 @@
 local __cascade = 0
 
 local function window_starting_position(child_rect, screen_size)
-    local strategy = getprop(theme.wm.position_strategy)
+    local strategy = getprop("wm.position_strategy")
     if type(strategy) == "table" then
         return { x = child_rect.x, y = child_rect.y }
     elseif strategy == "cascade" then
@@ -40,7 +40,7 @@ local theme = {
 
         window_starting_location = function(child_rect, screen_size)
             local starting_pos = window_starting_position(child_rect, screen_size)
-            local padding = getprop(theme.wm.padding, child_rect, screen_size)
+            local padding = getprop("wm.padding", child_rect, screen_size)
             local w = child_rect.w + padding.left + padding.right + 1
             local h = child_rect.h + padding.top + padding.bottom + 1
             return {
@@ -66,7 +66,7 @@ local theme = {
         end,
 
         on_expose = function(window, exposed_area)
-            window:fill("#ff0000")
+            -- window:fill("#ff0000")
         end,
     }
 

@@ -23,11 +23,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cfc984dc-ed70-415c-909c-ea033a92ff6e" name="Changes" comment=".">
+      <change afterPath="$PROJECT_DIR$/graphics/x11/wmwindow.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/wmwindow.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmwindow.hh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/wmx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmx11.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/wmx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmx11.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/theme.inl" beforeDir="false" afterPath="$PROJECT_DIR$/theme/theme.inl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/themehelper.lua" beforeDir="false" afterPath="$PROJECT_DIR$/theme/themehelper.lua" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -259,7 +261,7 @@
       <workItem from="1698249032242" duration="1833000" />
       <workItem from="1698254947249" duration="1916000" />
       <workItem from="1698256909632" duration="5345000" />
-      <workItem from="1698268323493" duration="4152000" />
+      <workItem from="1698268323493" duration="7004000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -389,7 +391,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698276168824</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary=".">
+      <option name="closed" value="true" />
+      <created>1698276432425</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1698276432425</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

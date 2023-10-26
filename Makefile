@@ -51,7 +51,7 @@ libtheme.a: theme/theme.o theme/logger.o theme/types/l_wm.o theme/types/l_window
 # libgraphics-x11
 #
 
-libgraphics-x11.a: graphics/graphics.o graphics/x11/graphicsx11.o graphics/x11/wmx11.o
+libgraphics-x11.a: graphics/graphics.o graphics/x11/graphicsx11.o graphics/x11/wmx11.o graphics/x11/wmwindow.o
 	ar -rc $@ $^
 
 #

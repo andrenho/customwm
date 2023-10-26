@@ -124,7 +124,7 @@ void WMX11::on_map_request(Window child_id)
     XMapWindow(dpy_, child_id);
     XFlush(dpy_);
 
-    WM_Window window(parent_id, child_id, parent_rect);
+    WM_Window window(dpy_, parent_id, child_id, parent_rect);
     theme_.call_opt("wm.after_window_registered", &window);
     windows_.insert({ parent_id, std::move(window) });
 
