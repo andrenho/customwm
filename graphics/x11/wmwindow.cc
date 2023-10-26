@@ -11,8 +11,8 @@ WM_Window::WM_Window(Display* dpy, Window parent_id, Window child_id, Rectangle 
 
 WM_Window::~WM_Window()
 {
-    // XFreeColormap(dpy_, colormap_);  -- TODO - generating BadWindow???
-    // XFlush(dpy_);
+    XFreeColormap(dpy_, colormap_);
+    XFlush(dpy_);
 }
 
 void WM_Window::fill(Color const &color)

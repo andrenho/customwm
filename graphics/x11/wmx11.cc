@@ -136,26 +136,31 @@ void WMX11::on_map_request(Window child_id)
 
 void WMX11::on_unmap_notify(XUnmapEvent const &e)
 {
-    for (auto& kv: windows_) {
-        WM_Window* window = kv.second.get();
-        if (window->child_id == e.window) {
-            XReparentWindow(dpy_, window->child_id, root_, 0, 0);
-            XRemoveFromSaveSet(dpy_, window->child_id);
-            XFlush(dpy_);
+    auto it = windows_.find(e.window);
+    if (it != windows_.end()) {
 
-            Window parent_id = window->parent_id;
-            windows_.erase(parent_id);
+        // parent is unmapped
+        Window parent_id = it->first;
+        windows_.erase(parent_id);
+        XDestroyWindow(dpy_, parent_id);
+        XFlush(dpy_);
 
-            XUnmapWindow(dpy_, parent_id);
-            XDestroyWindow(dpy_, parent_id);
-            XFlush(dpy_);
+        LOG.debug("Destroyed parent window id %d", parent_id);
 
-            LOG.debug("Destroyed parent window id %d", parent_id);
+    } else {
+        for (auto& kv: windows_) {
+            WM_Window* window = kv.second.get();
 
-            theme_.call_opt("wm.after_window_unregistered", window);
+            // child is unmapped
+            if (window->child_id == e.window) {
+                XReparentWindow(dpy_, window->child_id, root_, 0, 0);
+                XRemoveFromSaveSet(dpy_, window->child_id);
+                XDestroyWindow(dpy_, window->child_id);
+                XUnmapWindow(dpy_, window->parent_id);
+                XFlush(dpy_);
 
-            LOG.info("Unmapped window %d", kv.first);
-            return;
+                theme_.call_opt("wm.after_window_unregistered", &it->second);
+            }
         }
     }
 }

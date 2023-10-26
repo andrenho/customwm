@@ -22,7 +22,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cfc984dc-ed70-415c-909c-ea033a92ff6e" name="Changes" comment=".">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contrib/luaw" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/wmwindow.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmwindow.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/wmx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmx11.cc" afterDir="false" />
     </list>
@@ -316,7 +315,7 @@
       <workItem from="1698268323493" duration="9345000" />
       <workItem from="1698325106011" duration="11000" />
       <workItem from="1698325117823" duration="19000" />
-      <workItem from="1698325141056" duration="7676000" />
+      <workItem from="1698325141056" duration="9566000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -486,7 +485,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698334204446</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary=".">
+      <option name="closed" value="true" />
+      <created>1698334875594</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1698334875594</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -511,14 +518,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/graphics/x11/wmwindow.cc</url>
-          <line>13</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/graphics/x11/wmx11.cc</url>
-          <line>148</line>
-          <option name="timeStamp" value="15" />
+          <line>138</line>
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
