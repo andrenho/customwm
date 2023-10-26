@@ -1,0 +1,15 @@
+include ../config.mk
+
+CPPFLAGS += `pkg-config --cflags x11`
+
+all: libgraphics-x11.a
+
+OBJ := graphics.o x11/graphicsx11.o x11/wmwindow.o x11/wmx11.o
+
+libgraphics-x11.a: ${OBJ}
+	ar -rc $@ $^
+
+clean:
+	rm -f ${OBJ} ${OBJ:%.o=%.d} libgraphics-x11.a
+
+-include ${OBJ:%.o=%.d}

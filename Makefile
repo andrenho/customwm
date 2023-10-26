@@ -1,4 +1,4 @@
-all: theme/libtheme.a
+all: customwm-x11
 
 FORCE: ;
 
@@ -7,14 +7,27 @@ export ROOT=$(shell pwd)
 include config.mk
 
 #
-# luaw library dependency
+# internal libraries dependencies
+#
+
+theme/libtheme.a: libluaw-jit.a luazh-jit FORCE
+	${MAKE} -C theme all DEBUG=${DEBUG}
+
+graphics/libgraphics-x11.a: FORCE
+	${MAKE} -C graphics -f Makefile.x11 all DEBUG=${DEBUG}
+
+customwm-x11: theme/libtheme.a graphics/libgraphics-x11.a
+	${MAKE} -C customwm -f Makefile.x11 all DEBUG=${DEBUG}
+
+#
+# external dependencies
 #
 
 LUAW_PATH=contrib/luaw
 LUAW_FILE=${LUAW_PATH}/README.md
 
 ${LUAW_FILE}:  # download luaw git submodule, if not there
-	git submodule --recursive --remote
+	git submodule update --recursive --remote
 
 luazh-jit: ${LUAW_FILE}
 	$(MAKE) -C ${LUAW_PATH} $@
@@ -25,107 +38,14 @@ libluaw-jit.a: ${LUAW_FILE}
 	cp ${LUAW_PATH}/$@ $@
 
 #
-# internal libraries dependencies
-#
-
-theme/libtheme.a: libluaw-jit.a luazh-jit FORCE
-	${MAKE} -C theme all DEBUG=${DEBUG}
-
-#
 # clean
 #
 
 clean:
 	${MAKE} -C theme clean DEBUG=${DEBUG}
+	${MAKE} -C graphics -f Makefile.x11 clean DEBUG=${DEBUG}
+	${MAKE} -C customwm -f Makefile.x11 clean DEBUG=${DEBUG}
 
 distclean: clean
+	rm -f *.a
 	$(MAKE) -C ${LUAW_PATH} clean
-
-##
-## configuration
-##
-#
-## TODO - check for libs
-#
-#LIBS_CFLAGS = $(shell pkg-config --silence-errors --cflags x11 zlib)
-#CPPFLAGS = -Wall -Wextra -I. -I contrib/luaw/luaw ${LIBS_CFLAGS}
-#CXXFLAGS = -std=c++20
-#
-#ifdef DEBUG
-#	CPPFLAGS += -O0 -Og -ggdb
-#else
-#	CPPFLAGS += -Ofast
-#	LUAHZ_FLAGS = -s
-#endif
-#
-#LDFLAGS = $(shell pkg-config --libs x11 zlib)
-#
-#LUAW_PATH=contrib/luaw
-#
-##
-## targets
-##
-#
-#all: customwm-x11
-#
-#customwm/main-x11.o: customwm/main.cc customwm/customwm.embed
-#	$(CXX) -c -o $@ $< ${CXXFLAGS} ${CPPFLAGS} -DGRAPHICS=X11
-#
-#customwm-x11: customwm/main-x11.o customwm/options.o libluaw-jit.a libtheme.a libgraphics-x11.a
-#	$(CXX) -o $@ $^ ${LDFLAGS}
-#
-##
-## lua bytecode compilation
-##
-#
-#%.embed: %.lua luazh-jit
-#	./luazh-jit $(basename $(notdir $<))_lua ${LUASZ_FLAGS} $< > $@
-#
-##
-## libtheme
-##
-#
-#theme/theme.o: theme/themehelper.embed libluaw-jit.a
-#
-#libtheme.a: theme/theme.o theme/logger.o theme/types/l_wm.o theme/types/l_window.o theme/types/types.o
-#	ar -rc $@ $^
-#
-##
-## libgraphics-x11
-##
-#
-#libgraphics-x11.a: graphics/graphics.o graphics/x11/graphicsx11.o graphics/x11/wmx11.o graphics/x11/wmwindow.o
-#	ar -rc $@ $^
-#
-##
-## external static libraries / programs
-##
-#
-#luazh-jit:
-#	$(MAKE) -C ${LUAW_PATH} $@
-#	cp ${LUAW_PATH}/$@ $@
-#
-#libluaw-jit.a:
-#	$(MAKE) -C ${LUAW_PATH} $@ DEBUG=${DEBUG}
-#	cp ${LUAW_PATH}/$@ $@
-#
-##
-## tests
-##
-#
-#test-theme: theme/test/test.o libtheme.a libluaw-jit.a
-#	$(CXX) -o $@ $^ ${LDFLAGS}
-#
-#check: test-theme
-#	./test-theme
-#
-##
-## clean targets
-##
-#
-#clean:
-#	find . -name '*.embed' -delete
-#	rm -f *.a theme/*.o theme/**/*.o customwm/*.o graphics/*.o graphics/x11/*.o graphics/wayland/*.o luazh-jit customwm-x11 customwm-wayland
-#
-#distclean: clean
-#	$(MAKE) -C ${LUAW_PATH} clean

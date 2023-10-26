@@ -1,4 +1,4 @@
-CPPFLAGS = -Wall -Wextra -I. -MD -MP
+CPPFLAGS = -Wall -Wextra -I. -I${ROOT} -I${ROOT}/contrib/luaw/luaw -MD -MP
 CXXFLAGS = -std=c++20
 
 ifdef DEBUG
@@ -7,6 +7,9 @@ else
 	CPPFLAGS += -Ofast
 	LUAHZ_FLAGS = -s
 endif
+
+LDFLAGS = `pkg-config --libs zlib`
+LDFLAGS_X11 = `pkg-config --libs x11`
 
 %.embed: %.lua ../luazh-jit
 	../luazh-jit $(basename $(notdir $<))_lua ${LUASZ_FLAGS} $< > $@
