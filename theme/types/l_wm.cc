@@ -1,7 +1,7 @@
 #include "l_wm.hh"
 
 #include "luaw.hh"
-#include "theme/logger.hh"
+#include "logger.hh"
 
 void l_wm_create_metadata(lua_State* L)
 {

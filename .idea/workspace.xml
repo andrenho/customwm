@@ -6,14 +6,11 @@
   <component name="CMakeRunConfigurationManager">
     <generated>
       <config projectName="customwm" targetName="libluaw-jit.a" />
-      <config projectName="customwm" targetName="check" />
-      <config projectName="customwm" targetName="customwm-x11" />
       <config projectName="customwm" targetName="luazh-jit" />
-      <config projectName="customwm" targetName="libgraphics-x11.a" />
       <config projectName="customwm" targetName="distclean" />
+      <config projectName="customwm" targetName="Makefile" />
+      <config projectName="customwm" targetName="FORCE" />
       <config projectName="customwm" targetName="all" />
-      <config projectName="customwm" targetName="test-theme" />
-      <config projectName="customwm" targetName="libtheme.a" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -23,13 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cfc984dc-ed70-415c-909c-ea033a92ff6e" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/graphics/x11/wmwindow.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config.mk" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/theme/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/wmwindow.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmwindow.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/wmx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmx11.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/themehelper.lua" beforeDir="false" afterPath="$PROJECT_DIR$/theme/themehelper.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contrib/luaw" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contrib/luaw/luajit" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw/luajit" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/luaw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_window.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_wm.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_wm.cc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,32 +92,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.jetbrains.cidr.cpp.cmake.workspace.CMakeCacheInvalidator.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;refactor-new&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MakefileSettings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.jetbrains.cidr.cpp.cmake.workspace.CMakeCacheInvalidator.marker": "true",
+    "git-widget-placeholder": "refactor-new",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.fileTypes",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/theme/types" />
       <recent name="$PROJECT_DIR$/graphics" />
     </key>
   </component>
-  <component name="RunManager" selected="Makefile Application.customwm-x11">
+  <component name="RunManager" selected="Makefile Application.all">
+    <configuration default="true" type="lua.app" factoryName="Lua Application">
+      <option name="program" value="/opt/homebrew/bin/lua" />
+      <option name="file" value="" />
+      <option name="workingDir" value="$PROJECT_DIR$/theme/theme.cc" />
+      <option name="debuggerType" value="2" />
+      <option name="params" value="" />
+      <option name="charset" value="UTF-8" />
+      <option name="showConsole" value="true" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="lua.app" factoryName="Lua Application">
       <option name="program" value="/opt/homebrew/bin/lua" />
       <option name="file" value="" />
@@ -134,6 +144,26 @@
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
+    <configuration name="FORCE" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="FORCE" CONFIG_NAME="FORCE" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FORCE" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="FORCE" CONFIG_NAME="FORCE" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Makefile" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="Makefile" CONFIG_NAME="Makefile" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="all" CONFIG_NAME="all" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="all" CONFIG_NAME="all" version="1">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
@@ -160,6 +190,16 @@
       </method>
     </configuration>
     <configuration name="customwm-x11" type="CLionNativeAppRunConfigurationType" PROGRAM_PARAMS="-d :1 -v" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="customwm-x11" CONFIG_NAME="customwm-x11" version="1" RUN_PATH="$PROJECT_DIR$/customwm-x11">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="customwm-x11" type="CLionNativeAppRunConfigurationType" PROGRAM_PARAMS="-d :1 -v" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="customwm-x11" CONFIG_NAME="customwm-x11" version="1" RUN_PATH="$PROJECT_DIR$/customwm-x11">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="distclean" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="distclean" CONFIG_NAME="distclean" version="1">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
       </method>
@@ -194,12 +234,22 @@
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
       </method>
     </configuration>
+    <configuration name="libluaw-jit.a" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="libluaw-jit.a" CONFIG_NAME="libluaw-jit.a" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="libtheme.a" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="libtheme.a" CONFIG_NAME="libtheme.a" version="1">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
       </method>
     </configuration>
     <configuration name="libtheme.a" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="libtheme.a" CONFIG_NAME="libtheme.a" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="luazh-jit" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="luazh-jit" CONFIG_NAME="luazh-jit" version="1">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
       </method>
@@ -235,15 +285,17 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Makefile Application.all" />
       <item itemvalue="Makefile Application.check" />
-      <item itemvalue="Makefile Application.customwm-x11" />
-      <item itemvalue="Makefile Application.distclean" />
       <item itemvalue="Makefile Application.libgraphics-x11.a" />
-      <item itemvalue="Makefile Application.libluaw-jit.a" />
       <item itemvalue="Makefile Application.libtheme.a" />
-      <item itemvalue="Makefile Application.luazh-jit" />
       <item itemvalue="Makefile Application.test-theme" />
+      <item itemvalue="Makefile Application.customwm-x11" />
+      <item itemvalue="Makefile Application.all" />
+      <item itemvalue="Makefile Application.distclean" />
+      <item itemvalue="Makefile Application.FORCE" />
+      <item itemvalue="Makefile Application.libluaw-jit.a" />
+      <item itemvalue="Makefile Application.luazh-jit" />
+      <item itemvalue="Makefile Application.Makefile" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -261,7 +313,10 @@
       <workItem from="1698249032242" duration="1833000" />
       <workItem from="1698254947249" duration="1916000" />
       <workItem from="1698256909632" duration="5345000" />
-      <workItem from="1698268323493" duration="7004000" />
+      <workItem from="1698268323493" duration="9345000" />
+      <workItem from="1698325106011" duration="11000" />
+      <workItem from="1698325117823" duration="19000" />
+      <workItem from="1698325141056" duration="1029000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -399,7 +454,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698276432425</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary=".">
+      <option name="closed" value="true" />
+      <created>1698320886560</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1698320886560</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
