@@ -9,6 +9,7 @@ struct L_Window {
     virtual ~L_Window() = default;
 
     [[nodiscard]] virtual Rectangle rect() const = 0;
+    virtual void fill(Color const& color) = 0;
 
     static constexpr const char* mt_identifier = "Window";
 };

@@ -8,6 +8,8 @@
 #include <cstdio>
 #include <cstdlib>
 
+#include <utility>
+
 WMX11::WMX11(Theme& theme, Display* dpy)
     : theme_(theme), dpy_(dpy)
 {
@@ -124,9 +126,9 @@ void WMX11::on_map_request(Window child_id)
     XMapWindow(dpy_, child_id);
     XFlush(dpy_);
 
-    WM_Window window(dpy_, parent_id, child_id, parent_rect);
-    theme_.call_opt("wm.after_window_registered", &window);
-    windows_.insert({ parent_id, std::move(window) });
+    auto window = std::make_unique<WM_Window>(dpy_, parent_id, child_id, parent_rect);
+    windows_.emplace(parent_id, std::move(window));
+    theme_.call_opt("wm.after_window_registered", window.get());
 
     LOG.info("Reparented window %d (parent %d)", child_id, parent_id);
 }
@@ -134,17 +136,23 @@ void WMX11::on_map_request(Window child_id)
 void WMX11::on_unmap_notify(XUnmapEvent const &e)
 {
     for (auto& kv: windows_) {
-        if (kv.second.child_id == e.window) {
-            XReparentWindow(dpy_, e.window, root_, 0, 0);
-            XRemoveFromSaveSet(dpy_, e.window);
-            XUnmapWindow(dpy_, kv.first);
-            XDestroyWindow(dpy_, kv.first);
+        WM_Window* window = kv.second.get();
+        if (window->child_id == e.window) {
+            XReparentWindow(dpy_, window->child_id, root_, 0, 0);
+            XRemoveFromSaveSet(dpy_, window->child_id);
             XFlush(dpy_);
 
-            theme_.call_opt("wm.after_window_unregistered", &kv.second);
+            windows_.erase(kv.first);
+
+            XUnmapWindow(dpy_, window->parent_id);
+            XFlush(dpy_);
+
+            XDestroyWindow(dpy_, window->parent_id);
+            XFlush(dpy_);
+
+            theme_.call_opt("wm.after_window_unregistered", window);
 
             LOG.info("Unmapped window %d", kv.first);
-            windows_.erase(kv.first);
             return;
         }
     }

@@ -13,3 +13,8 @@ WM_Window::~WM_Window()
 {
     XFreeColormap(dpy_, colormap_);
 }
+
+void WM_Window::fill(Color const &color)
+{
+    // TODO
+}

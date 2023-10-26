@@ -19,7 +19,7 @@ private:
     Theme&   theme_;
     Display* dpy_;
     Window   root_;
-    std::unordered_map<Window, WM_Window> windows_;
+    std::unordered_map<Window, std::unique_ptr<WM_Window>> windows_;
 
     void setup_event_filter();
     void add_existing_windows();

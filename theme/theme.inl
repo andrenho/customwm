@@ -15,18 +15,8 @@ template <typename T> T Theme::get_prop(std::string const& prop, auto&&... args)
 
 void Theme::call_opt(std::string const& prop, auto&&... args)
 {
-    lua_getglobal(L, THEME_GLOBAL);
-    try {
-        luaw_getfield(L, -1, prop);
-    } catch (LuaException&) {
-        return;  // field not found, ignore
-    }
-
-    if (lua_type(L, -1) == LUA_TFUNCTION) {
-        luaw_call(L, args...);
-    } else if (!lua_isnil(L, -1)) {
-        throw ThemeException("Property '" + prop + "' is not a function.");
-    }
+    lua_getglobal(L, "callopt");
+    luaw_call(L, prop, args...);
 }
 
 template <typename T> void Theme::create_global_object(std::string const& lua_name, T* object)

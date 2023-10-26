@@ -21,15 +21,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cfc984dc-ed70-415c-909c-ea033a92ff6e" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/customwm/Makefile.x11" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graphics/Makefile.x11" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.mk" beforeDir="false" afterPath="$PROJECT_DIR$/config.mk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contrib/luaw" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contrib/luaw/luajit" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw/luajit" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/wmwindow.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmwindow.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/theme/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/wmwindow.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmwindow.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/wmx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmx11.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/wmx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmx11.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/theme.inl" beforeDir="false" afterPath="$PROJECT_DIR$/theme/theme.inl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_window.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_window.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/types.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/types.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/types.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/types.hh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +124,7 @@
       <recent name="$PROJECT_DIR$/graphics" />
     </key>
   </component>
-  <component name="RunManager" selected="Makefile Application.all">
+  <component name="RunManager" selected="Makefile Application.customwm-x11">
     <configuration default="true" type="lua.app" factoryName="Lua Application">
       <option name="program" value="/opt/homebrew/bin/lua" />
       <option name="file" value="" />
@@ -189,7 +190,7 @@
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration name="customwm-x11" type="CLionNativeAppRunConfigurationType" PROGRAM_PARAMS="-d :1 -v" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="customwm-x11" CONFIG_NAME="customwm-x11" version="1" RUN_PATH="$PROJECT_DIR$/customwm-x11">
+    <configuration name="customwm-x11" type="CLionNativeAppRunConfigurationType" PROGRAM_PARAMS="-d :1 -v" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="customwm-x11" CONFIG_NAME="customwm-x11" version="1" RUN_PATH="$PROJECT_DIR$/customwm/customwm-x11">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
       </method>
@@ -321,7 +322,7 @@
       <workItem from="1698268323493" duration="9345000" />
       <workItem from="1698325106011" duration="11000" />
       <workItem from="1698325117823" duration="19000" />
-      <workItem from="1698325141056" duration="2541000" />
+      <workItem from="1698325141056" duration="6931000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -475,17 +476,45 @@
       <option name="project" value="LOCAL" />
       <updated>1698326207794</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary=".">
+      <option name="closed" value="true" />
+      <created>1698327710783</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1698327710783</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="." />
     <option name="LAST_COMMIT_MESSAGE" value="." />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/graphics/x11/wmx11.cc</url>
+          <line>139</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="CLionNativeAppRunConfigurationType">
         <watch expression="luaw_dump_stack(L, 10)" language="ObjectiveC" />

@@ -50,3 +50,21 @@ bool WindowStartingLocation::lua_is(lua_State *L, int index)
             luaw_hasfield(L, index, "parent_rect") && luaw_hasfield(L, index, "child_offset");
 }
 
+Color Color::from_lua(lua_State *L, int index)
+{
+    std::string color = luaL_checkstring(L, index);
+
+    try {
+        if (color.size() != 7 || color[0] != '#')
+            throw;
+        return {
+                (uint8_t) std::stoi(color.substr(1, 2), nullptr, 16),
+                (uint8_t) std::stoi(color.substr(3, 2), nullptr, 16),
+                (uint8_t) std::stoi(color.substr(5, 2), nullptr, 16)
+        };
+
+    } catch (std::exception& e) {
+        luaL_error(L, "Invalid color format");
+        return {};
+    }
+}

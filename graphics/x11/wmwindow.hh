@@ -9,11 +9,17 @@ public:
     WM_Window(Display* dpy_, Window parent_id, Window child_id, Rectangle const &rectangle);
     ~WM_Window() override;
 
+    WM_Window(WM_Window const&) = delete;
+    WM_Window& operator=(WM_Window const&) = delete;
+    WM_Window(WM_Window&&) = delete;
+    WM_Window& operator=(WM_Window&&) = delete;
+
     Window parent_id;
     Window child_id;
     Rectangle rectangle;
 
     Rectangle rect() const override { return rectangle; }
+    void fill(Color const &color) override;
 
 private:
     Display* dpy_;
