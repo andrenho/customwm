@@ -4,6 +4,8 @@
 #include <X11/Xlib.h>
 #include "theme/types/l_window.hh"
 
+#include <map>
+
 class WM_Window : public L_Window {
 public:
     WM_Window(Display* dpy_, Window parent_id, Window child_id, Rectangle const &rectangle);
@@ -24,6 +26,10 @@ public:
 private:
     Display* dpy_;
     Colormap colormap_;
+    GC gc_;
+    std::map<Color, unsigned long> colors_;
+
+    unsigned long get_color(Color const &color);
 };
 
 #endif //WMWINDOW_HH_

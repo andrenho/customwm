@@ -128,8 +128,8 @@ void WMX11::on_map_request(Window child_id)
     XFlush(dpy_);
 
     auto window = std::make_unique<WM_Window>(dpy_, parent_id, child_id, parent_rect);
-    windows_.emplace(parent_id, std::move(window));
     theme_.call_opt("wm.after_window_registered", window.get());
+    windows_.emplace(parent_id, std::move(window));
 
     LOG.info("Reparented window %d (parent %d)", child_id, parent_id);
 }
@@ -169,5 +169,5 @@ void WMX11::on_expose(XExposeEvent const &e)
 {
     auto it = windows_.find(e.window);
     if (it != windows_.end())
-        theme_.call_opt("wm.on_expose", &it->second, Rectangle { e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
+        theme_.call_opt("wm.on_expose", (WM_Window *) it->second.get(), Rectangle { e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
 }
