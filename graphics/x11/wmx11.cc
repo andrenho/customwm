@@ -115,6 +115,7 @@ void WMX11::on_map_request(Window child_id)
     // create window
     Window parent_id = XCreateWindow(dpy_, root, parent_rect.x, parent_rect.y, parent_rect.w, parent_rect.h, 0,
                                      CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);
+    LOG.debug("Created parent window id %d", parent_id);
     XSelectInput(dpy_, parent_id, SubstructureNotifyMask | StructureNotifyMask | ExposureMask);
 
     // manage child
@@ -142,13 +143,14 @@ void WMX11::on_unmap_notify(XUnmapEvent const &e)
             XRemoveFromSaveSet(dpy_, window->child_id);
             XFlush(dpy_);
 
-            windows_.erase(kv.first);
+            Window parent_id = window->parent_id;
+            windows_.erase(parent_id);
 
-            XUnmapWindow(dpy_, window->parent_id);
+            XUnmapWindow(dpy_, parent_id);
+            XDestroyWindow(dpy_, parent_id);
             XFlush(dpy_);
 
-            XDestroyWindow(dpy_, window->parent_id);
-            XFlush(dpy_);
+            LOG.debug("Destroyed parent window id %d", parent_id);
 
             theme_.call_opt("wm.after_window_unregistered", window);
 
