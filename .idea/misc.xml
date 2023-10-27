@@ -6,19 +6,11 @@
       <file path="$PROJECT_DIR$/graphics" />
       <file path="$PROJECT_DIR$/theme" />
     </sourceRoots>
-    <libraryRoots>
-      <file path="$PROJECT_DIR$/contrib" />
-    </libraryRoots>
-    <excludeRoots>
-      <file path="$PROJECT_DIR$/.old" />
-      <file path="$PROJECT_DIR$/.old2" />
-    </excludeRoots>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MakefileSettings">
     <option name="linkedExternalProjectsSettings">
       <MakefileProjectSettings>
-        <option name="buildOptions" value="--jobs=10 DEBUG=1" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>

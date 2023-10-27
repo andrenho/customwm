@@ -1,20 +1,21 @@
-#ifndef WMWINDOW_HH_
-#define WMWINDOW_HH_
+#ifndef WINDOWX11_HH_
+#define WINDOWX11_HH_
 
 #include <X11/Xlib.h>
 #include "theme/types/l_window.hh"
+#include "resourcesx11.hh"
 
 #include <map>
 
-class WM_Window : public L_Window {
+class WindowX11 : public L_Window {
 public:
-    WM_Window(Display* dpy_, Window parent_id, Window child_id, Rectangle const &rectangle);
-    ~WM_Window() override;
+    WindowX11(Display* dpy_, ResourcesX11& resources, Window parent_id, Window child_id, Rectangle const &rectangle);
+    ~WindowX11() override;
 
-    WM_Window(WM_Window const&) = delete;
-    WM_Window& operator=(WM_Window const&) = delete;
-    WM_Window(WM_Window&&) = delete;
-    WM_Window& operator=(WM_Window&&) = delete;
+    WindowX11(WindowX11 const&) = delete;
+    WindowX11& operator=(WindowX11 const&) = delete;
+    WindowX11(WindowX11&&) = delete;
+    WindowX11& operator=(WindowX11&&) = delete;
 
     Window parent_id;
     Window child_id;
@@ -27,6 +28,7 @@ public:
 
 private:
     Display* dpy_;
+    ResourcesX11& resources_;
     Colormap colormap_;
     GC gc_;
     std::map<Color, unsigned long> colors_;
@@ -34,4 +36,4 @@ private:
     unsigned long get_color(Color const &color);
 };
 
-#endif //WMWINDOW_HH_
+#endif //WINDOWX11_HH_

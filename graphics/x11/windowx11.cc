@@ -1,17 +1,18 @@
-#include "wmwindow.hh"
+#include "windowx11.hh"
 #include "theme/logger.hh"
 
 #include <X11/Xlib.h>
+#include <X11/Xft/Xft.h>
 
-WM_Window::WM_Window(Display* dpy, Window parent_id, Window child_id, Rectangle const &rectangle)
-        : parent_id(parent_id), child_id(child_id), rectangle(rectangle), dpy_(dpy)
+WindowX11::WindowX11(Display* dpy, ResourcesX11& resources, Window parent_id, Window child_id, Rectangle const &rectangle)
+        : parent_id(parent_id), child_id(child_id), rectangle(rectangle), dpy_(dpy), resources_(resources)
 {
     Visual* visual = DefaultVisual(dpy, DefaultScreen(dpy));
     colormap_ = XCreateColormap(dpy, parent_id, visual, AllocNone);
     gc_ = XCreateGC(dpy_, parent_id, 0, nullptr);
 }
 
-WM_Window::~WM_Window()
+WindowX11::~WindowX11()
 {
     XFreeGC(dpy_, gc_);
 
@@ -24,7 +25,7 @@ WM_Window::~WM_Window()
     XFlush(dpy_);
 }
 
-void WM_Window::fill(Color const &color)
+void WindowX11::fill(Color const &color)
 {
     unsigned long pixel = get_color(color);
     XSetForeground(dpy_, gc_, pixel);
@@ -32,7 +33,7 @@ void WM_Window::fill(Color const &color)
     XFlush(dpy_);
 }
 
-unsigned long WM_Window::get_color(Color const &color)
+unsigned long WindowX11::get_color(Color const &color)
 {
     // black or white?
     if (color.is_white())
@@ -58,6 +59,7 @@ unsigned long WM_Window::get_color(Color const &color)
     return xcolor.pixel;
 }
 
-void WM_Window::text(int x, int y, std::string const &text, TextProperties const &text_properties)
+void WindowX11::text(int x, int y, std::string const &text, TextProperties const &text_properties)
 {
+    XftFont* font = resources_.get_font(text_properties.font);
 }

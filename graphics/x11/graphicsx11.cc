@@ -12,6 +12,8 @@ GraphicsX11::GraphicsX11(Theme& theme, std::optional<std::string> const& display
     if (!dpy_)
         throw std::runtime_error("Failed to open display.");
     LOG.debug("Connected to display %p.", dpy_);
+
+    resources_ = std::make_unique<ResourcesX11>(dpy_);
 }
 
 GraphicsX11::~GraphicsX11()
@@ -21,6 +23,6 @@ GraphicsX11::~GraphicsX11()
 
 std::unique_ptr<WM> GraphicsX11::create_wm_()
 {
-    return std::make_unique<WMX11>(theme_, dpy_);
+    return std::make_unique<WMX11>(theme_, dpy_, *resources_.get());
 }
 

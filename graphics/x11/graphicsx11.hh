@@ -2,7 +2,9 @@
 #define GRAPHICSX11_HH_
 
 #include "../graphics.hh"
+#include "resourcesx11.hh"
 
+#include <memory>
 #include <optional>
 #include <string>
 
@@ -17,6 +19,7 @@ public:
 
 private:
     Display* dpy_;
+    std::unique_ptr<ResourcesX11> resources_;
 };
 
 #endif //GRAPHICSX11_HH_

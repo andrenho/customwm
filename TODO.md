@@ -9,3 +9,4 @@ Images
 
 Error management
   - [ ] luaw_to - check type
+  - [ ] Check for libraries

@@ -2,7 +2,7 @@
 #include "theme/logger.hh"
 #include "theme/theme.hh"
 #include "theme/types/types.hh"
-#include "wmwindow.hh"
+#include "windowx11.hh"
 
 #include <X11/Xlib.h>
 #include <cstdio>
@@ -10,8 +10,8 @@
 
 #include <utility>
 
-WMX11::WMX11(Theme& theme, Display* dpy)
-    : theme_(theme), dpy_(dpy)
+WMX11::WMX11(Theme& theme, Display* dpy, ResourcesX11& resources)
+    : theme_(theme), dpy_(dpy), resources_(resources)
 {
     root_ = DefaultRootWindow(dpy_);
 }
@@ -127,7 +127,7 @@ void WMX11::on_map_request(Window child_id)
     XMapWindow(dpy_, child_id);
     XFlush(dpy_);
 
-    auto window = std::make_unique<WM_Window>(dpy_, parent_id, child_id, parent_rect);
+    auto window = std::make_unique<WindowX11>(dpy_, resources_, parent_id, child_id, parent_rect);
     theme_.call_opt("wm.after_window_registered", window.get());
     windows_.emplace(parent_id, std::move(window));
 
@@ -149,7 +149,7 @@ void WMX11::on_unmap_notify(XUnmapEvent const &e)
 
     } else {
         for (auto& kv: windows_) {
-            WM_Window* window = kv.second.get();
+            WindowX11* window = kv.second.get();
 
             // child is unmapped
             if (window->child_id == e.window) {
@@ -169,5 +169,5 @@ void WMX11::on_expose(XExposeEvent const &e)
 {
     auto it = windows_.find(e.window);
     if (it != windows_.end())
-        theme_.call_opt("wm.on_expose", (WM_Window *) it->second.get(), Rectangle { e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
+        theme_.call_opt("wm.on_expose", (WindowX11 *) it->second.get(), Rectangle {e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
 }

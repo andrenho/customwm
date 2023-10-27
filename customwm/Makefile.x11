@@ -4,12 +4,12 @@ all: customwm-x11
 
 OBJ := main.o options.o
 
-CPPFLAGS += -DGRAPHICS=X11 `pkg-config --cflags x11`
+CPPFLAGS += -DGRAPHICS=X11 `pkg-config --cflags x11 xft`
 
 main.o: customwm.embed
 
-customwm-x11: ${OBJ} ../libluaw-jit.a ../theme/libtheme.a ../graphics/libgraphics-x11.a
-	$(CXX) -o $@ $^ ${LDFLAGS} ${LDFLAGS_X11}
+customwm-x11: ${OBJ}
+	$(CXX) -o $@ $^ ../libluaw-jit.a ../theme/libtheme.a ../graphics/libgraphics-x11.a ${LDFLAGS} ${LDFLAGS_X11}
 
 clean:
 	rm -f ${OBJ} ${OBJ:%.o=%.d} customwm customwm.embed

@@ -9,7 +9,7 @@ else
 endif
 
 LDFLAGS = `pkg-config --libs zlib`
-LDFLAGS_X11 = `pkg-config --libs x11`
+LDFLAGS_X11 = `pkg-config --libs x11 xft`
 
 %.embed: %.lua ../luazh-jit
 	../luazh-jit $(basename $(notdir $<))_lua ${LUASZ_FLAGS} $< > $@
