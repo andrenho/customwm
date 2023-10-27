@@ -22,12 +22,15 @@
   <component name="ChangeListManager">
     <list default="true" id="cfc984dc-ed70-415c-909c-ea033a92ff6e" name="Changes" comment=".">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contrib/luaw" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/wmwindow.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmwindow.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/wmwindow.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmwindow.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/wmx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmx11.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/theme/types/l_window.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/types/l_wm.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_wm.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_window.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/types.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/types.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/types.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/types.hh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -277,6 +280,11 @@
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Makefile Application.check" />
       <item itemvalue="Makefile Application.libgraphics-x11.a" />
@@ -310,7 +318,7 @@
       <workItem from="1698325106011" duration="11000" />
       <workItem from="1698325117823" duration="19000" />
       <workItem from="1698325141056" duration="13754000" />
-      <workItem from="1698353089010" duration="227000" />
+      <workItem from="1698353089010" duration="3396000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -496,7 +504,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698349002905</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary=".">
+      <option name="closed" value="true" />
+      <created>1698353378249</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1698353378249</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -57,3 +57,7 @@ unsigned long WM_Window::get_color(Color const &color)
     colors_.emplace(color, xcolor.pixel);
     return xcolor.pixel;
 }
+
+void WM_Window::text(int x, int y, std::string const &text, TextProperties const &text_properties)
+{
+}

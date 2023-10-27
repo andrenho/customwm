@@ -28,13 +28,21 @@ end
 
 local theme = {
 
+    resources = {
+
+        fonts = {
+            basic = { "helvetica-18" },
+        },
+
+    },
+
     wm = {
 
         --
         -- PROPERTIES
         --
 
-        padding = { top = 24, bottom = 3, left = 3, right = 3 },
+        padding = { top = 100, bottom = 3, left = 3, right = 3 },
 
         position_strategy = "cascade",   -- cascade, center, random, maximized, requested
 
@@ -66,7 +74,8 @@ local theme = {
         end,
 
         on_expose = function(window, exposed_area)
-            window:fill("#ff0000")
+            window:fill("#ffdfff")
+            window:text(30, 30, "Hello world")
         end,
     }
 

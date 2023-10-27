@@ -23,6 +23,8 @@ public:
     Rectangle rect() const override { return rectangle; }
     void fill(Color const &color) override;
 
+    void text(int x, int y, std::string const &text, TextProperties const &text_properties) override;
+
 private:
     Display* dpy_;
     Colormap colormap_;

@@ -2,6 +2,7 @@
 #define TYPES_HH_
 
 #include <cstdint>
+#include <string>
 
 struct lua_State;
 
@@ -42,6 +43,12 @@ struct WindowStartingLocation {
 
     static WindowStartingLocation from_lua(lua_State* L, int index);
     static bool lua_is(lua_State* L, int index);
+};
+
+struct TextProperties {
+    std::string font = "basic";
+
+    static TextProperties from_lua(lua_State* L, int index);
 };
 
 #endif //TYPES_HH_
