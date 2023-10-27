@@ -20,22 +20,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7441ff57-9827-4494-aaef-c5520d25d915" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/graphics/x11/resourcesx11.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graphics/x11/resourcesx11.hh" afterDir="false" />
+    <list default="true" id="7441ff57-9827-4494-aaef-c5520d25d915" name="Changes" comment=".">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.mk" beforeDir="false" afterPath="$PROJECT_DIR$/config.mk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/Makefile.x11" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/Makefile.x11" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/Makefile.x11" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/Makefile.x11" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/graphicsx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/graphicsx11.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/graphicsx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/graphicsx11.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/wmwindow.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/windowx11.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/wmwindow.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/windowx11.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/wmx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmx11.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/wmx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wmx11.hh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,6 +112,11 @@
     "WebServerToolWindowFactoryState": "false",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "advanced.settings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -187,11 +179,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1698412142068</updated>
-      <workItem from="1698412143682" duration="141000" />
+      <workItem from="1698412143682" duration="447000" />
     </task>
+    <task id="LOCAL-00001" summary=".">
+      <option name="closed" value="true" />
+      <created>1698412297955</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1698412297955</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
   </component>
 </project>
