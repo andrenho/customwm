@@ -1,35 +1,76 @@
+#
+# sources
+#
+
+OBJ_THEME = theme/logger.o theme/theme.o theme/types/types.o theme/types/l_wm.o \
+            theme/types/l_window.o
+
+OBJ_GRAPHICS = graphics/graphics.o
+
+OBJ_GRAPHICS_X11 = ${OBJ_GRAPHICS} graphics/x11/graphicsx11.o graphics/x11/resourcesx11.o \
+                   graphics/x11/windowx11.o graphics/x11/wmx11.o
+
+OBJ_CUSTOMWM = customwm/main.o customwm/options.o
+
+#
+# config
+#
+
+CPPFLAGS = -Wall -Wextra -I. -I./contrib/luaw/luaw -MD -MP $(shell pkg-config --cflags zlib)
+CPPFLAGS_X11 = $(shell pkg-config --cflags x11 xft) -DBACKEND=X11
+CXXFLAGS = -std=c++20
+
+ifdef DEBUG
+	CPPFLAGS += -O0 -Og -ggdb
+else
+	CPPFLAGS += -Ofast
+	LUAHZ_FLAGS = -s
+endif
+
+LDFLAGS = $(shell pkg-config --libs zlib)
+LDFLAGS_X11 = ${LDFLAGS} $(shell pkg-config --libs x11 xft)
+
+LUAW_PATH=contrib/luaw
+LUAW_FILE=${LUAW_PATH}/README.md
+LUAJIT_HEADER=${LUAW_PATH}/luajit/src/luajit.h
+
+#
+# main dependencies
+#
+
 all: customwm-x11
 
-FORCE: ;
-
-export ROOT=$(shell pwd)
-
-include config.mk
+customwm-x11: CPPFLAGS += ${CPPFLAGS_X11}
+customwm-x11: ${OBJ_THEME} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM} libluaw-jit.a
+	$(CXX) -o $@ $^ ${LDFLAGS_X11}
 
 #
-# internal libraries dependencies
+# secondary dependencies
 #
 
-theme/libtheme.a: libluaw-jit.a luazh-jit FORCE
-	${MAKE} -C theme all DEBUG=${DEBUG}
+customwm/main.o: customwm/customwm.embed
 
-graphics/libgraphics-x11.a: FORCE
-	${MAKE} -C graphics -f Makefile.x11 all DEBUG=${DEBUG}
+theme/theme.o: theme/themehelper.embed
 
-customwm-x11: theme/libtheme.a graphics/libgraphics-x11.a
-	${MAKE} -C customwm -f Makefile.x11 all DEBUG=${DEBUG}
+${OBJ_THEME} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM}: ${LUAJIT_HEADER}
+
+#
+# automatic rules
+#
+
+%.embed: %.lua ./luazh-jit
+	./luazh-jit $(basename $(notdir $<))_lua ${LUASZ_FLAGS} $< > $@
+
+-include ${OBJ:%.o=%.d}
 
 #
 # external dependencies
 #
 
-LUAW_PATH=contrib/luaw
-LUAW_FILE=${LUAW_PATH}/README.md
-
 ${LUAW_FILE}:  # download luaw git submodule, if not there
 	git submodule update --recursive --remote
 
-luazh-jit: ${LUAW_FILE}
+luazh-jit: ${LUAW_FILE} libluaw-jit.a
 	$(MAKE) -C ${LUAW_PATH} $@
 	cp ${LUAW_PATH}/$@ $@
 
@@ -37,15 +78,11 @@ libluaw-jit.a: ${LUAW_FILE}
 	$(MAKE) -C ${LUAW_PATH} $@ DEBUG=${DEBUG}
 	cp ${LUAW_PATH}/$@ $@
 
-#
-# clean
-#
+${LUAJIT_HEADER}: libluaw-jit.a
 
 clean:
-	${MAKE} -C theme clean DEBUG=${DEBUG}
-	${MAKE} -C graphics -f Makefile.x11 clean DEBUG=${DEBUG}
-	${MAKE} -C customwm -f Makefile.x11 clean DEBUG=${DEBUG}
+	rm -f ${OBJ_THEME} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM} customwm-x11 **/*.embed **/*.d
 
 distclean: clean
-	rm -f *.a
+	rm -f libluaw-jit.a luazh-jit
 	$(MAKE) -C ${LUAW_PATH} clean
