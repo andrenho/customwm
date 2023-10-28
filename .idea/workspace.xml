@@ -18,16 +18,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7441ff57-9827-4494-aaef-c5520d25d915" name="Changes" comment=".">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.mk" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/Makefile.x11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/Makefile.x11" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/types/l_window.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/types/l_wm.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_wm.cc" afterDir="false" />
-    </list>
+    <list default="true" id="7441ff57-9827-4494-aaef-c5520d25d915" name="Changes" comment="." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -156,7 +147,7 @@
       <option name="presentableId" value="Default" />
       <updated>1698412142068</updated>
       <workItem from="1698412143682" duration="1128000" />
-      <workItem from="1698494116684" duration="2656000" />
+      <workItem from="1698494116684" duration="2672000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -174,7 +165,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698412603363</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary=".">
+      <option name="closed" value="true" />
+      <created>1698496794755</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1698496794755</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
