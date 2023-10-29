@@ -75,7 +75,7 @@ local theme = {
 
         on_expose = function(window, exposed_area)
             window:fill("#ffdfff")
-            window:text(30, 30, "Hello world!", { color = "#ff0000" })
+            window:text(20, 20, "Hello world!", { color = "#ff0000", halign = "center", w = window:rect().w })
         end,
     }
 
