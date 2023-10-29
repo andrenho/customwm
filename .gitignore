@@ -2,7 +2,7 @@ customwm-x11
 customwm-wayland
 *.embed
 *.plist
-luazh-jit
+contrib/luaw/luazh-jit
 luazh-jit.yml
 test-theme
 

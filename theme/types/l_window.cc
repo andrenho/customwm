@@ -14,7 +14,7 @@ void l_window_create_metadata(lua_State* L)
                 if (lua_gettop(L) >= 5)
                     THIS->text(luaw_to<int>(L, 2), luaw_to<int>(L, 3), luaw_to<std::string>(L, 4), luaw_to<TextProperties>(L, 5));
                 else
-                    THIS->text(luaw_to<int>(L, 2), luaw_to<int>(L, 3), luaw_to<std::string>(L, 4));
+                    THIS->text(luaw_to<int>(L, 2), luaw_to<int>(L, 3), luaw_to<std::string>(L, 4), {});
                 return 0;
             }},
     });

@@ -80,6 +80,10 @@ libluaw-jit.a: ${LUAW_FILE}
 
 ${LUAJIT_HEADER}: libluaw-jit.a
 
+#
+# special targets
+#
+
 clean:
 	rm -f ${OBJ_THEME} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM} customwm-x11 **/*.embed **/*.d
 

@@ -1,7 +1,11 @@
 #ifndef THEME_HH_
 #define THEME_HH_
 
+#include <functional>
 #include <memory>
+#include <string>
+#include <vector>
+
 #include "luaw.hh"
 
 class Theme {
@@ -14,6 +18,9 @@ public:
 
     template <typename T> T get_prop(std::string const& prop, auto&&... args) const;
     void call_opt(std::string const& prop, auto&&... args);
+
+    using Fonts = std::map<std::string, std::vector<std::string>>;
+    Fonts fonts() const;
 
     template <typename T> void create_global_object(std::string const& lua_name, T* object);
 

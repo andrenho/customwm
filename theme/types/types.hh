@@ -46,7 +46,7 @@ struct WindowStartingLocation {
 };
 
 struct TextProperties {
-    std::string font = "basic";
+    std::vector<std::string> font = { "basic" };
 
     static TextProperties from_lua(lua_State* L, int index);
 };

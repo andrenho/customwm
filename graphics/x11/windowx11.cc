@@ -61,5 +61,14 @@ unsigned long WindowX11::get_color(Color const &color)
 
 void WindowX11::text(int x, int y, std::string const &text, TextProperties const &text_properties)
 {
-    XftFont* font = resources_.get_font(text_properties.font);
+    XftFont* font = nullptr;
+    for (auto& font_name: text_properties.font) {
+        font = resources_.get_font(font_name);
+        if (font != nullptr)
+            break;
+    }
+    if (font == nullptr)
+        throw std::runtime_error("Font " + text_properties.font.at(0) + " not found.");
+
+
 }

@@ -52,3 +52,29 @@ void Theme::merge_theme()
     lua_call(L, 1, 0);
     lua_pop(L, 1);
 }
+
+Theme::Fonts Theme::fonts() const
+{
+    Fonts tf;
+
+    lua_getglobal(L, THEME_GLOBAL);
+    if (!luaw_hasfield(L, -1, "resources.fonts")) {
+        lua_pop(L, 1);
+        return {};
+    }
+
+    luaw_getfield(L, -1, "resources.fonts");
+
+    luaw_spairs(L, -1, [&](lua_State* LL, std::string const& key) {
+        if (lua_type(LL, -1) == LUA_TSTRING)
+            tf.emplace(key, std::vector<std::string> { luaw_to<std::string>(LL, -1) });
+        else if (lua_type(LL, -1) == LUA_TTABLE)
+            tf.emplace(key, luaw_to<std::vector<std::string>>(LL, -1));
+        else
+            luaL_error(LL, "Unexpected type for 'resource.fonts'");
+    });
+
+    lua_pop(L, 2);
+
+    return tf;
+}

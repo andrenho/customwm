@@ -14,6 +14,7 @@ GraphicsX11::GraphicsX11(Theme& theme, std::optional<std::string> const& display
     LOG.debug("Connected to display %p.", dpy_);
 
     resources_ = std::make_unique<ResourcesX11>(dpy_);
+    resources_->load_resources(theme);
 }
 
 GraphicsX11::~GraphicsX11()
@@ -23,6 +24,6 @@ GraphicsX11::~GraphicsX11()
 
 std::unique_ptr<WM> GraphicsX11::create_wm_()
 {
-    return std::make_unique<WMX11>(theme_, dpy_, *resources_.get());
+    return std::make_unique<WMX11>(theme_, dpy_, *resources_);
 }
 
