@@ -26,7 +26,7 @@ public:
     Rectangle rect() const override { return rectangle; }
     void fill(Color const &color) override;
 
-    void text(int x, int y, std::string const &text, TextProperties const &text_properties) override;
+    void text(int x, int y, std::string const &text, std::string const &font_key, Color const &color) override;
 
 private:
     Display* dpy_;

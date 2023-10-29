@@ -46,16 +46,4 @@ struct WindowStartingLocation {
     static bool lua_is(lua_State* L, int index);
 };
 
-struct TextProperties {
-    std::string                   font = "basic";
-    Color                         color = { 0, 0, 0 };
-    enum { Left, HCenter, Right } halign = Left;
-    enum { Top, VCenter, Bottom } valign = Bottom;
-    int                           w = 0;
-    int                           h = 0;
-    enum { Show, Hide, Ellipsis } overflow = Show;
-
-    static TextProperties from_lua(lua_State* L, int index);
-};
-
 #endif //TYPES_HH_

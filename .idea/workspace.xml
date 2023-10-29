@@ -20,7 +20,13 @@
   <component name="ChangeListManager">
     <list default="true" id="7441ff57-9827-4494-aaef-c5520d25d915" name="Changes" comment=".">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/windowx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/windowx11.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/windowx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/windowx11.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_window.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_window.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/types.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/types.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/theme/types/types.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/types.hh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,23 +92,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Makefile Application.customwm-x11">
     <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="all" CONFIG_NAME="all" version="1">
       <method v="2">
@@ -147,7 +153,8 @@
       <updated>1698412142068</updated>
       <workItem from="1698412143682" duration="1128000" />
       <workItem from="1698494116684" duration="2672000" />
-      <workItem from="1698499022222" duration="7077000" />
+      <workItem from="1698499022222" duration="8720000" />
+      <workItem from="1698614414427" duration="1243000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -205,7 +212,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698588003808</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary=".">
+      <option name="closed" value="true" />
+      <created>1698588721615</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1698588721615</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,17 +229,6 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="." />
     <option name="LAST_COMMIT_MESSAGE" value="." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/theme/types/l_window.cc</url>
-          <line>13</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

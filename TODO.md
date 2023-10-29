@@ -1,8 +1,8 @@
 ## Theme
 
 Text
-  - [ ] Load font
-  - [ ] Write text
+  - [x] Load font
+  - [x] Write text
   - [ ] Text properties
 
 Images
@@ -10,3 +10,4 @@ Images
 Error management
   - [ ] luaw_to - check type
   - [ ] Check for libraries
+  - [ ] Reload config file

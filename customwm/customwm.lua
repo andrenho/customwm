@@ -1,30 +1,18 @@
 local __cascade = 0
 
-local function window_starting_position(child_rect, screen_size)
-    local strategy = getprop("wm.position_strategy")
-    if type(strategy) == "table" then
-        return { x = child_rect.x, y = child_rect.y }
-    elseif strategy == "cascade" then
-        local x = __cascade * 24
-        local y = __cascade * 24
-        __cascade = __cascade + 1
-        if __cascade == 5 then __cascade = 0 end
-        return { x=x, y=y }
-    elseif strategy == "center" then
-        return {
-            x = (screen_size.w / 2) - (child_rect.w / 2),
-            y = (screen_size.h / 2) - (child_rect.h / 2),
-        }
-    elseif strategy == "random" then
-        return { x = math.random(screen_size.w / 3), y = math.random(screen_size.h / 3) }
-    elseif strategy == "maximized" then
-        error("Not implemented")
-    elseif strategy == "requested" then
-        return { x = child_rect.x, y = child_rect.y }
-    else
-        error("Invalid value '"..(strategy or 'nil').."' for wm.position_strategy.")
+-- calculate the window starting position { x, y } based on properties provided by the user
+
+__window_metatable = {
+
+    -- based on the text properties, draw text on the screen
+    window_draw_text = function(window, x, y, text, properties)
+        properties = properties or {}
+        properties.color = properties.color or "#000000"
+        properties.font = properties.font or "basic"
+        window:_draw(x, y, text, properties.font, properties.color)
     end
-end
+
+}
 
 local theme = {
 
@@ -47,6 +35,33 @@ local theme = {
         position_strategy = "cascade",   -- cascade, center, random, maximized, requested
 
         window_starting_location = function(child_rect, screen_size)
+
+            local function window_starting_position(child_rect_, screen_size_)
+                local strategy = getprop("wm.position_strategy")
+                if type(strategy) == "table" then
+                    return { x = child_rect_.x, y = child_rect_.y }
+                elseif strategy == "cascade" then
+                    local x = __cascade * 24
+                    local y = __cascade * 24
+                    __cascade = __cascade + 1
+                    if __cascade == 5 then __cascade = 0 end
+                    return { x=x, y=y }
+                elseif strategy == "center" then
+                    return {
+                        x = (screen_size_.w / 2) - (child_rect_.w / 2),
+                        y = (screen_size_.h / 2) - (child_rect_.h / 2),
+                    }
+                elseif strategy == "random" then
+                    return { x = math.random(screen_size_.w / 3), y = math.random(screen_size_.h / 3) }
+                elseif strategy == "maximized" then
+                    error("Not implemented")
+                elseif strategy == "requested" then
+                    return { x = child_rect_.x, y = child_rect_.y }
+                else
+                    error("Invalid value '"..(strategy or 'nil').."' for wm.position_strategy.")
+                end
+            end
+
             local starting_pos = window_starting_position(child_rect, screen_size)
             local padding = getprop("wm.padding", child_rect, screen_size)
             local w = child_rect.w + padding.left + padding.right + 1
@@ -56,6 +71,7 @@ local theme = {
                 child_offset = { x = padding.left, y = padding.top }
             }
         end,
+
 
         --
         -- EVENTS (overrideable)
@@ -75,7 +91,7 @@ local theme = {
 
         on_expose = function(window, exposed_area)
             window:fill("#ffdfff")
-            window:text(20, 20, "Hello world!", { color = "#ff0000", halign = "center", w = window:rect().w })
+            window:text(20, 20, "Hello world!", "basic", "#ff0000")
         end,
     }
 
