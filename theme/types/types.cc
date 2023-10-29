@@ -74,8 +74,11 @@ TextProperties TextProperties::from_lua(lua_State *L, int index)
     luaL_checktype(L, index, LUA_TTABLE);
 
     TextProperties text_properties;
+
     if (luaw_hasfield(L, index, "font"))
         text_properties.font = luaw_getfield<std::string>(L, index, "font");
+    if (luaw_hasfield(L, index, "color"))
+        text_properties.color = luaw_getfield<Color>(L, index, "color");
 
     return text_properties;
 }
