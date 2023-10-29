@@ -21,7 +21,7 @@ CPPFLAGS_X11 = $(shell pkg-config --cflags x11 xft) -DBACKEND=X11
 CXXFLAGS = -std=c++20
 
 ifdef DEBUG
-	CPPFLAGS += -O0 -Og -ggdb
+	CPPFLAGS += -O0 -Og -ggdb -DDEBUG=1
 else
 	CPPFLAGS += -Ofast
 	LUAHZ_FLAGS = -s

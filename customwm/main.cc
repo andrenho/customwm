@@ -16,7 +16,11 @@ int main(int argc, char* argv[])
     Options options(argc, argv);
 
     Theme theme;
+#ifdef DEBUG
+    theme.load_theme_file("./customwm/customwm.lua");
+#else
     theme.load_theme(customwm_lua);
+#endif
 
     if (options.theme_file)
         theme.load_theme_file(*options.theme_file);

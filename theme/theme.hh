@@ -4,7 +4,10 @@
 #include <functional>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
+
+#include <sys/stat.h>
 
 #include "luaw.hh"
 
@@ -25,12 +28,15 @@ public:
     template <typename T> void create_global_object(std::string const& lua_name, T* object);
 
     void print_effective_theme() const;
+    void check_for_theme_file_reloaded();
 
 private:
     std::unique_ptr<lua_State, std::function<void(lua_State*)>> Lptr;
     lua_State* L;
+    std::vector<std::pair<std::string, long>> watched_files_;
 
     void merge_theme();
+    void add_watched_file(std::string const& filename);
 
     static constexpr const char* THEME_GLOBAL = "theme";
 };
