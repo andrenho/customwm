@@ -27,7 +27,7 @@ void ResourcesX11::load_fonts(Theme &theme)
         for (auto const& font_name: font_names) {
             XftFont* font = XftFontOpenName(dpy_, DefaultScreen(dpy_), font_name.c_str());
             if (font) {
-                fonts_.emplace(font_name, font);
+                fonts_.emplace(key, font);
                 found = true;
                 LOG.debug("Loaded font '%s' as %p", font_name.c_str(), font);
                 break;
@@ -39,15 +39,3 @@ void ResourcesX11::load_fonts(Theme &theme)
         }
     }
 }
-
-XftFont* ResourcesX11::get_font(std::string const& name)
-{
-    auto it = fonts_.find(name);
-    if (it != fonts_.end())
-        return it->second;
-
-    XftFont* font = XftFontOpenName(dpy_, DefaultScreen(dpy_), name.c_str());
-    fonts_.emplace(name, font);
-    return font;
-}
-

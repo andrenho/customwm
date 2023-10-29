@@ -2,6 +2,8 @@
 #define WINDOWX11_HH_
 
 #include <X11/Xlib.h>
+#include <X11/Xft/Xft.h>
+
 #include "theme/types/l_window.hh"
 #include "resourcesx11.hh"
 
@@ -31,9 +33,12 @@ private:
     ResourcesX11& resources_;
     Colormap colormap_;
     GC gc_;
+    XftDraw* xft_draw_ = nullptr;
     std::map<Color, unsigned long> colors_;
+    std::map<Color, XftColor>      xft_colors_;
 
     unsigned long get_color(Color const &color);
+    XftColor&     get_xft_color(Color const& color);
 };
 
 #endif //WINDOWX11_HH_

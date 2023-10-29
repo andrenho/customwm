@@ -14,7 +14,7 @@ public:
 
     void load_resources(Theme& theme);
 
-    XftFont* get_font(std::string const& name);
+    XftFont* get_font(std::string const& name) { return fonts_.at(name); }
 
 private:
     std::unordered_map<std::string, XftFont*> fonts_;

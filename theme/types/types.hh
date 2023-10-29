@@ -27,11 +27,12 @@ struct Size {
 };
 
 struct Color {
-    uint8_t r, g, b;
-    [[nodiscard]] bool is_white() const { return r == 255 && g == 255 && b == 255; }
-    [[nodiscard]] bool is_black() const { return r == 0 && g == 0 && b == 0; }
+    uint8_t r, g, b, a = 255;
+    [[nodiscard]] bool is_white() const { return r == 255 && g == 255 && b == 255 & a == 255; }
+    [[nodiscard]] bool is_black() const { return r == 0 && g == 0 && b == 0 & a == 255; }
     bool operator <(Color const& c) const {
-        return ((((uint32_t) r) << 16) | (((uint32_t) g) << 8) | b) < ((((uint32_t) c.r) << 16) | (((uint32_t) c.g) << 8) | c.b);
+        return ((((uint32_t) r) << 24) | (((uint32_t) g) << 16) | (((uint32_t) b) << 8) | a) <
+               ((((uint32_t) c.r) << 24) | (((uint32_t) c.g) << 16) | (((uint32_t) b) << 8) | a);
     }
 
     static Color from_lua(lua_State* L, int index);
@@ -46,7 +47,8 @@ struct WindowStartingLocation {
 };
 
 struct TextProperties {
-    std::vector<std::string> font = { "basic" };
+    std::string font = "basic";
+    Color color = { 0, 0, 0 };
 
     static TextProperties from_lua(lua_State* L, int index);
 };

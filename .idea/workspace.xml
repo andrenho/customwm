@@ -19,17 +19,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7441ff57-9827-4494-aaef-c5520d25d915" name="Changes" comment=".">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/graphicsx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/graphicsx11.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/resourcesx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/resourcesx11.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/resourcesx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/resourcesx11.hh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/windowx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/windowx11.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/theme.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/theme.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/theme.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/theme.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/types/l_window.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/types/l_window.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/windowx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/windowx11.hh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/theme/types/types.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/types.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/theme/types/types.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/types.hh" afterDir="false" />
     </list>
@@ -157,7 +151,7 @@
       <updated>1698412142068</updated>
       <workItem from="1698412143682" duration="1128000" />
       <workItem from="1698494116684" duration="2672000" />
-      <workItem from="1698499022222" duration="3704000" />
+      <workItem from="1698499022222" duration="5992000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -183,7 +177,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698496794755</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary=".">
+      <option name="closed" value="true" />
+      <created>1698582768706</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1698582768706</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

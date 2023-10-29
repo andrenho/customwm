@@ -75,7 +75,7 @@ TextProperties TextProperties::from_lua(lua_State *L, int index)
 
     TextProperties text_properties;
     if (luaw_hasfield(L, index, "font"))
-        text_properties.font = luaw_getfield<std::vector<std::string>>(L, index, "font");
+        text_properties.font = luaw_getfield<std::string>(L, index, "font");
 
     return text_properties;
 }
