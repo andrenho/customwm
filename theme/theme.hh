@@ -22,8 +22,7 @@ public:
     template <typename T> T get_prop(std::string const& prop, auto&&... args) const;
     void call_opt(std::string const& prop, auto&&... args);
 
-    using Fonts = std::map<std::string, std::vector<std::string>>;
-    Fonts fonts() const;
+    std::vector<std::string> resource_font(std::string const& key) const;
 
     template <typename T> void create_global_object(std::string const& lua_name, T* object);
 

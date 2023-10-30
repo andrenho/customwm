@@ -3,8 +3,10 @@ customwm-wayland
 *.embed
 *.plist
 contrib/luaw/luazh-jit
+luazh-jit
 luazh-jit.yml
 test-theme
+*.dSYM/*
 
 # Prerequisites
 *.d
@@ -40,3 +42,7 @@ test-theme
 *.app
 
 cmake-build-debug
+/contrib/luaw/luazh-jit.dSYM/Contents/Info.plist
+/contrib/luaw/luazh-jit.dSYM/Contents/Resources/DWARF/luazh-jit
+/contrib/luaw/luazh-jit
+/contrib/luaw/luazh-jit.dSYM/Contents/Resources/Relocations/aarch64/luazh-jit.yml

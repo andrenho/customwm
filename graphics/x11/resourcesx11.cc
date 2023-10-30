@@ -11,31 +11,27 @@ ResourcesX11::~ResourcesX11()
         XftFontClose(dpy_, font);
 }
 
-void ResourcesX11::load_resources(Theme& theme)
+XftFont* ResourcesX11::get_font(std::string const& key) const
 {
-    load_fonts(theme);
+    auto it = fonts_.find(key);
+    if (it != fonts_.end())
+        return it->second;
+
+    auto [it2, _] = fonts_.emplace(key, load_font(key));
+    return it2->second;
 }
 
-void ResourcesX11::load_fonts(Theme &theme)
+XftFont* ResourcesX11::load_font(std::string const& key) const
 {
-    Theme::Fonts fonts = theme.fonts();
+    auto font_names = theme_.resource_font(key);
 
-    for (auto const& [key, font_names] : fonts) {
-
-        bool found = false;
-
-        for (auto const& font_name: font_names) {
-            XftFont* font = XftFontOpenName(dpy_, DefaultScreen(dpy_), font_name.c_str());
-            if (font) {
-                fonts_.emplace(key, font);
-                found = true;
-                LOG.debug("Loaded font '%s' as %p", font_name.c_str(), font);
-                break;
-            }
-        }
-
-        if (!found) {
-            throw std::runtime_error("A font for resource '" + key + "' could not be found.");
+    for (auto const& font_name: font_names) {
+        XftFont* font = XftFontOpenName(dpy_, DefaultScreen(dpy_), font_name.c_str());
+        if (font) {
+            LOG.debug("Loaded font '%s' as %p", font_name.c_str(), font);
+            return font;
         }
     }
+
+    throw std::runtime_error("A font for resource '" + key + "' could not be loaded.");
 }

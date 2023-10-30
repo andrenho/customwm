@@ -13,8 +13,7 @@ GraphicsX11::GraphicsX11(Theme& theme, std::optional<std::string> const& display
         throw std::runtime_error("Failed to open display.");
     LOG.debug("Connected to display %p.", dpy_);
 
-    resources_ = std::make_unique<ResourcesX11>(dpy_);
-    resources_->load_resources(theme);
+    resources_ = std::make_unique<ResourcesX11>(dpy_, theme);
 }
 
 GraphicsX11::~GraphicsX11()

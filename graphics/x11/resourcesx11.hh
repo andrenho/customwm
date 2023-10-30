@@ -9,18 +9,17 @@
 
 class ResourcesX11 {
 public:
-    explicit ResourcesX11(Display* dpy): dpy_(dpy) {}
+    explicit ResourcesX11(Display* dpy, Theme& theme): dpy_(dpy), theme_(theme) {}
     ~ResourcesX11();
 
-    void load_resources(Theme& theme);
-
-    XftFont* get_font(std::string const& name) { return fonts_.at(name); }
+    XftFont* get_font(std::string const& key) const;
 
 private:
-    std::unordered_map<std::string, XftFont*> fonts_;
+    mutable std::unordered_map<std::string, XftFont*> fonts_;
     Display* dpy_;
+    Theme& theme_;
 
-    void load_fonts(Theme& theme);
+    XftFont* load_font(std::string const& key) const;
 };
 
 #endif //RESOURCESX11_HH_

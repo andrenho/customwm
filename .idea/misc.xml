@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="CidrRootsConfiguration">
-    <sourceRoots>
-      <file path="$PROJECT_DIR$/customwm" />
-      <file path="$PROJECT_DIR$/graphics" />
-      <file path="$PROJECT_DIR$/theme" />
-    </sourceRoots>
-  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MakefileSettings">
     <option name="linkedExternalProjectsSettings">
       <MakefileProjectSettings>
-        <option name="buildOptions" value="-j 10 DEBUG=1" />
+        <option name="buildOptions" value="-j10 DEBUG=1" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
