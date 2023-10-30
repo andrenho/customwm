@@ -68,3 +68,55 @@ Color Color::from_lua(lua_State *L, int index)
         return {};
     }
 }
+
+TextProperties TextProperties::from_lua(lua_State* L, int index)
+{
+    TextProperties tp;
+
+    if (luaw_hasfield(L, index, "font"))
+        tp.font = luaw_getfield<std::string>(L, index, "font");
+    if (luaw_hasfield(L, index, "color"))
+        tp.color = luaw_getfield<Color>(L, index, "color");
+    if (luaw_hasfield(L, index, "w"))
+        tp.w = luaw_getfield<int32_t>(L, index, "w");
+    if (luaw_hasfield(L, index, "h"))
+        tp.h = luaw_getfield<int32_t>(L, index, "h");
+    
+    if (luaw_hasfield(L, index, "halign")) {
+        std::string halign = luaw_getfield<std::string>(L, index, "halign");
+        if (halign == "left")
+            tp.halign = Left;
+        else if (halign == "center")
+            tp.halign = HCenter;
+        else if (halign == "right")
+            tp.halign = Right;
+        else
+            luaL_error(L, "Invalid value for halign field: %s", halign.c_str());
+    }
+
+    if (luaw_hasfield(L, index, "valign")) {
+        std::string valign = luaw_getfield<std::string>(L, index, "valign");
+        if (valign == "top")
+            tp.valign = Top;
+        else if (valign == "center")
+            tp.valign = VCenter;
+        else if (valign == "bottom")
+            tp.valign = Bottom;
+        else
+            luaL_error(L, "Invalid value for valign field: %s", valign.c_str());
+    }
+
+    if (luaw_hasfield(L, index, "overflow")) {
+        std::string overflow = luaw_getfield<std::string>(L, index, "overflow");
+        if (overflow == "visible")
+            tp.overflow = Visible;
+        else if (overflow == "hidden")
+            tp.overflow = Hidden;
+        else if (overflow == "ellipsis")
+            tp.overflow = Ellipsis;
+        else
+            luaL_error(L, "Invalid value for overflow field: %s", overflow.c_str());
+    }
+
+    return tp;
+}

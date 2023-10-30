@@ -84,15 +84,10 @@ XftColor& WindowX11::get_xft_color(Color const &color)
     return kv.first->second;
 }
 
-void WindowX11::text(int x, int y, std::string const &text, std::string const &font_key, Color const &color)
+void WindowX11::text(int x, int y, std::string const &text, TextProperties const& tp)
 {
-    XftFont* font;
-    try {
-        font = resources_.get_font(font_key);
-    } catch (std::out_of_range&) {
-        throw std::runtime_error("Font '" + font_key + "' not found.");
-    }
+    XftFont* font = resources_.get_font(tp.font);
 
-    XftDrawStringUtf8(xft_draw_, &(get_xft_color(color)), font, x, y,
+    XftDrawStringUtf8(xft_draw_, &(get_xft_color(tp.color)), font, x, y,
                       (FcChar8 const *) text.c_str(), (int) text.size());
 }

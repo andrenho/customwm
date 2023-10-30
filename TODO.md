@@ -8,10 +8,6 @@ Text
 
 Images
 
-Fixes:
-  - [ ] Rename X11 files (?)
-  - [ ] Const correctness (specially in Theme)
-
 Error management
   - [ ] luaw_to - check type
   - [ ] Check for libraries

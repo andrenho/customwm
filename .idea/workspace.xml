@@ -18,18 +18,16 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85af904c-4e08-41cc-b7a2-66d490ad309f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="85af904c-4e08-41cc-b7a2-66d490ad309f" name="Changes" comment=".">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contrib/luaw" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contrib/luaw/luajit" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw/luajit" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/graphicsx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/graphicsx11.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/resourcesx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/resourcesx11.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/resourcesx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/resourcesx11.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/theme.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/theme.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/theme.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/theme.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/windowx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/windowx11.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/windowx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/windowx11.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_window.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_window.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/types.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/types.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/types.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/types.hh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,11 +152,35 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1698665206661</updated>
-      <workItem from="1698665207679" duration="1077000" />
+      <workItem from="1698665207679" duration="2569000" />
     </task>
+    <task id="LOCAL-00001" summary=".">
+      <option name="closed" value="true" />
+      <created>1698666322669</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1698666322669</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
   </component>
 </project>
