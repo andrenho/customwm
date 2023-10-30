@@ -6,16 +6,22 @@
 #include <unordered_map>
 #include <string>
 #include "theme/theme.hh"
+#include "theme/types/types.hh"
 
 class ResourcesX11 {
 public:
-    explicit ResourcesX11(Display* dpy, Theme& theme): dpy_(dpy), theme_(theme) {}
+    ResourcesX11(Display* dpy, Theme& theme);
     ~ResourcesX11();
 
-    XftFont* get_font(std::string const& key) const;
+    unsigned long get_color(Color const &color) const;
+    XftColor&     get_xft_color(Color const& color) const;
+    XftFont*      get_font(std::string const& key) const;
 
 private:
+    mutable std::map<Color, unsigned long>            colors_;
+    mutable std::map<Color, XftColor>                 xft_colors_;
     mutable std::unordered_map<std::string, XftFont*> fonts_;
+
     Display* dpy_;
     Theme& theme_;
 

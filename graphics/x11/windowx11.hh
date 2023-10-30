@@ -25,20 +25,13 @@ public:
 
     Rectangle rect() const override { return rectangle; }
     void fill(Color const &color) override;
-
     void text(int x, int y, std::string const &text, TextProperties const& tp) override;
 
 private:
     Display* dpy_;
     ResourcesX11& resources_;
-    Colormap colormap_;
     GC gc_;
     XftDraw* xft_draw_ = nullptr;
-    std::map<Color, unsigned long> colors_;
-    std::map<Color, XftColor>      xft_colors_;
-
-    unsigned long get_color(Color const &color);
-    XftColor&     get_xft_color(Color const& color);
 };
 
 #endif //WINDOWX11_HH_
