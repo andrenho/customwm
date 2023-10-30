@@ -70,3 +70,8 @@ try_again:
     XftDrawStringUtf8(xft_draw_, &(resources_.get_xft_color(tp.color)), font, x, y,
                       (FcChar8 const *) text.c_str(), (int) text.size());
 }
+
+void WindowX11::draw(int x, int y, std::string const &slice)
+{
+
+}

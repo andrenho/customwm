@@ -12,6 +12,7 @@ struct L_Window {
     [[nodiscard]] virtual Rectangle rect() const = 0;
     virtual void fill(Color const& color) = 0;
     virtual void text(int x, int y, std::string const& text, TextProperties const& text_properties) = 0;
+    virtual void draw(int x, int y, std::string const& slice) = 0;
 
     static constexpr const char* mt_identifier = "Window";
 };

@@ -19,9 +19,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85af904c-4e08-41cc-b7a2-66d490ad309f" name="Changes" comment=".">
+      <change afterPath="$PROJECT_DIR$/customwm/basic.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contrib/luaw" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/windowx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/windowx11.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/windowx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/windowx11.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_window.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_window.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.hh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +94,8 @@
     "WebServerToolWindowFactoryState": "false",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "1b3d1d97",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/aw98156/prj/customwm/customwm",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -100,6 +105,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/customwm" />
+    </key>
+  </component>
   <component name="RunManager" selected="Makefile Application.customwm-x11">
     <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="all" CONFIG_NAME="all" version="1">
       <method v="2">
@@ -144,7 +154,7 @@
       <updated>1698665206661</updated>
       <workItem from="1698665207679" duration="7074000" />
       <workItem from="1698677536259" duration="1000" />
-      <workItem from="1698698211599" duration="2523000" />
+      <workItem from="1698698211599" duration="3917000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -202,7 +212,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698700666660</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary=".">
+      <option name="closed" value="true" />
+      <created>1698701658135</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1698701658135</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -22,6 +22,14 @@ local theme = {
             basic = { "helvetica-18" },
         },
 
+        images = {
+            main = { src = "file", filename = "customwm/customwm.png" },
+        },
+
+        slices = {
+            x = { image = 'main', rect = { x=0, y=0, w=24, y=24 } },
+        },
+
     },
 
     wm = {
@@ -91,10 +99,11 @@ local theme = {
 
         on_expose = function(window, exposed_area)
             window:fill("#ffdfff")
-            window:text(0, 0, "Hello world!", {
+            window:text(24, 24, "Hello world!", {
                 font = "basic", color = "#ff0000",
                 w = 60,
             })
+            window:draw(0, 0, "x")
         end,
     }
 
