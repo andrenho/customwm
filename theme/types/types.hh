@@ -51,8 +51,8 @@ struct TextProperties {
     Color                              color { 0, 0, 0 };
     enum { Left, HCenter, Right }      halign = Left;
     enum { Top, VCenter, Bottom }      valign = Top;
-    int32_t                            w = 0;
-    int32_t                            h = 0;
+    uint32_t                           w = 0;
+    uint32_t                           h = 0;
     enum { Visible, Hidden, Ellipsis } overflow = Visible;
 
     static TextProperties from_lua(lua_State* L, int index);

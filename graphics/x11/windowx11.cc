@@ -24,9 +24,25 @@ void WindowX11::fill(Color const &color)
     XFlush(dpy_);
 }
 
-void WindowX11::text(int x, int y, std::string const &text, TextProperties const& tp)
+void WindowX11::text(int x, int y, std::string const &text, TextProperties const& tp_)
 {
+    TextProperties tp = tp_;
+
     XftFont* font = resources_.get_font(tp.font);
+
+    XGlyphInfo glyph_info;
+    XftTextExtentsUtf8(dpy_, font, (FcChar8 const *) text.c_str(), (int) text.size(), &glyph_info);
+
+    if (tp.w == 0)
+        tp.w = glyph_info.width;
+    if (tp.h == 0)
+        tp.h = glyph_info.height;
+
+    if (tp.halign == TextProperties::HCenter) {
+        x += ((int32_t) tp.w / 2) - (glyph_info.width / 2);
+    } else if (tp.halign == TextProperties::Right) {
+        x += (int32_t) tp.w - glyph_info.width;
+    }
 
     XftDrawStringUtf8(xft_draw_, &(resources_.get_xft_color(tp.color)), font, x, y,
                       (FcChar8 const *) text.c_str(), (int) text.size());

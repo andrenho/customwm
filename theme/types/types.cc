@@ -78,9 +78,9 @@ TextProperties TextProperties::from_lua(lua_State* L, int index)
     if (luaw_hasfield(L, index, "color"))
         tp.color = luaw_getfield<Color>(L, index, "color");
     if (luaw_hasfield(L, index, "w"))
-        tp.w = luaw_getfield<int32_t>(L, index, "w");
+        tp.w = luaw_getfield<uint32_t>(L, index, "w");
     if (luaw_hasfield(L, index, "h"))
-        tp.h = luaw_getfield<int32_t>(L, index, "h");
+        tp.h = luaw_getfield<uint32_t>(L, index, "h");
     
     if (luaw_hasfield(L, index, "halign")) {
         std::string halign = luaw_getfield<std::string>(L, index, "halign");
