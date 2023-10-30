@@ -9,6 +9,7 @@ Text
 Images
 
 Error management
-  - [ ] luaw_to - check type
+  - [x] luaw_to - check type
   - [ ] Check for libraries
   - [ ] Reload config file
+  - [ ] lua_error management

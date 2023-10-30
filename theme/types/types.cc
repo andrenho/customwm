@@ -21,6 +21,12 @@ void Rectangle::to_lua(lua_State *L) const
     luaw_setfield(L, -1, "h", h);
 }
 
+bool Rectangle::lua_is(lua_State *L, int index)
+{
+    return lua_istable(L, index) && luaw_hasfield(L, index, "x") && luaw_hasfield(L, index, "y")
+            && luaw_hasfield(L, index, "w") && luaw_hasfield(L, index, "h");
+}
+
 Point Point::from_lua(lua_State *L, int index)
 {
     return {
@@ -29,11 +35,21 @@ Point Point::from_lua(lua_State *L, int index)
     };
 }
 
+bool Point::lua_is(lua_State *L, int index)
+{
+    return lua_istable(L, index) && luaw_hasfield(L, index, "x") && luaw_hasfield(L, index, "y");
+}
+
 void Size::to_lua(lua_State *L) const
 {
     lua_newtable(L);
     luaw_setfield(L, -1, "w", w);
     luaw_setfield(L, -1, "h", h);
+}
+
+bool Size::lua_is(lua_State *L, int index)
+{
+    return lua_istable(L, index) && luaw_hasfield(L, index, "w") && luaw_hasfield(L, index, "h");
 }
 
 WindowStartingLocation WindowStartingLocation::from_lua(lua_State *L, int index)
@@ -67,6 +83,11 @@ Color Color::from_lua(lua_State *L, int index)
         luaL_error(L, "Invalid color format");
         return {};
     }
+}
+
+bool Color::lua_is(lua_State *L, int index)
+{
+    return lua_isstring(L, index) && luaw_len(L, index) == 7 && luaw_to<std::string>(L, index).starts_with("#");
 }
 
 TextProperties TextProperties::from_lua(lua_State* L, int index)
@@ -119,4 +140,9 @@ TextProperties TextProperties::from_lua(lua_State* L, int index)
     }
 
     return tp;
+}
+
+bool TextProperties::lua_is(lua_State *L, int index)
+{
+    return lua_istable(L, index);
 }

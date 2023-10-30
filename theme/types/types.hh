@@ -12,18 +12,21 @@ struct Rectangle {
 
     void to_lua(lua_State* L) const;
     static Rectangle from_lua(lua_State* L, int index);
+    static bool lua_is(lua_State* L, int index);
 };
 
 struct Point {
     int32_t x, y;
 
     static Point from_lua(lua_State* L, int index);
+    static bool lua_is(lua_State* L, int index);
 };
 
 struct Size {
     uint32_t w, h;
 
     void to_lua(lua_State* L) const;
+    static bool lua_is(lua_State* L, int index);
 };
 
 struct Color {
@@ -36,6 +39,7 @@ struct Color {
     }
 
     static Color from_lua(lua_State* L, int index);
+    static bool lua_is(lua_State* L, int index);
 };
 
 struct WindowStartingLocation {
@@ -56,6 +60,7 @@ struct TextProperties {
     enum { Visible, Hidden, Ellipsis } overflow = Visible;
 
     static TextProperties from_lua(lua_State* L, int index);
+    static bool lua_is(lua_State* L, int index);
 };
 
 #endif //TYPES_HH_
