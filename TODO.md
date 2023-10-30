@@ -4,7 +4,7 @@ Text
   - [x] Load font
   - [x] Write text
   - [x] Load resources on demand
-  - [ ] Text properties
+  - [x] Text properties
 
 Images
 
