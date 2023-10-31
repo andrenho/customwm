@@ -23,11 +23,11 @@ local theme = {
         },
 
         images = {
-            main = { src = "file", filename = "customwm/customwm.png" },
+            main = { filename = "customwm/customwm.png" },
         },
 
         slices = {
-            x = { image = 'main', rect = { x=0, y=0, w=24, y=24 } },
+            x = { image = 'main', rect = { x=0, y=0, w=24, h=24 } },
         },
 
     },

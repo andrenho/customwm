@@ -151,7 +151,7 @@ Slice Slice::from_lua(lua_State *L, int index)
 {
     return {
         .image = luaw_getfield<std::string>(L, index, "image"),
-        .rect = luaw_getfield<Rectangle>(L, index, "image"),
+        .rect = luaw_getfield<Rectangle>(L, index, "rect"),
     };
 }
 

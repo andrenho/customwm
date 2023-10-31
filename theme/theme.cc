@@ -1,6 +1,8 @@
 #include "theme.hh"
 
 #include <sys/stat.h>
+#include <ios>
+#include <fstream>
 
 #include "themeexception.hh"
 #include "themehelper.embed"
@@ -124,8 +126,16 @@ restart:
 
 std::vector<uint8_t> Theme::resource_image(std::string const &key) const
 {
-    // TODO
+    lua_getglobal(L, THEME_GLOBAL);
+    if (!luaw_hasfield(L, -1, "resources.images." + key))
+        throw std::runtime_error("Could not find resource image '" + key + "'");
+    luaw_getfield(L, -1, "resources.images." + key);
 
-    return std::vector<uint8_t>();
+    if (luaw_hasfield(L, -1, "filename")) {
+        std::ifstream stream(luaw_getfield<std::string>(L, -1, "filename"), std::ios::in | std::ios::binary);
+        return { std::istreambuf_iterator<char>(stream), std::istreambuf_iterator<char>() };
+    } else {
+        throw std::runtime_error("Malformed resource image");
+    }
 }
 
