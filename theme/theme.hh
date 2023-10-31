@@ -10,6 +10,7 @@
 #include <sys/stat.h>
 
 #include "luaw.hh"
+#include "theme/types/types.hh"
 
 class Theme {
 public:
@@ -23,6 +24,7 @@ public:
     void call_opt(std::string const& prop, auto&&... args);
 
     std::vector<std::string> resource_font(std::string const& key) const;
+    Slice resource_slice(std::string const& key) const;
 
     template <typename T> void create_global_object(std::string const& lua_name, T* object);
 

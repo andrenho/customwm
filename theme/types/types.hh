@@ -63,4 +63,12 @@ struct TextProperties {
     static bool lua_is(lua_State* L, int index);
 };
 
+struct Slice {
+    std::string image;
+    Rectangle   rect;
+
+    static Slice from_lua(lua_State* L, int index);
+    static bool lua_is(lua_State* L, int index);
+};
+
 #endif //TYPES_HH_

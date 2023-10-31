@@ -16,16 +16,19 @@ public:
     unsigned long get_color(Color const &color) const;
     XftColor&     get_xft_color(Color const& color) const;
     XftFont*      get_font(std::string const& key) const;
+    std::pair<XImage*, Rectangle> get_slice_image(std::string const& slice_name) const;
 
 private:
     mutable std::map<Color, unsigned long>            colors_;
     mutable std::map<Color, XftColor>                 xft_colors_;
     mutable std::unordered_map<std::string, XftFont*> fonts_;
+    mutable std::unordered_map<std::string, XImage*>  images_;
 
     Display* dpy_;
     Theme& theme_;
 
     XftFont* load_font(std::string const& key) const;
+    XImage* load_image(uint8_t* data, size_t sz) const;
 };
 
 #endif //RESOURCESX11_HH_

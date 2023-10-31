@@ -73,5 +73,7 @@ try_again:
 
 void WindowX11::draw(int x, int y, std::string const &slice)
 {
-
+    auto [ximage, rect] = resources_.get_slice_image(slice);
+    XPutImage(dpy_, parent_id, gc_, ximage, rect.x, rect.y, x, y, rect.w, rect.h);
+    XFlush(dpy_);
 }

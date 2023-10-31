@@ -75,6 +75,19 @@ std::vector<std::string> Theme::resource_font(std::string const& key) const
     return r;
 }
 
+Slice Theme::resource_slice(std::string const &key) const
+{
+    lua_getglobal(L, THEME_GLOBAL);
+    if (!luaw_hasfield(L, -1, "resources.slices." + key)) {
+        lua_pop(L, 1);
+        return {};
+    }
+
+    auto r = luaw_getfield<Slice>(L, -1, "resources.slices." + key);
+    lua_pop(L, 1);
+    return r;
+}
+
 void Theme::add_watched_file(std::string const& filename)
 {
     struct stat result {};
@@ -108,3 +121,4 @@ restart:
 
     throw RestartException();
 }
+

@@ -146,3 +146,17 @@ bool TextProperties::lua_is(lua_State *L, int index)
 {
     return lua_istable(L, index);
 }
+
+Slice Slice::from_lua(lua_State *L, int index)
+{
+    return {
+        .image = luaw_getfield<std::string>(L, index, "image"),
+        .rect = luaw_getfield<Rectangle>(L, index, "image"),
+    };
+}
+
+bool Slice::lua_is(lua_State *L, int index)
+{
+    return lua_type(L, index) == LUA_TTABLE &&
+           luaw_hasfield(L, index, "image") && luaw_hasfield(L, index, "rect");
+}
