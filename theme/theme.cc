@@ -75,7 +75,7 @@ std::vector<std::string> Theme::resource_font(std::string const& key) const
     return r;
 }
 
-Slice Theme::resource_slice(std::string const &key) const
+std::optional<Slice> Theme::resource_slice(std::string const &key) const
 {
     lua_getglobal(L, THEME_GLOBAL);
     if (!luaw_hasfield(L, -1, "resources.slices." + key)) {
@@ -120,5 +120,12 @@ restart:
     }
 
     throw RestartException();
+}
+
+std::vector<uint8_t> Theme::resource_image(std::string const &key) const
+{
+    // TODO
+
+    return std::vector<uint8_t>();
 }
 

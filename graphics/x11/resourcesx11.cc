@@ -85,11 +85,20 @@ XftFont* ResourcesX11::get_font(std::string const& key) const
 
 std::pair<XImage*, Rectangle> ResourcesX11::get_slice_image(std::string const& slice_name) const
 {
-    Slice slice = theme_.resource_slice(slice_name);
+    auto slice = theme_.resource_slice(slice_name);
+    if (!slice.has_value())
+        throw std::runtime_error("Slice '" + slice_name + "' not found in theme file.");
 
-    // TODO...
+    XImage *ximage;
+    auto it = images_.find(slice->image);
+    if (it == images_.end()) {
+        auto [it2, _] = images_.emplace(slice->image, load_image(slice->image));
+        ximage = it2->second;
+    } else {
+        ximage = it->second;
+    }
 
-    return { nullptr, { 0, 0, 0, 0 } };
+    return { ximage, slice->rect };
 }
 
 XftFont* ResourcesX11::load_font(std::string const& key) const
@@ -107,9 +116,12 @@ XftFont* ResourcesX11::load_font(std::string const& key) const
     throw std::runtime_error("A font for resource '" + key + "' could not be loaded.");
 }
 
-XImage *ResourcesX11::load_image(uint8_t *data, size_t sz) const
+XImage *ResourcesX11::load_image(std::string const& key) const
 {
+    auto image = theme_.resource_image(key);
+
     // TODO
+
     return nullptr;
 }
 

@@ -28,7 +28,7 @@ private:
     Theme& theme_;
 
     XftFont* load_font(std::string const& key) const;
-    XImage* load_image(uint8_t* data, size_t sz) const;
+    XImage* load_image(std::string const& key) const;
 };
 
 #endif //RESOURCESX11_HH_

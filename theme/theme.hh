@@ -2,6 +2,7 @@
 #define THEME_HH_
 
 #include <functional>
+#include <optional>
 #include <memory>
 #include <string>
 #include <utility>
@@ -24,7 +25,8 @@ public:
     void call_opt(std::string const& prop, auto&&... args);
 
     std::vector<std::string> resource_font(std::string const& key) const;
-    Slice resource_slice(std::string const& key) const;
+    std::optional<Slice> resource_slice(std::string const& key) const;
+    std::vector<uint8_t> resource_image(std::string const& key) const;
 
     template <typename T> void create_global_object(std::string const& lua_name, T* object);
 
