@@ -142,15 +142,15 @@ Image ResourcesX11::load_image(std::string const& key) const
 
         int y = (i / 4) / w;
         int x = (i / 4) - (y * w);
-        printf("%d %d\n", x, y);
+        printf("%d\n", x);
 
         image_data[i] = data[i+2];
         image_data[i+1] = data[i+1];
         image_data[i+2] = data[i];
-        image_data[i+3] = data[i+3];
+        image_data[i+3] = 0;
 
-        if (data[i+4] == 0x0) { // transparent
-            mask_data[i / 4 / 8] = (1 << ((i / 4) % 8));
+        if (data[i+3] == 0xff) { // non-transparent
+            mask_data[i / 4 / 8] |= (1 << ((i / 4) % 8));
         }
     }
 
@@ -167,13 +167,11 @@ Image ResourcesX11::load_image(std::string const& key) const
     free(data);
 
     // create mask
-    /*
     Pixmap mask = XCreatePixmapFromBitmapData(dpy_, DefaultRootWindow(dpy_), (char *) mask_data, w, h,
-                                              WhitePixel(dpy_, scr), BlackPixel(dpy_, scr), depth);
-                                              */
+                                              WhitePixel(dpy_, scr), BlackPixel(dpy_, scr), 1);
 
     LOG.debug("Image created for '%s'", key.c_str());
 
-    return { .pixmap = pixmap };
+    return { .pixmap = pixmap, .mask = mask };
 }
 

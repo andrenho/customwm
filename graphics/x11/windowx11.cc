@@ -74,6 +74,9 @@ try_again:
 void WindowX11::draw(int x, int y, std::string const &slice)
 {
     auto [image, rect] = resources_.get_slice_image(slice);
+    XSetClipMask(dpy_, gc_, image.mask);
+    XSetClipOrigin(dpy_, gc_, -rect.x + x, -rect.y + y);
     XCopyArea(dpy_, image.pixmap, parent_id, gc_, rect.x, rect.y, rect.w, rect.h, x, y);
+    XSetClipMask(dpy_, gc_, None);
     XFlush(dpy_);
 }

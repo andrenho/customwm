@@ -19,7 +19,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85af904c-4e08-41cc-b7a2-66d490ad309f" name="Changes" comment=".">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customwm/customwm.png" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/resourcesx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/resourcesx11.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/windowx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/windowx11.cc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,11 +295,6 @@
           <url>file://$PROJECT_DIR$/theme/theme.cc</url>
           <line>139</line>
           <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/graphics/x11/windowx11.cc</url>
-          <line>76</line>
-          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

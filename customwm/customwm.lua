@@ -103,7 +103,8 @@ local theme = {
                 font = "basic", color = "#ff0000",
                 w = 60,
             })
-            window:draw(0, 0, "x")
+            window:draw(15, 15, "x")
+            -- window:fill("#00ff00")
         end,
     }
 
