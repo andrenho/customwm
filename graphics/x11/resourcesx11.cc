@@ -1,7 +1,14 @@
 #include "resourcesx11.hh"
-#include "theme/logger.hh"
 
 #include <X11/Xft/Xft.h>
+
+#define STBI_NO_HDR
+#define STBI_NO_LINEAR
+#define STBI_NO_JPEG
+#define STBI_FAILURE_USERMSG
+#define STB_IMAGE_IMPLEMENTATION
+#include "contrib/stb_image.h"
+#include "theme/logger.hh"
 
 // see: https://archive.irixnet.org/apocrypha/nekonomicon/forum/15/8794/1.html
 
@@ -83,22 +90,22 @@ XftFont* ResourcesX11::get_font(std::string const& key) const
     return it2->second;
 }
 
-std::pair<XImage*, Rectangle> ResourcesX11::get_slice_image(std::string const& slice_name) const
+std::pair<Image, Rectangle> ResourcesX11::get_slice_image(std::string const& slice_name) const
 {
     auto slice = theme_.resource_slice(slice_name);
     if (!slice.has_value())
         throw std::runtime_error("Slice '" + slice_name + "' not found in theme file.");
 
-    XImage *ximage;
+    Image image;
     auto it = images_.find(slice->image);
     if (it == images_.end()) {
         auto [it2, _] = images_.emplace(slice->image, load_image(slice->image));
-        ximage = it2->second;
+        image = it2->second;
     } else {
-        ximage = it->second;
+        image = it->second;
     }
 
-    return { ximage, slice->rect };
+    return { image, slice->rect };
 }
 
 XftFont* ResourcesX11::load_font(std::string const& key) const
@@ -116,12 +123,56 @@ XftFont* ResourcesX11::load_font(std::string const& key) const
     throw std::runtime_error("A font for resource '" + key + "' could not be loaded.");
 }
 
-XImage *ResourcesX11::load_image(std::string const& key) const
+Image ResourcesX11::load_image(std::string const& key) const
 {
     auto image = theme_.resource_image(key);
 
-    // TODO
+    // load image pixels
+    int w, h;
+    int channels;
+    uint8_t* data = stbi_load_from_memory(image.data(), image.size(), &w, &h, &channels, 4);
 
-    return nullptr;
+    // convert RGB (from STI) to BGR (expected by X) and create mask
+    auto* image_data = new uint8_t[w * h * 4];  // it'll be freed by XDestroyImage
+
+    uint8_t mask_data[w * h / 8];
+    memset(mask_data, 0, sizeof mask_data);
+
+    for (int i = 0; i < w * h * 4; i += 4) {
+
+        int y = (i / 4) / w;
+        int x = (i / 4) - (y * w);
+        printf("%d %d\n", x, y);
+
+        image_data[i] = data[i+2];
+        image_data[i+1] = data[i+1];
+        image_data[i+2] = data[i];
+        image_data[i+3] = 0xff;
+
+        if (data[i+4] == 0x0) { // transparent
+            mask_data[i / 4 / 8] = (1 << ((i / 4) % 8));
+        }
+    }
+
+    // create image
+    int depth = DefaultDepthOfScreen(DefaultScreenOfDisplay(dpy_));
+    int scr = DefaultScreen(dpy_);
+    /*
+    XImage* ximage = XCreateImage(dpy_, DefaultVisual(dpy_, DefaultScreen(dpy_)), depth, ZPixmap, 0,
+                                  (char *) image_data, w, h, 32, 0);
+    Pixmap pixmap = XCreatePixmap(dpy_, DefaultRootWindow(dpy_), w, h, depth);
+    XPutImage(dpy_, pixmap, DefaultGC(dpy_, scr), ximage, 0, 0, 0, 0, w, h);
+
+    XDestroyImage(ximage);
+    free(data);
+     */
+
+    // create mask
+    Pixmap mask = XCreatePixmapFromBitmapData(dpy_, DefaultRootWindow(dpy_), (char *) mask_data, w, h,
+                                              WhitePixel(dpy_, scr), BlackPixel(dpy_, scr), depth);
+
+    LOG.debug("Image created for '%s'", key.c_str());
+
+    return { .pixmap = mask };
 }
 

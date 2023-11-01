@@ -8,6 +8,11 @@
 #include "theme/theme.hh"
 #include "theme/types/types.hh"
 
+struct Image {
+    Pixmap pixmap;
+    Pixmap mask;
+};
+
 class ResourcesX11 {
 public:
     ResourcesX11(Display* dpy, Theme& theme);
@@ -16,19 +21,19 @@ public:
     unsigned long get_color(Color const &color) const;
     XftColor&     get_xft_color(Color const& color) const;
     XftFont*      get_font(std::string const& key) const;
-    std::pair<XImage*, Rectangle> get_slice_image(std::string const& slice_name) const;
+    std::pair<Image, Rectangle> get_slice_image(std::string const& slice_name) const;
 
 private:
     mutable std::map<Color, unsigned long>            colors_;
     mutable std::map<Color, XftColor>                 xft_colors_;
     mutable std::unordered_map<std::string, XftFont*> fonts_;
-    mutable std::unordered_map<std::string, XImage*>  images_;
+    mutable std::unordered_map<std::string, Image>    images_;
 
     Display* dpy_;
     Theme& theme_;
 
     XftFont* load_font(std::string const& key) const;
-    XImage* load_image(std::string const& key) const;
+    Image    load_image(std::string const& key) const;
 };
 
 #endif //RESOURCESX11_HH_
