@@ -7,12 +7,12 @@ Text
   - [x] Text properties
 
 Images
-  - [ ] Find resource and slice
-  - [ ] Load image
-  - [ ] Translate image to XPixmap
-  - [ ] Paste image
-  - [ ] Translate image to XBitmap
-  - [ ] Paste with transparency
+  - [x] Find resource and slice
+  - [x] Load image
+  - [x] Translate image to XPixmap
+  - [x] Paste image
+  - [x] Translate image to XBitmap
+  - [x] Paste with transparency
 
 Error management
   - [x] luaw_to - check type
