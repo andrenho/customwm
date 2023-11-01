@@ -29,9 +29,6 @@ void WindowX11::fill(Color const &color)
 {
     cairo_set_source_rgb(cr, (double) color.r / 256.0, (double) color.g / 256.0, (double) color.b / 256.0);
     cairo_paint(cr);
-    cairo_surface_flush(cairo_sf);
-
-    XFlush(dpy_);
 }
 
 void WindowX11::text(int x, int y, std::string const &text_, TextProperties const& tp_)
@@ -85,5 +82,11 @@ void WindowX11::draw(int x, int y, std::string const &slice)
 {
     auto [image, rect] = resources_.get_slice_image(slice);
     XCopyArea(dpy_, image.pixmap, parent_id, gc_, rect.x, rect.y, rect.w, rect.h, x, y);
+    XFlush(dpy_);
+}
+
+void WindowX11::flush()
+{
+    cairo_surface_flush(cairo_sf);
     XFlush(dpy_);
 }

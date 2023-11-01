@@ -168,6 +168,9 @@ void WMX11::on_unmap_notify(XUnmapEvent const &e)
 void WMX11::on_expose(XExposeEvent const &e)
 {
     auto it = windows_.find(e.window);
-    if (it != windows_.end())
-        theme_.call_opt("wm.on_expose", (WindowX11 *) it->second.get(), Rectangle {e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
+    if (it != windows_.end()) {
+        WindowX11* window = it->second.get();
+        theme_.call_opt("wm.on_expose", window, Rectangle {e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
+        window->flush();
+    }
 }

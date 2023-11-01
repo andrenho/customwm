@@ -29,6 +29,8 @@ public:
     void text(int x, int y, std::string const &text, TextProperties const& tp) override;
     void draw(int x, int y, std::string const &slice) override;
 
+    void flush();
+
 private:
     Display* dpy_;
     ResourcesX11& resources_;
