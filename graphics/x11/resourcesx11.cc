@@ -23,6 +23,11 @@ ResourcesX11::~ResourcesX11()
     for (auto& [_, xft_color] : xft_colors_)
         XftColorFree(dpy_, DefaultVisual(dpy_, DefaultScreen(dpy_)), DefaultColormap(dpy_, DefaultScreen(dpy_)), &xft_color);
 
+    for (auto& [_, image] : images_) {
+        XFreePixmap(dpy_, image.pixmap);
+        XFreePixmap(dpy_, image.mask);
+    }
+
     std::vector<unsigned long> pixels(colors_.size());
     std::transform(colors_.begin(), colors_.end(), std::back_inserter(pixels),
                    [](std::pair<const Color, unsigned long>& p) { return p.second; });
