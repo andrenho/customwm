@@ -147,7 +147,7 @@ Image ResourcesX11::load_image(std::string const& key) const
         image_data[i] = data[i+2];
         image_data[i+1] = data[i+1];
         image_data[i+2] = data[i];
-        image_data[i+3] = 0xff;
+        image_data[i+3] = data[i+3];
 
         if (data[i+4] == 0x0) { // transparent
             mask_data[i / 4 / 8] = (1 << ((i / 4) % 8));
@@ -157,7 +157,7 @@ Image ResourcesX11::load_image(std::string const& key) const
     // create image
     int depth = DefaultDepthOfScreen(DefaultScreenOfDisplay(dpy_));
     int scr = DefaultScreen(dpy_);
-    /*
+
     XImage* ximage = XCreateImage(dpy_, DefaultVisual(dpy_, DefaultScreen(dpy_)), depth, ZPixmap, 0,
                                   (char *) image_data, w, h, 32, 0);
     Pixmap pixmap = XCreatePixmap(dpy_, DefaultRootWindow(dpy_), w, h, depth);
@@ -165,14 +165,15 @@ Image ResourcesX11::load_image(std::string const& key) const
 
     XDestroyImage(ximage);
     free(data);
-     */
 
     // create mask
+    /*
     Pixmap mask = XCreatePixmapFromBitmapData(dpy_, DefaultRootWindow(dpy_), (char *) mask_data, w, h,
                                               WhitePixel(dpy_, scr), BlackPixel(dpy_, scr), depth);
+                                              */
 
     LOG.debug("Image created for '%s'", key.c_str());
 
-    return { .pixmap = mask };
+    return { .pixmap = pixmap };
 }
 
