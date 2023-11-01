@@ -3,6 +3,7 @@
 
 #include <X11/Xlib.h>
 #include <X11/Xft/Xft.h>
+#include <cairo.h>
 
 #include "theme/types/l_window.hh"
 #include "resourcesx11.hh"
@@ -31,6 +32,8 @@ public:
 private:
     Display* dpy_;
     ResourcesX11& resources_;
+    cairo_surface_t* cairo_sf;
+    cairo_t* cr;
     GC gc_;
     XftDraw* xft_draw_ = nullptr;
 };

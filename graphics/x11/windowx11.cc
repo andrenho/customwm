@@ -1,17 +1,25 @@
 #include "windowx11.hh"
 #include "theme/logger.hh"
 
-#include <stdexcept>
+#include <cairo-xlib.h>
 
 WindowX11::WindowX11(Display* dpy, ResourcesX11& resources, Window parent_id, Window child_id, Rectangle const &rectangle)
         : parent_id(parent_id), child_id(child_id), rectangle(rectangle), dpy_(dpy), resources_(resources)
 {
+    cairo_sf = cairo_xlib_surface_create(dpy_, parent_id, DefaultVisual(dpy_, DefaultScreen(dpy_)), (int) rectangle.w, (int) rectangle.h);
+    cairo_xlib_surface_set_size(cairo_sf, (int) rectangle.w, (int) rectangle.h);
+
+    cr = cairo_create(cairo_sf);
+
     gc_ = XCreateGC(dpy_, parent_id, 0, nullptr);
     xft_draw_ = XftDrawCreate(dpy, parent_id, DefaultVisual(dpy, DefaultScreen(dpy)), DefaultColormap(dpy, DefaultScreen(dpy)));
 }
 
 WindowX11::~WindowX11()
 {
+    cairo_destroy(cr);
+    cairo_surface_destroy(cairo_sf);
+
     XftDrawDestroy(xft_draw_);
     XFreeGC(dpy_, gc_);
     XFlush(dpy_);
@@ -19,8 +27,10 @@ WindowX11::~WindowX11()
 
 void WindowX11::fill(Color const &color)
 {
-    XSetForeground(dpy_, gc_, resources_.get_color(color));
-    XFillRectangle(dpy_, parent_id, gc_, 0, 0, rectangle.w, rectangle.h);
+    cairo_set_source_rgb(cr, (double) color.r / 256.0, (double) color.g / 256.0, (double) color.b / 256.0);
+    cairo_paint(cr);
+    cairo_surface_flush(cairo_sf);
+
     XFlush(dpy_);
 }
 

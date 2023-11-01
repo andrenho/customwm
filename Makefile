@@ -17,7 +17,7 @@ OBJ_CUSTOMWM = customwm/main.o customwm/options.o
 #
 
 CPPFLAGS = -Wall -Wextra -I. -I./contrib/luaw/luaw -MD -MP $(shell pkg-config --cflags zlib)
-CPPFLAGS_X11 = $(shell pkg-config --cflags x11 xft) -DBACKEND=X11
+CPPFLAGS_X11 = $(shell pkg-config --cflags x11 xft cairo) -DBACKEND=X11
 CXXFLAGS = -std=c++20
 
 ifdef DEBUG
@@ -28,7 +28,7 @@ else
 endif
 
 LDFLAGS = $(shell pkg-config --libs zlib)
-LDFLAGS_X11 = ${LDFLAGS} $(shell pkg-config --libs x11 xft)
+LDFLAGS_X11 = ${LDFLAGS} $(shell pkg-config --libs x11 xft cairo)
 
 LUAW_PATH=contrib/luaw
 LUAW_FILE=${LUAW_PATH}/README.md
