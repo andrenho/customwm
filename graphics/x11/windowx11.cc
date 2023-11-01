@@ -2,6 +2,7 @@
 #include "theme/logger.hh"
 
 #include <cairo-xlib.h>
+#include <pango/pangocairo.h>
 
 WindowX11::WindowX11(Display* dpy, ResourcesX11& resources, Window parent_id, Window child_id, Rectangle const &rectangle)
         : parent_id(parent_id), child_id(child_id), rectangle(rectangle), dpy_(dpy), resources_(resources)
@@ -27,12 +28,25 @@ WindowX11::~WindowX11()
 
 void WindowX11::fill(Color const &color)
 {
-    cairo_set_source_rgb(cr, (double) color.r / 256.0, (double) color.g / 256.0, (double) color.b / 256.0);
+    cairo_set_source_rgba(cr, (double) color.r / 255.0, (double) color.g / 255.0, (double) color.b / 255.0, (double) color.a / 255.0);
     cairo_paint(cr);
 }
 
 void WindowX11::text(int x, int y, std::string const &text_, TextProperties const& tp_)
 {
+    PangoLayout* layout = pango_cairo_create_layout(cr);
+    pango_layout_set_text(layout, text_.c_str(), -1);
+
+    // TODO - move to resources
+    PangoFontDescription* desc = pango_font_description_from_string(tp_.font.c_str());
+    pango_layout_set_font_description(layout, desc);
+    pango_font_description_free(desc);
+
+    cairo_set_source_rgba(cr, (double) tp_.color.r / 255.0, (double) tp_.color.g / 255.0, (double) tp_.color.b / 255.0, (double) tp_.color.a / 255.0);
+    pango_cairo_update_layout(cr, layout);
+    pango_cairo_show_layout(cr, layout);
+
+    /*
     TextProperties tp = tp_;
     std::string text = text_;
 
@@ -76,6 +90,7 @@ try_again:
 
     XftDrawStringUtf8(xft_draw_, &(resources_.get_xft_color(tp.color)), font, x, y,
                       (FcChar8 const *) text.c_str(), (int) text.size());
+                      */
 }
 
 void WindowX11::draw(int x, int y, std::string const &slice)
