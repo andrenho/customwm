@@ -26,24 +26,44 @@ WindowX11::~WindowX11()
     XFlush(dpy_);
 }
 
+void WindowX11::cairo_set_color(cairo_t* cr_, Color const &color) const {
+    cairo_set_source_rgba(cr_, (double) color.r / 255.0, (double) color.g / 255.0, (double) color.b / 255.0, (double) color.a / 255.0);
+}
+
 void WindowX11::fill(Color const &color)
 {
-    cairo_set_source_rgba(cr, (double) color.r / 255.0, (double) color.g / 255.0, (double) color.b / 255.0, (double) color.a / 255.0);
+    cairo_set_color(cr, color);
     cairo_paint(cr);
 }
 
-void WindowX11::text(int x, int y, std::string const &text_, TextProperties const& tp_)
+void WindowX11::text(int x, int y, std::string const &text_, TextProperties const& tp)
 {
     PangoLayout* layout = pango_cairo_create_layout(cr);
     pango_layout_set_text(layout, text_.c_str(), -1);
 
     // TODO - move to resources
-    PangoFontDescription* desc = pango_font_description_from_string(tp_.font.c_str());
+    PangoFontDescription* desc = pango_font_description_from_string(tp.font.c_str());
     pango_layout_set_font_description(layout, desc);
     pango_font_description_free(desc);
 
-    cairo_set_source_rgba(cr, (double) tp_.color.r / 255.0, (double) tp_.color.g / 255.0, (double) tp_.color.b / 255.0, (double) tp_.color.a / 255.0);
+    cairo_set_color(cr, tp.color);
+
+    if (tp.w == 0)
+        pango_layout_set_width(layout, -1);
+    else
+        pango_layout_set_width(layout, PANGO_UNITS_ROUND(tp.w));
+
+    if (tp.halign == TextProperties::HCenter)
+        pango_layout_set_alignment(layout, PANGO_ALIGN_CENTER);
+    else if (tp.halign == TextProperties::Right)
+        pango_layout_set_alignment(layout, PANGO_ALIGN_RIGHT);
+
+    if (tp.overflow == TextProperties::Ellipsis)
+        pango_layout_set_ellipsize(layout, PANGO_ELLIPSIZE_END);
+
     pango_cairo_update_layout(cr, layout);
+
+    cairo_translate(cr, x, y);
     pango_cairo_show_layout(cr, layout);
 
     /*

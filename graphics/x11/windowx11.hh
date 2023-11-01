@@ -39,6 +39,8 @@ private:
     cairo_t* cr;
     GC gc_;
     XftDraw* xft_draw_ = nullptr;
+
+    void cairo_set_color(cairo_t* cr, Color const &color) const;
 };
 
 #endif //WINDOWX11_HH_
