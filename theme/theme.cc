@@ -132,8 +132,12 @@ std::vector<uint8_t> Theme::resource_image(std::string const &key) const
     luaw_getfield(L, -1, "resources.images." + key);
 
     if (luaw_hasfield(L, -1, "filename")) {
-        std::ifstream stream(luaw_getfield<std::string>(L, -1, "filename"), std::ios::in | std::ios::binary);
-        return { std::istreambuf_iterator<char>(stream), std::istreambuf_iterator<char>() };
+        std::string filename = luaw_getfield<std::string>(L, -1, "filename");
+        std::ifstream stream(filename, std::ios::in | std::ios::binary);
+        if (!stream.good())
+            throw std::runtime_error("Could not open file '" + filename + "'");
+        std::vector<uint8_t> contents { std::istreambuf_iterator<char>(stream), std::istreambuf_iterator<char>() };
+        return contents;
     } else {
         throw std::runtime_error("Malformed resource image");
     }
