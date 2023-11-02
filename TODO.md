@@ -9,6 +9,8 @@ Window:
     - [x] On hotspot click (?)
     - [x] Attach window to pointer
     - [x] On move
+  - [ ] Grab
+    - [ ] Set cursor
   - [ ] Resize
   - [ ] Minimize
   - [ ] Maximize
@@ -21,10 +23,14 @@ Menu
 
 Bar
 
+Improvements:
+  - [ ] Create X window in WMWindow
+  - [ ] Cache properties
+  - [ ] Global Visual, Screen, Colormap, etc...
+
 Error management
   - [x] luaw_to - check type
-  - [ ] Global Visual, Screen, Colormap, etc...
   - [ ] Check for libraries
   - [ ] Reload config file
-  - [ ] lua_error management
   - [ ] Better mouse button names
+  - [ ] lua_error management
