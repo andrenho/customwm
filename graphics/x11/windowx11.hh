@@ -28,6 +28,8 @@ public:
     void text(int x, int y, std::string const &text, TextProperties const& tp) override;
     void draw(int x, int y, std::string const &slice) override;
 
+    std::optional<std::string> name() const override;
+
 private:
     Display* dpy_;
     ResourcesX11& resources_;

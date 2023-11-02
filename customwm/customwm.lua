@@ -104,7 +104,7 @@ local theme = {
                 w = 60,
             })
             window:draw(15, 15, "x")
-            -- window:fill("#00ff00")
+            print(window:name())
         end,
     }
 

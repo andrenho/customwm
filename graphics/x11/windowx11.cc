@@ -80,3 +80,12 @@ void WindowX11::draw(int x, int y, std::string const &slice)
     XSetClipMask(dpy_, gc_, None);
     XFlush(dpy_);
 }
+
+std::optional<std::string> WindowX11::name() const
+{
+    XTextProperty p;
+    if ((XGetWMName(dpy_, child_id, &p) == 0) || p.value == nullptr)
+        return {};
+
+    return (char *) p.value;
+}

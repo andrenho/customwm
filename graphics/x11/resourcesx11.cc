@@ -145,10 +145,6 @@ Image ResourcesX11::load_image(std::string const& key) const
 
     for (int i = 0; i < w * h * 4; i += 4) {
 
-        int y = (i / 4) / w;
-        int x = (i / 4) - (y * w);
-        printf("%d\n", x);
-
         image_data[i] = data[i+2];
         image_data[i+1] = data[i+1];
         image_data[i+2] = data[i];

@@ -1,18 +1,15 @@
 ## Theme
 
-Text
-  - [x] Load font
-  - [x] Write text
-  - [x] Load resources on demand
-  - [x] Text properties
+Window:
+  - [x] Read window name
+  - [ ] Move window
+  - [ ] Resize
+  - [ ] Minimize
+  - [ ] Maximize
 
-Images
-  - [x] Find resource and slice
-  - [x] Load image
-  - [x] Translate image to XPixmap
-  - [x] Paste image
-  - [x] Translate image to XBitmap
-  - [x] Paste with transparency
+W95 theme:
+  - [ ] Graphics
+    - [ ] Code to position graphics on window
 
 Error management
   - [x] luaw_to - check type
