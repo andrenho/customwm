@@ -4,12 +4,11 @@ Window:
   - [x] Read window name
   - [x] Set correct cursor
   - [x] Define hotspot areas
-  - [ ] Move window
+  - [x] Move window
     - [x] On click (clicks going through?)
     - [x] On hotspot click (?)
-    - [ ] Attach window to pointer
-    - [ ] On move
-    - [ ] Move types
+    - [x] Attach window to pointer
+    - [x] On move
   - [ ] Resize
   - [ ] Minimize
   - [ ] Maximize
@@ -28,3 +27,4 @@ Error management
   - [ ] Check for libraries
   - [ ] Reload config file
   - [ ] lua_error management
+  - [ ] Better mouse button names

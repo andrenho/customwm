@@ -48,7 +48,7 @@ void WMX11::setup_event_filter()
 {
     XSetErrorHandler(&WMX11::on_error);
 
-    XSelectInput(dpy_, root_, SubstructureRedirectMask | SubstructureNotifyMask);
+    XSelectInput(dpy_, root_, SubstructureRedirectMask | SubstructureNotifyMask | PointerMotionMask);
     XSync(dpy_, false);
 }
 
@@ -85,9 +85,29 @@ void WMX11::add_existing_windows()
             case ButtonRelease:
                 on_click(e.xbutton);
                 break;
+            case MotionNotify:
+                on_move(e.xmotion);
+                break;
+            case ConfigureNotify:
+                on_configure(e.xconfigure);
+                break;
+            case CreateNotify:
+            case DestroyNotify:
+            case MapNotify:
+            case ReparentNotify:
+                break;
             default:
                 LOG.debug("Unmapped event received: %d", e.type);
         }
+    }
+}
+
+void WMX11::move_window_with_mouse(bool move, std::optional<L_Window*> window)
+{
+    if (move && window) {
+        moving_window_with_mouse_ = (WindowX11 *) window.value();
+    } else {
+        moving_window_with_mouse_ = {};
     }
 }
 
@@ -122,7 +142,7 @@ void WMX11::on_map_request(Window child_id)
                                      CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);
     LOG.debug("Created parent window id %d", parent_id);
     XSelectInput(dpy_, parent_id, SubstructureNotifyMask | StructureNotifyMask | ExposureMask |
-                                  ButtonPressMask | ButtonReleaseMask);
+                                  ButtonPressMask | ButtonReleaseMask | PointerMotionMask);
 
     // set cursor
     Cursor c = XCreateFontCursor(dpy_, XC_left_ptr);  // TODO - free cursor
@@ -175,11 +195,14 @@ void WMX11::on_unmap_notify(XUnmapEvent const &e)
     }
 }
 
+
 void WMX11::on_expose(XExposeEvent const &e)
 {
     auto it = windows_.find(e.window);
-    if (it != windows_.end())
+    if (it != windows_.end()) {
         theme_.call_opt("wm.on_expose", (WindowX11 *) it->second.get(), Rectangle {e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
+        XFlush(dpy_);
+    }
 }
 
 void WMX11::on_click(XButtonEvent const &e)
@@ -212,7 +235,30 @@ void WMX11::on_click(XButtonEvent const &e)
     }
 }
 
-void WMX11::move_with_window(L_Window *window, bool move)
+void WMX11::on_move(XMotionEvent const &e)
 {
+    if (moving_window_with_mouse_.has_value()) {
+        XWindowAttributes xwa;
+        XGetWindowAttributes(dpy_, (*moving_window_with_mouse_)->parent_id, &xwa);
+        int x = xwa.x + e.x_root - last_mouse_position_.x;
+        int y = xwa.y + e.y_root - last_mouse_position_.y;
+        XMoveWindow(dpy_, (*moving_window_with_mouse_)->parent_id, x, y);
+    }
+    last_mouse_position_ = { e.x_root, e.y_root };
 
+    std::optional<WindowX11*> window {};
+    auto it = windows_.find(e.window);
+    if (it != windows_.end())
+        window = it->second.get();
+    theme_.call_opt("wm.on_mouse_move", window, Point { e.x, e.y });
+}
+
+void WMX11::on_configure(XConfigureEvent const &e)
+{
+    auto it = windows_.find(e.window);
+    if (it != windows_.end()) {
+        WindowX11* window = it->second.get();
+        window->rectangle = { e.x, e.y, (uint32_t) e.width, (uint32_t) e.height };
+        theme_.call_opt("wm.on_configure_window", window);
+    }
 }

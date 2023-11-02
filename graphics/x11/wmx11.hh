@@ -16,7 +16,7 @@ public:
     void run() override;
     [[nodiscard]] std::string interface_name() const override { return "X11"; }
 
-    void move_with_window(L_Window *window, bool move) override;
+    void move_window_with_mouse(bool move, std::optional<L_Window*> window) override;
 
 private:
     Theme&   theme_;
@@ -24,6 +24,9 @@ private:
     ResourcesX11& resources_;
     Window   root_;
     std::unordered_map<Window, std::unique_ptr<WindowX11>> windows_;
+
+    std::optional<WindowX11*> moving_window_with_mouse_ {};
+    Point last_mouse_position_ { 0, 0 };
 
     void setup_event_filter();
     void add_existing_windows();
@@ -35,6 +38,10 @@ private:
     void on_expose(XExposeEvent const &e);
     void on_click(XButtonEvent const &e);
     static int on_error(Display* d, XErrorEvent* e);
+
+    void on_move(XMotionEvent const &xmotion);
+
+    void on_configure(XConfigureEvent const &xconfigure);
 };
 
 #endif //WMX11_HH_

@@ -107,19 +107,27 @@ local theme = {
             window:text(0, 0, window:name(), {
                 font = "basic", w = window:rect().w, h = 24, halign = "center", valign = "center"
             })
+            print('expose')
         end,
 
         on_click = function(window, ev)
+            if ev.button == 'left' and not ev.pressed then
+                wm:move_window_with_mouse(false)
+            end
         end,
 
         on_hotspot_click = function(window, hotspot, ev)
             if hotspot == 'title' then
-                if ev.pressed then
-                    wm:move_with_mouse(window, true)
-                else
-                    wm:move_with_mouse(window, false)
+                if ev.button == 'left' and ev.pressed then
+                    wm:move_window_with_mouse(true, window)
                 end
             end
+        end,
+
+        on_mouse_move = function(window, pos)
+        end,
+
+        on_configure_window = function(window)
         end,
     }
 

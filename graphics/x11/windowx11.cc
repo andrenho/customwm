@@ -21,7 +21,6 @@ void WindowX11::fill(Color const &color)
 {
     XSetForeground(dpy_, gc_, resources_.get_color(color));
     XFillRectangle(dpy_, parent_id, gc_, 0, 0, rectangle.w, rectangle.h);
-    XFlush(dpy_);
 }
 
 void WindowX11::text(int x, int y, std::string const &text_, TextProperties const& tp_)
@@ -78,7 +77,6 @@ void WindowX11::draw(int x, int y, std::string const &slice)
     XSetClipOrigin(dpy_, gc_, -rect.x + x, -rect.y + y);
     XCopyArea(dpy_, image.pixmap, parent_id, gc_, rect.x, rect.y, rect.w, rect.h, x, y);
     XSetClipMask(dpy_, gc_, None);
-    XFlush(dpy_);
 }
 
 std::string WindowX11::name() const
