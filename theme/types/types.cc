@@ -27,6 +27,11 @@ bool Rectangle::lua_is(lua_State *L, int index)
             && luaw_hasfield(L, index, "w") && luaw_hasfield(L, index, "h");
 }
 
+bool Rectangle::contains(Point const &p) const
+{
+    return p.x >= x && p.y >= y && p.x < (x + w) && p.y < (y + h);
+}
+
 Point Point::from_lua(lua_State *L, int index)
 {
     return {
@@ -38,6 +43,13 @@ Point Point::from_lua(lua_State *L, int index)
 bool Point::lua_is(lua_State *L, int index)
 {
     return lua_istable(L, index) && luaw_hasfield(L, index, "x") && luaw_hasfield(L, index, "y");
+}
+
+void Point::to_lua(lua_State *L) const
+{
+    lua_newtable(L);
+    luaw_setfield(L, -1, "x", x);
+    luaw_setfield(L, -1, "y", y);
 }
 
 void Size::to_lua(lua_State *L) const
@@ -159,4 +171,18 @@ bool Slice::lua_is(lua_State *L, int index)
 {
     return lua_type(L, index) == LUA_TTABLE &&
            luaw_hasfield(L, index, "image") && luaw_hasfield(L, index, "rect");
+}
+
+void ClickEvent::to_lua(lua_State *L) const
+{
+    lua_newtable(L);
+    luaw_setfield(L, -1, "pressed", pressed);
+    luaw_setfield(L, -1, "pos", pos);
+    luaw_setfield(L, -1, "abs_pos", abs_pos);
+    switch (button) {
+        case Left:   luaw_setfield(L, -1, "button", "left"); break;
+        case Middle: luaw_setfield(L, -1, "button", "middle"); break;
+        case Right:  luaw_setfield(L, -1, "button", "right"); break;
+        default:     luaw_setfield(L, -1, "button", "other"); break;
+    }
 }

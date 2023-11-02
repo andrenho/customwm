@@ -13,6 +13,10 @@
 Theme::Theme()
     : Lptr(luaw_newstate(), [](lua_State* LL) { lua_close(LL); }), L(Lptr.get())
 {
+    lua_atpanic(L, [](lua_State* LL) -> int {   // makes debugging easier
+        throw std::runtime_error(std::string("lua error: ") + lua_tostring(LL, -1));
+    });
+
     luaw_do_z(L, themehelper_lua);
 
     l_wm_create_metadata(L);

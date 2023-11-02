@@ -31,6 +31,7 @@ private:
     void on_map_request(Window child_id);
     void on_unmap_notify(XUnmapEvent const &e);
     void on_expose(XExposeEvent const &e);
+    void on_click(XButtonEvent const &e);
     static int on_error(Display* d, XErrorEvent* e);
 };
 

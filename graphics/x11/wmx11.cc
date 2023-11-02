@@ -5,6 +5,7 @@
 #include "windowx11.hh"
 
 #include <X11/Xlib.h>
+#include <X11/cursorfont.h>
 #include <cstdio>
 #include <cstdlib>
 
@@ -80,6 +81,10 @@ void WMX11::add_existing_windows()
             case Expose:
                 on_expose(e.xexpose);
                 break;
+            case ButtonPress:
+            case ButtonRelease:
+                on_click(e.xbutton);
+                break;
             default:
                 LOG.debug("Unmapped event received: %d", e.type);
         }
@@ -116,7 +121,12 @@ void WMX11::on_map_request(Window child_id)
     Window parent_id = XCreateWindow(dpy_, root, parent_rect.x, parent_rect.y, parent_rect.w, parent_rect.h, 0,
                                      CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);
     LOG.debug("Created parent window id %d", parent_id);
-    XSelectInput(dpy_, parent_id, SubstructureNotifyMask | StructureNotifyMask | ExposureMask);
+    XSelectInput(dpy_, parent_id, SubstructureNotifyMask | StructureNotifyMask | ExposureMask |
+                                  ButtonPressMask | ButtonReleaseMask);
+
+    // set cursor
+    Cursor c = XCreateFontCursor(dpy_, XC_left_ptr);  // TODO - free cursor
+    XDefineCursor(dpy_, parent_id, c);
 
     // manage child
     XAddToSaveSet(dpy_, child_id);
@@ -170,4 +180,34 @@ void WMX11::on_expose(XExposeEvent const &e)
     auto it = windows_.find(e.window);
     if (it != windows_.end())
         theme_.call_opt("wm.on_expose", (WindowX11 *) it->second.get(), Rectangle {e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
+}
+
+void WMX11::on_click(XButtonEvent const &e)
+{
+    auto it = windows_.find(e.window);
+    if (it != windows_.end()) {
+
+        // create event
+        WindowX11* window = it->second.get();
+        ClickEvent click_event {
+            .pressed = (e.type == ButtonPress),
+            .pos = Point { e.x, e.y },
+            .abs_pos = Point { e.x_root, e.y_root },
+        };
+        switch (e.button) {
+            case Button1: click_event.button = ClickEvent::Left; break;
+            case Button2: click_event.button = ClickEvent::Middle; break;
+            case Button3: click_event.button = ClickEvent::Right; break;
+            default: click_event.button = ClickEvent::Other;
+        }
+
+        // on click
+        theme_.call_opt("wm.on_click", window, click_event);
+
+        // on hotspot click
+        for (auto [hotspot, rect]: theme_.get_prop<std::map<std::string, Rectangle>>("wm.hotspots", window)) {
+            if (rect.contains(click_event.pos))
+                theme_.call_opt("wm.on_hotspot_click", window, hotspot, click_event);
+        }
+    }
 }

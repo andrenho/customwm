@@ -6,21 +6,25 @@
 
 struct lua_State;
 
+struct Point {
+    int32_t x, y;
+
+    static Point from_lua(lua_State* L, int index);
+    static bool lua_is(lua_State* L, int index);
+    void to_lua(lua_State* L) const;
+};
+
 struct Rectangle {
     int32_t x, y;
     uint32_t w, h;
+
+    bool contains(Point const& p) const;
 
     void to_lua(lua_State* L) const;
     static Rectangle from_lua(lua_State* L, int index);
     static bool lua_is(lua_State* L, int index);
 };
 
-struct Point {
-    int32_t x, y;
-
-    static Point from_lua(lua_State* L, int index);
-    static bool lua_is(lua_State* L, int index);
-};
 
 struct Size {
     uint32_t w, h;
@@ -69,6 +73,15 @@ struct Slice {
 
     static Slice from_lua(lua_State* L, int index);
     static bool lua_is(lua_State* L, int index);
+};
+
+struct ClickEvent {
+    bool  pressed;
+    Point pos;
+    Point abs_pos;
+    enum { Other, Left, Middle, Right } button;
+
+    void to_lua(lua_State* L) const;
 };
 
 #endif //TYPES_HH_

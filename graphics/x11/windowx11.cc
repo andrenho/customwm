@@ -81,11 +81,11 @@ void WindowX11::draw(int x, int y, std::string const &slice)
     XFlush(dpy_);
 }
 
-std::optional<std::string> WindowX11::name() const
+std::string WindowX11::name() const
 {
     XTextProperty p;
     if ((XGetWMName(dpy_, child_id, &p) == 0) || p.value == nullptr)
-        return {};
+        return L_Window::name();
 
     return (char *) p.value;
 }

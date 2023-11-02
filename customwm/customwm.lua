@@ -38,7 +38,7 @@ local theme = {
         -- PROPERTIES
         --
 
-        padding = { top = 100, bottom = 3, left = 3, right = 3 },
+        padding = { top = 24, bottom = 2, left = 2, right = 2 },
 
         position_strategy = "cascade",   -- cascade, center, random, maximized, requested
 
@@ -80,6 +80,11 @@ local theme = {
             }
         end,
 
+        hotspots = function(window)
+            return {
+                title = { x = 0, y = 0, w = window:rect().w, h = getprop("wm.padding.top") },
+            }
+        end,
 
         --
         -- EVENTS (overrideable)
@@ -98,13 +103,17 @@ local theme = {
         end,
 
         on_expose = function(window, exposed_area)
-            window:fill("#ffdfff")
-            window:text(24, 24, "Hello world!", {
-                font = "basic", color = "#ff0000",
-                w = 60,
+            window:fill("#a0a0a0")
+            window:text(0, 0, window:name(), {
+                font = "basic", w = window:rect().w, h = 24, halign = "center", valign = "center"
             })
-            window:draw(15, 15, "x")
-            print(window:name())
+        end,
+
+        on_click = function(window, ev)
+        end,
+
+        on_hotspot_click = function(window, hotspot, ev)
+            print(hotspot)
         end,
     }
 
