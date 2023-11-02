@@ -211,3 +211,8 @@ void WMX11::on_click(XButtonEvent const &e)
         }
     }
 }
+
+void WMX11::move_with_window(L_Window *window, bool move)
+{
+
+}

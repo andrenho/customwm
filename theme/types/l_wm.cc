@@ -8,7 +8,14 @@
 void l_wm_create_metadata(lua_State* L)
 {
     std::string mt = luaw_set_metatable<L_WM>(L, {
-            { "interface_name", [](lua_State* L) { return luaw_push(L, THIS->interface_name()); } },
+        { "interface_name", [](lua_State* L) {
+            return luaw_push(L, THIS->interface_name());
+        }},
+        { "move_with_mouse", [](lua_State* L) {
+            auto window = luaw_to<L_Window*>(L, 2);
+            THIS->move_with_window(window, luaw_to<bool>(L, 3));
+            return 0;
+        }},
     });
     LOG.debug("Metatable setup for WM as '%s'", mt.c_str());
 }

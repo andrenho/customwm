@@ -113,7 +113,13 @@ local theme = {
         end,
 
         on_hotspot_click = function(window, hotspot, ev)
-            print(hotspot)
+            if hotspot == 'title' then
+                if ev.pressed then
+                    wm:move_with_mouse(window, true)
+                else
+                    wm:move_with_mouse(window, false)
+                end
+            end
         end,
     }
 

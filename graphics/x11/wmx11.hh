@@ -16,6 +16,8 @@ public:
     void run() override;
     [[nodiscard]] std::string interface_name() const override { return "X11"; }
 
+    void move_with_window(L_Window *window, bool move) override;
+
 private:
     Theme&   theme_;
     Display* dpy_;
