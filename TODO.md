@@ -26,6 +26,7 @@ Bar
 Improvements:
   - [x] Global Visual, Screen, Colormap, etc...
   - [ ] Create X window in WMWindow
+  - [ ] Move cursor to resources
   - [ ] Create find window method in WM
   - [ ] Cache properties
 

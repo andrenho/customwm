@@ -19,27 +19,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85af904c-4e08-41cc-b7a2-66d490ad309f" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/graphics/x11/x11.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graphics/x11/x11.hh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/main.cc" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/main.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/graphics.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/graphics.hh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/wm.hh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/graphicsx11.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/graphicsx11.hh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/resourcesx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/resources.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/resourcesx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/resources.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/windowx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/xwindow.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/windowx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/xwindow.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/wmx11.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wm.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/wmx11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wm.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/theme.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/theme.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/theme.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/theme.hh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,11 +109,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Makefile Application.customwm-x11">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="customwm" TARGET_NAME="all" CONFIG_NAME="all" version="1">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
