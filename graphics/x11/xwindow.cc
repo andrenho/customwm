@@ -1,29 +1,30 @@
-#include "windowx11.hh"
+#include "xwindow.hh"
 #include "theme/logger.hh"
+#include "x11.hh"
 
 #include <stdexcept>
 
-WindowX11::WindowX11(Display* dpy, ResourcesX11& resources, Window parent_id, Window child_id, Rectangle const &rectangle)
-        : parent_id(parent_id), child_id(child_id), rectangle(rectangle), dpy_(dpy), resources_(resources)
+XWindow::XWindow(Resources& resources, Window parent_id, Window child_id, Rectangle const &rectangle)
+        : parent_id(parent_id), child_id(child_id), rectangle(rectangle), resources_(resources)
 {
-    gc_ = XCreateGC(dpy_, parent_id, 0, nullptr);
-    xft_draw_ = XftDrawCreate(dpy, parent_id, DefaultVisual(dpy, DefaultScreen(dpy)), DefaultColormap(dpy, DefaultScreen(dpy)));
+    gc_ = XCreateGC(x11.display, parent_id, 0, nullptr);
+    xft_draw_ = XftDrawCreate(x11.display, parent_id, x11.visual, x11.colormap);
 }
 
-WindowX11::~WindowX11()
+XWindow::~XWindow()
 {
     XftDrawDestroy(xft_draw_);
-    XFreeGC(dpy_, gc_);
-    XFlush(dpy_);
+    XFreeGC(x11.display, gc_);
+    XFlush(x11.display);
 }
 
-void WindowX11::fill(Color const &color)
+void XWindow::fill(Color const &color)
 {
-    XSetForeground(dpy_, gc_, resources_.get_color(color));
-    XFillRectangle(dpy_, parent_id, gc_, 0, 0, rectangle.w, rectangle.h);
+    XSetForeground(x11.display, gc_, resources_.get_color(color));
+    XFillRectangle(x11.display, parent_id, gc_, 0, 0, rectangle.w, rectangle.h);
 }
 
-void WindowX11::text(int x, int y, std::string const &text_, TextProperties const& tp_)
+void XWindow::text(int x, int y, std::string const &text_, TextProperties const& tp_)
 {
     TextProperties tp = tp_;
     std::string text = text_;
@@ -35,7 +36,7 @@ try_again:
     XftFont* font = resources_.get_font(tp.font);
 
     XGlyphInfo glyph_info;
-    XftTextExtentsUtf8(dpy_, font, (FcChar8 const *) text.c_str(), (int) text.size(), &glyph_info);
+    XftTextExtentsUtf8(x11.display, font, (FcChar8 const *) text.c_str(), (int) text.size(), &glyph_info);
 
     if (tp.w == 0)
         tp.w = glyph_info.width;
@@ -70,19 +71,19 @@ try_again:
                       (FcChar8 const *) text.c_str(), (int) text.size());
 }
 
-void WindowX11::draw(int x, int y, std::string const &slice)
+void XWindow::draw(int x, int y, std::string const &slice)
 {
     auto [image, rect] = resources_.get_slice_image(slice);
-    XSetClipMask(dpy_, gc_, image.mask);
-    XSetClipOrigin(dpy_, gc_, -rect.x + x, -rect.y + y);
-    XCopyArea(dpy_, image.pixmap, parent_id, gc_, rect.x, rect.y, rect.w, rect.h, x, y);
-    XSetClipMask(dpy_, gc_, None);
+    XSetClipMask(x11.display, gc_, image.mask);
+    XSetClipOrigin(x11.display, gc_, -rect.x + x, -rect.y + y);
+    XCopyArea(x11.display, image.pixmap, parent_id, gc_, rect.x, rect.y, rect.w, rect.h, x, y);
+    XSetClipMask(x11.display, gc_, None);
 }
 
-std::string WindowX11::name() const
+std::string XWindow::name() const
 {
     XTextProperty p;
-    if ((XGetWMName(dpy_, child_id, &p) == 0) || p.value == nullptr)
+    if ((XGetWMName(x11.display, child_id, &p) == 0) || p.value == nullptr)
         return L_Window::name();
 
     return (char *) p.value;

@@ -1,31 +1,26 @@
 #ifndef WMX11_HH_
 #define WMX11_HH_
 
-#include "../wm.hh"
 #include "theme/theme.hh"
-#include "windowx11.hh"
-#include "resourcesx11.hh"
+#include "xwindow.hh"
+#include "resources.hh"
+#include "theme/types/l_wm.hh"
 
 #include <unordered_map>
 #include <X11/Xlib.h>
 
-class WMX11 : public WM {
+class WM : public L_WM {
 public:
-    explicit WMX11(Theme& theme, Display* dpy, ResourcesX11& resources);
-
-    void run() override;
+    void run();
     [[nodiscard]] std::string interface_name() const override { return "X11"; }
 
     void move_window_with_mouse(bool move, std::optional<L_Window*> window) override;
 
 private:
-    Theme&   theme_;
-    Display* dpy_;
-    ResourcesX11& resources_;
-    Window   root_;
-    std::unordered_map<Window, std::unique_ptr<WindowX11>> windows_;
+    Resources resources_;
+    std::unordered_map<Window, std::unique_ptr<XWindow>> windows_;
 
-    std::optional<WindowX11*> moving_window_with_mouse_ {};
+    std::optional<XWindow*> moving_window_with_mouse_ {};
     Point last_mouse_position_ { 0, 0 };
 
     void setup_event_filter();
@@ -44,4 +39,4 @@ private:
     void on_configure(XConfigureEvent const &xconfigure);
 };
 
-#endif //WMX11_HH_
+#endif //WM_HH_

@@ -1,4 +1,4 @@
-#include "resourcesx11.hh"
+#include "resources.hh"
 
 #include <X11/Xft/Xft.h>
 
@@ -8,42 +8,36 @@
 #define STBI_FAILURE_USERMSG
 #define STB_IMAGE_IMPLEMENTATION
 #include "contrib/stb_image.h"
+
 #include "theme/logger.hh"
+#include "x11.hh"
 
-// see: https://archive.irixnet.org/apocrypha/nekonomicon/forum/15/8794/1.html
-
-ResourcesX11::ResourcesX11(Display* dpy, Theme& theme)
-    : dpy_(dpy), theme_(theme)
-{
-
-}
-
-ResourcesX11::~ResourcesX11()
+Resources::~Resources()
 {
     for (auto& [_, xft_color] : xft_colors_)
-        XftColorFree(dpy_, DefaultVisual(dpy_, DefaultScreen(dpy_)), DefaultColormap(dpy_, DefaultScreen(dpy_)), &xft_color);
+        XftColorFree(x11.display, x11.visual, x11.colormap, &xft_color);
 
     for (auto& [_, image] : images_) {
-        XFreePixmap(dpy_, image.pixmap);
-        XFreePixmap(dpy_, image.mask);
+        XFreePixmap(x11.display, image.pixmap);
+        XFreePixmap(x11.display, image.mask);
     }
 
     std::vector<unsigned long> pixels(colors_.size());
     std::transform(colors_.begin(), colors_.end(), std::back_inserter(pixels),
                    [](std::pair<const Color, unsigned long>& p) { return p.second; });
-    XFreeColors(dpy_, DefaultColormap(dpy_, DefaultScreen(dpy_)), pixels.data(), (int) pixels.size(), 0);
+    XFreeColors(x11.display, x11.colormap, pixels.data(), (int) pixels.size(), 0);
 
     for (auto const& [_, font]: fonts_)
-        XftFontClose(dpy_, font);
+        XftFontClose(x11.display, font);
 }
 
-unsigned long ResourcesX11::get_color(Color const &color) const
+unsigned long Resources::get_color(Color const &color) const
 {
     // black or white?
     if (color.is_white())
-        return WhitePixel(dpy_, DefaultScreen(dpy_));
+        return x11.white;
     else if (color.is_black())
-        return BlackPixel(dpy_, DefaultScreen(dpy_));
+        return x11.black;
 
     // cached?
     auto it = colors_.find(color);
@@ -57,13 +51,13 @@ unsigned long ResourcesX11::get_color(Color const &color) const
             .blue = static_cast<unsigned short>(color.b * 256),
             .flags = DoRed | DoGreen | DoBlue,
     };
-    if (XAllocColor(dpy_, DefaultColormap(dpy_, DefaultScreen(dpy_)), &xcolor) == 0)
+    if (XAllocColor(x11.display, x11.colormap, &xcolor) == 0)
         LOG.info("Color allocation failed (%d %d %d)", color.r, color.g, color.b);
     colors_.emplace(color, xcolor.pixel);
     return xcolor.pixel;
 }
 
-XftColor& ResourcesX11::get_xft_color(Color const& color) const
+XftColor& Resources::get_xft_color(Color const& color) const
 {
     // cached?
     auto it = xft_colors_.find(color);
@@ -78,14 +72,13 @@ XftColor& ResourcesX11::get_xft_color(Color const& color) const
             .alpha = static_cast<unsigned short>(color.a * 256),
     };
     XftColor xft_color;
-    if (XftColorAllocValue(dpy_, DefaultVisual(dpy_, DefaultScreen(dpy_)), DefaultColormap(dpy_, DefaultScreen(dpy_)),
-                           &xcolor, &xft_color) == 0)
+    if (XftColorAllocValue(x11.display, x11.visual, x11.colormap, &xcolor, &xft_color) == 0)
         LOG.info("XftColor allocation failed (%d %d %d)", color.r, color.g, color.b);
     auto kv = xft_colors_.emplace(color, xft_color);
     return kv.first->second;
 }
 
-XftFont* ResourcesX11::get_font(std::string const& key) const
+XftFont* Resources::get_font(std::string const& key) const
 {
     auto it = fonts_.find(key);
     if (it != fonts_.end())
@@ -95,9 +88,9 @@ XftFont* ResourcesX11::get_font(std::string const& key) const
     return it2->second;
 }
 
-std::pair<Image, Rectangle> ResourcesX11::get_slice_image(std::string const& slice_name) const
+std::pair<Image, Rectangle> Resources::get_slice_image(std::string const& slice_name) const
 {
-    auto slice = theme_.resource_slice(slice_name);
+    auto slice = theme.resource_slice(slice_name);
     if (!slice.has_value())
         throw std::runtime_error("Slice '" + slice_name + "' not found in theme file.");
 
@@ -113,12 +106,12 @@ std::pair<Image, Rectangle> ResourcesX11::get_slice_image(std::string const& sli
     return { image, slice->rect };
 }
 
-XftFont* ResourcesX11::load_font(std::string const& key) const
+XftFont* Resources::load_font(std::string const& key) const
 {
-    auto font_names = theme_.resource_font(key);
+    auto font_names = theme.resource_font(key);
 
     for (auto const& font_name: font_names) {
-        XftFont* font = XftFontOpenName(dpy_, DefaultScreen(dpy_), font_name.c_str());
+        XftFont* font = XftFontOpenName(x11.display, x11.screen, font_name.c_str());
         if (font) {
             LOG.debug("Loaded font '%s' as %p", font_name.c_str(), font);
             return font;
@@ -128,9 +121,9 @@ XftFont* ResourcesX11::load_font(std::string const& key) const
     throw std::runtime_error("A font for resource '" + key + "' could not be loaded.");
 }
 
-Image ResourcesX11::load_image(std::string const& key) const
+Image Resources::load_image(std::string const& key) const
 {
-    auto image = theme_.resource_image(key);
+    auto image = theme.resource_image(key);
 
     // load image pixels
     int w, h;
@@ -156,20 +149,17 @@ Image ResourcesX11::load_image(std::string const& key) const
     }
 
     // create image
-    int depth = DefaultDepthOfScreen(DefaultScreenOfDisplay(dpy_));
-    int scr = DefaultScreen(dpy_);
+    int scr = x11.screen;
 
-    XImage* ximage = XCreateImage(dpy_, DefaultVisual(dpy_, DefaultScreen(dpy_)), depth, ZPixmap, 0,
-                                  (char *) image_data, w, h, 32, 0);
-    Pixmap pixmap = XCreatePixmap(dpy_, DefaultRootWindow(dpy_), w, h, depth);
-    XPutImage(dpy_, pixmap, DefaultGC(dpy_, scr), ximage, 0, 0, 0, 0, w, h);
+    XImage* ximage = XCreateImage(x11.display, x11.visual, x11.depth, ZPixmap, 0, (char *) image_data, w, h, 32, 0);
+    Pixmap pixmap = XCreatePixmap(x11.display, x11.root, w, h, x11.depth);
+    XPutImage(x11.display, pixmap, x11.gc, ximage, 0, 0, 0, 0, w, h);
 
     XDestroyImage(ximage);
     free(data);
 
     // create mask
-    Pixmap mask = XCreatePixmapFromBitmapData(dpy_, DefaultRootWindow(dpy_), (char *) mask_data, w, h,
-                                              WhitePixel(dpy_, scr), BlackPixel(dpy_, scr), 1);
+    Pixmap mask = XCreatePixmapFromBitmapData(x11.display, x11.root, (char *) mask_data, w, h, x11.white, x11.black, 1);
 
     LOG.debug("Image created for '%s'", key.c_str());
 

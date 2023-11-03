@@ -107,7 +107,6 @@ local theme = {
             window:text(0, 0, window:name(), {
                 font = "basic", w = window:rect().w, h = 24, halign = "center", valign = "center"
             })
-            print('expose')
         end,
 
         on_click = function(window, ev)

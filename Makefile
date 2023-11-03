@@ -5,10 +5,7 @@
 OBJ_THEME = theme/logger.o theme/theme.o theme/types/types.o theme/types/l_wm.o \
             theme/types/l_window.o
 
-OBJ_GRAPHICS = graphics/graphics.o
-
-OBJ_GRAPHICS_X11 = ${OBJ_GRAPHICS} graphics/x11/graphicsx11.o graphics/x11/resourcesx11.o \
-                   graphics/x11/windowx11.o graphics/x11/wmx11.o
+OBJ_GRAPHICS_X11 = graphics/x11/x11.o graphics/x11/resources.o graphics/x11/xwindow.o graphics/x11/wm.o
 
 OBJ_CUSTOMWM = customwm/main.o customwm/options.o
 

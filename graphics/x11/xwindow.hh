@@ -1,23 +1,23 @@
-#ifndef WINDOWX11_HH_
-#define WINDOWX11_HH_
+#ifndef XWINDOW_HH_
+#define XWINDOW_HH_
 
 #include <X11/Xlib.h>
 #include <X11/Xft/Xft.h>
 
 #include "theme/types/l_window.hh"
-#include "resourcesx11.hh"
+#include "resources.hh"
 
 #include <map>
 
-class WindowX11 : public L_Window {
+class XWindow : public L_Window {
 public:
-    WindowX11(Display* dpy_, ResourcesX11& resources, Window parent_id, Window child_id, Rectangle const &rectangle);
-    ~WindowX11() override;
+    XWindow(Resources& resources, Window parent_id, Window child_id, Rectangle const &rectangle);
+    ~XWindow() override;
 
-    WindowX11(WindowX11 const&) = delete;
-    WindowX11& operator=(WindowX11 const&) = delete;
-    WindowX11(WindowX11&&) = delete;
-    WindowX11& operator=(WindowX11&&) = delete;
+    XWindow(XWindow const&) = delete;
+    XWindow& operator=(XWindow const&) = delete;
+    XWindow(XWindow&&) = delete;
+    XWindow& operator=(XWindow&&) = delete;
 
     Window parent_id;
     Window child_id;
@@ -31,10 +31,9 @@ public:
     std::string name() const override;
 
 private:
-    Display* dpy_;
-    ResourcesX11& resources_;
+    Resources& resources_;
     GC gc_;
     XftDraw* xft_draw_ = nullptr;
 };
 
-#endif //WINDOWX11_HH_
+#endif //XWINDOW_HH_

@@ -1,8 +1,4 @@
-#include "wmx11.hh"
-#include "theme/logger.hh"
-#include "theme/theme.hh"
-#include "theme/types/types.hh"
-#include "windowx11.hh"
+#include "wm.hh"
 
 #include <X11/Xlib.h>
 #include <X11/cursorfont.h>
@@ -11,17 +7,15 @@
 
 #include <utility>
 
-WMX11::WMX11(Theme& theme, Display* dpy, ResourcesX11& resources)
-    : theme_(theme), dpy_(dpy), resources_(resources)
-{
-    root_ = DefaultRootWindow(dpy_);
-}
+#include "x11.hh"
+#include "theme/logger.hh"
+#include "xwindow.hh"
 
-void WMX11::run()
+void WM::run()
 {
     setup_event_filter();
     add_existing_windows();
-    theme_.call_opt("wm.after_start");
+    theme.call_opt("wm.after_start");
     main_loop();
 }
 
@@ -29,47 +23,47 @@ void WMX11::run()
 void WMX11::initialize_xcomposite()
 {
     int ev_base, err_base;
-    if (XCompositeQueryExtension(dpy_, &ev_base, &err_base)) {
+    if (XCompositeQueryExtension(x11.display, &ev_base, &err_base)) {
         int major = 0, minor = 2;
-        XCompositeQueryVersion(dpy_, &major, &minor);
+        XCompositeQueryVersion(x11.display, &major, &minor);
         if (major == 0 && minor < 2)
             throw std::runtime_error("Composite version not supported (expected >= 0.2, found " +
                                      std::to_string(major) + "." + std::to_string(minor) + ")");
     }
 
-    for (int i = 0; i < ScreenCount(dpy_); ++i)
-        XCompositeRedirectSubwindows(dpy_, RootWindow(dpy_, i), CompositeRedirectAutomatic);
+    for (int i = 0; i < ScreenCount(x11.display); ++i)
+        XCompositeRedirectSubwindows(x11.display, RootWindow(x11.display, i), CompositeRedirectAutomatic);
 
     LOG.debug("Composite initialized.");
 }
  */
 
-void WMX11::setup_event_filter()
+void WM::setup_event_filter()
 {
-    XSetErrorHandler(&WMX11::on_error);
+    XSetErrorHandler(&WM::on_error);
 
-    XSelectInput(dpy_, root_, SubstructureRedirectMask | SubstructureNotifyMask | PointerMotionMask);
-    XSync(dpy_, false);
+    XSelectInput(x11.display, x11.root, SubstructureRedirectMask | SubstructureNotifyMask | PointerMotionMask);
+    XSync(x11.display, false);
 }
 
-void WMX11::add_existing_windows()
+void WM::add_existing_windows()
 {
     Window root, parent;
     Window* window_list;
     unsigned int n_windows;
 
-    XQueryTree(dpy_, root_, &root, &parent, &window_list, &n_windows);
+    XQueryTree(x11.display, x11.root, &root, &parent, &window_list, &n_windows);
     for (size_t i = 0; i < n_windows; ++i)
         on_map_request(window_list[i]);
 
     free(window_list);
 }
 
-[[noreturn]] void WMX11::main_loop()
+[[noreturn]] void WM::main_loop()
 {
     for (;;) {
         XEvent e;
-        XNextEvent(dpy_, &e);
+        XNextEvent(x11.display, &e);
 
         switch (e.type) {
             case MapRequest:
@@ -102,16 +96,16 @@ void WMX11::add_existing_windows()
     }
 }
 
-void WMX11::move_window_with_mouse(bool move, std::optional<L_Window*> window)
+void WM::move_window_with_mouse(bool move, std::optional<L_Window*> window)
 {
     if (move && window) {
-        moving_window_with_mouse_ = (WindowX11 *) window.value();
+        moving_window_with_mouse_ = (XWindow *) window.value();
     } else {
         moving_window_with_mouse_ = {};
     }
 }
 
-int WMX11::on_error(Display* dsp, XErrorEvent* e)
+int WM::on_error(Display* dsp, XErrorEvent* e)
 {
     if (e->error_code == BadAccess && e->request_code == 2 && e->minor_code == 0)
         throw std::runtime_error("There's already another window manager running!\n");
@@ -123,48 +117,47 @@ int WMX11::on_error(Display* dsp, XErrorEvent* e)
     return 0;
 }
 
-void WMX11::on_map_request(Window child_id)
+void WM::on_map_request(Window child_id)
 {
     // figure out information about the child window
     Window root;
     int requested_x, requested_y;
     unsigned int child_w, child_h, border, depth;
-    XGetGeometry(dpy_, child_id, &root, &requested_x, &requested_y, &child_w, &child_h, &border, &depth);
+    XGetGeometry(x11.display, child_id, &root, &requested_x, &requested_y, &child_w, &child_h, &border, &depth);
 
     // figure out information about the parent window (TODO)
-    int snum = DefaultScreen(dpy_);
     Rectangle child_rect = { requested_x, requested_y, child_w, child_h };
-    Size screen_size = { (uint32_t) DisplayWidth(dpy_, snum), (uint32_t) DisplayHeight(dpy_, snum) };
-    auto [parent_rect, offset] = theme_.get_prop<WindowStartingLocation>("wm.window_starting_location", child_rect, screen_size);
+    Size screen_size = { (uint32_t) DisplayWidth(x11.display, x11.screen), (uint32_t) DisplayHeight(x11.display, x11.screen) };
+    auto [parent_rect, offset] = theme.get_prop<WindowStartingLocation>("wm.window_starting_location", child_rect, screen_size);
 
     // create window
-    Window parent_id = XCreateWindow(dpy_, root, parent_rect.x, parent_rect.y, parent_rect.w, parent_rect.h, 0,
+    Window parent_id = XCreateWindow(x11.display, root, parent_rect.x, parent_rect.y, parent_rect.w, parent_rect.h, 0,
                                      CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);
     LOG.debug("Created parent window id %d", parent_id);
-    XSelectInput(dpy_, parent_id, SubstructureNotifyMask | StructureNotifyMask | ExposureMask |
+    XSelectInput(x11.display, parent_id, SubstructureNotifyMask | StructureNotifyMask | ExposureMask |
                                   ButtonPressMask | ButtonReleaseMask | PointerMotionMask);
 
     // set cursor
-    Cursor c = XCreateFontCursor(dpy_, XC_left_ptr);  // TODO - free cursor
-    XDefineCursor(dpy_, parent_id, c);
+    Cursor c = XCreateFontCursor(x11.display, XC_left_ptr);  // TODO - free cursor
+    XDefineCursor(x11.display, parent_id, c);
 
     // manage child
-    XAddToSaveSet(dpy_, child_id);
-    XReparentWindow(dpy_, child_id, parent_id, offset.x, offset.y);
+    XAddToSaveSet(x11.display, child_id);
+    XReparentWindow(x11.display, child_id, parent_id, offset.x, offset.y);
 
     // map windows
-    XMapWindow(dpy_, parent_id);
-    XMapWindow(dpy_, child_id);
-    XFlush(dpy_);
+    XMapWindow(x11.display, parent_id);
+    XMapWindow(x11.display, child_id);
+    XFlush(x11.display);
 
-    auto window = std::make_unique<WindowX11>(dpy_, resources_, parent_id, child_id, parent_rect);
-    theme_.call_opt("wm.after_window_registered", window.get());
+    auto window = std::make_unique<XWindow>(resources_, parent_id, child_id, parent_rect);
+    theme.call_opt("wm.after_window_registered", window.get());
     windows_.emplace(parent_id, std::move(window));
 
     LOG.info("Reparented window %d (parent %d)", child_id, parent_id);
 }
 
-void WMX11::on_unmap_notify(XUnmapEvent const &e)
+void WM::on_unmap_notify(XUnmapEvent const &e)
 {
     auto it = windows_.find(e.window);
     if (it != windows_.end()) {
@@ -172,46 +165,46 @@ void WMX11::on_unmap_notify(XUnmapEvent const &e)
         // parent is unmapped
         Window parent_id = it->first;
         windows_.erase(parent_id);
-        XDestroyWindow(dpy_, parent_id);
-        XFlush(dpy_);
+        XDestroyWindow(x11.display, parent_id);
+        XFlush(x11.display);
 
         LOG.debug("Destroyed parent window id %d", parent_id);
 
     } else {
         for (auto& kv: windows_) {
-            WindowX11* window = kv.second.get();
+            XWindow* window = kv.second.get();
 
             // child is unmapped
             if (window->child_id == e.window) {
-                XReparentWindow(dpy_, window->child_id, root_, 0, 0);
-                XRemoveFromSaveSet(dpy_, window->child_id);
-                XDestroyWindow(dpy_, window->child_id);
-                XUnmapWindow(dpy_, window->parent_id);
-                XFlush(dpy_);
+                XReparentWindow(x11.display, window->child_id, x11.root, 0, 0);
+                XRemoveFromSaveSet(x11.display, window->child_id);
+                XDestroyWindow(x11.display, window->child_id);
+                XUnmapWindow(x11.display, window->parent_id);
+                XFlush(x11.display);
 
-                theme_.call_opt("wm.after_window_unregistered", &it->second);
+                theme.call_opt("wm.after_window_unregistered", &it->second);
             }
         }
     }
 }
 
 
-void WMX11::on_expose(XExposeEvent const &e)
+void WM::on_expose(XExposeEvent const &e)
 {
     auto it = windows_.find(e.window);
     if (it != windows_.end()) {
-        theme_.call_opt("wm.on_expose", (WindowX11 *) it->second.get(), Rectangle {e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
-        XFlush(dpy_);
+        theme.call_opt("wm.on_expose", (XWindow *) it->second.get(), Rectangle {e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
+        XFlush(x11.display);
     }
 }
 
-void WMX11::on_click(XButtonEvent const &e)
+void WM::on_click(XButtonEvent const &e)
 {
     auto it = windows_.find(e.window);
     if (it != windows_.end()) {
 
         // create event
-        WindowX11* window = it->second.get();
+        XWindow* window = it->second.get();
         ClickEvent click_event {
             .pressed = (e.type == ButtonPress),
             .pos = Point { e.x, e.y },
@@ -225,40 +218,40 @@ void WMX11::on_click(XButtonEvent const &e)
         }
 
         // on click
-        theme_.call_opt("wm.on_click", window, click_event);
+        theme.call_opt("wm.on_click", window, click_event);
 
         // on hotspot click
-        for (auto [hotspot, rect]: theme_.get_prop<std::map<std::string, Rectangle>>("wm.hotspots", window)) {
+        for (auto [hotspot, rect]: theme.get_prop<std::map<std::string, Rectangle>>("wm.hotspots", window)) {
             if (rect.contains(click_event.pos))
-                theme_.call_opt("wm.on_hotspot_click", window, hotspot, click_event);
+                theme.call_opt("wm.on_hotspot_click", window, hotspot, click_event);
         }
     }
 }
 
-void WMX11::on_move(XMotionEvent const &e)
+void WM::on_move(XMotionEvent const &e)
 {
     if (moving_window_with_mouse_.has_value()) {
         XWindowAttributes xwa;
-        XGetWindowAttributes(dpy_, (*moving_window_with_mouse_)->parent_id, &xwa);
+        XGetWindowAttributes(x11.display, (*moving_window_with_mouse_)->parent_id, &xwa);
         int x = xwa.x + e.x_root - last_mouse_position_.x;
         int y = xwa.y + e.y_root - last_mouse_position_.y;
-        XMoveWindow(dpy_, (*moving_window_with_mouse_)->parent_id, x, y);
+        XMoveWindow(x11.display, (*moving_window_with_mouse_)->parent_id, x, y);
     }
     last_mouse_position_ = { e.x_root, e.y_root };
 
-    std::optional<WindowX11*> window {};
+    std::optional<XWindow*> window {};
     auto it = windows_.find(e.window);
     if (it != windows_.end())
         window = it->second.get();
-    theme_.call_opt("wm.on_mouse_move", window, Point { e.x, e.y });
+    theme.call_opt("wm.on_mouse_move", window, Point { e.x, e.y });
 }
 
-void WMX11::on_configure(XConfigureEvent const &e)
+void WM::on_configure(XConfigureEvent const &e)
 {
     auto it = windows_.find(e.window);
     if (it != windows_.end()) {
-        WindowX11* window = it->second.get();
+        XWindow* window = it->second.get();
         window->rectangle = { e.x, e.y, (uint32_t) e.width, (uint32_t) e.height };
-        theme_.call_opt("wm.on_configure_window", window);
+        theme.call_opt("wm.on_configure_window", window);
     }
 }

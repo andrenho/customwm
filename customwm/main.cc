@@ -2,20 +2,18 @@
 #include "options.hh"
 
 #include "customwm.embed"
-#include "graphics/graphics.hh"
+
 #if GRAPHICS==X11
-#  include "graphics/x11/graphicsx11.hh"
+#  include "graphics/x11/x11.hh"
+#  include "graphics/x11/wm.hh"
 #endif
 
 #include <memory>
-
-#include "theme/logger.hh"
 
 int main(int argc, char* argv[])
 {
     Options options(argc, argv);
 
-    Theme theme;
 #ifdef DEBUG
     theme.load_theme_file("./customwm/customwm.lua");
 #else
@@ -25,12 +23,11 @@ int main(int argc, char* argv[])
     if (options.theme_file)
         theme.load_theme_file(*options.theme_file);
 
-    std::unique_ptr<Graphics> graphics;
 #if GRAPHICS==X11
-    graphics = std::make_unique<GraphicsX11>(theme, options.display);
+    x11.init(options.display);
 #endif
 
-    WM* wm = graphics->create_wm();
-    theme.create_global_object("wm", wm);
-    wm->run();
+    WM wm;
+    theme.create_global_object("wm", &wm);
+    wm.run();
 }

@@ -69,9 +69,9 @@ Composite:
 2. customwm-theme (reads lua theme)
 3. customwm
    1. Base theme - main logic
-   2. WindowX11 Manager
+   2. XWindow Manager
 
-The **WindowX11 Manager** has the following responsibilities:
+The **XWindow Manager** has the following responsibilities:
  - Own the outer windows and keep track of them
  - Reparent and deal with inner window lifecycle
  - Events: either deal with them or send them up to the theme

@@ -1,5 +1,5 @@
-#ifndef RESOURCESX11_HH_
-#define RESOURCESX11_HH_
+#ifndef RESOURCES_HH_
+#define RESOURCES_HH_
 
 #include <X11/Xlib.h>
 #include <X11/Xft/Xft.h>
@@ -13,10 +13,9 @@ struct Image {
     Pixmap mask;
 };
 
-class ResourcesX11 {
+class Resources {
 public:
-    ResourcesX11(Display* dpy, Theme& theme);
-    ~ResourcesX11();
+    ~Resources();
 
     unsigned long get_color(Color const &color) const;
     XftColor&     get_xft_color(Color const& color) const;
@@ -29,11 +28,8 @@ private:
     mutable std::unordered_map<std::string, XftFont*> fonts_;
     mutable std::unordered_map<std::string, Image>    images_;
 
-    Display* dpy_;
-    Theme& theme_;
-
     XftFont* load_font(std::string const& key) const;
     Image    load_image(std::string const& key) const;
 };
 
-#endif //RESOURCESX11_HH_
+#endif //RESOURCES_HH_

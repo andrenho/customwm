@@ -44,6 +44,8 @@ private:
     static constexpr const char* THEME_GLOBAL = "theme";
 };
 
+extern Theme theme;
+
 #include "theme.inl"
 
 #endif //THEME_HH_

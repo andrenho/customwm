@@ -24,9 +24,10 @@ Menu
 Bar
 
 Improvements:
+  - [x] Global Visual, Screen, Colormap, etc...
   - [ ] Create X window in WMWindow
+  - [ ] Create find window method in WM
   - [ ] Cache properties
-  - [ ] Global Visual, Screen, Colormap, etc...
 
 Error management
   - [x] luaw_to - check type

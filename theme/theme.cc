@@ -10,6 +10,8 @@
 #include "types/l_wm.hh"
 #include "types/l_window.hh"
 
+Theme theme;
+
 Theme::Theme()
     : Lptr(luaw_newstate(), [](lua_State* LL) { lua_close(LL); }), L(Lptr.get())
 {
