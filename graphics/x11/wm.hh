@@ -21,6 +21,7 @@ public:
 private:
     Resources resources_;
     std::unordered_map<Window, std::unique_ptr<XWindow>> windows_;
+    std::optional<std::string> current_hotspot_ {};
 
     std::optional<XWindow*> moving_window_with_mouse_ {};
     Point last_mouse_position_ { 0, 0 };

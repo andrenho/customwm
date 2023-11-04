@@ -71,29 +71,33 @@ void WM::add_existing_windows()
 
         switch (e.type) {
             case MapRequest:
+                LOG.debug("event: MapRequest %d", e.xmaprequest.window);
                 on_map_request(e.xmaprequest.window);
                 break;
             case UnmapNotify:
+                LOG.debug("event: UnmapNotify %d", e.xunmap.window);
                 on_unmap_notify(e.xunmap);
                 break;
             case Expose:
+                LOG.debug("event: Expose %d", e.xexpose.window);
                 on_expose(e.xexpose);
                 break;
             case ButtonPress:
             case ButtonRelease:
+                LOG.debug("event: Button %d", e.xbutton.window);
                 on_click(e.xbutton);
                 break;
             case MotionNotify:
                 on_move(e.xmotion);
                 break;
             case ConfigureNotify:
+                LOG.debug("event: ConfigureNotify %d", e.xconfigure.window);
                 on_configure(e.xconfigure);
                 break;
-            case CreateNotify:
-            case DestroyNotify:
-            case MapNotify:
-            case ReparentNotify:
-                break;
+            case CreateNotify:  LOG.debug("event: CreateNotify %d", e.xcreatewindow.window); break;
+            case DestroyNotify: LOG.debug("event: DestroyNotify %d", e.xdestroywindow.window); break;
+            case MapNotify:     LOG.debug("event: MapNotify %d", e.xmap.window); break;
+            case ReparentNotify:LOG.debug("event: ReparentNotify %d", e.xreparent.window); break;
             default:
                 LOG.debug("Unmapped event received: %d", e.type);
         }
@@ -175,6 +179,7 @@ void WM::on_unmap_notify(XUnmapEvent const &e)
                 parent->deleted = true;
             }
         }
+        XFlush(x11.display);
     }
 }
 
@@ -219,6 +224,7 @@ void WM::on_click(XButtonEvent const &e)
 
 void WM::on_move(XMotionEvent const &e)
 {
+    // check if moving window
     if (moving_window_with_mouse_.has_value()) {
         XWindowAttributes xwa;
         XGetWindowAttributes(x11.display, (*moving_window_with_mouse_)->id, &xwa);
@@ -226,10 +232,28 @@ void WM::on_move(XMotionEvent const &e)
         int y = xwa.y + e.y_root - last_mouse_position_.y;
         XMoveWindow(x11.display, (*moving_window_with_mouse_)->id, x, y);
     }
-    last_mouse_position_ = { e.x_root, e.y_root };
 
-    XWindow* xwindow = find_parent(e.window);   // can be null
-    theme.call_opt("wm.on_mouse_move", xwindow, Point { e.x, e.y });
+    // check if entering or leaving hotspot
+    XWindow* xwindow = find_parent(e.window);
+    if (xwindow) {
+        std::optional<std::string> new_hotspot {};
+        for (auto [hs, rect]: theme.get_prop<std::map<std::string, Rectangle>>("wm.hotspots", xwindow)) {
+            if (rect.contains({ e.x, e.y }))
+                new_hotspot = hs;
+        }
+        if (new_hotspot != current_hotspot_) {
+            if (current_hotspot_)
+                theme.call_opt("wm.on_leave_hotspot", xwindow, *current_hotspot_);
+            if (new_hotspot)
+                theme.call_opt("wm.on_enter_hotspot", xwindow, *new_hotspot);
+            current_hotspot_ = new_hotspot;
+        }
+    }
+
+    // fire on_mouse_move event on theme
+    theme.call_opt("wm.on_mouse_move", xwindow, Point { e.x, e.y });  // xwindow can be null
+
+    last_mouse_position_ = { e.x_root, e.y_root };
 }
 
 void WM::on_configure(XConfigureEvent const &e)

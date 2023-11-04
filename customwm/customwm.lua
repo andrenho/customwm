@@ -111,23 +111,43 @@ local theme = {
         end,
 
         on_click = function(window, ev)
-            if ev.button == 'left' and not ev.pressed then
-                wm:move_window_with_mouse(false)
-            end
+            getprop("wm._on_click", window, ev)
         end,
 
         on_hotspot_click = function(window, hotspot, ev)
-            if hotspot == 'title' then
-                if ev.button == 'left' and ev.pressed then
-                    wm:move_window_with_mouse(true, window)
-                end
-            end
+            getprop("wm._on_hotspot_click", window, hotspot, ev)
         end,
 
         on_mouse_move = function(window, pos)
         end,
 
+        on_enter_hotspot = function(window, hotspot)
+            print('Entering hotspot ' .. hotspot)
+        end,
+
+        on_leave_hotspot = function(window, hotspot)
+            print('Leaving hotspot' .. hotspot)
+        end,
+
         on_configure_window = function(window)
+        end,
+
+        --
+        -- EVENTS (private)
+        --
+
+        _on_click = function(window, ev)
+            if ev.button == 'left' and not ev.pressed then
+                wm:move_window_with_mouse(false)
+            end
+        end,
+
+        _on_hotspot_click = function(window, hotspot, ev)
+            if hotspot == 'title' then
+                if ev.button == 'left' and ev.pressed then
+                    wm:move_window_with_mouse(true, window)
+                end
+            end
         end,
     }
 
