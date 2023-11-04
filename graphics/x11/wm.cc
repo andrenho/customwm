@@ -1,9 +1,6 @@
 #include "wm.hh"
 
 #include <X11/Xlib.h>
-#include <X11/cursorfont.h>
-#include <X11/Xatom.h>
-#include <cstdio>
 #include <cstdlib>
 
 #include <utility>
@@ -16,7 +13,6 @@ WM::WM()
     : child_id_atom(XInternAtom(x11.display, "child_id", false)),
       parent_id_atom(XInternAtom(x11.display, "parent_id", false))
 {
-
 }
 
 void WM::run()
@@ -155,15 +151,12 @@ void WM::on_map_request(Window child_id)
     XMapWindow(x11.display, child_id);
     XFlush(x11.display);
     theme.call_opt("wm.after_window_registered", parent.get());
-    auto [wmwindow, _] = windows_.emplace(parent->id, WM_Window { .parent = std::move(parent), .child_id = child_id });
+    auto [wmwindow, _] = windows_.emplace(parent->id, std::move(parent));
 
     // set properties
-    XWindow* xparent = wmwindow->second.parent.get();
-    XChangeProperty(x11.display, xparent->id, child_id_atom, XA_WINDOW, 32, PropModeReplace,
-                    (unsigned char *) &child_id, 1);
-    XChangeProperty(x11.display, child_id, parent_id_atom, XA_WINDOW, 32, PropModeReplace,
-                    (unsigned char *) &xparent->id, 1);
-
+    XWindow* xparent = wmwindow->second.get();
+    resources_.set_property(xparent->id, "child", child_id);
+    resources_.set_property(child_id, "parent", xparent->id);
 }
 
 void WM::on_unmap_notify(XUnmapEvent const &e)
@@ -178,10 +171,12 @@ void WM::on_unmap_notify(XUnmapEvent const &e)
 
     } else {
 
-        for (auto const& [_, w]: windows_) {
-            if (w.child_id == e.window) {
-                XUnmapWindow(x11.display, w.parent->id);
-                w.parent->deleted = true;
+        // child is unmapped
+        for (auto& [parent_id, parent]: windows_) {
+            Window child_id = resources_.get_property<Window>(parent_id, "child");
+            if (child_id != None) {
+                XUnmapWindow(x11.display, parent_id);
+                parent->deleted = true;
             }
         }
     }
@@ -256,13 +251,14 @@ XWindow* WM::find_parent(Window parent_id) const
     if (it == windows_.end())
         return nullptr;
     else
-        return it->second.parent.get();
+        return it->second.get();
 }
 
 std::string WM::window_name(L_Window *window) const
 {
+    /*
     for (auto& kv: windows_) {
-        if (((XWindow *) window)->id == kv.second.parent->id) {
+        if (((XWindow *) window)->id == kv.second->id) {
             XTextProperty p;
             if ((XGetWMName(x11.display, kv.second.child_id, &p) == 0) || p.value == nullptr)
                 goto not_found;
@@ -272,5 +268,6 @@ std::string WM::window_name(L_Window *window) const
     }
 
 not_found:
+     */
     return L_WM::window_name(window);
 }

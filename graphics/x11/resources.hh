@@ -22,6 +22,12 @@ public:
     XftFont*      get_font(std::string const& key) const;
     std::pair<Image, Rectangle> get_slice_image(std::string const& slice_name) const;
 
+    template<typename T> void set_property(Window window, std::string const& name, T const& value);
+    template<typename T> T    get_property(Window window, std::string const& name) const;
+
+    template<> void   set_property(Window window, std::string const& name, Window const& value);
+    template<> Window get_property(Window window, std::string const& name) const;
+
 private:
     mutable std::map<Color, unsigned long>            colors_;
     mutable std::map<Color, XftColor>                 xft_colors_;

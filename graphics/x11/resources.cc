@@ -164,3 +164,28 @@ Image Resources::load_image(std::string const& key) const
     return { .pixmap = pixmap, .mask = mask };
 }
 
+template<>
+void Resources::set_property(Window window, std::string const& name, Window const& value)
+{
+    Atom atom = XInternAtom(x11.display, name.c_str(), false);
+
+    XChangeProperty(x11.display, window, atom, XA_WINDOW, 32, PropModeReplace,
+                    (unsigned char *) &value, 1);
+}
+
+template<> Window
+Resources::get_property(Window window, std::string const& name) const
+{
+    Atom atom = XInternAtom(x11.display, name.c_str(), false);
+
+    Atom type;
+    int format;
+    unsigned long nret, left;
+    unsigned char* data;
+    XGetWindowProperty(x11.display, window, atom, 0, 1, False, XA_WINDOW, &type, &format, &nret, &left, &data);
+    if (nret == None)
+        return None;
+    Window ret = ((Window *) data)[0];
+    XFree(data);
+    return ret;
+}

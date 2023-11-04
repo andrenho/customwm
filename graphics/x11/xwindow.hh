@@ -27,6 +27,7 @@ public:
     void fill(Color const &color) override;
     void text(int x, int y, std::string const &text, TextProperties const& tp) override;
     void draw(int x, int y, std::string const &slice) override;
+    std::string name() const override;
 
 private:
     Resources& resources_;

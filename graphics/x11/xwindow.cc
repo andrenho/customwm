@@ -90,3 +90,9 @@ void XWindow::draw(int x, int y, std::string const &slice)
     XCopyArea(x11.display, image.pixmap, id, gc_, rect.x, rect.y, rect.w, rect.h, x, y);
     XSetClipMask(x11.display, gc_, None);
 }
+
+std::string XWindow::name() const
+{
+    // TODO ???
+    return L_Window::name();
+}

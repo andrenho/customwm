@@ -9,11 +9,6 @@
 #include <unordered_map>
 #include <X11/Xlib.h>
 
-struct WM_Window {
-    std::unique_ptr<XWindow> parent;
-    Window                   child_id;
-};
-
 class WM : public L_WM {
 public:
     WM();
@@ -26,7 +21,7 @@ public:
 
 private:
     Resources resources_;
-    std::unordered_map<Window, WM_Window> windows_;
+    std::unordered_map<Window, std::unique_ptr<XWindow>> windows_;
 
     std::optional<XWindow*> moving_window_with_mouse_ {};
     Point last_mouse_position_ { 0, 0 };
