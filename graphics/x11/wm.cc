@@ -57,8 +57,19 @@ void WM::add_existing_windows()
     unsigned int n_windows;
 
     XQueryTree(x11.display, x11.root, &root, &parent, &window_list, &n_windows);
-    for (size_t i = 0; i < n_windows; ++i)
-        on_map_request(window_list[i]);
+    for (size_t i = 0; i < n_windows; ++i) {
+        XEvent ev {
+            .xmaprequest = {
+                    .type = MapRequest,
+                    .serial = 0,
+                    .send_event = 0,
+                    .display = x11.display,
+                    .parent = root,
+                    .window = window_list[i],
+            }
+        };
+        XPutBackEvent(x11.display, &ev);
+    }
 
     free(window_list);
 }
