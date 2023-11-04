@@ -29,6 +29,8 @@ public:
     void draw(int x, int y, std::string const &slice) override;
     std::string name() const override;
 
+    void set_cursor(std::string const &key) override;
+
 private:
     Resources& resources_;
     GC gc_;

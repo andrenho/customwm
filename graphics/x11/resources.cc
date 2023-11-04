@@ -15,6 +15,7 @@
 Resources::Resources()
 {
     cursors_["pointer"] = XCreateFontCursor(x11.display, XC_left_ptr);
+    cursors_["watch"] = XCreateFontCursor(x11.display, XC_watch);
 }
 
 Resources::~Resources()

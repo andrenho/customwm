@@ -138,10 +138,6 @@ void WM::on_map_request(Window child_id)
     auto parent = std::make_unique<XWindow>(resources_, parent_rect);
     LOG.debug("Created parent window id %d", parent->id);
 
-    // set cursor (TODO - move to resources)
-    Cursor c = XCreateFontCursor(x11.display, XC_left_ptr);  // TODO - free cursor
-    XDefineCursor(x11.display, parent->id, c);
-
     // manage child
     XAddToSaveSet(x11.display, child_id);
     XReparentWindow(x11.display, child_id, parent->id, offset.x, offset.y);

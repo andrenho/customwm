@@ -31,9 +31,12 @@ Improvements:
       - [x] Move properties to resources
       - [x] Set XWindow ATOM
   - [x] Do some organization on WM / XWindow
-  - [ ] Move cursor to resources
-  - [ ] Update cursor from theme
+  - [x] Move cursor to resources
+  - [x] Update cursor from theme
   - [ ] On enter/on leave hotspot
+  - [ ] Deal with errors
+    - What to do if lua error?
+    - Log errors
   - [ ] Cache properties
 
 Error management
@@ -42,3 +45,6 @@ Error management
   - [ ] Reload config file
   - [ ] Better mouse button names
   - [ ] lua_error management
+
+Future:
+  - Register cursors

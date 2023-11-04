@@ -30,6 +30,10 @@ void l_window_create_metadata(lua_State* L)
                 luaw_push(L, THIS->name());
                 return 1;
             }},
+            { "set_cursor", [](lua_State *L) {
+                THIS->set_cursor(luaL_checkstring(L, 2));
+                return 0;
+            }},
     });
     LOG.debug("Metatable setup for Window as '%s'", mt.c_str());
 }

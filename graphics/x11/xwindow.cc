@@ -107,3 +107,8 @@ std::string XWindow::name() const
 not_found:
     return L_Window::name();
 }
+
+void XWindow::set_cursor(std::string const &key)
+{
+    XDefineCursor(x11.display, id, resources_.get_cursor(key));
+}
