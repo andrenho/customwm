@@ -93,6 +93,15 @@ void XWindow::draw(int x, int y, std::string const &slice)
 
 std::string XWindow::name() const
 {
-    // TODO ???
+    Window child = resources_.get_property<Window>(id, "child");
+    if (child != None) {
+        XTextProperty p;
+        if ((XGetWMName(x11.display, child, &p) == 0) || p.value == nullptr)
+            goto not_found;
+
+        return (char *) p.value;
+    }
+
+not_found:
     return L_Window::name();
 }

@@ -17,7 +17,6 @@ public:
     [[nodiscard]] std::string interface_name() const override { return "X11"; }
 
     void move_window_with_mouse(bool move, std::optional<L_Window*> window) override;
-    std::string window_name(L_Window *window) const override;
 
 private:
     Resources resources_;

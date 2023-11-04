@@ -18,10 +18,6 @@ void l_wm_create_metadata(lua_State* L)
             THIS->move_window_with_mouse(luaw_to<bool>(L, 2), window);
             return 0;
         }},
-        { "window_name", [](lua_State* L) {
-            luaw_push(L, THIS->window_name(luaw_to<L_Window *>(L, 2)));
-            return 1;
-        }},
     });
     LOG.debug("Metatable setup for WM as '%s'", mt.c_str());
 }

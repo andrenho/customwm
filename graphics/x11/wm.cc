@@ -253,21 +253,3 @@ XWindow* WM::find_parent(Window parent_id) const
     else
         return it->second.get();
 }
-
-std::string WM::window_name(L_Window *window) const
-{
-    /*
-    for (auto& kv: windows_) {
-        if (((XWindow *) window)->id == kv.second->id) {
-            XTextProperty p;
-            if ((XGetWMName(x11.display, kv.second.child_id, &p) == 0) || p.value == nullptr)
-                goto not_found;
-
-            return (char *) p.value;
-        }
-    }
-
-not_found:
-     */
-    return L_WM::window_name(window);
-}

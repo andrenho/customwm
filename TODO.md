@@ -27,9 +27,9 @@ Improvements:
   - [x] Global Visual, Screen, Colormap, etc...
   - [x] Create X window in WMWindow
   - [x] Strategic flushes
-  - [ ] Set child as property of id
-      - [ ] Move properties to resources
-      - [ ] Set XWindow ATOM
+  - [x] Set child as property of id
+      - [x] Move properties to resources
+      - [x] Set XWindow ATOM
   - [ ] Do some organization on WM / XWindow
   - [ ] Move cursor to resources
   - [ ] Create find window method in WM

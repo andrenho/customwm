@@ -19,17 +19,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85af904c-4e08-41cc-b7a2-66d490ad309f" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/graphics/x11/resources.inl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/resources.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/resources.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/resources.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/resources.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/wm.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wm.cc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/wm.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wm.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/x11.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/x11.hh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphics/x11/xwindow.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/xwindow.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/x11/xwindow.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/xwindow.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/types/l_window.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_window.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_window.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_wm.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_wm.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_wm.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_wm.hh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -375,7 +373,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699061106611</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary=".">
+      <option name="closed" value="true" />
+      <created>1699114217242</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1699114217242</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
