@@ -16,6 +16,8 @@ struct WM_Window {
 
 class WM : public L_WM {
 public:
+    WM();
+
     void run();
     [[nodiscard]] std::string interface_name() const override { return "X11"; }
 
@@ -28,6 +30,7 @@ private:
 
     std::optional<XWindow*> moving_window_with_mouse_ {};
     Point last_mouse_position_ { 0, 0 };
+    Atom  child_id_atom, parent_id_atom;
 
     void setup_event_filter();
     void add_existing_windows();

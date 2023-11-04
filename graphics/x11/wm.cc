@@ -2,6 +2,7 @@
 
 #include <X11/Xlib.h>
 #include <X11/cursorfont.h>
+#include <X11/Xatom.h>
 #include <cstdio>
 #include <cstdlib>
 
@@ -10,6 +11,13 @@
 #include "x11.hh"
 #include "theme/logger.hh"
 #include "xwindow.hh"
+
+WM::WM()
+    : child_id_atom(XInternAtom(x11.display, "child_id", false)),
+      parent_id_atom(XInternAtom(x11.display, "parent_id", false))
+{
+
+}
 
 void WM::run()
 {
@@ -146,9 +154,16 @@ void WM::on_map_request(Window child_id)
     // map windows
     XMapWindow(x11.display, child_id);
     XFlush(x11.display);
-
     theme.call_opt("wm.after_window_registered", parent.get());
-    windows_.emplace(parent->id, WM_Window { .parent = std::move(parent), .child_id = child_id });
+    auto [wmwindow, _] = windows_.emplace(parent->id, WM_Window { .parent = std::move(parent), .child_id = child_id });
+
+    // set properties
+    XWindow* xparent = wmwindow->second.parent.get();
+    XChangeProperty(x11.display, xparent->id, child_id_atom, XA_WINDOW, 32, PropModeReplace,
+                    (unsigned char *) &child_id, 1);
+    XChangeProperty(x11.display, child_id, parent_id_atom, XA_WINDOW, 32, PropModeReplace,
+                    (unsigned char *) &xparent->id, 1);
+
 }
 
 void WM::on_unmap_notify(XUnmapEvent const &e)
