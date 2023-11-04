@@ -26,8 +26,8 @@ Bar
 Improvements:
   - [x] Global Visual, Screen, Colormap, etc...
   - [x] Create X window in WMWindow
+  - [x] Strategic flushes
   - [ ] Set child as property of id
-  - [ ] Strategic flushes
   - [ ] Move cursor to resources
   - [ ] Create find window method in WM
   - [ ] Cache properties

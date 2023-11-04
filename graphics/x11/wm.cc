@@ -169,7 +169,6 @@ void WM::on_unmap_notify(XUnmapEvent const &e)
                 w.parent->deleted = true;
             }
         }
-        XFlush(x11.display);
     }
 }
 
