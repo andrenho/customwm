@@ -4,24 +4,35 @@
 
 #include <stdexcept>
 
-XWindow::XWindow(Resources& resources, Window parent_id, Window child_id, Rectangle const &rectangle)
-        : parent_id(parent_id), child_id(child_id), rectangle(rectangle), resources_(resources)
+XWindow::XWindow(Resources& resources, Rectangle const &rectangle)
+        : rectangle(rectangle), resources_(resources)
 {
-    gc_ = XCreateGC(x11.display, parent_id, 0, nullptr);
-    xft_draw_ = XftDrawCreate(x11.display, parent_id, x11.visual, x11.colormap);
+    id = XCreateWindow(x11.display, x11.root, rectangle.x, rectangle.y, rectangle.w, rectangle.h, 0,
+                       CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);
+
+    XSelectInput(x11.display, id, SubstructureNotifyMask | StructureNotifyMask | ExposureMask |
+                                          ButtonPressMask | ButtonReleaseMask | PointerMotionMask);
+
+    XMapWindow(x11.display, id);
+
+    gc_ = XCreateGC(x11.display, id, 0, nullptr);
+    xft_draw_ = XftDrawCreate(x11.display, id, x11.visual, x11.colormap);
+
+    XFlush(x11.display);
 }
 
 XWindow::~XWindow()
 {
     XftDrawDestroy(xft_draw_);
     XFreeGC(x11.display, gc_);
+    XDestroyWindow(x11.display, id);
     XFlush(x11.display);
 }
 
 void XWindow::fill(Color const &color)
 {
     XSetForeground(x11.display, gc_, resources_.get_color(color));
-    XFillRectangle(x11.display, parent_id, gc_, 0, 0, rectangle.w, rectangle.h);
+    XFillRectangle(x11.display, id, gc_, 0, 0, rectangle.w, rectangle.h);
 }
 
 void XWindow::text(int x, int y, std::string const &text_, TextProperties const& tp_)
@@ -76,15 +87,6 @@ void XWindow::draw(int x, int y, std::string const &slice)
     auto [image, rect] = resources_.get_slice_image(slice);
     XSetClipMask(x11.display, gc_, image.mask);
     XSetClipOrigin(x11.display, gc_, -rect.x + x, -rect.y + y);
-    XCopyArea(x11.display, image.pixmap, parent_id, gc_, rect.x, rect.y, rect.w, rect.h, x, y);
+    XCopyArea(x11.display, image.pixmap, id, gc_, rect.x, rect.y, rect.w, rect.h, x, y);
     XSetClipMask(x11.display, gc_, None);
-}
-
-std::string XWindow::name() const
-{
-    XTextProperty p;
-    if ((XGetWMName(x11.display, child_id, &p) == 0) || p.value == nullptr)
-        return L_Window::name();
-
-    return (char *) p.value;
 }

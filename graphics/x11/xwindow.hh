@@ -11,7 +11,7 @@
 
 class XWindow : public L_Window {
 public:
-    XWindow(Resources& resources, Window parent_id, Window child_id, Rectangle const &rectangle);
+    XWindow(Resources& resources, Rectangle const &rectangle);
     ~XWindow() override;
 
     XWindow(XWindow const&) = delete;
@@ -19,16 +19,14 @@ public:
     XWindow(XWindow&&) = delete;
     XWindow& operator=(XWindow&&) = delete;
 
-    Window parent_id;
-    Window child_id;
+    Window id;
     Rectangle rectangle;
+    bool deleted = false;
 
     Rectangle rect() const override { return rectangle; }
     void fill(Color const &color) override;
     void text(int x, int y, std::string const &text, TextProperties const& tp) override;
     void draw(int x, int y, std::string const &slice) override;
-
-    std::string name() const override;
 
 private:
     Resources& resources_;

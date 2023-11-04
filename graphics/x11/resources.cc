@@ -149,8 +149,6 @@ Image Resources::load_image(std::string const& key) const
     }
 
     // create image
-    int scr = x11.screen;
-
     XImage* ximage = XCreateImage(x11.display, x11.visual, x11.depth, ZPixmap, 0, (char *) image_data, w, h, 32, 0);
     Pixmap pixmap = XCreatePixmap(x11.display, x11.root, w, h, x11.depth);
     XPutImage(x11.display, pixmap, x11.gc, ximage, 0, 0, 0, 0, w, h);

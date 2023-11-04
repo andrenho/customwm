@@ -26,10 +26,6 @@ void l_window_create_metadata(lua_State* L)
                 THIS->draw(luaw_to<int>(L, 2), luaw_to<int>(L, 3), luaw_to<std::string>(L, 4));
                 return 0;
             }},
-            { "name", [](lua_State* L) {
-                luaw_push(L, THIS->name());
-                return 1;
-            }},
     });
     LOG.debug("Metatable setup for Window as '%s'", mt.c_str());
 }

@@ -131,80 +131,64 @@ void WM::on_map_request(Window child_id)
     auto [parent_rect, offset] = theme.get_prop<WindowStartingLocation>("wm.window_starting_location", child_rect, screen_size);
 
     // create window
-    Window parent_id = XCreateWindow(x11.display, root, parent_rect.x, parent_rect.y, parent_rect.w, parent_rect.h, 0,
-                                     CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);
-    LOG.debug("Created parent window id %d", parent_id);
-    XSelectInput(x11.display, parent_id, SubstructureNotifyMask | StructureNotifyMask | ExposureMask |
-                                  ButtonPressMask | ButtonReleaseMask | PointerMotionMask);
+    auto parent = std::make_unique<XWindow>(resources_, parent_rect);
+    LOG.debug("Created parent window id %d", parent->id);
 
-    // set cursor
+    // set cursor (TODO - move to resources)
     Cursor c = XCreateFontCursor(x11.display, XC_left_ptr);  // TODO - free cursor
-    XDefineCursor(x11.display, parent_id, c);
+    XDefineCursor(x11.display, parent->id, c);
 
     // manage child
     XAddToSaveSet(x11.display, child_id);
-    XReparentWindow(x11.display, child_id, parent_id, offset.x, offset.y);
+    XReparentWindow(x11.display, child_id, parent->id, offset.x, offset.y);
+    LOG.info("Reparented window %d (parent %d)", child_id, parent->id);
 
     // map windows
-    XMapWindow(x11.display, parent_id);
     XMapWindow(x11.display, child_id);
     XFlush(x11.display);
 
-    auto window = std::make_unique<XWindow>(resources_, parent_id, child_id, parent_rect);
-    theme.call_opt("wm.after_window_registered", window.get());
-    windows_.emplace(parent_id, std::move(window));
-
-    LOG.info("Reparented window %d (parent %d)", child_id, parent_id);
+    theme.call_opt("wm.after_window_registered", parent.get());
+    windows_.emplace(parent->id, WM_Window { .parent = std::move(parent), .child_id = child_id });
 }
 
 void WM::on_unmap_notify(XUnmapEvent const &e)
 {
-    auto it = windows_.find(e.window);
-    if (it != windows_.end()) {
+    XWindow* xwindow = find_parent(e.window);
+    if (xwindow) {
 
         // parent is unmapped
-        Window parent_id = it->first;
-        windows_.erase(parent_id);
-        XDestroyWindow(x11.display, parent_id);
-        XFlush(x11.display);
-
-        LOG.debug("Destroyed parent window id %d", parent_id);
+        theme.call_opt("wm.after_window_unregistered", xwindow);
+        LOG.debug("Destroyed parent window id %d", xwindow->id);
+        windows_.erase(xwindow->id);
 
     } else {
-        for (auto& kv: windows_) {
-            XWindow* window = kv.second.get();
 
-            // child is unmapped
-            if (window->child_id == e.window) {
-                XReparentWindow(x11.display, window->child_id, x11.root, 0, 0);
-                XRemoveFromSaveSet(x11.display, window->child_id);
-                XDestroyWindow(x11.display, window->child_id);
-                XUnmapWindow(x11.display, window->parent_id);
-                XFlush(x11.display);
-
-                theme.call_opt("wm.after_window_unregistered", &it->second);
+        for (auto const& [_, w]: windows_) {
+            if (w.child_id == e.window) {
+                XUnmapWindow(x11.display, w.parent->id);
+                w.parent->deleted = true;
             }
         }
+        XFlush(x11.display);
     }
 }
 
 
 void WM::on_expose(XExposeEvent const &e)
 {
-    auto it = windows_.find(e.window);
-    if (it != windows_.end()) {
-        theme.call_opt("wm.on_expose", (XWindow *) it->second.get(), Rectangle {e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
+    XWindow* xwindow = find_parent(e.window);
+    if (xwindow && !xwindow->deleted) {
+        theme.call_opt("wm.on_expose", xwindow, Rectangle {e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
         XFlush(x11.display);
     }
 }
 
 void WM::on_click(XButtonEvent const &e)
 {
-    auto it = windows_.find(e.window);
-    if (it != windows_.end()) {
+    XWindow* xwindow = find_parent(e.window);
+    if (xwindow) {
 
         // create event
-        XWindow* window = it->second.get();
         ClickEvent click_event {
             .pressed = (e.type == ButtonPress),
             .pos = Point { e.x, e.y },
@@ -218,12 +202,12 @@ void WM::on_click(XButtonEvent const &e)
         }
 
         // on click
-        theme.call_opt("wm.on_click", window, click_event);
+        theme.call_opt("wm.on_click", xwindow, click_event);
 
         // on hotspot click
-        for (auto [hotspot, rect]: theme.get_prop<std::map<std::string, Rectangle>>("wm.hotspots", window)) {
+        for (auto [hotspot, rect]: theme.get_prop<std::map<std::string, Rectangle>>("wm.hotspots", xwindow)) {
             if (rect.contains(click_event.pos))
-                theme.call_opt("wm.on_hotspot_click", window, hotspot, click_event);
+                theme.call_opt("wm.on_hotspot_click", xwindow, hotspot, click_event);
         }
     }
 }
@@ -232,26 +216,47 @@ void WM::on_move(XMotionEvent const &e)
 {
     if (moving_window_with_mouse_.has_value()) {
         XWindowAttributes xwa;
-        XGetWindowAttributes(x11.display, (*moving_window_with_mouse_)->parent_id, &xwa);
+        XGetWindowAttributes(x11.display, (*moving_window_with_mouse_)->id, &xwa);
         int x = xwa.x + e.x_root - last_mouse_position_.x;
         int y = xwa.y + e.y_root - last_mouse_position_.y;
-        XMoveWindow(x11.display, (*moving_window_with_mouse_)->parent_id, x, y);
+        XMoveWindow(x11.display, (*moving_window_with_mouse_)->id, x, y);
     }
     last_mouse_position_ = { e.x_root, e.y_root };
 
-    std::optional<XWindow*> window {};
-    auto it = windows_.find(e.window);
-    if (it != windows_.end())
-        window = it->second.get();
-    theme.call_opt("wm.on_mouse_move", window, Point { e.x, e.y });
+    XWindow* xwindow = find_parent(e.window);   // can be null
+    theme.call_opt("wm.on_mouse_move", xwindow, Point { e.x, e.y });
 }
 
 void WM::on_configure(XConfigureEvent const &e)
 {
-    auto it = windows_.find(e.window);
-    if (it != windows_.end()) {
-        XWindow* window = it->second.get();
-        window->rectangle = { e.x, e.y, (uint32_t) e.width, (uint32_t) e.height };
-        theme.call_opt("wm.on_configure_window", window);
+    XWindow* xwindow = find_parent(e.window);
+    if (xwindow) {
+        xwindow->rectangle = { e.x, e.y, (uint32_t) e.width, (uint32_t) e.height };
+        theme.call_opt("wm.on_configure_window", xwindow);
     }
+}
+
+XWindow* WM::find_parent(Window parent_id) const
+{
+    auto it = windows_.find(parent_id);
+    if (it == windows_.end())
+        return nullptr;
+    else
+        return it->second.parent.get();
+}
+
+std::string WM::window_name(L_Window *window) const
+{
+    for (auto& kv: windows_) {
+        if (((XWindow *) window)->id == kv.second.parent->id) {
+            XTextProperty p;
+            if ((XGetWMName(x11.display, kv.second.child_id, &p) == 0) || p.value == nullptr)
+                goto not_found;
+
+            return (char *) p.value;
+        }
+    }
+
+not_found:
+    return L_WM::window_name(window);
 }
