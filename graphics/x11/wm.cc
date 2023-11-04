@@ -234,20 +234,20 @@ void WM::on_move(XMotionEvent const &e)
     }
 
     // check if entering or leaving hotspot
+    std::optional<std::string> new_hotspot {};
     XWindow* xwindow = find_parent(e.window);
     if (xwindow) {
-        std::optional<std::string> new_hotspot {};
         for (auto [hs, rect]: theme.get_prop<std::map<std::string, Rectangle>>("wm.hotspots", xwindow)) {
             if (rect.contains({ e.x, e.y }))
                 new_hotspot = hs;
         }
-        if (new_hotspot != current_hotspot_) {
-            if (current_hotspot_)
-                theme.call_opt("wm.on_leave_hotspot", xwindow, *current_hotspot_);
-            if (new_hotspot)
-                theme.call_opt("wm.on_enter_hotspot", xwindow, *new_hotspot);
-            current_hotspot_ = new_hotspot;
-        }
+    }
+    if (new_hotspot != current_hotspot_) {
+        if (current_hotspot_)
+            theme.call_opt("wm.on_leave_hotspot", xwindow, *current_hotspot_);
+        if (new_hotspot)
+            theme.call_opt("wm.on_enter_hotspot", xwindow, *new_hotspot);
+        current_hotspot_ = new_hotspot;
     }
 
     // fire on_mouse_move event on theme
