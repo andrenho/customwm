@@ -18,6 +18,8 @@ XWindow::XWindow(Resources& resources, Rectangle const &rectangle)
     gc_ = XCreateGC(x11.display, id, 0, nullptr);
     xft_draw_ = XftDrawCreate(x11.display, id, x11.visual, x11.colormap);
 
+    XDefineCursor(x11.display, id, resources_.get_cursor("pointer"));
+
     XFlush(x11.display);
 }
 

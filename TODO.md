@@ -30,9 +30,10 @@ Improvements:
   - [x] Set child as property of id
       - [x] Move properties to resources
       - [x] Set XWindow ATOM
-  - [ ] Do some organization on WM / XWindow
+  - [x] Do some organization on WM / XWindow
   - [ ] Move cursor to resources
-  - [ ] Create find window method in WM
+  - [ ] Update cursor from theme
+  - [ ] On enter/on leave hotspot
   - [ ] Cache properties
 
 Error management

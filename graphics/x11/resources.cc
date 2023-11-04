@@ -12,8 +12,16 @@
 #include "theme/logger.hh"
 #include "x11.hh"
 
+Resources::Resources()
+{
+    cursors_["pointer"] = XCreateFontCursor(x11.display, XC_left_ptr);
+}
+
 Resources::~Resources()
 {
+    for (auto& [_, cursor]: cursors_)
+        XFreeCursor(x11.display, cursor);
+
     for (auto& [_, xft_color] : xft_colors_)
         XftColorFree(x11.display, x11.visual, x11.colormap, &xft_color);
 
@@ -162,6 +170,16 @@ Image Resources::load_image(std::string const& key) const
     LOG.debug("Image created for '%s'", key.c_str());
 
     return { .pixmap = pixmap, .mask = mask };
+}
+
+Cursor Resources::get_cursor(std::string const& key) const
+{
+    try {
+        return cursors_.at(key);
+    } catch (std::out_of_range&) {
+        LOG.info("Cursor not found: " + key);
+        return None;
+    }
 }
 
 template<>
