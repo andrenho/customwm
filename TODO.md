@@ -34,7 +34,7 @@ Improvements:
   - [x] Move cursor to resources
   - [x] Update cursor from theme
   - [x] On enter/on leave hotspot
-    - [ ] Fix hotspot when leaving window
+    - [x] Fix hotspot when leaving window
   - [ ] Bug - start application with existing window
   - [ ] Deal with errors
     - What to do if lua error?
