@@ -9,6 +9,7 @@ Window:
     - [x] On hotspot click (?)
     - [x] Attach window to pointer
     - [x] On move
+  - [ ] Window focus
   - [ ] Grab
     - [ ] Set cursor
   - [ ] Resize
@@ -35,7 +36,7 @@ Improvements:
   - [x] Update cursor from theme
   - [x] On enter/on leave hotspot
     - [x] Fix hotspot when leaving window
-  - [ ] Bug - start application with existing window
+  - [x] Bug - start application with existing window
   - [ ] Deal with errors
     - What to do if lua error?
     - Log errors
@@ -49,4 +50,4 @@ Error management
   - [ ] lua_error management
 
 Future:
-  - Register cursors
+  - Create new cursors
