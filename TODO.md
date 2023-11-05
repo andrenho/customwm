@@ -37,10 +37,10 @@ Improvements:
   - [x] On enter/on leave hotspot
     - [x] Fix hotspot when leaving window
   - [x] Bug - start application with existing window
-  - [ ] Deal with errors
-    - What to do if lua error?
-    - Log errors
   - [ ] Cache properties
+  - [ ] Deal with errors
+    - [ ] Throw first, and then log
+    - [ ] Better errors in luaw
 
 Error management
   - [x] luaw_to - check type

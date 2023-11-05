@@ -10,6 +10,7 @@ void Options::display_help(int exit_status)
     printf("    -d, --display   Sets the display (default: $DISPLAY)\n");
     printf("    -t, --theme     Sets the theme (default: default)\n");
     printf("    -v, --verbose   Print debugging logs\n");
+    printf("    -x, --exception Throw naked exception on error\n");
     printf("    -h, --help      Prints this help\n");
     exit(exit_status);
 }
@@ -25,6 +26,7 @@ Options::Options(int argc, char **argv)
                 { "display", required_argument, nullptr, 'd' },
                 { "theme", required_argument, nullptr, 't' },
                 { "verbose", no_argument, nullptr, 'v' },
+                { "exception", no_argument, nullptr, 'x' },
                 { "help", required_argument, nullptr, 'h' },
         };
 
@@ -42,6 +44,9 @@ Options::Options(int argc, char **argv)
                 break;
             case 'h':
                 display_help(EXIT_SUCCESS);
+                break;
+            case 'x':
+                throw_exceptions = true;
                 break;
             case 'v':
                 LOG.level = Logger::Debug;

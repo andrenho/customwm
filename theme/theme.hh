@@ -13,6 +13,8 @@
 #include "luaw.hh"
 #include "theme/types/types.hh"
 
+enum class ErrorAction { LOG, ERROR, THROW };
+
 class Theme {
 public:
     Theme();
@@ -20,6 +22,8 @@ public:
     void load_theme(LuaCompressedBytecode lsb[]);
     void load_theme_file(std::string const& filename);
     void load_theme_code(std::string const& code);
+
+    void set_error_action(ErrorAction action);
 
     template <typename T> T get_prop(std::string const& prop, auto&&... args) const;
     void call_opt(std::string const& prop, auto&&... args);

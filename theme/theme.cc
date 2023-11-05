@@ -1,5 +1,6 @@
 #include "theme.hh"
 
+#include <cstdlib>
 #include <sys/stat.h>
 #include <ios>
 #include <fstream>
@@ -9,21 +10,44 @@
 #include "types/exceptions.hh"
 #include "types/l_wm.hh"
 #include "types/l_window.hh"
+#include "logger.hh"
 
 Theme theme;
 
 Theme::Theme()
     : Lptr(luaw_newstate(), [](lua_State* LL) { lua_close(LL); }), L(Lptr.get())
 {
-    lua_atpanic(L, [](lua_State* LL) -> int {   // makes debugging easier
-        throw std::runtime_error(std::string("lua error: ") + lua_tostring(LL, -1));
-    });
+    set_error_action(ErrorAction::THROW);
 
     luaw_do_z(L, themehelper_lua);
 
     l_wm_create_metadata(L);
     l_window_create_metadata(L);
 }
+
+void Theme::set_error_action(ErrorAction action)
+{
+    switch (action) {
+        case ErrorAction::LOG:
+            lua_atpanic(L, [](lua_State* LL) -> int {
+                LOG.error("lua error: %s", lua_tostring(LL, -1));
+                return 0;
+            });
+            break;
+        case ErrorAction::ERROR:
+            lua_atpanic(L, [](lua_State* LL) -> int {
+                LOG.error("lua error: %s", lua_tostring(LL, -1));
+                exit(EXIT_FAILURE);
+            });
+            break;
+        case ErrorAction::THROW:
+            lua_atpanic(L, [](lua_State* LL) -> int {   // makes debugging easier
+                throw std::runtime_error(std::string("lua error: ") + lua_tostring(LL, -1));
+            });
+            break;
+    }
+}
+
 
 void Theme::load_theme([[maybe_unused]] LuaCompressedBytecode lsb[])
 {
@@ -148,4 +172,3 @@ std::vector<uint8_t> Theme::resource_image(std::string const &key) const
         throw std::runtime_error("Malformed resource image");
     }
 }
-

@@ -12,6 +12,9 @@ public:
 
     void debug(const char* fmt, ...);
     void debug(std::string const& text);
+
+    void error(const char* fmt, ...);
+    void error(std::string const& text);
 };
 
 extern Logger LOG;

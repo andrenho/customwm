@@ -11,6 +11,8 @@ public:
     std::optional<std::string> display {};
     std::optional<std::string> theme_file {};
 
+    bool throw_exceptions = false;
+
 private:
     static void display_help(int exit_status);
 };

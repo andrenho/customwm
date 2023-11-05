@@ -14,6 +14,9 @@ int main(int argc, char* argv[])
 {
     Options options(argc, argv);
 
+    if (!options.throw_exceptions)
+        theme.set_error_action(ErrorAction::ERROR);
+
 #ifdef DEBUG
     theme.load_theme_file("./customwm/customwm.lua");
 #else
@@ -29,5 +32,9 @@ int main(int argc, char* argv[])
 
     WM wm;
     theme.create_global_object("wm", &wm);
+
+    if (!options.throw_exceptions)
+        theme.set_error_action(ErrorAction::LOG);
+
     wm.run();
 }
