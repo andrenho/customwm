@@ -1,4 +1,6 @@
 theme = {}
+__property_cache = {}
+
 
 function merge_theme(new_theme)
 
@@ -28,12 +30,15 @@ function merge_theme(new_theme)
     theme = merge_tables(theme, new_theme)
 end
 
+
 local function find_property(property, optional)
-    if optional == nil then optional = false end
+    local cached_value = __property_cache[property]
+    if cached_value ~= nil then return cached_value end
+
     local cur = theme
     for part in string.gmatch(property, "([^%.]+)") do
         if cur[part] == nil then
-            if optional then
+            if optional == nil or optional == true then
                 return nil
             else
                 error("Property " .. property .. " not found.")
@@ -41,8 +46,11 @@ local function find_property(property, optional)
         end
         cur = cur[part]
     end
+
+    __property_cache[property] = cur
     return cur
 end
+
 
 function getprop(key, ...)
     local cur = find_property(key, false)
@@ -52,6 +60,7 @@ function getprop(key, ...)
         return cur
     end
 end
+
 
 function callopt(key, ...)
     local f = find_property(key, true)

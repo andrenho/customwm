@@ -21,14 +21,7 @@
     <list default="true" id="85af904c-4e08-41cc-b7a2-66d490ad309f" name="Changes" comment=".">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/main.cc" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/main.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/options.cc" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/options.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customwm/options.hh" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/options.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/logger.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/logger.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/logger.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/logger.hh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/theme.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/theme.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/theme.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/theme.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/themehelper.lua" beforeDir="false" afterPath="$PROJECT_DIR$/theme/themehelper.lua" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +161,7 @@
       <workItem from="1698948658529" duration="1159000" />
       <workItem from="1698950796886" duration="501000" />
       <workItem from="1698951721526" duration="8318000" />
-      <workItem from="1699205211742" duration="1009000" />
+      <workItem from="1699205211742" duration="3331000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -442,7 +435,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699143954254</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary=".">
+      <option name="closed" value="true" />
+      <created>1699206235072</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1699206235072</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

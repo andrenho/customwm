@@ -10,6 +10,7 @@ Window:
     - [x] Attach window to pointer
     - [x] On move
   - [ ] Window focus
+  - [ ] Close window
   - [ ] Grab
     - [ ] Set cursor
   - [ ] Resize
@@ -24,24 +25,6 @@ Menu
 
 Bar
 
-Improvements:
-  - [x] Global Visual, Screen, Colormap, etc...
-  - [x] Create X window in WMWindow
-  - [x] Strategic flushes
-  - [x] Set child as property of id
-      - [x] Move properties to resources
-      - [x] Set XWindow ATOM
-  - [x] Do some organization on WM / XWindow
-  - [x] Move cursor to resources
-  - [x] Update cursor from theme
-  - [x] On enter/on leave hotspot
-    - [x] Fix hotspot when leaving window
-  - [x] Bug - start application with existing window
-  - [ ] Cache properties
-  - [ ] Deal with errors
-    - [ ] Throw first, and then log
-    - [ ] Better errors in luaw
-
 Error management
   - [x] luaw_to - check type
   - [ ] Check for libraries
@@ -51,3 +34,4 @@ Error management
 
 Future:
   - Create new cursors
+  - Improved error handling using lua_pcall
