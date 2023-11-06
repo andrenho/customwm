@@ -96,7 +96,6 @@ local theme = {
 
         after_window_registered = function(window)
             print("Window registered: ", window)
-            window:set_cursor("watch")
         end,
 
         after_window_unregistered = function(window)

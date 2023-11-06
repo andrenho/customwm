@@ -18,6 +18,13 @@ void l_wm_create_metadata(lua_State* L)
             THIS->move_window_with_mouse(luaw_to<bool>(L, 2), window);
             return 0;
         }},
+        { "set_focus", [](lua_State* L) {
+            std::optional<L_Window *> window {};
+            if (lua_gettop(L) >= 2)
+                window = luaw_to<std::optional<L_Window*>>(L, 2);
+            THIS->set_focus(window);
+            return 0;
+        }},
     });
     LOG.debug("Metatable setup for WM as '%s'", mt.c_str());
 }

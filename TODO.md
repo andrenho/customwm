@@ -35,3 +35,4 @@ Error management
 Future:
   - Create new cursors
   - Improved error handling using lua_pcall
+  - Virtual Desktops

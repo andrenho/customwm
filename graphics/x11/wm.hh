@@ -11,12 +11,11 @@
 
 class WM : public L_WM {
 public:
-    WM();
-
     void run();
     [[nodiscard]] std::string interface_name() const override { return "X11"; }
 
     void move_window_with_mouse(bool move, std::optional<L_Window*> window) override;
+    void set_focus(std::optional<L_Window *> window) override;
 
 private:
     Resources resources_;
@@ -25,13 +24,13 @@ private:
 
     std::optional<XWindow*> moving_window_with_mouse_ {};
     Point last_mouse_position_ { 0, 0 };
-    Atom  child_id_atom, parent_id_atom;
 
     void setup_event_filter();
     void add_existing_windows();
 
     [[noreturn]] void main_loop();
 
+    // events
     void on_map_request(Window child_id);
     void on_unmap_notify(XUnmapEvent const &e);
     void on_expose(XExposeEvent const &e);

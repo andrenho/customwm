@@ -9,12 +9,6 @@
 #include "theme/logger.hh"
 #include "xwindow.hh"
 
-WM::WM()
-    : child_id_atom(XInternAtom(x11.display, "child_id", false)),
-      parent_id_atom(XInternAtom(x11.display, "parent_id", false))
-{
-}
-
 void WM::run()
 {
     add_existing_windows();
@@ -272,4 +266,9 @@ XWindow* WM::find_parent(Window parent_id) const
         return nullptr;
     else
         return it->second.get();
+}
+
+void WM::set_focus(std::optional<L_Window *> window)
+{
+
 }

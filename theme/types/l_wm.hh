@@ -10,6 +10,7 @@ struct L_WM {
     [[nodiscard]] virtual std::string interface_name() const = 0;
 
     virtual void move_window_with_mouse(bool move, std::optional<L_Window*> window) = 0;
+    virtual void set_focus(std::optional<L_Window*> window) = 0;
 
     static constexpr const char* mt_identifier = "WM";
 };

@@ -20,8 +20,76 @@
   <component name="ChangeListManager">
     <list default="true" id="85af904c-4e08-41cc-b7a2-66d490ad309f" name="Changes" comment=".">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/THEME.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/TODO.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libresource/colors.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libresource/colors.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libresource/contrib/stb_image.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libresource/resourcemanager.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libresource/resourcemanager.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libtheme/base/base.lua" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libtheme/base/base.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libtheme/exceptions.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libtheme/luaw.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libtheme/luaw.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libtheme/luaw.inl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libtheme/theme.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libtheme/theme.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libtheme/theme.inl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libtheme/types/iwindow.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libtheme/types/iwindow.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libtheme/types/resources.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libtheme/types/resources.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libtheme/types/types.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/libtheme/types/types.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/sample.lua" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/wm/main.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/wm/options.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/wm/options.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/wm/window.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/wm/window.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/wm/wm.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old/wm/wm.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/THEME" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/__CMakeLists.txt__" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/customwm/customwm.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/customwm/customwm.lua" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/customwm/main.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libengine/engine.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libengine/engine.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libengine/engine.inl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libengine/exceptions.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libengine/helper/helper.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libengine/helper/helper.lua" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libengine/luaw.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libengine/luaw.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libengine/luaw.inl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libengine/metatables.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libengine/metatables.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libengine/types/types.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libengine/types/types.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libroot/root.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libroot/root.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libroot/server.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libroot/wayland/output.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libroot/wayland/output.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libroot/wayland/root_wayland.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libroot/wayland/root_wayland.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libroot/wayland/server_wayland.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libroot/wayland/server_wayland.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libroot/x11/root_x11.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libroot/x11/root_x11.hh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libroot/x11/server_x11.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.old2/libroot/x11/server_x11.hh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/theme/themehelper.lua" beforeDir="false" afterPath="$PROJECT_DIR$/theme/themehelper.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contrib/luaw" beforeDir="false" afterPath="$PROJECT_DIR$/contrib/luaw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customwm/customwm.lua" beforeDir="false" afterPath="$PROJECT_DIR$/customwm/customwm.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/wm.cc" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wm.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/wm.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/wm.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphics/x11/xwindow.hh" beforeDir="false" afterPath="$PROJECT_DIR$/graphics/x11/xwindow.hh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_wm.cc" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_wm.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/theme/types/l_wm.hh" beforeDir="false" afterPath="$PROJECT_DIR$/theme/types/l_wm.hh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +229,7 @@
       <workItem from="1698948658529" duration="1159000" />
       <workItem from="1698950796886" duration="501000" />
       <workItem from="1698951721526" duration="8318000" />
-      <workItem from="1699205211742" duration="3331000" />
+      <workItem from="1699205211742" duration="8927000" />
     </task>
     <task id="LOCAL-00001" summary=".">
       <option name="closed" value="true" />
@@ -443,7 +511,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699206235072</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary=".">
+      <option name="closed" value="true" />
+      <created>1699212911494</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1699212911494</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
