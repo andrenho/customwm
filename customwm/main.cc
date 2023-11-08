@@ -1,4 +1,4 @@
-#include "util/init.hh"
+#include "common/init.hh"
 
 int main(int argc, char* argv[])
 {

@@ -7,9 +7,9 @@
 #define STBI_NO_JPEG
 #define STBI_FAILURE_USERMSG
 #define STB_IMAGE_IMPLEMENTATION
-#include "contrib/stb_image.h"
+#include "stb_image.h"
 
-#include "util/logger.hh"
+#include "common/logger.hh"
 #include "x11.hh"
 
 Resources::Resources()

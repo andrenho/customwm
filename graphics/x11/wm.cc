@@ -6,7 +6,7 @@
 #include <utility>
 
 #include "x11.hh"
-#include "util/logger.hh"
+#include "common/logger.hh"
 #include "xwindow.hh"
 
 void WM::run()
@@ -270,5 +270,5 @@ XWindow* WM::find_parent(Window parent_id) const
 
 void WM::set_focus(std::optional<L_Window *> window)
 {
-
+    (void) window;  // TODO
 }

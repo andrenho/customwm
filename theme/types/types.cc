@@ -29,7 +29,7 @@ bool Rectangle::lua_is(lua_State *L, int index)
 
 bool Rectangle::contains(Point const &p) const
 {
-    return p.x >= x && p.y >= y && p.x < (x + w) && p.y < (y + h);
+    return p.x >= x && p.y >= y && p.x < (int32_t) (x + w) && p.y < (int32_t) (y + h);
 }
 
 Point Point::from_lua(lua_State *L, int index)

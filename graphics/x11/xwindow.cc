@@ -1,5 +1,5 @@
 #include "xwindow.hh"
-#include "util/logger.hh"
+#include "common/logger.hh"
 #include "x11.hh"
 
 #include <stdexcept>

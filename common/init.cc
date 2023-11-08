@@ -18,7 +18,7 @@ WM initialize(int argc, char* argv[])
         THEME.set_error_action(ErrorAction::ERROR);
 
 #ifdef DEBUG
-    THEME.load_theme_file("./util/base_theme.lua");
+    THEME.load_theme_file("./common/base_theme.lua");
 #else
     THEME.load_theme(base_theme_lua);
 #endif
