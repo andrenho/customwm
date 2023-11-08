@@ -8,8 +8,6 @@
 #  include "graphics/x11/wm.hh"
 #endif
 
-#include <memory>
-
 int main(int argc, char* argv[])
 {
     Options options(argc, argv);

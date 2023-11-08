@@ -10,7 +10,7 @@
 #include "types/exceptions.hh"
 #include "types/l_wm.hh"
 #include "types/l_window.hh"
-#include "logger.hh"
+#include "../util/logger.hh"
 
 Theme theme;
 

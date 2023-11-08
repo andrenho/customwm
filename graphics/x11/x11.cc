@@ -1,5 +1,5 @@
 #include "x11.hh"
-#include "theme/logger.hh"
+#include "util/logger.hh"
 
 X11 x11 {};
 

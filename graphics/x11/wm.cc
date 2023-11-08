@@ -6,7 +6,7 @@
 #include <utility>
 
 #include "x11.hh"
-#include "theme/logger.hh"
+#include "util/logger.hh"
 #include "xwindow.hh"
 
 void WM::run()

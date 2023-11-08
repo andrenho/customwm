@@ -9,7 +9,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "contrib/stb_image.h"
 
-#include "theme/logger.hh"
+#include "util/logger.hh"
 #include "x11.hh"
 
 Resources::Resources()

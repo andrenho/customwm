@@ -1,5 +1,5 @@
 #include "options.hh"
-#include "theme/logger.hh"
+#include "util/logger.hh"
 
 #include <cstdio>
 #include <cstdlib>

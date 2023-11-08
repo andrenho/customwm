@@ -2,8 +2,8 @@
 # sources
 #
 
-OBJ_THEME = theme/logger.o theme/theme.o theme/types/types.o theme/types/l_wm.o \
-            theme/types/l_window.o
+OBJ_COMMON = util/logger.o \
+	theme/theme.o theme/types/types.o theme/types/l_wm.o theme/types/l_window.o
 
 OBJ_GRAPHICS_X11 = graphics/x11/x11.o graphics/x11/resources.o graphics/x11/xwindow.o graphics/x11/wm.o
 
@@ -29,7 +29,10 @@ LDFLAGS_X11 = ${LDFLAGS} $(shell pkg-config --libs x11 xft)
 
 LUAW_PATH=contrib/luaw
 LUAW_FILE=${LUAW_PATH}/README.md
+
 LUAJIT_HEADER=${LUAW_PATH}/luajit/src/luajit.h
+LUAJIT_A=contrib/luaw/libluaw-jit.a
+LUAZH=contrib/luaw/luazh-jit
 
 #
 # main dependencies
@@ -38,7 +41,7 @@ LUAJIT_HEADER=${LUAW_PATH}/luajit/src/luajit.h
 all: customwm-x11
 
 customwm-x11: CPPFLAGS += ${CPPFLAGS_X11}
-customwm-x11: ${OBJ_THEME} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM} libluaw-jit.a
+customwm-x11: ${OBJ_COMMON} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM} ${LUAJIT_A}
 	$(CXX) -o $@ $^ ${LDFLAGS_X11}
 
 #
@@ -49,14 +52,14 @@ customwm/main.o: customwm/customwm.embed
 
 theme/theme.o: theme/themehelper.embed
 
-${OBJ_THEME} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM}: ${LUAJIT_HEADER}
+${OBJ_COMMON} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM}: ${LUAJIT_HEADER}
 
 #
 # automatic rules
 #
 
-%.embed: %.lua ./luazh-jit
-	./luazh-jit $(basename $(notdir $<))_lua ${LUASZ_FLAGS} $< > $@
+%.embed: %.lua ${LUAZH}
+	${LUAZH} $(basename $(notdir $<))_lua ${LUASZ_FLAGS} $< > $@
 
 -include ${OBJ:%.o=%.d}
 
@@ -67,23 +70,22 @@ ${OBJ_THEME} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM}: ${LUAJIT_HEADER}
 ${LUAW_FILE}:  # download luaw git submodule, if not there
 	git submodule update --init --recursive
 
-luazh-jit: ${LUAW_FILE} libluaw-jit.a
+${LUAZH}: ${LUAW_FILE} ${LUAJIT_A}
 	$(MAKE) -C ${LUAW_PATH} $@
-	cp ${LUAW_PATH}/$@ $@
 
-libluaw-jit.a: ${LUAW_FILE}
+${LUAJIT_A}: ${LUAW_FILE}
 	$(MAKE) -C ${LUAW_PATH} $@ DEBUG=${DEBUG}
-	cp ${LUAW_PATH}/$@ $@
 
-${LUAJIT_HEADER}: libluaw-jit.a
+${LUAJIT_HEADER}: ${LUAJIT_A}
 
 #
 # special targets
 #
 
 clean:
-	rm -f ${OBJ_THEME} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM} customwm-x11 **/*.embed **/*.d
+	find . -name '*.embed' -delete
+	find . -name '*.d' -delete
+	rm -f ${OBJ_COMMON} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM} customwm-x11
 
 distclean: clean
-	rm -f libluaw-jit.a luazh-jit
 	$(MAKE) -C ${LUAW_PATH} clean
