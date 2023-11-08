@@ -8,7 +8,7 @@
 #  include "graphics/x11/wm.hh"
 #endif
 
-#include "customwm.embed"
+#include "base_theme.embed"
 
 WM initialize(int argc, char* argv[])
 {
@@ -18,9 +18,9 @@ WM initialize(int argc, char* argv[])
         THEME.set_error_action(ErrorAction::ERROR);
 
 #ifdef DEBUG
-    theme.load_theme_file("./customwm/customwm.lua");
+    THEME.load_theme_file("./util/base_theme.lua");
 #else
-    THEME.load_theme(customwm_lua);
+    THEME.load_theme(base_theme_lua);
 #endif
 
     if (options.theme_file)
