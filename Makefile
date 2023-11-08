@@ -65,7 +65,7 @@ ${OBJ_THEME} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM}: ${LUAJIT_HEADER}
 #
 
 ${LUAW_FILE}:  # download luaw git submodule, if not there
-	git submodule update --recursive --remote
+	git submodule update --init --recursive
 
 luazh-jit: ${LUAW_FILE} libluaw-jit.a
 	$(MAKE) -C ${LUAW_PATH} $@
