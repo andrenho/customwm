@@ -1,38 +1,59 @@
+# v0.1 - Base X version
+
+## Basic infra
+
+- [x] Makefile, executable, load lua scripts
+- [x] Create "libraries"
+- [x] Run arguments
+- [x] Logger
+
 ## Theme
 
-Window:
-  - [x] Read window name
-  - [x] Set correct cursor
-  - [x] Define hotspot areas
-  - [x] Move window
-    - [x] On click (clicks going through?)
-    - [x] On hotspot click (?)
-    - [x] Attach window to pointer
-    - [x] On move
-  - [ ] Window focus
-  - [ ] Close window
-  - [ ] Grab
-    - [ ] Set cursor
-  - [ ] Resize
-  - [ ] Minimize
-  - [ ] Maximize
+- [x] Load theme, read props
+- [x] Merge theme
 
-W95 theme:
-  - [ ] Graphics
-    - [ ] Code to position graphics on window
+## WM
 
-Menu
+- [x] Connect to X (X object)
+- [x] Initialize WM
+- [x] X properties
+- [x] Events
+- [x] New window - reparent, add existing windows
+- [x] Window object
+- [x] Resource manager
+- [x] Fill, (RM: colors)
+- [x] RM: Load image
+- [x] Display image
+- [x] RM: Load font
+- [x] Text
+- [x] Add existing windows
+- [x] Cursors
+- [ ] Hotspots
+- [ ] Focus management
+- [ ] Close window
+- [ ] Grab / move / resize window
+- [ ] Minimize
+- [ ] Maximize
+- [ ] Sample W95 theme
 
-Bar
+## Bar
 
-Error management
-  - [x] luaw_to - check type
-  - [ ] Check for libraries
-  - [ ] Reload config file
-  - [ ] Better mouse button names
-  - [ ] lua_error management
+## Menu
 
-Future:
+## Error management
+- [x] luaw_to - check type
+- [ ] Check for libraries
+- [ ] Reload config file
+- [ ] Better mouse button names
+- [ ] lua_error management
+
+---
+
+# v0.2 - Base Wayland version
+
+---
+
+# Future
   - Create new cursors
   - Improved error handling using lua_pcall
   - Virtual Desktops
