@@ -13,7 +13,7 @@ void WM::run()
 {
     add_existing_windows();
     setup_event_filter();
-    theme.call_opt("wm.after_start");
+    THEME.call_opt("wm.after_start");
     main_loop();
 }
 
@@ -130,7 +130,7 @@ void WM::on_map_request(Window child_id)
     // figure out information about the parent window (TODO)
     Rectangle child_rect = { requested_x, requested_y, child_w, child_h };
     Size screen_size = { (uint32_t) DisplayWidth(x11.display, x11.screen), (uint32_t) DisplayHeight(x11.display, x11.screen) };
-    auto [parent_rect, offset] = theme.get_prop<WindowStartingLocation>("wm.window_starting_location", child_rect, screen_size);
+    auto [parent_rect, offset] = THEME.get_prop<WindowStartingLocation>("wm.window_starting_location", child_rect, screen_size);
 
     // create window
     auto parent = std::make_unique<XWindow>(resources_, parent_rect);
@@ -144,7 +144,7 @@ void WM::on_map_request(Window child_id)
     // map windows
     XMapWindow(x11.display, child_id);
     XFlush(x11.display);
-    theme.call_opt("wm.after_window_registered", parent.get());
+    THEME.call_opt("wm.after_window_registered", parent.get());
     auto [wmwindow, _] = windows_.emplace(parent->id, std::move(parent));
 
     // set properties
@@ -159,7 +159,7 @@ void WM::on_unmap_notify(XUnmapEvent const &e)
     if (xwindow) {
 
         // parent is unmapped
-        theme.call_opt("wm.after_window_unregistered", xwindow);
+        THEME.call_opt("wm.after_window_unregistered", xwindow);
         LOG.debug("Destroyed parent window id %d", xwindow->id);
         windows_.erase(xwindow->id);
 
@@ -182,7 +182,7 @@ void WM::on_expose(XExposeEvent const &e)
 {
     XWindow* xwindow = find_parent(e.window);
     if (xwindow && !xwindow->deleted) {
-        theme.call_opt("wm.on_expose", xwindow, Rectangle {e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
+        THEME.call_opt("wm.on_expose", xwindow, Rectangle {e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
         XFlush(x11.display);
     }
 }
@@ -206,12 +206,12 @@ void WM::on_click(XButtonEvent const &e)
         }
 
         // on click
-        theme.call_opt("wm.on_click", xwindow, click_event);
+        THEME.call_opt("wm.on_click", xwindow, click_event);
 
         // on hotspot click
-        for (auto [hotspot, rect]: theme.get_prop<std::map<std::string, Rectangle>>("wm.hotspots", xwindow)) {
+        for (auto [hotspot, rect]: THEME.get_prop<std::map<std::string, Rectangle>>("wm.hotspots", xwindow)) {
             if (rect.contains(click_event.pos))
-                theme.call_opt("wm.on_hotspot_click", xwindow, hotspot, click_event);
+                THEME.call_opt("wm.on_hotspot_click", xwindow, hotspot, click_event);
         }
     }
 }
@@ -231,21 +231,21 @@ void WM::on_move(XMotionEvent const &e)
     std::optional<std::string> new_hotspot {};
     XWindow* xwindow = find_parent(e.window);
     if (xwindow) {
-        for (auto [hs, rect]: theme.get_prop<std::map<std::string, Rectangle>>("wm.hotspots", xwindow)) {
+        for (auto [hs, rect]: THEME.get_prop<std::map<std::string, Rectangle>>("wm.hotspots", xwindow)) {
             if (rect.contains({ e.x, e.y }))
                 new_hotspot = hs;
         }
     }
     if (new_hotspot != current_hotspot_) {
         if (current_hotspot_)
-            theme.call_opt("wm.on_leave_hotspot", xwindow, *current_hotspot_);
+            THEME.call_opt("wm.on_leave_hotspot", xwindow, *current_hotspot_);
         if (new_hotspot)
-            theme.call_opt("wm.on_enter_hotspot", xwindow, *new_hotspot);
+            THEME.call_opt("wm.on_enter_hotspot", xwindow, *new_hotspot);
         current_hotspot_ = new_hotspot;
     }
 
     // fire on_mouse_move event on theme
-    theme.call_opt("wm.on_mouse_move", xwindow, Point { e.x, e.y });  // xwindow can be null
+    THEME.call_opt("wm.on_mouse_move", xwindow, Point {e.x, e.y });  // xwindow can be null
 
     last_mouse_position_ = { e.x_root, e.y_root };
 }
@@ -255,7 +255,7 @@ void WM::on_configure(XConfigureEvent const &e)
     XWindow* xwindow = find_parent(e.window);
     if (xwindow) {
         xwindow->rectangle = { e.x, e.y, (uint32_t) e.width, (uint32_t) e.height };
-        theme.call_opt("wm.on_configure_window", xwindow);
+        THEME.call_opt("wm.on_configure_window", xwindow);
     }
 }
 

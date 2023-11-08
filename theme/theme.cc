@@ -12,7 +12,7 @@
 #include "types/l_window.hh"
 #include "../util/logger.hh"
 
-Theme theme;
+Theme THEME;
 
 Theme::Theme()
     : Lptr(luaw_newstate(), [](lua_State* LL) { lua_close(LL); }), L(Lptr.get())

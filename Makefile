@@ -2,12 +2,12 @@
 # sources
 #
 
-OBJ_COMMON = util/logger.o \
+OBJ_COMMON = util/logger.o util/init.o util/options.o \
 	theme/theme.o theme/types/types.o theme/types/l_wm.o theme/types/l_window.o
 
 OBJ_GRAPHICS_X11 = graphics/x11/x11.o graphics/x11/resources.o graphics/x11/xwindow.o graphics/x11/wm.o
 
-OBJ_CUSTOMWM = customwm/main.o customwm/options.o
+OBJ_CUSTOMWM = customwm/main.o
 
 #
 # config
@@ -48,7 +48,7 @@ customwm-x11: ${OBJ_COMMON} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM} ${LUAJIT_A}
 # secondary dependencies
 #
 
-customwm/main.o: customwm/customwm.embed
+util/init.o: util/base_theme.embed
 
 theme/theme.o: theme/themehelper.embed
 
