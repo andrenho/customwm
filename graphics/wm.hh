@@ -1,6 +1,7 @@
 #ifndef WM_HH_
 #define WM_HH_
 
+#include <map>
 #include <unordered_map>
 
 #include "theme/types/lwm.hh"
@@ -29,19 +30,21 @@ protected:
     // desktop events
     void on_create_child(WHandle child_id);
     void on_destroy_child(WHandle child);
-    void on_move_pointer_desktop(Point new_pos);
-    void on_click_desktop(ClickEvent const& e);
+    void on_desktop_move_pointer(Point new_pos);
+    void on_desktop_click(ClickEvent const& e);
 
     // window events
-    void on_expose_window(WHandle parent, Rectangle rectangle);
-    void on_click_window(WHandle parent, ClickEvent const& e);
-    void on_move_pointer_window(WHandle parent, Point new_rel_pos);
+    void on_window_expose(WHandle parent, Rectangle rectangle);
+    void on_window_click(WHandle parent, ClickEvent const& e);
+    void on_window_move_pointer(WHandle parent, Point new_rel_pos);
 
     std::unique_ptr<Resources> resources_;
 
 private:
     std::unordered_map<WHandle, std::unique_ptr<LWindow>> windows_;
     std::unordered_map<WHandle, WHandle>                  parents_;  // [child] = parent
+
+    std::optional<std::string> hotspot(LWindow* window, Point const& p) const;
 };
 
 #endif //WM_HH_

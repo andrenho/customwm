@@ -109,15 +109,22 @@ local theme = {
             })
         end,
 
-        on_click = function(window, ev)
-            getprop("wm._on_click", window, ev)
+        on_window_click = function(window, ev)
+            pp("wm.on_window_click", window, ev)
+        end,
+
+        on_desktop_click = function(window, ev)
+            pp("wm.on_desktop_click", window, ev)
         end,
 
         on_hotspot_click = function(window, hotspot, ev)
-            getprop("wm._on_hotspot_click", window, hotspot, ev)
+            pp("wm.on_hotspot_click", window, ev)
         end,
 
-        on_mouse_move = function(window, pos)
+        on_window_mouse_move = function(window, pos)
+        end,
+
+        on_desktop_mouse_move = function(window, pos)
         end,
 
         on_enter_hotspot = function(window, hotspot)

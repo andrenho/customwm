@@ -5,7 +5,7 @@
 
 #include "graphics/graphics.hh"
 
-#include "base_theme.embed"
+#include "luascripts.embed"
 
 std::unique_ptr<WindowManager> initialize(int argc, char* argv[])
 {
@@ -17,7 +17,7 @@ std::unique_ptr<WindowManager> initialize(int argc, char* argv[])
 #ifdef DEBUG
     THEME.load_theme_file("./common/base_theme.lua");
 #else
-    THEME.load_theme(base_theme_lua);
+    THEME.load_theme(lua_scripts);
 #endif
 
     if (options.theme_file)

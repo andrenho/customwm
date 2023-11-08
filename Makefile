@@ -10,6 +10,8 @@ OBJ_GRAPHICS_X11 = graphics/x11/x.o graphics/x11/xwm.o graphics/x11/xresources.o
 
 OBJ_CUSTOMWM = customwm/main.o
 
+LUA_SCRIPTS = common/base_theme.lua
+
 #
 # config
 #

@@ -56,17 +56,17 @@ void WindowManager::on_destroy_child(WHandle child_id)
     }
 }
 
-void WindowManager::on_move_pointer_desktop(Point new_pos)
+void WindowManager::on_desktop_move_pointer(Point new_pos)
 {
 
 }
 
-void WindowManager::on_click_desktop(ClickEvent const &e)
+void WindowManager::on_desktop_click(ClickEvent const &e)
 {
-
+    THEME.call_opt("wm.on_desktop_click", e);
 }
 
-void WindowManager::on_expose_window(WHandle parent, Rectangle rectangle)
+void WindowManager::on_window_expose(WHandle parent, Rectangle rectangle)
 {
     try {
         LWindow* window = windows_.at(parent).get();
@@ -74,12 +74,31 @@ void WindowManager::on_expose_window(WHandle parent, Rectangle rectangle)
     } catch (std::out_of_range&) {}
 }
 
-void WindowManager::on_click_window(WHandle parent, ClickEvent const &e)
+void WindowManager::on_window_click(WHandle parent, ClickEvent const &e)
+{
+    LWindow* window = windows_.at((WHandle const) parent).get();
+
+    auto hs = hotspot(window, e.pos);
+    if (hs)
+        THEME.call_opt("wm.on_hotspot_click", window, hs, e);
+
+    THEME.call_opt("wm.on_window_click", window, e);
+}
+
+void WindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
 {
 
 }
 
-void WindowManager::on_move_pointer_window(WHandle parent, Point new_rel_pos)
+std::optional<std::string> WindowManager::hotspot(LWindow* window, Point const& p) const
 {
-
+    try {
+        for (auto const& [hs, rect]: THEME.get_prop<std::map<std::string, Rectangle>>("wm.hotspots", window)) {
+            if (rect.contains(p))
+                return hs;
+        }
+        return {};
+    } catch (std::out_of_range&) {
+        return {};
+    }
 }
