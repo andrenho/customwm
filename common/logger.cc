@@ -8,11 +8,17 @@ Logger LOG;
 void Logger::debug(char const *fmt, ...)
 {
     if (level == Debug) {
+        std::string gray, reset;
+        if (isatty(fileno(stdout))) {
+            gray = "\e[0;37m";
+            reset = "\e[0m";
+        }
+
         va_list args;
         va_start(args, fmt);
-        printf("debug: ");
+        printf("%sdebug: ", gray.c_str());
         vprintf(fmt, args);
-        printf("\n");
+        printf("%s\n", reset.c_str());
         va_end(args);
     }
 }
