@@ -1,15 +1,15 @@
-#include "wm.hh"
+#include "wm_x11.hh"
 
 #include <X11/Xlib.h>
 #include <cstdlib>
 
 #include <utility>
 
-#include "x11.hh"
+#include "graphics_x11.hh"
 #include "common/logger.hh"
 #include "xwindow.hh"
 
-void WM::run()
+void WM_X11::run()
 {
     add_existing_windows();
     setup_event_filter();
@@ -36,32 +36,32 @@ void WMX11::initialize_xcomposite()
 }
  */
 
-void WM::setup_event_filter()
+void WM_X11::setup_event_filter()
 {
-    XSetErrorHandler(&WM::on_error);
+    XSetErrorHandler(&WM_X11::on_error);
 
-    XSelectInput(x11.display, x11.root, SubstructureRedirectMask | SubstructureNotifyMask | PointerMotionMask);
-    XSync(x11.display, false);
+    XSelectInput(X->display, X->root, SubstructureRedirectMask | SubstructureNotifyMask | PointerMotionMask);
+    XSync(X->display, false);
 }
 
-void WM::add_existing_windows()
+void WM_X11::add_existing_windows()
 {
     Window root, parent;
     Window* window_list;
     unsigned int n_windows;
 
-    XQueryTree(x11.display, x11.root, &root, &parent, &window_list, &n_windows);
+    XQueryTree(X->display, X->root, &root, &parent, &window_list, &n_windows);
     for (size_t i = 0; i < n_windows; ++i)
         on_map_request(window_list[i]);
 
     free(window_list);
 }
 
-[[noreturn]] void WM::main_loop()
+[[noreturn]] void WM_X11::main_loop()
 {
     for (;;) {
         XEvent e;
-        XNextEvent(x11.display, &e);
+        XNextEvent(X->display, &e);
 
         switch (e.type) {
             case MapRequest:
@@ -98,7 +98,7 @@ void WM::add_existing_windows()
     }
 }
 
-void WM::move_window_with_mouse(bool move, std::optional<L_Window*> window)
+void WM_X11::move_window_with_mouse(bool move, std::optional<L_Window*> window)
 {
     if (move && window) {
         moving_window_with_mouse_ = (XWindow *) window.value();
@@ -107,7 +107,7 @@ void WM::move_window_with_mouse(bool move, std::optional<L_Window*> window)
     }
 }
 
-int WM::on_error(Display* dsp, XErrorEvent* e)
+int WM_X11::on_error(Display* dsp, XErrorEvent* e)
 {
     if (e->error_code == BadAccess && e->request_code == 2 && e->minor_code == 0)
         throw std::runtime_error("There's already another window manager running!\n");
@@ -119,17 +119,17 @@ int WM::on_error(Display* dsp, XErrorEvent* e)
     return 0;
 }
 
-void WM::on_map_request(Window child_id)
+void WM_X11::on_map_request(Window child_id)
 {
     // figure out information about the child window
     Window root;
     int requested_x, requested_y;
     unsigned int child_w, child_h, border, depth;
-    XGetGeometry(x11.display, child_id, &root, &requested_x, &requested_y, &child_w, &child_h, &border, &depth);
+    XGetGeometry(X->display, child_id, &root, &requested_x, &requested_y, &child_w, &child_h, &border, &depth);
 
     // figure out information about the parent window (TODO)
     Rectangle child_rect = { requested_x, requested_y, child_w, child_h };
-    Size screen_size = { (uint32_t) DisplayWidth(x11.display, x11.screen), (uint32_t) DisplayHeight(x11.display, x11.screen) };
+    Size screen_size = {(uint32_t) DisplayWidth(X->display, X->screen), (uint32_t) DisplayHeight(X->display, X->screen) };
     auto [parent_rect, offset] = THEME.get_prop<WindowStartingLocation>("wm.window_starting_location", child_rect, screen_size);
 
     // create window
@@ -137,13 +137,13 @@ void WM::on_map_request(Window child_id)
     LOG.debug("Created parent window id %d", parent->id);
 
     // manage child
-    XAddToSaveSet(x11.display, child_id);
-    XReparentWindow(x11.display, child_id, parent->id, offset.x, offset.y);
+    XAddToSaveSet(X->display, child_id);
+    XReparentWindow(X->display, child_id, parent->id, offset.x, offset.y);
     LOG.info("Reparented window %d (parent %d)", child_id, parent->id);
 
     // map windows
-    XMapWindow(x11.display, child_id);
-    XFlush(x11.display);
+    XMapWindow(X->display, child_id);
+    XFlush(X->display);
     THEME.call_opt("wm.after_window_registered", parent.get());
     auto [wmwindow, _] = windows_.emplace(parent->id, std::move(parent));
 
@@ -153,7 +153,7 @@ void WM::on_map_request(Window child_id)
     resources_.set_property(child_id, "parent", xparent->id);
 }
 
-void WM::on_unmap_notify(XUnmapEvent const &e)
+void WM_X11::on_unmap_notify(XUnmapEvent const &e)
 {
     XWindow* xwindow = find_parent(e.window);
     if (xwindow) {
@@ -169,25 +169,25 @@ void WM::on_unmap_notify(XUnmapEvent const &e)
         for (auto& [parent_id, parent]: windows_) {
             Window child_id = resources_.get_property<Window>(parent_id, "child");
             if (child_id != None) {
-                XUnmapWindow(x11.display, parent_id);
+                XUnmapWindow(X->display, parent_id);
                 parent->deleted = true;
             }
         }
-        XFlush(x11.display);
+        XFlush(X->display);
     }
 }
 
 
-void WM::on_expose(XExposeEvent const &e)
+void WM_X11::on_expose(XExposeEvent const &e)
 {
     XWindow* xwindow = find_parent(e.window);
     if (xwindow && !xwindow->deleted) {
         THEME.call_opt("wm.on_expose", xwindow, Rectangle {e.x, e.y, (uint32_t) e.width, (uint32_t) e.height });
-        XFlush(x11.display);
+        XFlush(X->display);
     }
 }
 
-void WM::on_click(XButtonEvent const &e)
+void WM_X11::on_click(XButtonEvent const &e)
 {
     XWindow* xwindow = find_parent(e.window);
     if (xwindow) {
@@ -216,15 +216,15 @@ void WM::on_click(XButtonEvent const &e)
     }
 }
 
-void WM::on_move(XMotionEvent const &e)
+void WM_X11::on_move(XMotionEvent const &e)
 {
     // check if moving window
     if (moving_window_with_mouse_.has_value()) {
         XWindowAttributes xwa;
-        XGetWindowAttributes(x11.display, (*moving_window_with_mouse_)->id, &xwa);
+        XGetWindowAttributes(X->display, (*moving_window_with_mouse_)->id, &xwa);
         int x = xwa.x + e.x_root - last_mouse_position_.x;
         int y = xwa.y + e.y_root - last_mouse_position_.y;
-        XMoveWindow(x11.display, (*moving_window_with_mouse_)->id, x, y);
+        XMoveWindow(X->display, (*moving_window_with_mouse_)->id, x, y);
     }
 
     // check if entering or leaving hotspot
@@ -250,7 +250,7 @@ void WM::on_move(XMotionEvent const &e)
     last_mouse_position_ = { e.x_root, e.y_root };
 }
 
-void WM::on_configure(XConfigureEvent const &e)
+void WM_X11::on_configure(XConfigureEvent const &e)
 {
     XWindow* xwindow = find_parent(e.window);
     if (xwindow) {
@@ -259,7 +259,7 @@ void WM::on_configure(XConfigureEvent const &e)
     }
 }
 
-XWindow* WM::find_parent(Window parent_id) const
+XWindow* WM_X11::find_parent(Window parent_id) const
 {
     auto it = windows_.find(parent_id);
     if (it == windows_.end())
@@ -268,7 +268,7 @@ XWindow* WM::find_parent(Window parent_id) const
         return it->second.get();
 }
 
-void WM::set_focus(std::optional<L_Window *> window)
+void WM_X11::set_focus(std::optional<L_Window *> window)
 {
     (void) window;  // TODO
 }

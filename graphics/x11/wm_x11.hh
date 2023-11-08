@@ -4,14 +4,14 @@
 #include "theme/theme.hh"
 #include "xwindow.hh"
 #include "resources.hh"
-#include "theme/types/l_wm.hh"
+#include "graphics/wm.hh"
 
 #include <unordered_map>
 #include <X11/Xlib.h>
 
-class WM : public L_WM {
+class WM_X11 : public WM {
 public:
-    void run();
+    void run() override;
     [[nodiscard]] std::string interface_name() const override { return "X11"; }
 
     void move_window_with_mouse(bool move, std::optional<L_Window*> window) override;

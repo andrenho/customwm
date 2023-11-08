@@ -2,6 +2,6 @@
 
 int main(int argc, char* argv[])
 {
-    WM wm = initialize(argc, argv);
-    wm.run();
+    std::unique_ptr<WM> wm = initialize(argc, argv);
+    wm->run();
 }

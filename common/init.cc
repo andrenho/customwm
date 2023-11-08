@@ -3,14 +3,11 @@
 #include "options.hh"
 #include "theme/theme.hh"
 
-#if GRAPHICS==X11
-#  include "graphics/x11/x11.hh"
-#  include "graphics/x11/wm.hh"
-#endif
+#include "graphics/graphics.hh"
 
 #include "base_theme.embed"
 
-WM initialize(int argc, char* argv[])
+std::unique_ptr<WM> initialize(int argc, char* argv[])
 {
     Options options(argc, argv);
 
@@ -26,12 +23,10 @@ WM initialize(int argc, char* argv[])
     if (options.theme_file)
         THEME.load_theme_file(*options.theme_file);
 
-#if GRAPHICS==X11
-    x11.init(options.display);
-#endif
+    Graphics* graphics = Graphics::create(options.display);
 
-    WM wm;
-    THEME.create_global_object("wm", &wm);
+    std::unique_ptr<WM> wm = graphics->create_wm();
+    THEME.create_global_object("wm", wm.get());
 
     if (!options.throw_exceptions)
         THEME.set_error_action(ErrorAction::LOG);

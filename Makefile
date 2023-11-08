@@ -3,9 +3,10 @@
 #
 
 OBJ_COMMON = common/logger.o common/init.o common/options.o \
-	theme/theme.o theme/types/types.o theme/types/l_wm.o theme/types/l_window.o
+	theme/theme.o theme/types/types.o theme/types/l_wm.o theme/types/l_window.o \
+	graphics/graphics.o graphics/wm.o
 
-OBJ_GRAPHICS_X11 = graphics/x11/x11.o graphics/x11/resources.o graphics/x11/xwindow.o graphics/x11/wm.o
+OBJ_GRAPHICS_X11 = graphics/x11/graphics_x11.o graphics/x11/wm_x11.o graphics/x11/resources.o graphics/x11/xwindow.o
 
 OBJ_CUSTOMWM = customwm/main.o
 
@@ -14,7 +15,7 @@ OBJ_CUSTOMWM = customwm/main.o
 #
 
 CPPFLAGS = -Wall -Wextra -I. -isystem ./contrib -isystem ./contrib/luaw/luaw -MD -MP $(shell pkg-config --cflags zlib)
-CPPFLAGS_X11 = $(shell pkg-config --cflags x11 xft) -DBACKEND=X11
+CPPFLAGS_X11 = $(shell pkg-config --cflags x11 xft) -DX11
 CXXFLAGS = -std=c++20
 
 ifdef DEBUG

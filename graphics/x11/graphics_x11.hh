@@ -1,5 +1,5 @@
-#ifndef X11_HH_
-#define X11_HH_
+#ifndef GRAPHICS_X11_HH_
+#define GRAPHICS_X11_HH_
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
@@ -7,8 +7,14 @@
 
 #include <optional>
 #include <string>
+#include "graphics/graphics.hh"
 
-struct X11 {
+#include <optional>
+
+struct Graphics_X11 : public Graphics {
+    explicit Graphics_X11(std::optional<std::string> const& display);
+    ~Graphics_X11() override;
+
     Display*      display;
     int           screen;
     Window        root;
@@ -19,10 +25,9 @@ struct X11 {
     unsigned long black;
     unsigned long white;
 
-    void init(std::optional<std::string> const& display);
-    ~X11();
+    std::unique_ptr<WM> create_wm() override;
 };
 
-extern X11 x11;
+extern Graphics_X11* X;
 
-#endif //X11_HH_
+#endif //GRAPHICS_X11_HH_

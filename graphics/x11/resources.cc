@@ -10,43 +10,43 @@
 #include "stb_image.h"
 
 #include "common/logger.hh"
-#include "x11.hh"
+#include "graphics_x11.hh"
 
 Resources::Resources()
 {
-    cursors_["pointer"] = XCreateFontCursor(x11.display, XC_left_ptr);
-    cursors_["watch"] = XCreateFontCursor(x11.display, XC_watch);
+    cursors_["pointer"] = XCreateFontCursor(X->display, XC_left_ptr);
+    cursors_["watch"] = XCreateFontCursor(X->display, XC_watch);
 }
 
 Resources::~Resources()
 {
     for (auto& [_, cursor]: cursors_)
-        XFreeCursor(x11.display, cursor);
+        XFreeCursor(X->display, cursor);
 
     for (auto& [_, xft_color] : xft_colors_)
-        XftColorFree(x11.display, x11.visual, x11.colormap, &xft_color);
+        XftColorFree(X->display, X->visual, X->colormap, &xft_color);
 
     for (auto& [_, image] : images_) {
-        XFreePixmap(x11.display, image.pixmap);
-        XFreePixmap(x11.display, image.mask);
+        XFreePixmap(X->display, image.pixmap);
+        XFreePixmap(X->display, image.mask);
     }
 
     std::vector<unsigned long> pixels(colors_.size());
     std::transform(colors_.begin(), colors_.end(), std::back_inserter(pixels),
                    [](std::pair<const Color, unsigned long>& p) { return p.second; });
-    XFreeColors(x11.display, x11.colormap, pixels.data(), (int) pixels.size(), 0);
+    XFreeColors(X->display, X->colormap, pixels.data(), (int) pixels.size(), 0);
 
     for (auto const& [_, font]: fonts_)
-        XftFontClose(x11.display, font);
+        XftFontClose(X->display, font);
 }
 
 unsigned long Resources::get_color(Color const &color) const
 {
     // black or white?
     if (color.is_white())
-        return x11.white;
+        return X->white;
     else if (color.is_black())
-        return x11.black;
+        return X->black;
 
     // cached?
     auto it = colors_.find(color);
@@ -60,7 +60,7 @@ unsigned long Resources::get_color(Color const &color) const
             .blue = static_cast<unsigned short>(color.b * 256),
             .flags = DoRed | DoGreen | DoBlue,
     };
-    if (XAllocColor(x11.display, x11.colormap, &xcolor) == 0)
+    if (XAllocColor(X->display, X->colormap, &xcolor) == 0)
         LOG.info("Color allocation failed (%d %d %d)", color.r, color.g, color.b);
     colors_.emplace(color, xcolor.pixel);
     return xcolor.pixel;
@@ -81,7 +81,7 @@ XftColor& Resources::get_xft_color(Color const& color) const
             .alpha = static_cast<unsigned short>(color.a * 256),
     };
     XftColor xft_color;
-    if (XftColorAllocValue(x11.display, x11.visual, x11.colormap, &xcolor, &xft_color) == 0)
+    if (XftColorAllocValue(X->display, X->visual, X->colormap, &xcolor, &xft_color) == 0)
         LOG.info("XftColor allocation failed (%d %d %d)", color.r, color.g, color.b);
     auto kv = xft_colors_.emplace(color, xft_color);
     return kv.first->second;
@@ -120,7 +120,7 @@ XftFont* Resources::load_font(std::string const& key) const
     auto font_names = THEME.resource_font(key);
 
     for (auto const& font_name: font_names) {
-        XftFont* font = XftFontOpenName(x11.display, x11.screen, font_name.c_str());
+        XftFont* font = XftFontOpenName(X->display, X->screen, font_name.c_str());
         if (font) {
             LOG.debug("Loaded font '%s' as %p", font_name.c_str(), font);
             return font;
@@ -158,15 +158,15 @@ Image Resources::load_image(std::string const& key) const
     }
 
     // create image
-    XImage* ximage = XCreateImage(x11.display, x11.visual, x11.depth, ZPixmap, 0, (char *) image_data, w, h, 32, 0);
-    Pixmap pixmap = XCreatePixmap(x11.display, x11.root, w, h, x11.depth);
-    XPutImage(x11.display, pixmap, x11.gc, ximage, 0, 0, 0, 0, w, h);
+    XImage* ximage = XCreateImage(X->display, X->visual, X->depth, ZPixmap, 0, (char *) image_data, w, h, 32, 0);
+    Pixmap pixmap = XCreatePixmap(X->display, X->root, w, h, X->depth);
+    XPutImage(X->display, pixmap, X->gc, ximage, 0, 0, 0, 0, w, h);
 
     XDestroyImage(ximage);
     free(data);
 
     // create mask
-    Pixmap mask = XCreatePixmapFromBitmapData(x11.display, x11.root, (char *) mask_data, w, h, x11.white, x11.black, 1);
+    Pixmap mask = XCreatePixmapFromBitmapData(X->display, X->root, (char *) mask_data, w, h, X->white, X->black, 1);
 
     LOG.debug("Image created for '%s'", key.c_str());
 
@@ -186,22 +186,22 @@ Cursor Resources::get_cursor(std::string const& key) const
 template<>
 void Resources::set_property(Window window, std::string const& name, Window const& value)
 {
-    Atom atom = XInternAtom(x11.display, name.c_str(), false);
+    Atom atom = XInternAtom(X->display, name.c_str(), false);
 
-    XChangeProperty(x11.display, window, atom, XA_WINDOW, 32, PropModeReplace,
+    XChangeProperty(X->display, window, atom, XA_WINDOW, 32, PropModeReplace,
                     (unsigned char *) &value, 1);
 }
 
 template<> Window
 Resources::get_property(Window window, std::string const& name) const
 {
-    Atom atom = XInternAtom(x11.display, name.c_str(), false);
+    Atom atom = XInternAtom(X->display, name.c_str(), false);
 
     Atom type;
     int format;
     unsigned long nret, left;
     unsigned char* data;
-    XGetWindowProperty(x11.display, window, atom, 0, 1, False, XA_WINDOW, &type, &format, &nret, &left, &data);
+    XGetWindowProperty(X->display, window, atom, 0, 1, False, XA_WINDOW, &type, &format, &nret, &left, &data);
     if (nret == None)
         return None;
     Window ret = ((Window *) data)[0];
