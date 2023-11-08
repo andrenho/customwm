@@ -14,7 +14,7 @@ __window_metatable = {
 
 }
 
-local theme = {
+theme = {
 
     resources = {
 
@@ -155,5 +155,3 @@ local theme = {
     }
 
 }
-
-return theme

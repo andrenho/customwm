@@ -6,11 +6,11 @@
 #include <fstream>
 
 #include "themeexception.hh"
-#include "themehelper.embed"
 #include "types/exceptions.hh"
 #include "types/lwm.hh"
 #include "types/lwindow.hh"
 #include "common/logger.hh"
+#include "scripts/luascripts.inc"
 
 Theme THEME;
 
@@ -19,7 +19,7 @@ Theme::Theme()
 {
     set_error_action(ErrorAction::THROW);
 
-    luaw_do_z(L, themehelper_lua);
+    luaw_do_z(L, luascripts);
 
     l_wm_create_metadata(L);
     l_window_create_metadata(L);

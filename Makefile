@@ -10,7 +10,7 @@ OBJ_GRAPHICS_X11 = graphics/x11/x.o graphics/x11/xwm.o graphics/x11/xresources.o
 
 OBJ_CUSTOMWM = customwm/main.o
 
-LUA_SCRIPTS = common/base_theme.lua
+LUA_SCRIPTS = scripts/base_theme.lua scripts/themehelper.lua
 
 #
 # config
@@ -51,20 +51,18 @@ customwm-x11: ${OBJ_COMMON} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM} ${LUAJIT_A}
 # secondary dependencies
 #
 
-common/init.o: common/base_theme.embed
-
-theme/theme.o: theme/themehelper.embed
-
 ${OBJ_COMMON} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM}: ${LUAJIT_HEADER}
 
-#
-# automatic rules
-#
-
-%.embed: %.lua ${LUAZH}
-	${LUAZH} $(basename $(notdir $<))_lua ${LUASZ_FLAGS} $< > $@
-
 -include ${OBJ:%.o=%.d}
+
+#
+# scripts
+#
+
+theme/theme.o: scripts/luascripts.inc
+
+scripts/luascripts.inc: ${LUA_SCRIPTS} ${LUAZH}
+	${LUAZH} luascripts ${LUASZ_FLAGS} ${LUA_SCRIPTS} > $@
 
 #
 # external dependencies
@@ -86,7 +84,7 @@ ${LUAJIT_HEADER}: ${LUAJIT_A}
 #
 
 clean:
-	find . -name '*.embed' -delete
+	find . -name '*.inc' -delete
 	find . -name '*.d' -delete
 	rm -f ${OBJ_COMMON} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM} customwm-x11
 

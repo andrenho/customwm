@@ -1,4 +1,3 @@
-theme = {}
 __property_cache = {}
 
 

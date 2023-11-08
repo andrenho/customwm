@@ -1,6 +1,6 @@
 customwm-x11
 customwm-wayland
-*.embed
+*.inc
 *.plist
 contrib/luaw/luazh-jit
 luazh-jit
