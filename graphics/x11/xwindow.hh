@@ -19,16 +19,17 @@ public:
     XWindow(XWindow&&) = delete;
     XWindow& operator=(XWindow&&) = delete;
 
-    Window id;
+    Window id_;
     Rectangle rectangle;
     bool deleted = false;
 
-    Rectangle rect() const override { return rectangle; }
-    void fill(Color const &color) override;
-    void text(int x, int y, std::string const &text, TextProperties const& tp) override;
-    void draw(int x, int y, std::string const &slice) override;
+    WHandle     id() const override { return id_; }
+    Rectangle   rect() const override { return rectangle; }
+    void        fill(Color const &color) override;
+    void        text(int x, int y, std::string const &text, TextProperties const& tp) override;
+    void        draw(int x, int y, std::string const &slice) override;
     std::string name() const override;
-    void set_cursor(std::string const &key) override;
+    void        set_cursor(std::string const &key) override;
 
 private:
     XResources& resources_;

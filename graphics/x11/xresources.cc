@@ -10,7 +10,7 @@
 #include "stb_image.h"
 
 #include "common/logger.hh"
-#include "xgraphics.hh"
+#include "x.hh"
 
 XResources::XResources()
 {
@@ -183,8 +183,7 @@ Cursor XResources::get_cursor(std::string const& key) const
     }
 }
 
-template<>
-void XResources::set_property(Window window, std::string const& name, Window const& value)
+void XResources::set_property(WHandle window, std::string const &name, WHandle const &value)
 {
     Atom atom = XInternAtom(X->display, name.c_str(), false);
 
@@ -192,8 +191,7 @@ void XResources::set_property(Window window, std::string const& name, Window con
                     (unsigned char *) &value, 1);
 }
 
-template<> Window
-XResources::get_property(Window window, std::string const& name) const
+std::optional<WHandle> XResources::get_property_whandle(WHandle window, std::string const &name)
 {
     Atom atom = XInternAtom(X->display, name.c_str(), false);
 
@@ -203,7 +201,7 @@ XResources::get_property(Window window, std::string const& name) const
     unsigned char* data;
     XGetWindowProperty(X->display, window, atom, 0, 1, False, XA_WINDOW, &type, &format, &nret, &left, &data);
     if (nret == None)
-        return None;
+        return {};
     Window ret = ((Window *) data)[0];
     XFree(data);
     return ret;

@@ -1,5 +1,5 @@
-#ifndef XGRAPHICS_HH_
-#define XGRAPHICS_HH_
+#ifndef X_HH_
+#define X_HH_
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
@@ -30,4 +30,4 @@ struct XGraphics : public Graphics {
 
 extern XGraphics* X;
 
-#endif //XGRAPHICS_HH_
+#endif //X_HH_

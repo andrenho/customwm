@@ -6,8 +6,6 @@
 #include "theme/types/lwm.hh"
 #include "resources.hh"
 
-using WHandle = uintptr_t;
-
 class WindowManager : public LWindowManager {
 public:
     explicit WindowManager(std::unique_ptr<Resources> resources)
@@ -21,6 +19,7 @@ protected:
     virtual void add_existing_windows() = 0;
     virtual void setup_event_listener() = 0;
     virtual void parse_next_event() = 0;
+    virtual void reparent_window(WHandle parent_id, WHandle child_id, Point const& offset) = 0;
 
     [[nodiscard]] virtual Rectangle get_window_rectangle(WHandle window) const = 0;
     [[nodiscard]] virtual Size      get_screen_size() const = 0;
@@ -42,6 +41,7 @@ protected:
 
 private:
     std::unordered_map<WHandle, std::unique_ptr<LWindow>> windows_;
+    std::unordered_map<WHandle, WHandle>                  parents_;  // [child] = parent
 };
 
 #endif //WM_HH_

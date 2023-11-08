@@ -5,7 +5,7 @@
 
 #include <utility>
 
-#include "xgraphics.hh"
+#include "x.hh"
 #include "common/logger.hh"
 #include "xwindow.hh"
 
@@ -118,6 +118,8 @@ void XWindowManager::parse_next_event()
         default:
             LOG.debug("Unmapped event received: %d", e.type);
     }
+
+    XFlush(X->display);
 }
 
 void XWindowManager::move_window_with_mouse(bool move, std::optional<LWindow*> window)
@@ -156,6 +158,13 @@ Size XWindowManager::get_screen_size() const
         (uint32_t) DisplayWidth(X->display, X->screen),
         (uint32_t) DisplayHeight(X->display, X->screen)
     };
+}
+
+void XWindowManager::reparent_window(WHandle parent_id, WHandle child_id, Point const &offset)
+{
+    XAddToSaveSet(X->display, child_id);
+    XReparentWindow(X->display, child_id, parent_id, offset.x, offset.y);
+    XMapWindow(X->display, child_id);
 }
 
 

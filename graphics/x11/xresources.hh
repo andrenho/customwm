@@ -25,8 +25,8 @@ public:
     std::pair<Image, Rectangle> get_slice_image(std::string const& slice_name) const;
     Cursor        get_cursor(std::string const& key) const;
 
-    template<typename T> void set_property(Window window, std::string const& name, T const& value);
-    template<typename T> T    get_property(Window window, std::string const& name) const;
+    void set_property(WHandle window, std::string const &name, WHandle const &value) override;
+    std::optional<WHandle> get_property_whandle(WHandle window, std::string const &name) override;
 
 private:
     mutable std::map<Color, unsigned long>            colors_;
@@ -37,9 +37,6 @@ private:
 
     XftFont* load_font(std::string const& key) const;
     Image    load_image(std::string const& key) const;
-
-    template<> void   set_property(Window window, std::string const& name, Window const& value);
-    template<> Window get_property(Window window, std::string const& name) const;
 };
 
 #endif //XRESOURCES_HH_

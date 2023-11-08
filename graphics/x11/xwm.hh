@@ -22,6 +22,7 @@ protected:
     void add_existing_windows() override;
     void setup_event_listener() override;
     void parse_next_event() override;
+    void reparent_window(WHandle parent_id, WHandle child_id, Point const &offset) override;
 
     [[nodiscard]] Rectangle get_window_rectangle(WHandle window) const override;
     [[nodiscard]] Size get_screen_size() const override;

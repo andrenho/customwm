@@ -8,12 +8,15 @@
 void l_window_create_metadata(lua_State* L)
 {
     std::string mt = luaw_set_metatable<LWindow>(L, {
-            { "fill", [](lua_State* L) {
-                THIS->fill(luaw_to<Color>(L, 2));
-                return 0;
+            { "id", [](lua_State* L) {
+                return luaw_push(L, THIS->id());
             }},
             { "rect", [](lua_State* L) {
                 return luaw_push(L, THIS->rect());
+            }},
+            { "fill", [](lua_State* L) {
+                THIS->fill(luaw_to<Color>(L, 2));
+                return 0;
             }},
             { "text", [](lua_State* L) {
                 TextProperties tp {};

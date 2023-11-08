@@ -1,40 +1,39 @@
 #include "xwindow.hh"
 #include "common/logger.hh"
-#include "xgraphics.hh"
+#include "x.hh"
 
 #include <stdexcept>
 
 XWindow::XWindow(XResources& resources, Rectangle const &rectangle)
         : rectangle(rectangle), resources_(resources)
 {
-    id = XCreateWindow(X->display, X->root, rectangle.x, rectangle.y, rectangle.w, rectangle.h, 0,
-                       CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);
+    id_ = XCreateWindow(X->display, X->root, rectangle.x, rectangle.y, rectangle.w, rectangle.h, 0,
+                        CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);
 
-    XSelectInput(X->display, id, SubstructureNotifyMask | StructureNotifyMask | ExposureMask |
-                                ButtonPressMask | ButtonReleaseMask | PointerMotionMask);
+    XSelectInput(X->display, id_, SubstructureNotifyMask | StructureNotifyMask | ExposureMask |
+                                  ButtonPressMask | ButtonReleaseMask | PointerMotionMask);
 
-    XMapWindow(X->display, id);
+    XMapWindow(X->display, id_);
 
-    gc_ = XCreateGC(X->display, id, 0, nullptr);
-    xft_draw_ = XftDrawCreate(X->display, id, X->visual, X->colormap);
+    gc_ = XCreateGC(X->display, id_, 0, nullptr);
+    xft_draw_ = XftDrawCreate(X->display, id_, X->visual, X->colormap);
 
-    XDefineCursor(X->display, id, resources_.get_cursor("pointer"));
-
-    XFlush(X->display);
+    XDefineCursor(X->display, id_, resources_.get_cursor("pointer"));
 }
 
 XWindow::~XWindow()
 {
+    XUnmapWindow(X->display, id_);
+
     XftDrawDestroy(xft_draw_);
     XFreeGC(X->display, gc_);
-    XDestroyWindow(X->display, id);
-    XFlush(X->display);
+    XDestroyWindow(X->display, id_);
 }
 
 void XWindow::fill(Color const &color)
 {
     XSetForeground(X->display, gc_, resources_.get_color(color));
-    XFillRectangle(X->display, id, gc_, 0, 0, rectangle.w, rectangle.h);
+    XFillRectangle(X->display, id_, gc_, 0, 0, rectangle.w, rectangle.h);
 }
 
 void XWindow::text(int x, int y, std::string const &text_, TextProperties const& tp_)
@@ -89,16 +88,16 @@ void XWindow::draw(int x, int y, std::string const &slice)
     auto [image, rect] = resources_.get_slice_image(slice);
     XSetClipMask(X->display, gc_, image.mask);
     XSetClipOrigin(X->display, gc_, -rect.x + x, -rect.y + y);
-    XCopyArea(X->display, image.pixmap, id, gc_, rect.x, rect.y, rect.w, rect.h, x, y);
+    XCopyArea(X->display, image.pixmap, id_, gc_, rect.x, rect.y, rect.w, rect.h, x, y);
     XSetClipMask(X->display, gc_, None);
 }
 
 std::string XWindow::name() const
 {
-    Window child = resources_.get_property<Window>(id, "child");
-    if (child != None) {
+    auto child = resources_.get_property_whandle(id_, "child");
+    if (child.has_value()) {
         XTextProperty p;
-        if ((XGetWMName(X->display, child, &p) == 0) || p.value == nullptr)
+        if ((XGetWMName(X->display, *child, &p) == 0) || p.value == nullptr)
             goto not_found;
 
         return (char *) p.value;
@@ -110,5 +109,5 @@ not_found:
 
 void XWindow::set_cursor(std::string const &key)
 {
-    XDefineCursor(X->display, id, resources_.get_cursor(key));
+    XDefineCursor(X->display, id_, resources_.get_cursor(key));
 }

@@ -98,7 +98,7 @@ local theme = {
             print("Window registered: ", window)
         end,
 
-        after_window_unregistered = function(window)
+        on_window_unregistered = function(window)
             print("Window unregistered: ", window)
         end,
 

@@ -1,4 +1,4 @@
-#include "xgraphics.hh"
+#include "x.hh"
 #include "common/logger.hh"
 #include "xwm.hh"
 
