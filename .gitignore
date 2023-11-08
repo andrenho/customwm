@@ -3,7 +3,7 @@ customwm-wayland
 *.embed
 *.plist
 contrib/luaw/luazh-jit
-./luazh-jit
+luazh-jit
 luazh-jit.yml
 test-theme
 *.dSYM/*
