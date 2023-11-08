@@ -1,5 +1,5 @@
-#ifndef RESOURCES_HH_
-#define RESOURCES_HH_
+#ifndef XRESOURCES_HH_
+#define XRESOURCES_HH_
 
 #include <X11/Xlib.h>
 #include <X11/Xft/Xft.h>
@@ -7,16 +7,17 @@
 #include <string>
 #include "theme/theme.hh"
 #include "theme/types/types.hh"
+#include "graphics/resources.hh"
 
 struct Image {
     Pixmap pixmap;
     Pixmap mask;
 };
 
-class Resources {
+class XResources : public Resources {
 public:
-    Resources();
-    ~Resources();
+    XResources();
+    ~XResources();
 
     unsigned long get_color(Color const &color) const;
     XftColor&     get_xft_color(Color const& color) const;
@@ -41,4 +42,4 @@ private:
     template<> Window get_property(Window window, std::string const& name) const;
 };
 
-#endif //RESOURCES_HH_
+#endif //XRESOURCES_HH_

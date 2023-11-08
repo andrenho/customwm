@@ -7,7 +7,7 @@
 
 struct Graphics {
     virtual ~Graphics() = default;
-    virtual std::unique_ptr<WM> create_wm() = 0;
+    virtual std::unique_ptr<WindowManager> create_wm() = 0;
 
     static Graphics* create(std::optional<std::string> const& display);
 

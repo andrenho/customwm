@@ -1,4 +1,4 @@
-#include "resources.hh"
+#include "xresources.hh"
 
 #include <X11/Xft/Xft.h>
 
@@ -10,15 +10,15 @@
 #include "stb_image.h"
 
 #include "common/logger.hh"
-#include "graphics_x11.hh"
+#include "xgraphics.hh"
 
-Resources::Resources()
+XResources::XResources()
 {
     cursors_["pointer"] = XCreateFontCursor(X->display, XC_left_ptr);
     cursors_["watch"] = XCreateFontCursor(X->display, XC_watch);
 }
 
-Resources::~Resources()
+XResources::~XResources()
 {
     for (auto& [_, cursor]: cursors_)
         XFreeCursor(X->display, cursor);
@@ -40,7 +40,7 @@ Resources::~Resources()
         XftFontClose(X->display, font);
 }
 
-unsigned long Resources::get_color(Color const &color) const
+unsigned long XResources::get_color(Color const &color) const
 {
     // black or white?
     if (color.is_white())
@@ -66,7 +66,7 @@ unsigned long Resources::get_color(Color const &color) const
     return xcolor.pixel;
 }
 
-XftColor& Resources::get_xft_color(Color const& color) const
+XftColor& XResources::get_xft_color(Color const& color) const
 {
     // cached?
     auto it = xft_colors_.find(color);
@@ -87,7 +87,7 @@ XftColor& Resources::get_xft_color(Color const& color) const
     return kv.first->second;
 }
 
-XftFont* Resources::get_font(std::string const& key) const
+XftFont* XResources::get_font(std::string const& key) const
 {
     auto it = fonts_.find(key);
     if (it != fonts_.end())
@@ -97,7 +97,7 @@ XftFont* Resources::get_font(std::string const& key) const
     return it2->second;
 }
 
-std::pair<Image, Rectangle> Resources::get_slice_image(std::string const& slice_name) const
+std::pair<Image, Rectangle> XResources::get_slice_image(std::string const& slice_name) const
 {
     auto slice = THEME.resource_slice(slice_name);
     if (!slice.has_value())
@@ -115,7 +115,7 @@ std::pair<Image, Rectangle> Resources::get_slice_image(std::string const& slice_
     return { image, slice->rect };
 }
 
-XftFont* Resources::load_font(std::string const& key) const
+XftFont* XResources::load_font(std::string const& key) const
 {
     auto font_names = THEME.resource_font(key);
 
@@ -130,7 +130,7 @@ XftFont* Resources::load_font(std::string const& key) const
     throw std::runtime_error("A font for resource '" + key + "' could not be loaded.");
 }
 
-Image Resources::load_image(std::string const& key) const
+Image XResources::load_image(std::string const& key) const
 {
     auto image = THEME.resource_image(key);
 
@@ -173,7 +173,7 @@ Image Resources::load_image(std::string const& key) const
     return { .pixmap = pixmap, .mask = mask };
 }
 
-Cursor Resources::get_cursor(std::string const& key) const
+Cursor XResources::get_cursor(std::string const& key) const
 {
     try {
         return cursors_.at(key);
@@ -184,7 +184,7 @@ Cursor Resources::get_cursor(std::string const& key) const
 }
 
 template<>
-void Resources::set_property(Window window, std::string const& name, Window const& value)
+void XResources::set_property(Window window, std::string const& name, Window const& value)
 {
     Atom atom = XInternAtom(X->display, name.c_str(), false);
 
@@ -193,7 +193,7 @@ void Resources::set_property(Window window, std::string const& name, Window cons
 }
 
 template<> Window
-Resources::get_property(Window window, std::string const& name) const
+XResources::get_property(Window window, std::string const& name) const
 {
     Atom atom = XInternAtom(X->display, name.c_str(), false);
 

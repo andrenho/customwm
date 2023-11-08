@@ -4,6 +4,6 @@
 #include <memory>
 #include "graphics/wm.hh"
 
-std::unique_ptr<WM> initialize(int argc, char* argv[]);
+std::unique_ptr<WindowManager> initialize(int argc, char* argv[]);
 
 #endif //INIT_HH_

@@ -1,20 +1,20 @@
-#include "wm_x11.hh"
+#include "xwm.hh"
 
 #include <X11/Xlib.h>
 #include <cstdlib>
 
 #include <utility>
 
-#include "graphics_x11.hh"
+#include "xgraphics.hh"
 #include "common/logger.hh"
 #include "xwindow.hh"
 
-void WM_X11::run()
+
+XWindowManager::XWindowManager()
+    : WindowManager(std::make_unique<XResources>()),
+      xresources_(dynamic_cast<XResources *>(resources_.get()))
 {
-    add_existing_windows();
-    setup_event_filter();
-    THEME.call_opt("wm.after_start");
-    main_loop();
+
 }
 
 /*
@@ -36,15 +36,15 @@ void WMX11::initialize_xcomposite()
 }
  */
 
-void WM_X11::setup_event_filter()
+void XWindowManager::setup_event_listener()
 {
-    XSetErrorHandler(&WM_X11::on_error);
+    XSetErrorHandler(&XWindowManager::on_error);
 
     XSelectInput(X->display, X->root, SubstructureRedirectMask | SubstructureNotifyMask | PointerMotionMask);
     XSync(X->display, false);
 }
 
-void WM_X11::add_existing_windows()
+void XWindowManager::add_existing_windows()
 {
     Window root, parent;
     Window* window_list;
@@ -52,53 +52,75 @@ void WM_X11::add_existing_windows()
 
     XQueryTree(X->display, X->root, &root, &parent, &window_list, &n_windows);
     for (size_t i = 0; i < n_windows; ++i)
-        on_map_request(window_list[i]);
+        on_create_child(window_list[i]);
 
     free(window_list);
 }
 
-[[noreturn]] void WM_X11::main_loop()
+std::unique_ptr<LWindow> XWindowManager::create_window(Rectangle const &rectangle) const
 {
-    for (;;) {
-        XEvent e;
-        XNextEvent(X->display, &e);
+    return std::make_unique<XWindow>(*xresources_, rectangle);
+}
 
-        switch (e.type) {
-            case MapRequest:
-                LOG.debug("event: MapRequest %d", e.xmaprequest.window);
-                on_map_request(e.xmaprequest.window);
-                break;
-            case UnmapNotify:
-                LOG.debug("event: UnmapNotify %d", e.xunmap.window);
-                on_unmap_notify(e.xunmap);
-                break;
-            case Expose:
-                LOG.debug("event: Expose %d", e.xexpose.window);
-                on_expose(e.xexpose);
-                break;
-            case ButtonPress:
-            case ButtonRelease:
-                LOG.debug("event: Button %d", e.xbutton.window);
-                on_click(e.xbutton);
-                break;
-            case MotionNotify:
-                on_move(e.xmotion);
-                break;
-            case ConfigureNotify:
-                LOG.debug("event: ConfigureNotify %d", e.xconfigure.window);
-                on_configure(e.xconfigure);
-                break;
-            case CreateNotify:  LOG.debug("event: CreateNotify %d", e.xcreatewindow.window); break;
-            case DestroyNotify: LOG.debug("event: DestroyNotify %d", e.xdestroywindow.window); break;
-            case MapNotify:     LOG.debug("event: MapNotify %d", e.xmap.window); break;
-            case ReparentNotify:LOG.debug("event: ReparentNotify %d", e.xreparent.window); break;
-            default:
-                LOG.debug("Unmapped event received: %d", e.type);
+void XWindowManager::parse_next_event()
+{
+    XEvent e;
+    XNextEvent(X->display, &e);
+
+    switch (e.type) {
+        case MapRequest:
+            LOG.debug("event: MapRequest %d", e.xmaprequest.window);
+            on_create_child(e.xmaprequest.window);
+            break;
+        case UnmapNotify:
+            LOG.debug("event: UnmapNotify %d", e.xunmap.window);
+            on_destroy_child(e.xunmap.window);
+            break;
+        case Expose:
+            LOG.debug("event: Expose %d", e.xexpose.window);
+            on_expose_window(e.xexpose.window,
+                 { e.xexpose.x, e.xexpose.y, (uint32_t) e.xexpose.width, (uint32_t) e.xexpose.height });
+            break;
+        case ButtonPress:
+        case ButtonRelease:
+        {
+            LOG.debug("event: Button %d", e.xbutton.window);
+            ClickEvent click_event {
+                    .pressed = (e.type == ButtonPress),
+                    .pos = Point { e.xbutton.x, e.xbutton.y },
+                    .abs_pos = Point { e.xbutton.x_root, e.xbutton.y_root },
+            };
+            switch (e.xbutton.button) {
+                case Button1: click_event.button = ClickEvent::Left; break;
+                case Button2: click_event.button = ClickEvent::Middle; break;
+                case Button3: click_event.button = ClickEvent::Right; break;
+                default: click_event.button = ClickEvent::Other;
+            }
+            if (e.xmotion.window == None || e.xmotion.window == X->root)
+                on_click_desktop(click_event);
+            else
+                on_click_window(e.xmotion.window, click_event);
+            break;
         }
+        case MotionNotify:
+            if (e.xmotion.window == None || e.xmotion.window == X->root)
+                on_move_pointer_desktop({ e.xmotion.x_root, e.xmotion.y_root });
+            else
+                on_move_pointer_window(e.xmotion.window, { e.xmotion.x, e.xmotion.y });
+            break;
+        case ConfigureNotify:
+            // LOG.debug("event: ConfigureNotify %d", e.xconfigure.window);
+            break;
+        case CreateNotify:  LOG.debug("event: CreateNotify %d", e.xcreatewindow.window); break;
+        case DestroyNotify: LOG.debug("event: DestroyNotify %d", e.xdestroywindow.window); break;
+        case MapNotify:     LOG.debug("event: MapNotify %d", e.xmap.window); break;
+        case ReparentNotify:LOG.debug("event: ReparentNotify %d", e.xreparent.window); break;
+        default:
+            LOG.debug("Unmapped event received: %d", e.type);
     }
 }
 
-void WM_X11::move_window_with_mouse(bool move, std::optional<L_Window*> window)
+void XWindowManager::move_window_with_mouse(bool move, std::optional<LWindow*> window)
 {
     if (move && window) {
         moving_window_with_mouse_ = (XWindow *) window.value();
@@ -107,7 +129,7 @@ void WM_X11::move_window_with_mouse(bool move, std::optional<L_Window*> window)
     }
 }
 
-int WM_X11::on_error(Display* dsp, XErrorEvent* e)
+int XWindowManager::on_error(Display* dsp, XErrorEvent* e)
 {
     if (e->error_code == BadAccess && e->request_code == 2 && e->minor_code == 0)
         throw std::runtime_error("There's already another window manager running!\n");
@@ -119,6 +141,25 @@ int WM_X11::on_error(Display* dsp, XErrorEvent* e)
     return 0;
 }
 
+Rectangle XWindowManager::get_window_rectangle(WHandle window) const
+{
+    Window root;
+    int requested_x, requested_y;
+    unsigned int child_w, child_h, border, depth;
+    XGetGeometry(X->display, window, &root, &requested_x, &requested_y, &child_w, &child_h, &border, &depth);
+    return { requested_x, requested_y, child_w, child_h };
+}
+
+Size XWindowManager::get_screen_size() const
+{
+    return {
+        (uint32_t) DisplayWidth(X->display, X->screen),
+        (uint32_t) DisplayHeight(X->display, X->screen)
+    };
+}
+
+
+/*
 void WM_X11::on_map_request(Window child_id)
 {
     // figure out information about the child window
@@ -129,7 +170,7 @@ void WM_X11::on_map_request(Window child_id)
 
     // figure out information about the parent window (TODO)
     Rectangle child_rect = { requested_x, requested_y, child_w, child_h };
-    Size screen_size = {(uint32_t) DisplayWidth(X->display, X->screen), (uint32_t) DisplayHeight(X->display, X->screen) };
+    Size screen_size =
     auto [parent_rect, offset] = THEME.get_prop<WindowStartingLocation>("wm.window_starting_location", child_rect, screen_size);
 
     // create window
@@ -258,8 +299,9 @@ void WM_X11::on_configure(XConfigureEvent const &e)
         THEME.call_opt("wm.on_configure_window", xwindow);
     }
 }
+ */
 
-XWindow* WM_X11::find_parent(Window parent_id) const
+XWindow* XWindowManager::find_parent(Window parent_id) const
 {
     auto it = windows_.find(parent_id);
     if (it == windows_.end())
@@ -268,7 +310,8 @@ XWindow* WM_X11::find_parent(Window parent_id) const
         return it->second.get();
 }
 
-void WM_X11::set_focus(std::optional<L_Window *> window)
+void XWindowManager::set_focus(std::optional<LWindow *> window)
 {
     (void) window;  // TODO
 }
+

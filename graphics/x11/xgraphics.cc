@@ -1,10 +1,10 @@
-#include "graphics_x11.hh"
+#include "xgraphics.hh"
 #include "common/logger.hh"
-#include "wm_x11.hh"
+#include "xwm.hh"
 
-Graphics_X11* X = nullptr;
+XGraphics* X = nullptr;
 
-Graphics_X11::Graphics_X11(std::optional<std::string> const &display_name)
+XGraphics::XGraphics(std::optional<std::string> const &display_name)
 {
     std::string sdisplay = display_name.value_or(getenv("DISPLAY"));
     const char* cdisplay = sdisplay.empty() ? nullptr : sdisplay.c_str();
@@ -24,13 +24,13 @@ Graphics_X11::Graphics_X11(std::optional<std::string> const &display_name)
 
 }
 
-Graphics_X11::~Graphics_X11()
+XGraphics::~XGraphics()
 {
     XCloseDisplay(display);
 }
 
-std::unique_ptr<WM> Graphics_X11::create_wm()
+std::unique_ptr<WindowManager> XGraphics::create_wm()
 {
-    return std::make_unique<WM_X11>();
+    return std::make_unique<XWindowManager>();
 }
 

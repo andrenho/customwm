@@ -4,14 +4,14 @@
 #include <X11/Xlib.h>
 #include <X11/Xft/Xft.h>
 
-#include "theme/types/l_window.hh"
-#include "resources.hh"
+#include "theme/types/lwindow.hh"
+#include "xresources.hh"
 
 #include <map>
 
-class XWindow : public L_Window {
+class XWindow : public LWindow {
 public:
-    XWindow(Resources& resources, Rectangle const &rectangle);
+    XWindow(XResources& resources, Rectangle const &rectangle);
     ~XWindow() override;
 
     XWindow(XWindow const&) = delete;
@@ -31,7 +31,7 @@ public:
     void set_cursor(std::string const &key) override;
 
 private:
-    Resources& resources_;
+    XResources& resources_;
     GC gc_;
     XftDraw* xft_draw_ = nullptr;
 };

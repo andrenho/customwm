@@ -128,9 +128,6 @@ local theme = {
             print('Leaving hotspot' .. hotspot)
         end,
 
-        on_configure_window = function(window)
-        end,
-
         --
         -- EVENTS (private)
         --

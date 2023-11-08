@@ -7,7 +7,7 @@
 
 #include "base_theme.embed"
 
-std::unique_ptr<WM> initialize(int argc, char* argv[])
+std::unique_ptr<WindowManager> initialize(int argc, char* argv[])
 {
     Options options(argc, argv);
 
@@ -25,7 +25,7 @@ std::unique_ptr<WM> initialize(int argc, char* argv[])
 
     Graphics* graphics = Graphics::create(options.display);
 
-    std::unique_ptr<WM> wm = graphics->create_wm();
+    std::unique_ptr<WindowManager> wm = graphics->create_wm();
     THEME.create_global_object("wm", wm.get());
 
     if (!options.throw_exceptions)

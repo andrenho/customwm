@@ -2,6 +2,6 @@
 
 int main(int argc, char* argv[])
 {
-    std::unique_ptr<WM> wm = initialize(argc, argv);
+    std::unique_ptr<WindowManager> wm = initialize(argc, argv);
     wm->run();
 }

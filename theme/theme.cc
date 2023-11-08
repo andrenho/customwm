@@ -8,8 +8,8 @@
 #include "themeexception.hh"
 #include "themehelper.embed"
 #include "types/exceptions.hh"
-#include "types/l_wm.hh"
-#include "types/l_window.hh"
+#include "types/lwm.hh"
+#include "types/lwindow.hh"
 #include "common/logger.hh"
 
 Theme THEME;

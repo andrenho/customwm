@@ -1,10 +1,10 @@
 #include "xwindow.hh"
 #include "common/logger.hh"
-#include "graphics_x11.hh"
+#include "xgraphics.hh"
 
 #include <stdexcept>
 
-XWindow::XWindow(Resources& resources, Rectangle const &rectangle)
+XWindow::XWindow(XResources& resources, Rectangle const &rectangle)
         : rectangle(rectangle), resources_(resources)
 {
     id = XCreateWindow(X->display, X->root, rectangle.x, rectangle.y, rectangle.w, rectangle.h, 0,
@@ -105,7 +105,7 @@ std::string XWindow::name() const
     }
 
 not_found:
-    return L_Window::name();
+    return LWindow::name();
 }
 
 void XWindow::set_cursor(std::string const &key)

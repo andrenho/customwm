@@ -45,6 +45,6 @@ Info.plist
 
 cmake-build-debug
 /contrib/luaw/luazh-jit.dSYM/Contents/Info.plist
-/contrib/luaw/luazh-jit.dSYM/Contents/Resources/DWARF/luazh-jit
+/contrib/luaw/luazh-jit.dSYM/Contents/XResources/DWARF/luazh-jit
 /contrib/luaw/luazh-jit
-/contrib/luaw/luazh-jit.dSYM/Contents/Resources/Relocations/aarch64/luazh-jit.yml
+/contrib/luaw/luazh-jit.dSYM/Contents/XResources/Relocations/aarch64/luazh-jit.yml

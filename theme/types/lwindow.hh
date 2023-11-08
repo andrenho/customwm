@@ -1,13 +1,13 @@
-#ifndef L_WINDOW_HH_
-#define L_WINDOW_HH_
+#ifndef LWINDOW_HH_
+#define LWINDOW_HH_
 
 #include <cstdint>
 #include <optional>
 #include <string>
 #include "types.hh"
 
-struct L_Window {
-    virtual ~L_Window() = default;
+struct LWindow {
+    virtual ~LWindow() = default;
 
     [[nodiscard]] virtual Rectangle rect() const = 0;
     virtual void        fill(Color const& color) = 0;
@@ -21,4 +21,4 @@ struct L_Window {
 
 void l_window_create_metadata(lua_State* L);
 
-#endif //L_WINDOW_HH_
+#endif //LWINDOW_HH_
