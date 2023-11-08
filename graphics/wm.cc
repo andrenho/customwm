@@ -68,7 +68,10 @@ void WindowManager::on_click_desktop(ClickEvent const &e)
 
 void WindowManager::on_expose_window(WHandle parent, Rectangle rectangle)
 {
-
+    try {
+        LWindow* window = windows_.at(parent).get();
+        THEME.call_opt("wm.on_expose", window, rectangle);
+    } catch (std::out_of_range&) {}
 }
 
 void WindowManager::on_click_window(WHandle parent, ClickEvent const &e)
