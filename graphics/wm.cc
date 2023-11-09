@@ -93,7 +93,7 @@ void WindowManager::on_window_click(WHandle parent, ClickEvent const &e)
 
         auto hs = hotspot(window, e.pos);
         if (hs)
-            THEME.call_opt("wm.on_hotspot_click", window, hs, e);
+            THEME.call_opt("wm.on_hotspot_click", window, hs->first, e);
 
         THEME.call_opt("wm.on_window_click", window, e);
     } catch (std::out_of_range&) {}
@@ -108,7 +108,7 @@ void WindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
         std::optional<std::string> new_hotspot {};
         auto hs = hotspot(window, new_rel_pos);
         if (hs)
-            new_hotspot = *hs;
+            new_hotspot = hs->first;
 
         if (new_hotspot != current_hotspot_) {
             if (current_hotspot_)
@@ -122,12 +122,12 @@ void WindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
     } catch (std::out_of_range&) {}
 }
 
-std::optional<std::string> WindowManager::hotspot(LWindow* window, Point const& p) const
+std::optional<std::pair<std::string, Hotspot>> WindowManager::hotspot(LWindow* window, Point const& p) const
 {
     try {
         for (auto const& [name, hotspot]: THEME.get_prop<std::map<std::string, Hotspot>>("wm.hotspots", window)) {
             if (hotspot.area.contains(p))
-                return name;
+                return std::make_pair(name, hotspot);
         }
         return {};
     } catch (std::out_of_range&) {

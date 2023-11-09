@@ -46,7 +46,7 @@ private:
 
     std::optional<std::string> current_hotspot_ {};
 
-    std::optional<std::string> hotspot(LWindow* window, Point const& p) const;
+    std::optional<std::pair<std::string, Hotspot>> hotspot(LWindow* window, Point const& p) const;
 };
 
 #endif //WM_HH_
