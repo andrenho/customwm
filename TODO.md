@@ -29,6 +29,9 @@
 - [x] Add existing windows
 - [x] Cursors
 - [ ] Hotspots
+  - [x] Click
+  - [ ] Move (enter/leave)
+  - [ ] Cursor on hotspot
 - [ ] Focus management
 - [ ] Close window
 - [ ] Grab / move / resize window

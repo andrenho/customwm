@@ -58,7 +58,19 @@ void WindowManager::on_destroy_child(WHandle child_id)
 
 void WindowManager::on_desktop_move_pointer(Point new_pos)
 {
+#if 0
+    // check if moving window
+    if (moving_window_with_mouse_.has_value()) {
+        XWindowAttributes xwa;
+        XGetWindowAttributes(X->display, (*moving_window_with_mouse_)->id, &xwa);
+        int x = xwa.x + e.x_root - last_mouse_position_.x;
+        int y = xwa.y + e.y_root - last_mouse_position_.y;
+        XMoveWindow(X->display, (*moving_window_with_mouse_)->id, x, y);
+    }
 
+    last_mouse_position_ = { e.x_root, e.y_root };
+#endif
+    THEME.call_opt("wm.on_desktop_mouse_move", new_pos);
 }
 
 void WindowManager::on_desktop_click(ClickEvent const &e)
@@ -76,18 +88,38 @@ void WindowManager::on_window_expose(WHandle parent, Rectangle rectangle)
 
 void WindowManager::on_window_click(WHandle parent, ClickEvent const &e)
 {
-    LWindow* window = windows_.at((WHandle const) parent).get();
+    try {
+        LWindow* window = windows_.at((WHandle const) parent).get();
 
-    auto hs = hotspot(window, e.pos);
-    if (hs)
-        THEME.call_opt("wm.on_hotspot_click", window, hs, e);
+        auto hs = hotspot(window, e.pos);
+        if (hs)
+            THEME.call_opt("wm.on_hotspot_click", window, hs, e);
 
-    THEME.call_opt("wm.on_window_click", window, e);
+        THEME.call_opt("wm.on_window_click", window, e);
+    } catch (std::out_of_range&) {}
 }
 
 void WindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
 {
+    try {
+        // check if entering or leaving a hotspot
+        LWindow* window = windows_.at(parent).get();
 
+        std::optional<std::string> new_hotspot {};
+        auto hs = hotspot(window, new_rel_pos);
+        if (hs)
+            new_hotspot = *hs;
+
+        if (new_hotspot != current_hotspot_) {
+            if (current_hotspot_)
+                THEME.call_opt("wm.on_leave_hotspot", window, *current_hotspot_);
+            if (new_hotspot)
+                THEME.call_opt("wm.on_enter_hotspot", window, *new_hotspot);
+            current_hotspot_ = new_hotspot;
+        }
+
+        THEME.call_opt("wm.on_window_mouse_move", window, new_rel_pos);
+    } catch (std::out_of_range&) {}
 }
 
 std::optional<std::string> WindowManager::hotspot(LWindow* window, Point const& p) const

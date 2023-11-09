@@ -40,7 +40,8 @@ void XWindowManager::setup_event_listener()
 {
     XSetErrorHandler(&XWindowManager::on_error);
 
-    XSelectInput(X->display, X->root, SubstructureRedirectMask | SubstructureNotifyMask | PointerMotionMask);
+    XSelectInput(X->display, X->root, SubstructureRedirectMask | SubstructureNotifyMask | PointerMotionMask |
+            ButtonPressMask | ButtonReleaseMask);
     XSync(X->display, false);
 }
 
@@ -169,18 +170,6 @@ void XWindowManager::reparent_window(WHandle parent_id, WHandle child_id, Point 
 
 
 /*
-void WM_X11::on_click(XButtonEvent const &e)
-{
-    XWindow* xwindow = find_parent(e.window);
-    if (xwindow) {
-
-        // on hotspot click
-        for (auto [hotspot, rect]: THEME.get_prop<std::map<std::string, Rectangle>>("wm.hotspots", xwindow)) {
-            if (rect.contains(click_event.pos))
-                THEME.call_opt("wm.on_hotspot_click", xwindow, hotspot, click_event);
-        }
-    }
-}
 
 void WM_X11::on_move(XMotionEvent const &e)
 {
