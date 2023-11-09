@@ -18,7 +18,7 @@ XWindow::XWindow(XResources& resources, Rectangle const &rectangle)
     gc_ = XCreateGC(X->display, id_, 0, nullptr);
     xft_draw_ = XftDrawCreate(X->display, id_, X->visual, X->colormap);
 
-    XDefineCursor(X->display, id_, resources_.get_cursor("pointer"));
+    XDefineCursor(X->display, id_, resources_.get_cursor(Cursors::Pointer));
 }
 
 XWindow::~XWindow()

@@ -31,7 +31,7 @@
 - [ ] Hotspots
   - [x] Click
   - [x] Move (enter/leave)
-  - [ ] Cursor on hotspot
+  - [x] Cursor on hotspot
 - [ ] Focus management
 - [ ] Close window
 - [ ] Grab / move / resize window

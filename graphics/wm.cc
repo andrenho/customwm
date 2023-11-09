@@ -24,7 +24,7 @@ void WindowManager::on_create_child(WHandle child_id)
     auto [parent_rect, offset] = THEME.get_prop<WindowStartingLocation>("wm.window_starting_location", child_rect, screen_size);
 
     // create new window
-    std::unique_ptr<LWindow> parent_window = create_window(child_rect);
+    std::unique_ptr<LWindow> parent_window = create_window(parent_rect);
     WHandle parent_id = parent_window->id();
     auto [it,_] = windows_.emplace(parent_id, std::move(parent_window));
     LWindow* parent = it->second.get();
@@ -102,20 +102,25 @@ void WindowManager::on_window_click(WHandle parent, ClickEvent const &e)
 void WindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
 {
     try {
-        // check if entering or leaving a hotspot
         LWindow* window = windows_.at(parent).get();
 
         std::optional<std::string> new_hotspot {};
         auto hs = hotspot(window, new_rel_pos);
-        if (hs)
+        if (hs) {
             new_hotspot = hs->first;
 
-        if (new_hotspot != current_hotspot_) {
-            if (current_hotspot_)
-                THEME.call_opt("wm.on_leave_hotspot", window, *current_hotspot_);
-            if (new_hotspot)
-                THEME.call_opt("wm.on_enter_hotspot", window, *new_hotspot);
-            current_hotspot_ = new_hotspot;
+            // check if entering or leaving a hotspot
+            if (new_hotspot != current_hotspot_) {
+                if (current_hotspot_) {
+                    window->set_cursor(Cursors::Pointer);
+                    THEME.call_opt("wm.on_leave_hotspot", window, *current_hotspot_);
+                }
+                if (new_hotspot) {
+                    window->set_cursor(hs->second.cursor.value_or(Cursors::Pointer));
+                    THEME.call_opt("wm.on_enter_hotspot", window, *new_hotspot);
+                }
+                current_hotspot_ = new_hotspot;
+            }
         }
 
         THEME.call_opt("wm.on_window_mouse_move", window, new_rel_pos);

@@ -9,6 +9,7 @@
 using WHandle = uintptr_t;
 
 struct LWindow {
+
     virtual ~LWindow() = default;
 
     virtual WHandle                   id() const = 0;

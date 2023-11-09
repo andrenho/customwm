@@ -40,6 +40,8 @@ theme = {
 
         padding = { top = 24, bottom = 2, left = 2, right = 2 },
 
+        resize_border = 3,
+
         position_strategy = "cascade",   -- cascade, center, random, maximized, requested
 
         window_starting_location = function(child_rect, screen_size)
@@ -81,16 +83,7 @@ theme = {
         end,
 
         hotspots = function(window)
-            return {
-                title = {
-                    area = { x = 3, y = 3, w = window:rect().w, h = getprop("wm.padding.top") },
-                    cursor = "pointer"
-                },
-                top_left = {
-                    area = { x = 0, y = 0, w = 3, h = 3 },
-                    cursor = "top-left"
-                },
-            }
+            return getprop("wm.default_hotspots", window)
         end,
 
         --
@@ -156,6 +149,50 @@ theme = {
                 end
             end
         end,
+
+        default_hotspots = function(window)
+            local r = window:rect()
+            local border = getprop("wm.resize_border", window)
+            return {
+                title = {
+                    area = { x = border, y = border, w = r.w - (border * 2), h = getprop("wm.padding", window).top - border },
+                    cursor = "pointer"
+                },
+                top_left = {
+                    area = { x = 0, y = 0, w = border, h = border },
+                    cursor = "top-left"
+                },
+                top = {
+                    area = { x = border, y = 0, w = r.w - (border*2), h = border },
+                    cursor = "top"
+                },
+                top_right = {
+                    area = { x = r.w - border, y = 0, w = border, h = border },
+                    cursor = "top-right"
+                },
+                left = {
+                    area = { x = 0, y = border, w = border, h = r.h - (border*2) },
+                    cursor = "left",
+                },
+                right = {
+                    area = { x = r.w - border, y = border, w = border, h = r.h - (border*2) },
+                    cursor = "right",
+                },
+                bottom_left = {
+                    area = { x = 0, y = r.h - border, w = border, h = border },
+                    cursor = "bottom-left"
+                },
+                bottom_right = {
+                    area = { x = r.w - border, y = r.h - border, w = border, h = border },
+                    cursor = "bottom-right"
+                },
+                bottom = {
+                    area = { x = border, y = r.h - border, w = r.w - (border * 2), h = border },
+                    cursor = "bottom"
+                },
+            }
+        end,
+
     }
 
 }
