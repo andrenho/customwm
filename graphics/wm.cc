@@ -125,9 +125,9 @@ void WindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
 std::optional<std::string> WindowManager::hotspot(LWindow* window, Point const& p) const
 {
     try {
-        for (auto const& [hs, rect]: THEME.get_prop<std::map<std::string, Rectangle>>("wm.hotspots", window)) {
-            if (rect.contains(p))
-                return hs;
+        for (auto const& [name, hotspot]: THEME.get_prop<std::map<std::string, Hotspot>>("wm.hotspots", window)) {
+            if (hotspot.area.contains(p))
+                return name;
         }
         return {};
     } catch (std::out_of_range&) {

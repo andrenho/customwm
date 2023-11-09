@@ -82,7 +82,14 @@ theme = {
 
         hotspots = function(window)
             return {
-                title = { x = 0, y = 0, w = window:rect().w, h = getprop("wm.padding.top") },
+                title = {
+                    area = { x = 3, y = 3, w = window:rect().w, h = getprop("wm.padding.top") },
+                    cursor = "pointer"
+                },
+                top_left = {
+                    area = { x = 0, y = 0, w = 3, h = 3 },
+                    cursor = "top-left"
+                },
             }
         end,
 

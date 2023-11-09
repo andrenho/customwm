@@ -186,3 +186,17 @@ void ClickEvent::to_lua(lua_State *L) const
         default:     luaw_setfield(L, -1, "button", "other"); break;
     }
 }
+
+bool Hotspot::lua_is(lua_State *L, int index)
+{
+    return lua_type(L, index) == LUA_TTABLE &&
+           luaw_hasfield(L, index, "area") && luaw_hasfield(L, index, "cursor");
+}
+
+Hotspot Hotspot::from_lua(lua_State *L, int index)
+{
+    return {
+        .area = luaw_getfield<Rectangle>(L, index, "area"),
+        .cursor = luaw_getfield<std::optional<std::string>>(L, index, "cursor")
+    };
+}

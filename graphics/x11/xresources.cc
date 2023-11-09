@@ -15,7 +15,15 @@
 XResources::XResources()
 {
     cursors_["pointer"] = XCreateFontCursor(X->display, XC_left_ptr);
-    cursors_["watch"] = XCreateFontCursor(X->display, XC_watch);
+    cursors_["wait"] = XCreateFontCursor(X->display, XC_watch);
+    cursors_["bottom-left"] = XCreateFontCursor(X->display, XC_bottom_left_corner);
+    cursors_["bottom-right"] = XCreateFontCursor(X->display, XC_bottom_right_corner);
+    cursors_["top-left"] = XCreateFontCursor(X->display, XC_top_left_corner);
+    cursors_["top-right"] = XCreateFontCursor(X->display, XC_top_right_corner);
+    cursors_["top"] = XCreateFontCursor(X->display, XC_top_side);
+    cursors_["bottom"] = XCreateFontCursor(X->display, XC_bottom_side);
+    cursors_["right"] = XCreateFontCursor(X->display, XC_right_side);
+    cursors_["left"] = XCreateFontCursor(X->display, XC_left_side);
 }
 
 XResources::~XResources()

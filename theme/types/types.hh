@@ -84,4 +84,12 @@ struct ClickEvent {
     void to_lua(lua_State* L) const;
 };
 
+struct Hotspot {
+    Rectangle area;
+    std::optional<std::string> cursor;
+
+    static Hotspot from_lua(lua_State* L, int index);
+    static bool lua_is(lua_State* L, int index);
+};
+
 #endif //TYPES_HH_
