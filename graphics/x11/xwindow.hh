@@ -11,7 +11,7 @@
 
 class XWindow : public LWindow {
 public:
-    XWindow(XResources& resources, Rectangle const &rectangle);
+    XWindow(class XWindowManager const& wm, XResources const& resources, Rectangle const &rectangle);
     ~XWindow() override;
 
     XWindow(XWindow const&) = delete;
@@ -30,9 +30,11 @@ public:
     void        draw(int x, int y, std::string const &slice) override;
     std::string name() const override;
     void        set_cursor(std::string const &key) override;
+    bool        focused() const override;
 
 private:
-    XResources& resources_;
+    class XWindowManager const& wm_;
+    XResources const& resources_;
     GC gc_;
     XftDraw* xft_draw_ = nullptr;
 };

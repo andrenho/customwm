@@ -34,7 +34,7 @@
   - [x] Cursor on hotspot
 - [ ] Focus management
 - [ ] Close window
-- [ ] Grab / move / resize window
+- [ ] Grab / move / resize window + configure (keep window rect)
 - [ ] Minimize
 - [ ] Maximize
 - [ ] Sample W95 theme

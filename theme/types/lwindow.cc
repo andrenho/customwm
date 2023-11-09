@@ -37,6 +37,10 @@ void l_window_create_metadata(lua_State* L)
                 THIS->set_cursor(luaL_checkstring(L, 2));
                 return 0;
             }},
+            { "focused", [](lua_State *L) {
+                luaw_push(L, THIS->focused());
+                return 1;
+            }},
     });
     LOG.debug("Metatable setup for Window as '%s'", mt.c_str());
 }

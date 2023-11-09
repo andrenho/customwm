@@ -1,11 +1,11 @@
 #include "xwindow.hh"
+
 #include "common/logger.hh"
 #include "x.hh"
+#include "xwm.hh"
 
-#include <stdexcept>
-
-XWindow::XWindow(XResources& resources, Rectangle const &rectangle)
-        : rectangle(rectangle), resources_(resources)
+XWindow::XWindow(XWindowManager const& wm, XResources const& resources, Rectangle const &rectangle)
+        : rectangle(rectangle), wm_(wm), resources_(resources)
 {
     id_ = XCreateWindow(X->display, X->root, rectangle.x, rectangle.y, rectangle.w, rectangle.h, 0,
                         CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);
@@ -110,4 +110,9 @@ not_found:
 void XWindow::set_cursor(std::string const &key)
 {
     XDefineCursor(X->display, id_, resources_.get_cursor(key));
+}
+
+bool XWindow::focused() const
+{
+    return wm_.is_focused(this);
 }

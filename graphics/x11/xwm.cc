@@ -60,7 +60,7 @@ void XWindowManager::add_existing_windows()
 
 std::unique_ptr<LWindow> XWindowManager::create_window(Rectangle const &rectangle) const
 {
-    return std::make_unique<XWindow>(*xresources_, rectangle);
+    return std::make_unique<XWindow>(*this, *xresources_, rectangle);
 }
 
 void XWindowManager::parse_next_event()
@@ -215,9 +215,3 @@ XWindow* XWindowManager::find_parent(Window parent_id) const
     else
         return it->second.get();
 }
-
-void XWindowManager::set_focus(std::optional<LWindow *> window)
-{
-    (void) window;  // TODO
-}
-

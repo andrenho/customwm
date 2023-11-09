@@ -16,7 +16,6 @@ public:
     [[nodiscard]] std::string interface_name() const override { return "X11"; }
 
     void move_window_with_mouse(bool move, std::optional<LWindow*> window) override;
-    void set_focus(std::optional<LWindow *> window) override;
 
 protected:
     void add_existing_windows() override;
@@ -36,15 +35,6 @@ private:
     std::optional<XWindow*> moving_window_with_mouse_ {};
     Point last_mouse_position_ { 0, 0 };
 
-    // events
-    /*
-    void on_map_request(Window child_id);
-    void on_unmap_notify(XUnmapEvent const &e);
-    void on_expose(XExposeEvent const &e);
-    void on_click(XButtonEvent const &e);
-    void on_move(XMotionEvent const &xmotion);
-    void on_configure(XConfigureEvent const &xconfigure);
-     */
     static int on_error(Display* d, XErrorEvent* e);
 
     XWindow* find_parent(Window parent_id) const;

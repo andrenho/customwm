@@ -19,6 +19,7 @@ struct LWindow {
     virtual void                      draw(int x, int y, std::string const& slice) = 0;
     [[nodiscard]] virtual std::string name() const { return "Unnamed Application"; }
     virtual void                      set_cursor(std::string const& key) = 0;
+    virtual bool                      focused() const = 0;
 
     static constexpr const char* mt_identifier = "Window";
 };

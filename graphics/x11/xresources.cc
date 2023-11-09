@@ -199,7 +199,7 @@ void XResources::set_property(WHandle window, std::string const &name, WHandle c
                     (unsigned char *) &value, 1);
 }
 
-std::optional<WHandle> XResources::get_property_whandle(WHandle window, std::string const &name)
+std::optional<WHandle> XResources::get_property_whandle(WHandle window, std::string const &name) const
 {
     Atom atom = XInternAtom(X->display, name.c_str(), false);
 

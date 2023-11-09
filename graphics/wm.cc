@@ -40,6 +40,8 @@ void WindowManager::on_create_child(WHandle child_id)
     resources_->set_property(child_id, "parent", parent_id);
 
     THEME.call_opt("wm.after_window_registered", parent);
+
+    set_focus(parent);
 }
 
 void WindowManager::on_destroy_child(WHandle child_id)
@@ -138,4 +140,20 @@ std::optional<std::pair<std::string, Hotspot>> WindowManager::hotspot(LWindow* w
     } catch (std::out_of_range&) {
         return {};
     }
+}
+
+void WindowManager::set_focus(std::optional<LWindow *> window)
+{
+    if (focused_window_ && *focused_window_ != window)
+        on_window_expose(focused_window_.value()->id(), focused_window_.value()->rect());  // redraw old window
+
+    focused_window_ = window;
+
+    if (focused_window_)
+        on_window_expose(focused_window_.value()->id(), focused_window_.value()->rect());  // redraw new window
+}
+
+bool WindowManager::is_focused(LWindow const* window) const
+{
+    return focused_window_.value_or(nullptr) == window;
 }

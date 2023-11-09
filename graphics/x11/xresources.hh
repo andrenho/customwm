@@ -26,7 +26,7 @@ public:
     Cursor        get_cursor(std::string const& key) const;
 
     void set_property(WHandle window, std::string const &name, WHandle const &value) override;
-    std::optional<WHandle> get_property_whandle(WHandle window, std::string const &name) override;
+    std::optional<WHandle> get_property_whandle(WHandle window, std::string const &name) const override;
 
 private:
     mutable std::map<Color, unsigned long>            colors_;
