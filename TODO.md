@@ -34,8 +34,9 @@
   - [x] Cursor on hotspot
 - [x] Focus management
   - [x] Focus new windows
-  - [ ] Roll back focus to previous window when window is closed
-  - [ ] Change focus when window is clicked (and bring to front)
+  - [x] Roll back focus to previous window when window is closed
+  - [x] Change focus when window is clicked (and bring to front)
+- [ ] Keyboard focus
 - [ ] Close window
 - [ ] Grab / move / resize window + configure (keep window rect)
 - [ ] Minimize
