@@ -170,45 +170,6 @@ void XWindowManager::reparent_window(WHandle parent_id, WHandle child_id, Point 
     XMapWindow(X->display, child_id);
 }
 
-
-/*
-
-void WM_X11::on_move(XMotionEvent const &e)
-{
-    // check if moving window
-    if (moving_window_with_mouse_.has_value()) {
-        XWindowAttributes xwa;
-        XGetWindowAttributes(X->display, (*moving_window_with_mouse_)->id, &xwa);
-        int x = xwa.x + e.x_root - last_mouse_position_.x;
-        int y = xwa.y + e.y_root - last_mouse_position_.y;
-        XMoveWindow(X->display, (*moving_window_with_mouse_)->id, x, y);
-    }
-
-    // check if entering or leaving hotspot
-    std::optional<std::string> new_hotspot {};
-    XWindow* xwindow = find_parent(e.window);
-    if (xwindow) {
-        for (auto [hs, rect]: THEME.get_prop<std::map<std::string, Rectangle>>("wm.hotspots", xwindow)) {
-            if (rect.contains({ e.x, e.y }))
-                new_hotspot = hs;
-        }
-    }
-    if (new_hotspot != current_hotspot_) {
-        if (current_hotspot_)
-            THEME.call_opt("wm.on_leave_hotspot", xwindow, *current_hotspot_);
-        if (new_hotspot)
-            THEME.call_opt("wm.on_enter_hotspot", xwindow, *new_hotspot);
-        current_hotspot_ = new_hotspot;
-    }
-
-    // fire on_mouse_move event on theme
-    THEME.call_opt("wm.on_mouse_move", xwindow, Point {e.x, e.y });  // xwindow can be null
-
-    last_mouse_position_ = { e.x_root, e.y_root };
-}
-
- */
-
 void XWindowManager::expose(LWindow* window)
 {
     XEvent ev {
@@ -231,4 +192,5 @@ void XWindowManager::expose(LWindow* window)
 void XWindowManager::bring_window_to_front(LWindow *window)
 {
     XRaiseWindow(X->display, window->id());
+    XSetInputFocus(X->display, window->id(), RevertToNone, CurrentTime);
 }
