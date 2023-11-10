@@ -6,34 +6,36 @@
 
 #include "theme/types/lwm.hh"
 #include "resources.hh"
+#include "focusmanager.hh"
 
 class WindowManager : public LWindowManager {
 public:
     explicit WindowManager(std::unique_ptr<Resources> resources)
-        : resources_(std::move(resources)) {}
+        : resources_(std::move(resources)), focus_manager_(this) {}
 
     void run();
 
-    bool is_focused(LWindow const* window) const;
+    // overwritten from parent
+    void set_focus(std::optional<LWindow *> window) override { focus_manager_.set_focus(window); }
+
+    // to be overwritten in library specific code
+    virtual void expose(LWindow* window) = 0;
+
+    // getters
+    [[nodiscard]] FocusManager const& focus_manager() const { return focus_manager_; }
 
 protected:
+
+    // to be overwritten in library specific code
     virtual void add_existing_windows() = 0;
     virtual void setup_event_listener() = 0;
     virtual void parse_next_event() = 0;
     virtual void reparent_window(WHandle parent_id, WHandle child_id, Point const& offset) = 0;
 
-    [[noreturn]]  void main_loop();
-
     [[nodiscard]] virtual Rectangle get_window_rectangle(WHandle window) const = 0;
     [[nodiscard]] virtual Size      get_screen_size() const = 0;
 
     [[nodiscard]] virtual std::unique_ptr<LWindow> create_window(Rectangle const& rectangle) const = 0;
-
-    void set_focus(std::optional<LWindow *> window) override;
-
-protected:
-
-    virtual void expose(LWindow* window) = 0;
 
     // desktop events
     void on_create_child(WHandle child_id);
@@ -46,6 +48,7 @@ protected:
     void on_window_click(WHandle parent, ClickEvent const& e);
     void on_window_move_pointer(WHandle parent, Point new_rel_pos);
 
+    // shared internal fields
     std::unique_ptr<Resources> resources_;
 
 private:
@@ -53,8 +56,10 @@ private:
     std::unordered_map<WHandle, WHandle>                  parents_;  // [child] = parent
 
     std::optional<std::string> current_hotspot_ {};
-    std::optional<LWindow*>    focused_window_ {};
 
+    FocusManager focus_manager_;
+
+    [[noreturn]] void main_loop();
     std::optional<std::pair<std::string, Hotspot>> hotspot(LWindow* window, Point const& p) const;
 };
 

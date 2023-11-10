@@ -114,5 +114,5 @@ void XWindow::set_cursor(std::string const &key)
 
 bool XWindow::focused() const
 {
-    return wm_.is_focused(this);
+    return wm_.focus_manager().is_window_focused(this);
 }

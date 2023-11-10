@@ -28,11 +28,14 @@
 - [x] Text
 - [x] Add existing windows
 - [x] Cursors
-- [ ] Hotspots
+- [x] Hotspots
   - [x] Click
   - [x] Move (enter/leave)
   - [x] Cursor on hotspot
-- [ ] Focus management
+- [x] Focus management
+  - [x] Focus new windows
+  - [ ] Roll back focus to previous window when window is closed
+  - [ ] Change focus when window is clicked (and bring to front)
 - [ ] Close window
 - [ ] Grab / move / resize window + configure (keep window rect)
 - [ ] Minimize
