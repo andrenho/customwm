@@ -37,13 +37,20 @@ struct Color {
     uint8_t r, g, b, a = 255;
     [[nodiscard]] bool is_white() const { return r == 255 && g == 255 && b == 255 & a == 255; }
     [[nodiscard]] bool is_black() const { return r == 0 && g == 0 && b == 0 & a == 255; }
-    bool operator <(Color const& c) const {  // to use as key for std::map
-        return ((((uint32_t) r) << 24) | (((uint32_t) g) << 16) | (((uint32_t) b) << 8) | a) <
-               ((((uint32_t) c.r) << 24) | (((uint32_t) c.g) << 16) | (((uint32_t) b) << 8) | a);
+
+    bool operator==(const Color& o) const {
+        return r == o.r && g == o.g && b == o.b && a == o.a;
     }
 
     static Color from_lua(lua_State* L, int index);
     static bool lua_is(lua_State* L, int index);
+};
+
+template<>
+struct std::hash<Color> {
+    size_t operator()(Color const& c) const {
+        return (((uint32_t) c.r) << 24) | (((uint32_t) c.g) << 16) | (((uint32_t) c.b) << 8) | c.a;
+    }
 };
 
 struct WindowStartingLocation {

@@ -29,7 +29,7 @@ protected:
 
     [[nodiscard]] virtual std::unique_ptr<LWindow> create_window(Rectangle const& rectangle) const = 0;
 
-    void set_focus(std::optional<LWindow *> window);
+    void set_focus(std::optional<LWindow *> window) override;
 
 protected:
 

@@ -17,7 +17,7 @@ struct Image {
 class XResources : public Resources {
 public:
     XResources();
-    ~XResources();
+    ~XResources() override;
 
     unsigned long get_color(Color const &color) const;
     XftColor&     get_xft_color(Color const& color) const;
@@ -29,8 +29,8 @@ public:
     std::optional<WHandle> get_property_whandle(WHandle window, std::string const &name) const override;
 
 private:
-    mutable std::map<Color, unsigned long>            colors_;
-    mutable std::map<Color, XftColor>                 xft_colors_;
+    mutable std::unordered_map<Color, unsigned long>  colors_;
+    mutable std::unordered_map<Color, XftColor>       xft_colors_;
     mutable std::unordered_map<std::string, XftFont*> fonts_;
     mutable std::unordered_map<std::string, Image>    images_;
     mutable std::unordered_map<std::string, Cursor>   cursors_;

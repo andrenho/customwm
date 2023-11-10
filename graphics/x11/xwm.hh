@@ -39,8 +39,6 @@ private:
 
     static int on_error(Display* d, XErrorEvent* e);
 
-    XWindow* find_parent(Window parent_id) const;
-
     XResources* xresources_;
 };
 

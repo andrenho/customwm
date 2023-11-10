@@ -70,22 +70,22 @@ void XWindowManager::parse_next_event()
 
     switch (e.type) {
         case MapRequest:
-            LOG.debug("event: MapRequest %d", e.xmaprequest.window);
+            // LOG.debug("event: MapRequest %d", e.xmaprequest.window);
             on_create_child(e.xmaprequest.window);
             break;
         case UnmapNotify:
-            LOG.debug("event: UnmapNotify %d", e.xunmap.window);
+            // LOG.debug("event: UnmapNotify %d", e.xunmap.window);
             on_destroy_child(e.xunmap.window);
             break;
         case Expose:
-            LOG.debug("event: Expose %d", e.xexpose.window);
+            // LOG.debug("event: Expose %d", e.xexpose.window);
             on_window_expose(e.xexpose.window,
                              {e.xexpose.x, e.xexpose.y, (uint32_t) e.xexpose.width, (uint32_t) e.xexpose.height});
             break;
         case ButtonPress:
         case ButtonRelease:
         {
-            LOG.debug("event: Button %d", e.xbutton.window);
+            // LOG.debug("event: Button %d", e.xbutton.window);
             ClickEvent click_event {
                     .pressed = (e.type == ButtonPress),
                     .pos = Point { e.xbutton.x, e.xbutton.y },
@@ -112,10 +112,11 @@ void XWindowManager::parse_next_event()
         case ConfigureNotify:
             // LOG.debug("event: ConfigureNotify %d", e.xconfigure.window);
             break;
-        case CreateNotify:  LOG.debug("event: CreateNotify %d", e.xcreatewindow.window); break;
-        case DestroyNotify: LOG.debug("event: DestroyNotify %d", e.xdestroywindow.window); break;
-        case MapNotify:     LOG.debug("event: MapNotify %d", e.xmap.window); break;
-        case ReparentNotify:LOG.debug("event: ReparentNotify %d", e.xreparent.window); break;
+        case CreateNotify:   // LOG.debug("event: CreateNotify %d", e.xcreatewindow.window); break;
+        case DestroyNotify:  // LOG.debug("event: DestroyNotify %d", e.xdestroywindow.window); break;
+        case MapNotify:      // LOG.debug("event: MapNotify %d", e.xmap.window); break;
+        case ReparentNotify: // LOG.debug("event: ReparentNotify %d", e.xreparent.window); break;
+            break;
         default:
             LOG.debug("Unmapped event received: %d", e.type);
     }
@@ -207,17 +208,21 @@ void WM_X11::on_move(XMotionEvent const &e)
 
  */
 
-XWindow* XWindowManager::find_parent(Window parent_id) const
-{
-    auto it = windows_.find(parent_id);
-    if (it == windows_.end())
-        return nullptr;
-    else
-        return it->second.get();
-}
-
 void XWindowManager::expose(LWindow* window)
 {
-    XClearArea(X->display, window->id(), window->rect().x, window->rect().y, window->rect().w, window->rect().h, true);
-    XFlush(X->display);
+    XEvent ev {
+        .xexpose {
+                .type = Expose,
+                .serial = 0,
+                .send_event = true,
+                .display = X->display,
+                .window = window->id(),
+                .x = window->rect().x,
+                .y = window->rect().y,
+                .width = static_cast<int>(window->rect().w),
+                .height = static_cast<int>(window->rect().h),
+                .count = 0,
+        }
+    };
+    XSendEvent(X->display, window->id(), false, ExposureMask, &ev);
 }

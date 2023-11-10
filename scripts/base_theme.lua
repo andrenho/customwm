@@ -95,19 +95,17 @@ theme = {
         end,
 
         after_window_registered = function(window)
-            print("Window registered: ", window)
+            print("Window registered: ", window:id())
         end,
 
         on_window_unregistered = function(window)
-            print("Window unregistered: ", window)
+            print("Window unregistered: ", window:id())
         end,
 
         on_expose = function(window, exposed_area)
             if window:focused() then
-                print('focused', window:id())
                 window:fill("#a0a0ff")
             else
-                print('unfocused', window:id())
                 window:fill("#a0a0a0")
             end
             window:text(0, 0, window:name(), {
