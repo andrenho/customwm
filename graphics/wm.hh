@@ -23,6 +23,7 @@ public:
 
     // getters
     [[nodiscard]] FocusManager const& focus_manager() const { return focus_manager_; }
+    [[nodiscard]] std::unordered_map<WHandle, std::unique_ptr<LWindow>> const& windows() const { return windows_; }
 
 protected:
 

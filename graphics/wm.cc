@@ -41,7 +41,7 @@ void WindowManager::on_create_child(WHandle child_id)
 
     THEME.call_opt("wm.after_window_registered", parent);
 
-    set_focus(parent);
+    focus_manager_.set_focus(parent);
 }
 
 void WindowManager::on_destroy_child(WHandle child_id)
@@ -53,8 +53,7 @@ void WindowManager::on_destroy_child(WHandle child_id)
             parents_.erase(child_id);
             THEME.call_opt("wm.on_window_unregistered", window);
             LOG.debug("Destroyed parent window id %d", window->id());
-            if (focus_manager_.is_window_focused(window))
-                set_focus({}); // TODO - focus go back to previous window
+            focus_manager_.remove_window(window);
             windows_.erase(window->id());
         } catch (std::out_of_range&) {}
     }
