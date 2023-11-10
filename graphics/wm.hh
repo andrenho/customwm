@@ -33,6 +33,8 @@ protected:
 
 protected:
 
+    virtual void expose(LWindow* window) = 0;
+
     // desktop events
     void on_create_child(WHandle child_id);
     void on_destroy_child(WHandle child);

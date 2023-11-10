@@ -104,8 +104,10 @@ theme = {
 
         on_expose = function(window, exposed_area)
             if window:focused() then
+                print('focused', window:id())
                 window:fill("#a0a0ff")
             else
+                print('unfocused', window:id())
                 window:fill("#a0a0a0")
             end
             window:text(0, 0, window:name(), {

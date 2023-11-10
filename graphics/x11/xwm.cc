@@ -215,3 +215,9 @@ XWindow* XWindowManager::find_parent(Window parent_id) const
     else
         return it->second.get();
 }
+
+void XWindowManager::expose(LWindow* window)
+{
+    XClearArea(X->display, window->id(), window->rect().x, window->rect().y, window->rect().w, window->rect().h, true);
+    XFlush(X->display);
+}

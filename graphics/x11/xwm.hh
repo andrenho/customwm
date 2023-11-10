@@ -28,6 +28,8 @@ protected:
 
     [[nodiscard]] std::unique_ptr<LWindow> create_window(Rectangle const &rectangle) const override;
 
+    void expose(LWindow* window) override;
+
 private:
     std::unordered_map<Window, std::unique_ptr<XWindow>> windows_;
     std::optional<std::string> current_hotspot_ {};

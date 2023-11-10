@@ -53,6 +53,8 @@ void WindowManager::on_destroy_child(WHandle child_id)
             parents_.erase(child_id);
             THEME.call_opt("wm.on_window_unregistered", window);
             LOG.debug("Destroyed parent window id %d", window->id());
+            if (focused_window_ && *focused_window_ == window)
+                set_focus({}); // TODO - focus go back to previous window
             windows_.erase(window->id());
         } catch (std::out_of_range&) {}
     }
@@ -144,13 +146,13 @@ std::optional<std::pair<std::string, Hotspot>> WindowManager::hotspot(LWindow* w
 
 void WindowManager::set_focus(std::optional<LWindow *> window)
 {
-    if (focused_window_ && *focused_window_ != window)
-        on_window_expose(focused_window_.value()->id(), focused_window_.value()->rect());  // redraw old window
-
+    auto previous_window = focused_window_;
     focused_window_ = window;
 
+    if (previous_window)
+        expose(previous_window.value());
     if (focused_window_)
-        on_window_expose(focused_window_.value()->id(), focused_window_.value()->rect());  // redraw new window
+        expose(focused_window_.value());
 }
 
 bool WindowManager::is_focused(LWindow const* window) const
