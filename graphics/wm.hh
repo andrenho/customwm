@@ -20,10 +20,10 @@ public:
 
     // to be overwritten in library specific code
     virtual void expose(LWindow* window) = 0;
+    virtual void bring_window_to_front(LWindow* window) = 0;
 
     // getters
     [[nodiscard]] FocusManager const& focus_manager() const { return focus_manager_; }
-    [[nodiscard]] std::unordered_map<WHandle, std::unique_ptr<LWindow>> const& windows() const { return windows_; }
 
 protected:
 

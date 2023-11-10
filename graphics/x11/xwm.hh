@@ -16,6 +16,7 @@ public:
     [[nodiscard]] std::string interface_name() const override { return "X11"; }
 
     void move_window_with_mouse(bool move, std::optional<LWindow*> window) override;
+    void bring_window_to_front(LWindow *window) override;
 
 protected:
     void add_existing_windows() override;
@@ -35,7 +36,6 @@ private:
     std::optional<std::string> current_hotspot_ {};
 
     std::optional<XWindow*> moving_window_with_mouse_ {};
-    Point last_mouse_position_ { 0, 0 };
 
     static int on_error(Display* d, XErrorEvent* e);
 

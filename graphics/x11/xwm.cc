@@ -226,3 +226,8 @@ void XWindowManager::expose(LWindow* window)
     };
     XSendEvent(X->display, window->id(), false, ExposureMask, &ev);
 }
+
+void XWindowManager::bring_window_to_front(LWindow *window)
+{
+    XRaiseWindow(X->display, window->id());
+}

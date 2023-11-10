@@ -28,6 +28,8 @@ void FocusManager::set_focus(std::optional<LWindow *> window)
             window_order_.push_back(*focused_window_);
         else
             std::rotate(it, it+1, window_order_.end());
+
+        wm_->bring_window_to_front(*focused_window_);
     }
 }
 
