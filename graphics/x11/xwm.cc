@@ -101,6 +101,7 @@ void XWindowManager::parse_next_event()
                 on_desktop_click(click_event);
             else
                 on_window_click(e.xmotion.window, click_event);
+            XAllowEvents(X->display, ReplayPointer, e.xbutton.time);   // forward event to child
             break;
         }
         case MotionNotify:

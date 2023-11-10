@@ -89,16 +89,26 @@ void WindowManager::on_window_expose(WHandle parent, Rectangle rectangle)
     } catch (std::out_of_range&) {}
 }
 
-void WindowManager::on_window_click(WHandle parent, ClickEvent const &e)
+void WindowManager::on_window_click(WHandle window_id, ClickEvent const &e)
 {
+    // check for clicks on the parent
     try {
-        LWindow* window = windows_.at((WHandle const) parent).get();
+        LWindow* window = windows_.at((WHandle const) window_id).get();
+
+        focus_manager_.set_focus(window);
 
         auto hs = hotspot(window, e.pos);
         if (hs)
             THEME.call_opt("wm.on_hotspot_click", window, hs->first, e);
 
         THEME.call_opt("wm.on_window_click", window, e);
+    } catch (std::out_of_range&) {}
+
+    // check for clicks on the children
+    try {
+        WHandle parent_id = parents_.at(window_id);
+        LWindow* window = windows_.at((WHandle const) parent_id).get();
+        focus_manager_.set_focus(window);
     } catch (std::out_of_range&) {}
 }
 

@@ -13,6 +13,9 @@ XWindow::XWindow(XWindowManager const& wm, XResources const& resources, Rectangl
     XSelectInput(X->display, id_, SubstructureNotifyMask | StructureNotifyMask | ExposureMask |
                                   ButtonPressMask | ButtonReleaseMask | PointerMotionMask);
 
+    // redirect events to window manager
+    XGrabButton(X->display, AnyButton, AnyModifier, id_, false, ButtonPressMask, GrabModeSync, GrabModeAsync, None, None);
+
     XMapWindow(X->display, id_);
 
     gc_ = XCreateGC(X->display, id_, 0, nullptr);

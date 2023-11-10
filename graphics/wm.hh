@@ -46,7 +46,7 @@ protected:
 
     // window events
     void on_window_expose(WHandle parent, Rectangle rectangle);
-    void on_window_click(WHandle parent, ClickEvent const& e);
+    void on_window_click(WHandle window_id, ClickEvent const& e);
     void on_window_move_pointer(WHandle parent, Point new_rel_pos);
 
     // shared internal fields
