@@ -64,3 +64,4 @@
   - Create new cursors
   - Improved error handling using lua_pcall
   - Virtual Desktops
+  - Key management

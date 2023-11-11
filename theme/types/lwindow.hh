@@ -13,6 +13,7 @@ struct LWindow {
     virtual ~LWindow() = default;
 
     virtual WHandle                   id() const = 0;
+    virtual std::optional<WHandle>    child_id() const = 0;
     [[nodiscard]] virtual Rectangle   rect() const = 0;
     virtual void                      fill(Color const& color) = 0;
     virtual void                      text(int x, int y, std::string const& text, TextProperties const& text_properties) = 0;

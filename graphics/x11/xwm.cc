@@ -41,7 +41,10 @@ void XWindowManager::setup_event_listener()
     XSetErrorHandler(&XWindowManager::on_error);
 
     XSelectInput(X->display, X->root, SubstructureRedirectMask | SubstructureNotifyMask | PointerMotionMask |
-            ButtonPressMask | ButtonReleaseMask);
+            ButtonPressMask | ButtonReleaseMask | KeyPressMask | KeyReleaseMask);
+    XSetInputFocus(X->display, X->root, RevertToNone, CurrentTime);
+    XGrabKeyboard(X->display, X->root, true, GrabModeAsync, GrabModeAsync, CurrentTime);
+
     XSync(X->display, false);
 }
 
@@ -86,17 +89,7 @@ void XWindowManager::parse_next_event()
         case ButtonRelease:
         {
             // LOG.debug("event: Button %d", e.xbutton.window);
-            ClickEvent click_event {
-                    .pressed = (e.type == ButtonPress),
-                    .pos = Point { e.xbutton.x, e.xbutton.y },
-                    .abs_pos = Point { e.xbutton.x_root, e.xbutton.y_root },
-            };
-            switch (e.xbutton.button) {
-                case Button1: click_event.button = ClickEvent::Left; break;
-                case Button2: click_event.button = ClickEvent::Middle; break;
-                case Button3: click_event.button = ClickEvent::Right; break;
-                default: click_event.button = ClickEvent::Other;
-            }
+            ClickEvent click_event = map_to_click_event(e.xbutton);
             if (e.xmotion.window == None || e.xmotion.window == X->root)
                 on_desktop_click(click_event);
             else
@@ -112,6 +105,11 @@ void XWindowManager::parse_next_event()
             break;
         case ConfigureNotify:
             // LOG.debug("event: ConfigureNotify %d", e.xconfigure.window);
+            break;
+        case KeyPress:
+        case KeyRelease:
+            // TODO - send events to parent class, request authorization to propagate
+            propagate_keyevent_to_focused_window(e);
             break;
         case CreateNotify:   // LOG.debug("event: CreateNotify %d", e.xcreatewindow.window); break;
         case DestroyNotify:  // LOG.debug("event: DestroyNotify %d", e.xdestroywindow.window); break;
@@ -192,5 +190,35 @@ void XWindowManager::expose(LWindow* window)
 void XWindowManager::bring_window_to_front(LWindow *window)
 {
     XRaiseWindow(X->display, window->id());
-    XSetInputFocus(X->display, window->id(), RevertToNone, CurrentTime);
+    // XSetInputFocus(X->display, window->id(), RevertToNone, CurrentTime);
+}
+
+ClickEvent XWindowManager::map_to_click_event(XButtonEvent e) const
+{
+    ClickEvent click_event {
+            .pressed = (e.type == ButtonPress),
+            .pos = Point { e.x, e.y },
+            .abs_pos = Point { e.x_root, e.y_root },
+    };
+    switch (e.button) {
+        case Button1: click_event.button = ClickEvent::Left; break;
+        case Button2: click_event.button = ClickEvent::Middle; break;
+        case Button3: click_event.button = ClickEvent::Right; break;
+        default: click_event.button = ClickEvent::Other;
+    }
+    return click_event;
+}
+
+void XWindowManager::propagate_keyevent_to_focused_window(XEvent e) const
+{
+    auto focused = focus_manager().focused_window();
+    if (focused) {
+        e.xbutton.window = (*focused)->id();
+        XSendEvent(X->display, (*focused)->id(), false, KeyPressMask | KeyReleaseMask, &e);
+        auto child_id = (*focused)->child_id();
+        if (child_id) {
+            e.xbutton.window = *child_id;
+            XSendEvent(X->display, *child_id, false, KeyPressMask | KeyReleaseMask, &e);
+        }
+    }
 }

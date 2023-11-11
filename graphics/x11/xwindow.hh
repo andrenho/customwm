@@ -23,14 +23,15 @@ public:
     Rectangle rectangle;
     bool deleted = false;
 
-    WHandle     id() const override { return id_; }
-    Rectangle   rect() const override { return rectangle; }
-    void        fill(Color const &color) override;
-    void        text(int x, int y, std::string const &text, TextProperties const& tp) override;
-    void        draw(int x, int y, std::string const &slice) override;
-    std::string name() const override;
-    void        set_cursor(std::string const &key) override;
-    bool        focused() const override;
+    WHandle                id() const override { return id_; }
+    std::optional<WHandle> child_id() const override;
+    Rectangle              rect() const override { return rectangle; }
+    void                   fill(Color const &color) override;
+    void                   text(int x, int y, std::string const &text, TextProperties const& tp) override;
+    void                   draw(int x, int y, std::string const &slice) override;
+    std::string            name() const override;
+    void                   set_cursor(std::string const &key) override;
+    bool                   focused() const override;
 
 private:
     class XWindowManager const& wm_;

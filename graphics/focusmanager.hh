@@ -11,6 +11,8 @@ public:
     void set_focus(std::optional<LWindow *> window);
     void remove_window(LWindow* window);
 
+    std::optional<LWindow*> focused_window() const { return focused_window_; }
+
 private:
     class WindowManager*    wm_;
     std::optional<LWindow*> focused_window_ {};

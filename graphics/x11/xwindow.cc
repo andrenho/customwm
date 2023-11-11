@@ -15,6 +15,7 @@ XWindow::XWindow(XWindowManager const& wm, XResources const& resources, Rectangl
 
     // redirect events to window manager
     XGrabButton(X->display, AnyButton, AnyModifier, id_, false, ButtonPressMask, GrabModeSync, GrabModeAsync, None, None);
+    // XGrabKeyboard(X->display, id_, false, GrabModeAsync, GrabModeSync, CurrentTime);
 
     XMapWindow(X->display, id_);
 
@@ -31,6 +32,11 @@ XWindow::~XWindow()
     XftDrawDestroy(xft_draw_);
     XFreeGC(X->display, gc_);
     XDestroyWindow(X->display, id_);
+}
+
+std::optional<WHandle> XWindow::child_id() const
+{
+    return resources_.get_property_whandle(id_, "child");
 }
 
 void XWindow::fill(Color const &color)

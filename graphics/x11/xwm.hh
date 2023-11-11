@@ -34,8 +34,10 @@ protected:
 private:
     std::unordered_map<Window, std::unique_ptr<XWindow>> windows_;
     std::optional<std::string> current_hotspot_ {};
-
     std::optional<XWindow*> moving_window_with_mouse_ {};
+
+    ClickEvent map_to_click_event(XButtonEvent e) const;
+    void propagate_keyevent_to_focused_window(XEvent e) const;
 
     static int on_error(Display* d, XErrorEvent* e);
 

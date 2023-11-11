@@ -11,6 +11,9 @@ void l_window_create_metadata(lua_State* L)
             { "id", [](lua_State* L) {
                 return luaw_push(L, THIS->id());
             }},
+            { "child_id", [](lua_State* L) {
+                return luaw_push(L, THIS->child_id());
+            }},
             { "rect", [](lua_State* L) {
                 return luaw_push(L, THIS->rect());
             }},
