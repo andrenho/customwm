@@ -37,7 +37,7 @@
   - [x] Roll back focus to previous window when window is closed
   - [x] Change focus when window is clicked (and bring to front)
 - [x] Keyboard focus
-- [ ] Close window
+- [x] Close window
 - [ ] Grab / move / resize window + configure (keep window rect)
 - [ ] Minimize
 - [ ] Maximize
