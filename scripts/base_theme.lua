@@ -83,7 +83,12 @@ theme = {
         end,
 
         hotspots = function(window)
-            return getprop("wm.default_hotspots", window)
+            local h = getprop("wm.default_hotspots", window)
+            h.close = {
+                area = { x = window:rect().w - 15, y = 2, w = 13, h = 13 },
+                cursor = "kill"
+            }
+            return h
         end,
 
         --
@@ -111,6 +116,7 @@ theme = {
             window:text(0, 0, window:name(), {
                 font = "basic", w = window:rect().w, h = 24, halign = "center", valign = "center"
             })
+            window:fill("#ff0000", getprop("wm.hotspots", window).close.area)
         end,
 
         on_window_click = function(window, ev)
@@ -120,6 +126,9 @@ theme = {
         end,
 
         on_hotspot_click = function(window, hotspot, ev)
+            if hotspot == 'close' then
+                wm:close_window(window)
+            end
         end,
 
         on_window_mouse_move = function(window, pos)

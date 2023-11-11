@@ -17,6 +17,7 @@ public:
 
     void move_window_with_mouse(bool move, std::optional<LWindow*> window) override;
     void bring_window_to_front(LWindow *window) override;
+    void close_window(LWindow* window) override;
 
 protected:
     void add_existing_windows() override;
@@ -34,7 +35,7 @@ protected:
 private:
     std::unordered_map<Window, std::unique_ptr<XWindow>> windows_;
     std::optional<std::string> current_hotspot_ {};
-    std::optional<XWindow*> moving_window_with_mouse_ {};
+    std::optional<XWindow*>    moving_window_with_mouse_ {};
 
     ClickEvent map_to_click_event(XButtonEvent e) const;
     void propagate_keyevent_to_focused_window(XEvent e) const;

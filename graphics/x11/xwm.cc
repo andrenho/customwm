@@ -3,8 +3,6 @@
 #include <X11/Xlib.h>
 #include <cstdlib>
 
-#include <utility>
-
 #include "x.hh"
 #include "common/logger.hh"
 #include "xwindow.hh"
@@ -220,5 +218,27 @@ void XWindowManager::propagate_keyevent_to_focused_window(XEvent e) const
             e.xbutton.window = *child_id;
             XSendEvent(X->display, *child_id, false, KeyPressMask | KeyReleaseMask, &e);
         }
+    }
+}
+
+void XWindowManager::close_window(LWindow* window)
+{
+    auto protocols = ((XWindow*) window)->child_protocols();
+    WHandle target = window->child_id().value_or(window->id());
+
+    if (std::find(protocols.begin(), protocols.end(), "WM_DELETE_WINDOW") != protocols.end()) {
+        XEvent e {
+            .xclient {
+                .type = ClientMessage,
+                .window = target,
+                .message_type = XInternAtom(X->display, "WM_PROTOCOLS", true),
+                .format = 32,
+            }
+        };
+        e.xclient.data.l[0] = (long) (XInternAtom(X->display, "WM_DELETE_WINDOW", false));
+        e.xclient.data.l[1] = CurrentTime;
+        XSendEvent(X->display, target, false, NoEventMask, &e);
+    } else {
+        XDestroyWindow(X->display, target);
     }
 }

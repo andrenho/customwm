@@ -18,7 +18,10 @@ void l_window_create_metadata(lua_State* L)
                 return luaw_push(L, THIS->rect());
             }},
             { "fill", [](lua_State* L) {
-                THIS->fill(luaw_to<Color>(L, 2));
+                if (lua_gettop(L) >= 3)
+                    THIS->fill(luaw_to<Color>(L, 2), luaw_to<std::optional<Rectangle>>(L, 3));
+                else
+                    THIS->fill(luaw_to<Color>(L, 2));
                 return 0;
             }},
             { "text", [](lua_State* L) {

@@ -14,6 +14,7 @@ struct Cursors {
     static constexpr const char* Bottom = "bottom";
     static constexpr const char* Right = "right";
     static constexpr const char* Left = "left";
+    static constexpr const char* Kill = "kill";
 };
 
 class Resources {

@@ -11,6 +11,7 @@ struct LWindowManager {
 
     virtual void move_window_with_mouse(bool move, std::optional<LWindow*> window) = 0;
     virtual void set_focus(std::optional<LWindow*> window) = 0;
+    virtual void close_window(LWindow* window) = 0;
 
     static constexpr const char* mt_identifier = "WM";
 };

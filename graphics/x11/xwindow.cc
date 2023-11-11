@@ -39,10 +39,13 @@ std::optional<WHandle> XWindow::child_id() const
     return resources_.get_property_whandle(id_, "child");
 }
 
-void XWindow::fill(Color const &color)
+void XWindow::fill(Color const &color, std::optional<Rectangle> rect)
 {
     XSetForeground(X->display, gc_, resources_.get_color(color));
-    XFillRectangle(X->display, id_, gc_, 0, 0, rectangle.w, rectangle.h);
+    if (rect)
+        XFillRectangle(X->display, id_, gc_, rect->x, rect->y, rect->w, rect->h);
+    else
+        XFillRectangle(X->display, id_, gc_, 0, 0, rectangle.w, rectangle.h);
 }
 
 void XWindow::text(int x, int y, std::string const &text_, TextProperties const& tp_)
@@ -124,4 +127,25 @@ void XWindow::set_cursor(std::string const &key)
 bool XWindow::focused() const
 {
     return wm_.focus_manager().is_window_focused(this);
+}
+
+std::vector<std::string> XWindow::child_protocols() const
+{
+    std::vector<std::string> protocol_list;
+
+    Atom* protocols;
+    int n_protocols = 0;
+    auto child_id_ = child_id();
+    if (child_id_) {
+        if (XGetWMProtocols(X->display, *child_id_, &protocols, &n_protocols) != 0) {
+            char* names[n_protocols];
+            if (XGetAtomNames(X->display, protocols, n_protocols, names)) {
+                for (int i = 0; i < n_protocols; ++i)
+                    protocol_list.emplace_back(names[i]);
+            }
+            XFree(protocols);
+        }
+    }
+
+    return protocol_list;
 }

@@ -24,6 +24,7 @@ XResources::XResources()
     cursors_[Cursors::Bottom] = XCreateFontCursor(X->display, XC_bottom_side);
     cursors_[Cursors::Right] = XCreateFontCursor(X->display, XC_right_side);
     cursors_[Cursors::Left] = XCreateFontCursor(X->display, XC_left_side);
+    cursors_[Cursors::Kill] = XCreateFontCursor(X->display, XC_pirate);
 }
 
 XResources::~XResources()

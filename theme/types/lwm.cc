@@ -25,6 +25,10 @@ void l_wm_create_metadata(lua_State* L)
             THIS->set_focus(window);
             return 0;
         }},
+        { "close_window", [](lua_State* L) {
+            THIS->close_window(luaw_to<LWindow*>(L, 2));
+            return 0;
+        }},
     });
     LOG.debug("Metatable setup for WM as '%s'", mt.c_str());
 }
