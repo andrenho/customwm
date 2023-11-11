@@ -4,7 +4,7 @@
 
 OBJ_COMMON = common/logger.o common/init.o common/options.o \
 	theme/theme.o theme/types/types.o theme/types/lwm.o theme/types/lwindow.o \
-	graphics/graphics.o graphics/wm.o graphics/focusmanager.o
+	graphics/graphics.o graphics/wm.o graphics/focusmanager.o graphics/grabmanager.o
 
 OBJ_GRAPHICS_X11 = graphics/x11/x.o graphics/x11/xwm.o graphics/x11/xresources.o graphics/x11/xwindow.o
 

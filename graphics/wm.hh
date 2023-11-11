@@ -7,17 +7,18 @@
 #include "theme/types/lwm.hh"
 #include "resources.hh"
 #include "focusmanager.hh"
+#include "grabmanager.hh"
 
 class WindowManager : public LWindowManager {
 public:
     explicit WindowManager(std::unique_ptr<Resources> resources)
-        : resources_(std::move(resources)), focus_manager_(this) {}
+        : resources_(std::move(resources)), focus_manager_(this), grab_manager_(this) {}
 
     void run();
 
     // overwritten from parent
     void set_focus(std::optional<LWindow *> window) override { focus_manager_.set_focus(window); }
-    void grab(LWindow *window, GrabType grab_type) override;
+    void grab(LWindow *window, GrabType grab_type) override { grab_manager_.set_grab(window, grab_type); }
 
     // to be overwritten in library specific code
     virtual void expose(LWindow* window) = 0;
@@ -60,6 +61,7 @@ private:
     std::optional<std::string> current_hotspot_ {};
 
     FocusManager focus_manager_;
+    GrabManager  grab_manager_;
 
     [[noreturn]] void main_loop();
     std::optional<std::pair<std::string, Hotspot>> hotspot(LWindow* window, Point const& p) const;
