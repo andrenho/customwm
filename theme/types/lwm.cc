@@ -40,7 +40,7 @@ void l_wm_create_metadata(lua_State* L)
         { "grab", [](lua_State* L) {
             auto window = luaw_to<LWindow*>(L, 2);
             if (lua_isnil(L, 3)) {
-                THIS->grab(window, GrabType::None);
+                THIS->grab(window, GrabType::NoGrab);
             } else {
                 try {
                     THIS->grab(window, LWindowManager::grab_types.at(luaw_to<std::string>(L, 3)));

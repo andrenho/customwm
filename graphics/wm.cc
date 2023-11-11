@@ -152,8 +152,3 @@ std::optional<std::pair<std::string, Hotspot>> WindowManager::hotspot(LWindow* w
         return {};
     }
 }
-
-void WindowManager::grab(LWindow *window, GrabType grab_type)
-{
-    // TODO
-}

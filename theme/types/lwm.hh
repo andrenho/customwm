@@ -7,7 +7,7 @@
 #include "lwindow.hh"
 
 enum class GrabType {
-    None, Move, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight,
+    NoGrab, Move, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight,
 };
 
 struct LWindowManager {
