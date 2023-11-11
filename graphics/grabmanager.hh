@@ -10,8 +10,18 @@ public:
 
     void set_grab(LWindow *window, GrabType grab_type);
 
+    void move_pointer(Point const &p);
+
 private:
-    class WindowManager*    wm_;
+    class WindowManager* wm_;
+
+    struct Grab {
+        LWindow* window;
+        GrabType grab_type;
+    };
+    std::optional<Grab> current_grab_ {};
+
+    Point last_pointer_ { 0, 0 };
 };
 
 #endif //GRABMANAGER_HH_

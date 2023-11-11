@@ -10,6 +10,9 @@ bool FocusManager::is_window_focused(LWindow const *window) const
 
 void FocusManager::set_focus(std::optional<LWindow *> window)
 {
+    if (window == focused_window_)
+        return;
+
     auto previous_window = focused_window_;
     focused_window_ = window;
 

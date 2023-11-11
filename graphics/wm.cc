@@ -61,18 +61,7 @@ void WindowManager::on_destroy_child(WHandle child_id)
 
 void WindowManager::on_desktop_move_pointer(Point new_pos)
 {
-#if 0
-    // check if moving window
-    if (moving_window_with_mouse_.has_value()) {
-        XWindowAttributes xwa;
-        XGetWindowAttributes(X->display, (*moving_window_with_mouse_)->id, &xwa);
-        int x = xwa.x + e.x_root - last_mouse_position_.x;
-        int y = xwa.y + e.y_root - last_mouse_position_.y;
-        XMoveWindow(X->display, (*moving_window_with_mouse_)->id, x, y);
-    }
-
-    last_mouse_position_ = { e.x_root, e.y_root };
-#endif
+    grab_manager_.move_pointer(new_pos);
     THEME.call_opt("wm.on_desktop_mouse_move", new_pos);
 }
 

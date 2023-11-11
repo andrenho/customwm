@@ -148,6 +148,14 @@ local theme = {
         end,
 
         on_hotspot_click = function(window, hotspot, ev)
+            local hs = getprop("wm.hotspots", window)[hotspot]
+            if hs and hs.grab then
+                if ev.pressed then
+                    wm:grab(window, hs.grab)
+                else
+                    wm:grab(window, nil)
+                end
+            end
         end,
 
         on_window_mouse_move = function(window, pos)
