@@ -72,10 +72,10 @@ ${LUAW_FILE}:  # download luaw git submodule, if not there
 	git submodule update --init --recursive
 
 ${LUAZH}: ${LUAW_FILE} ${LUAJIT_A}
-	$(MAKE) -C ${LUAW_PATH} $@
+	$(MAKE) -C ${LUAW_PATH} luazh-jit
 
 ${LUAJIT_A}: ${LUAW_FILE}
-	$(MAKE) -C ${LUAW_PATH} $@ DEBUG=${DEBUG}
+	$(MAKE) -C ${LUAW_PATH} libluaw-jit.a DEBUG=${DEBUG}
 
 ${LUAJIT_HEADER}: ${LUAJIT_A}
 
