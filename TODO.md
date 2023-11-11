@@ -38,6 +38,8 @@
   - [x] Change focus when window is clicked (and bring to front)
 - [x] Keyboard focus
 - [x] Close window
+- [ ] Load theme
+  - [ ] Super
 - [ ] Grab / move / resize window + configure (keep window rect)
 - [ ] Minimize
 - [ ] Maximize

@@ -1,33 +1,12 @@
+
 local __cascade = 0
 
--- calculate the window starting position { x, y } based on properties provided by the user
-
-__window_metatable = {
-
-    -- based on the text properties, draw text on the screen
-    window_draw_text = function(window, x, y, text, properties)
-        properties = properties or {}
-        properties.color = properties.color or "#000000"
-        properties.font = properties.font or "basic"
-        window:_draw(x, y, text, properties.font, properties.color)
-    end
-
-}
-
-theme = {
+local theme = {
 
     resources = {
 
         fonts = {
             basic = { "helvetica-18" },
-        },
-
-        images = {
-            main = { filename = "customwm/customwm.png" },
-        },
-
-        slices = {
-            x = { image = 'main', rect = { x=0, y=0, w=24, h=24 } },
         },
 
     },
@@ -83,12 +62,55 @@ theme = {
         end,
 
         hotspots = function(window)
-            local h = getprop("wm.default_hotspots", window)
-            h.close = {
-                area = { x = window:rect().w - 15, y = 2, w = 13, h = 13 },
-                cursor = "kill"
+            local r = window:rect()
+            local border = getprop("wm.resize_border", window)
+            return {
+                title = {
+                    area = { x = border, y = border, w = r.w - (border * 2), h = getprop("wm.padding", window).top - border },
+                    cursor = "pointer",
+                    grab = "move",
+                },
+                top_left = {
+                    area = { x = 0, y = 0, w = border, h = border },
+                    cursor = "top-left",
+                    grab = "top-left",
+                },
+                top = {
+                    area = { x = border, y = 0, w = r.w - (border*2), h = border },
+                    cursor = "top",
+                    grab = "top",
+                },
+                top_right = {
+                    area = { x = r.w - border, y = 0, w = border, h = border },
+                    cursor = "top-right",
+                    grab = "top",
+                },
+                left = {
+                    area = { x = 0, y = border, w = border, h = r.h - (border*2) },
+                    cursor = "left",
+                    grab = "top",
+                },
+                right = {
+                    area = { x = r.w - border, y = border, w = border, h = r.h - (border*2) },
+                    cursor = "right",
+                    grab = "top",
+                },
+                bottom_left = {
+                    area = { x = 0, y = r.h - border, w = border, h = border },
+                    cursor = "bottom-left",
+                    grab = "top",
+                },
+                bottom_right = {
+                    area = { x = r.w - border, y = r.h - border, w = border, h = border },
+                    cursor = "bottom-right",
+                    grab = "top",
+                },
+                bottom = {
+                    area = { x = border, y = r.h - border, w = r.w - (border * 2), h = border },
+                    cursor = "bottom",
+                    grab = "top",
+                },
             }
-            return h
         end,
 
         --
@@ -126,9 +148,6 @@ theme = {
         end,
 
         on_hotspot_click = function(window, hotspot, ev)
-            if hotspot == 'close' then
-                wm:close_window(window)
-            end
         end,
 
         on_window_mouse_move = function(window, pos)
@@ -144,68 +163,8 @@ theme = {
         on_leave_hotspot = function(window, hotspot)
             print('Leaving hotspot ' .. hotspot)
         end,
-
-        --
-        -- EVENTS (private)
-        --
-
-        _on_click = function(window, ev)
-            if ev.button == 'left' and not ev.pressed then
-                wm:move_window_with_mouse(false)
-            end
-        end,
-
-        _on_hotspot_click = function(window, hotspot, ev)
-            if hotspot == 'title' then
-                if ev.button == 'left' and ev.pressed then
-                    wm:move_window_with_mouse(true, window)
-                end
-            end
-        end,
-
-        default_hotspots = function(window)
-            local r = window:rect()
-            local border = getprop("wm.resize_border", window)
-            return {
-                title = {
-                    area = { x = border, y = border, w = r.w - (border * 2), h = getprop("wm.padding", window).top - border },
-                    cursor = "pointer"
-                },
-                top_left = {
-                    area = { x = 0, y = 0, w = border, h = border },
-                    cursor = "top-left"
-                },
-                top = {
-                    area = { x = border, y = 0, w = r.w - (border*2), h = border },
-                    cursor = "top"
-                },
-                top_right = {
-                    area = { x = r.w - border, y = 0, w = border, h = border },
-                    cursor = "top-right"
-                },
-                left = {
-                    area = { x = 0, y = border, w = border, h = r.h - (border*2) },
-                    cursor = "left",
-                },
-                right = {
-                    area = { x = r.w - border, y = border, w = border, h = r.h - (border*2) },
-                    cursor = "right",
-                },
-                bottom_left = {
-                    area = { x = 0, y = r.h - border, w = border, h = border },
-                    cursor = "bottom-left"
-                },
-                bottom_right = {
-                    area = { x = r.w - border, y = r.h - border, w = border, h = border },
-                    cursor = "bottom-right"
-                },
-                bottom = {
-                    area = { x = border, y = r.h - border, w = r.w - (border * 2), h = border },
-                    cursor = "bottom"
-                },
-            }
-        end,
-
     }
 
 }
+
+merge_theme(theme)

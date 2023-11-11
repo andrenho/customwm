@@ -4,6 +4,7 @@
 #include "theme/theme.hh"
 
 #include "graphics/graphics.hh"
+#include "logger.hh"
 
 std::unique_ptr<WindowManager> initialize(int argc, char* argv[])
 {
@@ -14,6 +15,11 @@ std::unique_ptr<WindowManager> initialize(int argc, char* argv[])
 
     if (options.theme_file)
         THEME.load_theme_file(*options.theme_file);
+
+#if 0
+    if (LOG.level == Logger::Debug)
+        THEME.print_effective_theme();
+#endif
 
     Graphics* graphics = Graphics::create(options.display);
 

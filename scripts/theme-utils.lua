@@ -1,34 +1,32 @@
+theme = {
+    resources = {
+        fonts = {},
+        images = {},
+        slices = {},
+    },
+    wm = {},
+}
 __property_cache = {}
 
 
 function merge_theme(new_theme)
 
-    local function merge_tables(original_tbl, new_tbl)
-
-        if type(original_tbl) ~= 'table' or type(new_tbl) ~= 'table' then
-            error('Expected table')
-        end
-
-        local function merge_keys(original, new)
-
-            for k,v in pairs(new) do
-                if type(v) == 'table' and original[k] then
-                    merge_keys(original[k], v)
-                else
-                    original[k] = v
-                end
-            end
-
-            return original
-        end
-
-        return merge_keys(original_tbl, new_tbl)
-
+    local function shallow_merge(first_table, second_table)
+        if first_table == nil or second_table == nil then return end
+        for k,v in pairs(second_table) do first_table[k] = v end
     end
 
-    theme = merge_tables(theme, new_theme)
-end
+    theme.super = deepcopy(theme)
+    if new_theme.resources then
+        shallow_merge(theme.resources.fonts, new_theme.resources.fonts)
+        shallow_merge(theme.resources.images, new_theme.resources.images)
+        shallow_merge(theme.resources.slices, new_theme.resources.slices)
+    end
+    if new_theme.wm then
+        shallow_merge(theme.wm, new_theme.wm)
+    end
 
+end
 
 local function find_property(property, optional)
     local cached_value = __property_cache[property]
