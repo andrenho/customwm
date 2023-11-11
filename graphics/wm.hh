@@ -17,6 +17,7 @@ public:
 
     // overwritten from parent
     void set_focus(std::optional<LWindow *> window) override { focus_manager_.set_focus(window); }
+    void grab(LWindow *window, GrabType grab_type) override;
 
     // to be overwritten in library specific code
     virtual void expose(LWindow* window) = 0;

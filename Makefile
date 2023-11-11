@@ -10,7 +10,7 @@ OBJ_GRAPHICS_X11 = graphics/x11/x.o graphics/x11/xwm.o graphics/x11/xresources.o
 
 OBJ_CUSTOMWM = customwm/main.o
 
-LUA_SCRIPTS = scripts/deepcopy.lua scripts/theme-utils.lua scripts/inspect.lua scripts/base_theme.lua
+LUA_SCRIPTS = scripts/deepcopy.lua scripts/theme-utils.lua scripts/inspect.lua scripts/base-theme.lua
 
 #
 # config
