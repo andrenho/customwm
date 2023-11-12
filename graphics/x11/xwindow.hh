@@ -32,15 +32,18 @@ public:
     void                   set_cursor(std::string const &key) override;
     bool                   focused() const override;
 
-    void move(Point const &new_pos) override;
+    void                   move(Point const &new_pos) override;
+
+    // these functions are used to accelerate the painting of the screen (expose) while moving
+    void                   expose_from_cache(Rectangle const& rectangle);
 
     std::vector<std::string> child_protocols() const;
 
 private:
     class XWindowManager const& wm_;
-    XResources const& resources_;
-    GC gc_;
-    XftDraw* xft_draw_ = nullptr;
+    XResources const&           resources_;
+    GC                          gc_;
+    XftDraw*                    xft_draw_ = nullptr;
 };
 
 #endif //XWINDOW_HH_

@@ -103,6 +103,9 @@ void WindowManager::on_window_click(WHandle window_id, ClickEvent const &e)
 
 void WindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
 {
+    if (grab_manager_.is_moving())
+        return;
+
     try {
         LWindow* window = windows_.at(parent).get();
 
@@ -148,4 +151,9 @@ std::optional<std::pair<std::string, Hotspot>> WindowManager::hotspot(LWindow* w
     } catch (std::out_of_range&) {
         return {};
     }
+}
+
+void WindowManager::grab(LWindow *window, GrabType grab_type)
+{
+    grab_manager_.set_grab(window, grab_type);
 }

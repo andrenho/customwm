@@ -246,3 +246,15 @@ void XWindowManager::close_window(LWindow* window)
         XDestroyWindow(X->display, target);
     }
 }
+
+void XWindowManager::on_window_expose(WHandle parent, Rectangle rectangle)
+{
+    if (grab_manager_.is_moving()) {
+        try {
+            LWindow* window = windows_.at(parent).get();
+            ((XWindow *) window)->expose_from_cache(rectangle);
+        } catch (std::out_of_range&) {}
+    } else {
+        WindowManager::on_window_expose(parent, rectangle);
+    }
+}

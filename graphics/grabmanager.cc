@@ -4,10 +4,11 @@
 
 void GrabManager::set_grab(LWindow *window, GrabType grab_type)
 {
-    if (grab_type == GrabType::NoGrab)
+    if (grab_type == GrabType::NoGrab) {
         current_grab_ = {};
-    else
+    } else {
         current_grab_ = { window, grab_type };
+    }
 }
 
 void GrabManager::move_pointer(Point const &p)

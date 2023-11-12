@@ -166,3 +166,9 @@ void XWindow::move(Point const &new_pos)
 {
     XMoveWindow(X->display, id_, new_pos.x, new_pos.y);
 }
+
+void XWindow::expose_from_cache(Rectangle const& rectangle)
+{
+
+}
+

@@ -24,13 +24,15 @@ protected:
     void setup_event_listener() override;
     void parse_next_event() override;
     void reparent_window(WHandle parent_id, WHandle child_id, Point const &offset) override;
+    void expose(LWindow* window) override;
+
+    std::unique_ptr<LWindow> create_window(Rectangle const &rectangle) const override;
 
     [[nodiscard]] Rectangle get_window_rectangle(WHandle window) const override;
     [[nodiscard]] Size get_screen_size() const override;
 
-    [[nodiscard]] std::unique_ptr<LWindow> create_window(Rectangle const &rectangle) const override;
-
-    void expose(LWindow* window) override;
+    // overwritten events
+    void on_window_expose(WHandle parent, Rectangle rectangle) override;
 
 private:
     std::unordered_map<Window, std::unique_ptr<XWindow>> windows_;
