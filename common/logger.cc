@@ -1,6 +1,7 @@
 #include "logger.hh"
 
 #include <cstdio>
+#include <cstdarg>
 #include <unistd.h>
 
 Logger LOG;

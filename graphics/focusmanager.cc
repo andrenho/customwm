@@ -1,5 +1,7 @@
 #include "focusmanager.hh"
 
+#include <algorithm>
+
 #include "common/logger.hh"
 #include "wm.hh"
 

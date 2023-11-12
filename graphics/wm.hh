@@ -2,6 +2,7 @@
 #define WM_HH_
 
 #include <map>
+#include <memory>
 #include <unordered_map>
 
 #include "theme/types/lwm.hh"

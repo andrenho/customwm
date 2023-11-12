@@ -82,7 +82,7 @@ void WindowManager::on_window_click(WHandle window_id, ClickEvent const &e)
 {
     // check for clicks on the parent
     try {
-        LWindow* window = windows_.at((WHandle const) window_id).get();
+        LWindow* window = windows_.at((WHandle) window_id).get();
 
         focus_manager_.set_focus(window);
 
@@ -96,7 +96,7 @@ void WindowManager::on_window_click(WHandle window_id, ClickEvent const &e)
     // check for clicks on the children
     try {
         WHandle parent_id = parents_.at(window_id);
-        LWindow* window = windows_.at((WHandle const) parent_id).get();
+        LWindow* window = windows_.at((WHandle) parent_id).get();
         focus_manager_.set_focus(window);
     } catch (std::out_of_range&) {}
 }

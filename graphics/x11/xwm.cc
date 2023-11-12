@@ -194,6 +194,7 @@ ClickEvent XWindowManager::map_to_click_event(XButtonEvent e) const
             .pressed = (e.type == ButtonPress),
             .pos = Point { e.x, e.y },
             .abs_pos = Point { e.x_root, e.y_root },
+            .button = ClickEvent::Left,
     };
     switch (e.button) {
         case Button1: click_event.button = ClickEvent::Left; break;

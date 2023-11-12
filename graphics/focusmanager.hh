@@ -1,6 +1,8 @@
 #ifndef FOCUSMANAGER_HH_
 #define FOCUSMANAGER_HH_
 
+#include <vector>
+
 #include "theme/types/lwindow.hh"
 
 class FocusManager {

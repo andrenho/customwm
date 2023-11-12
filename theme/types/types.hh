@@ -2,6 +2,7 @@
 #define TYPES_HH_
 
 #include <cstdint>
+#include <optional>
 #include <string>
 
 struct lua_State;
@@ -41,11 +42,11 @@ struct Rectangle {
 
 struct Color {
     uint8_t r, g, b, a = 255;
-    [[nodiscard]] bool is_white() const { return r == 255 && g == 255 && b == 255 & a == 255; }
-    [[nodiscard]] bool is_black() const { return r == 0 && g == 0 && b == 0 & a == 255; }
+    [[nodiscard]] bool is_white() const { return (r == 255) && (g == 255) && (b == 255) & (a == 255); }
+    [[nodiscard]] bool is_black() const { return (r == 0) && (g == 0) && (b == 0) & (a == 255); }
 
     bool operator==(const Color& o) const {
-        return r == o.r && g == o.g && b == o.b && a == o.a;
+        return (r == o.r) && (g == o.g) && (b == o.b) && (a == o.a);
     }
 
     static Color from_lua(lua_State* L, int index);
