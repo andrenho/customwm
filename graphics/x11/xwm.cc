@@ -109,6 +109,7 @@ void XWindowManager::parse_next_event()
             break;
         case KeyPress:
         case KeyRelease:
+            // LOG.debug("event: KeyPress/Release %d", e.xconfigure.window);
             // TODO - send events to parent class, request authorization to propagate
             propagate_keyevent_to_focused_window(e);
             break;

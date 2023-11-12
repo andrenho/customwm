@@ -142,17 +142,13 @@ local theme = {
         end,
 
         on_window_click = function(window, ev)
-            if ev.button == 'left' and ev.release then
+            if ev.button == 'left' and not ev.pressed then
                 print('release')
                 wm:grab(window, nil)
             end
         end,
 
         on_desktop_click = function(ev)
-            if ev.button == 'left' and ev.release then
-                print('release')
-                wm:grab(window, nil)
-            end
         end,
 
         on_hotspot_click = function(window, hotspot, ev)
