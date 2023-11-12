@@ -35,7 +35,9 @@ public:
     void                   move(Point const &new_pos) override;
 
     // these functions are used to accelerate the painting of the screen (expose) while moving
-    void                   expose_from_cache(Rectangle const& rectangle);
+    void                   update_backbuffer(Rectangle const& rectangle);
+    void                   update_backbuffer_size(Size const& sz);
+    void                   expose_from_backbuffer(Rectangle const& rectangle);
 
     std::vector<std::string> child_protocols() const;
 
@@ -44,6 +46,7 @@ private:
     XResources const&           resources_;
     GC                          gc_;
     XftDraw*                    xft_draw_ = nullptr;
+    Pixmap                      backbuffer_;
 };
 
 #endif //XWINDOW_HH_

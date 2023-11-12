@@ -15,7 +15,6 @@ public:
 
     [[nodiscard]] std::string interface_name() const override { return "X11"; }
 
-    void move_window_with_mouse(bool move, std::optional<LWindow*> window) override;
     void bring_window_to_front(LWindow *window) override;
     void close_window(LWindow* window) override;
 
@@ -28,17 +27,16 @@ protected:
 
     std::unique_ptr<LWindow> create_window(Rectangle const &rectangle) const override;
 
+protected:
+
     [[nodiscard]] Rectangle get_window_rectangle(WHandle window) const override;
     [[nodiscard]] Size get_screen_size() const override;
 
     // overwritten events
+    void on_window_configure(WHandle window, Rectangle rectangle) override;
     void on_window_expose(WHandle parent, Rectangle rectangle) override;
 
 private:
-    std::unordered_map<Window, std::unique_ptr<XWindow>> windows_;
-    std::optional<std::string> current_hotspot_ {};
-    std::optional<XWindow*>    moving_window_with_mouse_ {};
-
     ClickEvent map_to_click_event(XButtonEvent e) const;
     void propagate_keyevent_to_focused_window(XEvent e) const;
 

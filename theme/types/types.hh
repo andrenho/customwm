@@ -17,23 +17,25 @@ struct Point {
     void to_lua(lua_State* L) const;
 };
 
+struct Size {
+    uint32_t w, h;
+
+    bool operator==(Size const& sz) const { return sz.w == w && sz.h == h; }
+
+    void to_lua(lua_State* L) const;
+    static bool lua_is(lua_State* L, int index);
+};
+
 struct Rectangle {
     int32_t x, y;
     uint32_t w, h;
 
     bool contains(Point const& p) const;
     Point topleft() const { return { x, y }; }
+    Size  size() const { return { w, h }; }
 
     void to_lua(lua_State* L) const;
     static Rectangle from_lua(lua_State* L, int index);
-    static bool lua_is(lua_State* L, int index);
-};
-
-
-struct Size {
-    uint32_t w, h;
-
-    void to_lua(lua_State* L) const;
     static bool lua_is(lua_State* L, int index);
 };
 

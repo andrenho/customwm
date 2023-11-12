@@ -48,16 +48,16 @@ protected:
 
     // window events
     virtual void on_window_expose(WHandle parent, Rectangle rectangle);
+    virtual void on_window_configure(WHandle window, Rectangle rectangle);
     void on_window_click(WHandle window_id, ClickEvent const& e);
     void on_window_move_pointer(WHandle parent, Point new_rel_pos);
-    void on_window_configure(WHandle window, Rectangle rectangle);
 
     // shared internal fields
     std::unique_ptr<Resources> resources_;
     GrabManager  grab_manager_;
+    std::unordered_map<WHandle, std::unique_ptr<LWindow>> windows_;
 
 private:
-    std::unordered_map<WHandle, std::unique_ptr<LWindow>> windows_;
     std::unordered_map<WHandle, WHandle>                  parents_;  // [child] = parent
 
     std::optional<std::string> current_hotspot_ {};

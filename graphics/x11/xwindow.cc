@@ -9,14 +9,15 @@ XWindow::XWindow(XWindowManager const& wm, XResources const& resources, Rectangl
 {
     id_ = XCreateWindow(X->display, X->root, rectangle.x, rectangle.y, rectangle.w, rectangle.h, 0,
                         CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);
-    update_rectangle(rectangle);
+    rectangle_ = rectangle;
+
+    backbuffer_ = XCreatePixmap(X->display, id_, rectangle.w, rectangle.h, X->depth);
 
     XSelectInput(X->display, id_, SubstructureNotifyMask | StructureNotifyMask | ExposureMask |
                                   ButtonPressMask | ButtonReleaseMask | PointerMotionMask);
 
     // redirect events to window manager
     XGrabButton(X->display, AnyButton, AnyModifier, id_, false, ButtonPressMask, GrabModeSync, GrabModeAsync, None, None);
-    // XGrabKeyboard(X->display, id_, false, GrabModeAsync, GrabModeSync, CurrentTime);
 
     XMapWindow(X->display, id_);
 
@@ -31,6 +32,7 @@ XWindow::~XWindow()
     XUnmapWindow(X->display, id_);
 
     XftDrawDestroy(xft_draw_);
+    XFreePixmap(X->display, backbuffer_);
     XFreeGC(X->display, gc_);
     XDestroyWindow(X->display, id_);
 }
@@ -43,10 +45,11 @@ std::optional<WHandle> XWindow::child_id() const
 void XWindow::fill(Color const &color, std::optional<Rectangle> rect)
 {
     XSetForeground(X->display, gc_, resources_.get_color(color));
-    if (rect)
+    if (rect) {
         XFillRectangle(X->display, id_, gc_, rect->x, rect->y, rect->w, rect->h);
-    else
+    } else {
         XFillRectangle(X->display, id_, gc_, 0, 0, rectangle_.w, rectangle_.h);
+    }
 }
 
 void XWindow::text(int x, int y, std::string const &text_, TextProperties const& tp_)
@@ -154,7 +157,7 @@ std::vector<std::string> XWindow::child_protocols() const
             if (XGetAtomNames(X->display, protocols, n_protocols, names)) {
                 for (int i = 0; i < n_protocols; ++i)
                     protocol_list.emplace_back(names[i]);
-            }
+        }
             XFree(protocols);
         }
     }
@@ -167,8 +170,23 @@ void XWindow::move(Point const &new_pos)
     XMoveWindow(X->display, id_, new_pos.x, new_pos.y);
 }
 
-void XWindow::expose_from_cache(Rectangle const& rectangle)
+void XWindow::update_backbuffer_size(Size const& sz)
 {
+    if (rectangle_.size() != sz) {
+        XFreePixmap(X->display, backbuffer_);
+        XCreatePixmap(X->display, id_, sz.w, sz.h, X->depth);
+    }
+}
 
+void XWindow::update_backbuffer(Rectangle const& rectangle)
+{
+    XCopyArea(X->display, id_, backbuffer_, X->gc, rectangle.x, rectangle.y, rectangle.w, rectangle.h,
+              rectangle.x, rectangle.y);
+}
+
+void XWindow::expose_from_backbuffer(Rectangle const& rectangle)
+{
+    XCopyArea(X->display, backbuffer_, id_, X->gc, rectangle.x, rectangle.y, rectangle.w, rectangle.h,
+              rectangle.x, rectangle.y);
 }
 

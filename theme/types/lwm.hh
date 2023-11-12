@@ -14,7 +14,6 @@ struct LWindowManager {
     virtual ~LWindowManager() = default;
     [[nodiscard]] virtual std::string interface_name() const = 0;
 
-    virtual void move_window_with_mouse(bool move, std::optional<LWindow*> window) = 0;
     virtual void set_focus(std::optional<LWindow*> window) = 0;
     virtual void close_window(LWindow* window) = 0;
 

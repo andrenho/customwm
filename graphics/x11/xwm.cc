@@ -117,21 +117,14 @@ void XWindowManager::parse_next_event()
         case DestroyNotify:  // LOG.debug("event: DestroyNotify %d", e.xdestroywindow.window); break;
         case MapNotify:      // LOG.debug("event: MapNotify %d", e.xmap.window); break;
         case ReparentNotify: // LOG.debug("event: ReparentNotify %d", e.xreparent.window); break;
+        case GraphicsExpose: // LOG.debug("event: GraphicsExpose %d", e.xreparent.window); break;
+        case NoExpose:       // LOG.debug("event: NoExpose %d", e.xreparent.window); break;
             break;
         default:
             LOG.debug("Unmapped event received: %d", e.type);
     }
 
     XFlush(X->display);
-}
-
-void XWindowManager::move_window_with_mouse(bool move, std::optional<LWindow*> window)
-{
-    if (move && window) {
-        moving_window_with_mouse_ = (XWindow *) window.value();
-    } else {
-        moving_window_with_mouse_ = {};
-    }
 }
 
 int XWindowManager::on_error(Display* dsp, XErrorEvent* e)
@@ -247,14 +240,27 @@ void XWindowManager::close_window(LWindow* window)
     }
 }
 
+void XWindowManager::on_window_configure(WHandle window, Rectangle rectangle)
+{
+    WindowManager::on_window_configure(window, rectangle);
+    LWindow* lwindow = windows_.at(window).get();
+    ((XWindow *) lwindow)->update_backbuffer_size(rectangle.size());
+}
+
 void XWindowManager::on_window_expose(WHandle parent, Rectangle rectangle)
 {
     if (grab_manager_.is_moving()) {
         try {
             LWindow* window = windows_.at(parent).get();
-            ((XWindow *) window)->expose_from_cache(rectangle);
+            ((XWindow *) window)->expose_from_backbuffer(rectangle);
         } catch (std::out_of_range&) {}
+
     } else {
         WindowManager::on_window_expose(parent, rectangle);
+
+        try {
+            LWindow* window = windows_.at(parent).get();
+            ((XWindow *) window)->update_backbuffer(rectangle);
+        } catch (std::out_of_range&) {}
     }
 }
