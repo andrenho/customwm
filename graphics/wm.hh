@@ -59,7 +59,7 @@ protected:
     std::unordered_map<WHandle, std::unique_ptr<LWindow>> windows_;
 
 private:
-    std::unordered_map<WHandle, WHandle>                  parents_;  // [child] = parent
+    std::unordered_map<WHandle, WHandle> parents_;  // [child] = parent
 
     std::optional<std::string> current_hotspot_ {};
 

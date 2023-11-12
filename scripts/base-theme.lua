@@ -83,32 +83,32 @@ local theme = {
                 top_right = {
                     area = { x = r.w - border, y = 0, w = border, h = border },
                     cursor = "top-right",
-                    grab = "top",
+                    grab = "top-right",
                 },
                 left = {
                     area = { x = 0, y = border, w = border, h = r.h - (border*2) },
                     cursor = "left",
-                    grab = "top",
+                    grab = "left",
                 },
                 right = {
                     area = { x = r.w - border, y = border, w = border, h = r.h - (border*2) },
                     cursor = "right",
-                    grab = "top",
+                    grab = "right",
                 },
                 bottom_left = {
                     area = { x = 0, y = r.h - border, w = border, h = border },
                     cursor = "bottom-left",
-                    grab = "top",
+                    grab = "bottom-left",
                 },
                 bottom_right = {
                     area = { x = r.w - border, y = r.h - border, w = border, h = border },
                     cursor = "bottom-right",
-                    grab = "top",
+                    grab = "bottom-right",
                 },
                 bottom = {
                     area = { x = border, y = r.h - border, w = r.w - (border * 2), h = border },
                     cursor = "bottom",
-                    grab = "top",
+                    grab = "bottom",
                 },
             }
         end,
@@ -143,7 +143,6 @@ local theme = {
 
         on_window_click = function(window, ev)
             if ev.button == 'left' and not ev.pressed then
-                print('release')
                 wm:grab(window, nil)
             end
         end,
@@ -154,7 +153,6 @@ local theme = {
         on_hotspot_click = function(window, hotspot, ev)
             local hs = getprop("wm.hotspots", window)[hotspot]
             if hs and hs.grab and ev.pressed and ev.button == 'left' then
-                print('grab')
                 wm:grab(window, hs.grab)
             end
         end,
@@ -166,11 +164,9 @@ local theme = {
         end,
 
         on_enter_hotspot = function(window, hotspot)
-            print('Entering hotspot ' .. hotspot)
         end,
 
         on_leave_hotspot = function(window, hotspot)
-            print('Leaving hotspot ' .. hotspot)
         end,
     }
 

@@ -244,8 +244,10 @@ void XWindowManager::close_window(LWindow* window)
 void XWindowManager::on_window_configure(WHandle window, Rectangle rectangle)
 {
     WindowManager::on_window_configure(window, rectangle);
-    LWindow* lwindow = windows_.at(window).get();
-    ((XWindow *) lwindow)->update_backbuffer_size(rectangle.size());
+    try {
+        LWindow* lwindow = windows_.at(window).get();
+        ((XWindow *) lwindow)->update_backbuffer_size(rectangle.size());
+    } catch (std::out_of_range&) {}
 }
 
 void XWindowManager::on_window_expose(WHandle parent, Rectangle rectangle)

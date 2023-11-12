@@ -32,6 +32,7 @@ void WindowManager::on_create_child(WHandle child_id)
 
     // reparent window
     reparent_window(parent_id, child_id, offset);
+    parent->set_child(child_id, { offset.x, offset.y, child_rect.w, child_rect.h });
     parents_[child_id] = parent_id;
     LOG.info("Reparented window %d (parent %d)", child_id, parent_id);
 

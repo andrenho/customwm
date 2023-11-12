@@ -52,6 +52,14 @@ void Point::to_lua(lua_State *L) const
     luaw_setfield(L, -1, "y", y);
 }
 
+Size Size::from_lua(lua_State *L, int index)
+{
+    return {
+            .w = luaw_getfield<uint32_t>(L, index, "w"),
+            .h = luaw_getfield<uint32_t>(L, index, "h"),
+    };
+}
+
 void Size::to_lua(lua_State *L) const
 {
     lua_newtable(L);

@@ -23,6 +23,7 @@ struct Size {
 
     bool operator==(Size const& sz) const { return sz.w == w && sz.h == h; }
 
+    static Size from_lua(lua_State* L, int index);
     void to_lua(lua_State* L) const;
     static bool lua_is(lua_State* L, int index);
 };

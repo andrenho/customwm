@@ -15,10 +15,35 @@ void GrabManager::move_pointer(Point const &p)
 {
     if (current_grab_) {
         Point diff = p - last_pointer_;
-        Rectangle rectangle = current_grab_->window->rect(true);
-        if (current_grab_->grab_type == GrabType::Move) {
-            Point new_pos = rectangle.topleft() + diff;
-            current_grab_->window->move(new_pos);
+        LWindow* window = current_grab_->window;
+        Rectangle rect = window->rect(true);
+
+        Point new_pos { 0, 0 };
+        switch (current_grab_->grab_type) {
+            case GrabType::NoGrab:
+                break;
+            case GrabType::Move:
+                new_pos = rect.topleft() + diff;
+                window->move(new_pos);
+                break;
+            case GrabType::TopLeft:
+                break;
+            case GrabType::Top:
+                break;
+            case GrabType::TopRight:
+                break;
+            case GrabType::Left:
+                break;
+            case GrabType::Right:
+                window->resize({ rect.w + diff.x, rect.h });
+                break;
+            case GrabType::BottomLeft:
+                break;
+            case GrabType::Bottom:
+                break;
+            case GrabType::BottomRight:
+                window->resize({ rect.w + diff.x, rect.h + diff.y });
+                break;
         }
     }
 

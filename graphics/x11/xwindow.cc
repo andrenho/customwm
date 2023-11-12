@@ -37,11 +37,6 @@ XWindow::~XWindow()
     XDestroyWindow(X->display, id_);
 }
 
-std::optional<WHandle> XWindow::child_id() const
-{
-    return resources_.get_property_whandle(id_, "child");
-}
-
 void XWindow::fill(Color const &color, std::optional<Rectangle> rect)
 {
     XSetForeground(X->display, gc_, resources_.get_color(color));
@@ -121,7 +116,7 @@ Rectangle XWindow::rect(bool update_cache) const
 
 std::string XWindow::name() const
 {
-    auto child = resources_.get_property_whandle(id_, "child");
+    auto child = child_id();
     if (child.has_value()) {
         XTextProperty p;
         if ((XGetWMName(X->display, *child, &p) == 0) || p.value == nullptr)
@@ -168,6 +163,18 @@ std::vector<std::string> XWindow::child_protocols() const
 void XWindow::move(Point const &new_pos)
 {
     XMoveWindow(X->display, id_, new_pos.x, new_pos.y);
+}
+
+void XWindow::resize(Size const& new_size)
+{
+    auto child = child_id();
+    if (child) {
+        child_rect_.w += (new_size.w - rectangle_.w);
+        child_rect_.h += (new_size.h - rectangle_.h);
+        XResizeWindow(X->display, *child, child_rect_.w, child_rect_.h);
+    }
+
+    XResizeWindow(X->display, id_, new_size.w, new_size.h);
 }
 
 void XWindow::update_backbuffer_size(Size const& sz)

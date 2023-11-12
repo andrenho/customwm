@@ -38,9 +38,11 @@
   - [x] Change focus when window is clicked (and bring to front)
 - [x] Keyboard focus
 - [x] Close window
-- [ ] Load theme
-  - [ ] Super
+- [x] Load theme
+  - [x] Super
 - [ ] Grab / move / resize window + configure (keep window rect)
+  - [x] Move
+  - [ ] Resize
 - [ ] Minimize
 - [ ] Maximize
 - [ ] Sample W95 theme
@@ -54,6 +56,7 @@
 - [ ] Check for libraries
 - [ ] Reload config file
 - [ ] Better mouse button names
+- [ ] Caching of text for better perfomance (maybe freetype?)
 - [ ] lua_error management
 
 ---

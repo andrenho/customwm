@@ -50,6 +50,20 @@ void l_window_create_metadata(lua_State* L)
                 luaw_push(L, THIS->focused());
                 return 1;
             }},
+            { "move", [](lua_State* L) {
+                THIS->move(luaw_to<Point>(L, 2));
+                return 0;
+            }},
+            { "resize", [](lua_State* L) {
+                THIS->resize(luaw_to<Size>(L, 2));
+                return 0;
+            }},
     });
     LOG.debug("Metatable setup for Window as '%s'", mt.c_str());
+}
+
+void LWindow::set_child(WHandle child_id, Rectangle const &rectangle)
+{
+    child_id_ = child_id;
+    child_rect_ = rectangle;
 }
