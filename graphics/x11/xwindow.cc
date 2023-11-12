@@ -167,10 +167,10 @@ void XWindow::move(Point const &new_pos)
 
 void XWindow::resize(Size const& nsize)
 {
-    Size minimum_size = THEME.get_prop<Size>("wm.minimum_window_size", this);
+    Size minimum_size = THEME.get_prop<Size>("wm.minimum_window_size", this);  // TODO - cache this
     Size new_size = {
-            std::max(minimum_size.w, new_size.w),
-            std::max(minimum_size.h, new_size.h),
+            std::max(minimum_size.w, nsize.w),
+            std::max(minimum_size.h, nsize.h),
     };
 
     auto child = child_id();

@@ -61,7 +61,7 @@ local theme = {
             }
         end,
 
-        minimum_window_size = { w = 64, h = 24 },
+        minimum_window_size = { w = 96, h = 32 },
 
         hotspots = function(window)
             local r = window:rect()
