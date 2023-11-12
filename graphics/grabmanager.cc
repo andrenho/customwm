@@ -13,6 +13,12 @@ void GrabManager::set_grab(LWindow *window, GrabType grab_type)
 void GrabManager::move_pointer(Point const &p)
 {
     if (current_grab_) {
+        Point diff = p - last_pointer_;
+        Rectangle rectangle = current_grab_->window->rect(true);
+        if (current_grab_->grab_type == GrabType::Move) {
+            Point new_pos = rectangle.topleft() + diff;
+            current_grab_->window->move(new_pos);
+        }
     }
 
     last_pointer_ = p;

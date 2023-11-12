@@ -96,13 +96,16 @@ void XWindowManager::parse_next_event()
             break;
         }
         case MotionNotify:
-            if (e.xmotion.window == None || e.xmotion.window == X->root)
-                on_desktop_move_pointer({e.xmotion.x_root, e.xmotion.y_root});
-            else
+            // LOG.debug("event: Motion %d", e.xbutton.window);
+            if (e.xmotion.window != None || e.xmotion.window != X->root)
                 on_window_move_pointer(e.xmotion.window, {e.xmotion.x, e.xmotion.y});
+            on_move_pointer({e.xmotion.x_root, e.xmotion.y_root});
             break;
         case ConfigureNotify:
             // LOG.debug("event: ConfigureNotify %d", e.xconfigure.window);
+            on_window_configure(e.xconfigure.window,
+                                { e.xconfigure.x, e.xconfigure.y,
+                                  (uint32_t) e.xconfigure.width, (uint32_t) e.xconfigure.height });
             break;
         case KeyPress:
         case KeyRelease:

@@ -9,6 +9,9 @@ struct lua_State;
 struct Point {
     int32_t x, y;
 
+    Point operator+(Point const& o) const { return { x + o.x, y + o.y }; }
+    Point operator-(Point const& o) const { return { x - o.x, y - o.y }; }
+
     static Point from_lua(lua_State* L, int index);
     static bool lua_is(lua_State* L, int index);
     void to_lua(lua_State* L) const;
@@ -19,6 +22,7 @@ struct Rectangle {
     uint32_t w, h;
 
     bool contains(Point const& p) const;
+    Point topleft() const { return { x, y }; }
 
     void to_lua(lua_State* L) const;
     static Rectangle from_lua(lua_State* L, int index);

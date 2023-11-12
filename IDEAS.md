@@ -2,3 +2,5 @@
 - Improved error handling using lua_pcall
 - Virtual Desktops
 - Key management
+- IPC between customwm and bar, etc
+- Wallpaper

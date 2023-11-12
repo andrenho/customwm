@@ -5,10 +5,11 @@
 #include "xwm.hh"
 
 XWindow::XWindow(XWindowManager const& wm, XResources const& resources, Rectangle const &rectangle)
-        : rectangle(rectangle), wm_(wm), resources_(resources)
+        : wm_(wm), resources_(resources)
 {
     id_ = XCreateWindow(X->display, X->root, rectangle.x, rectangle.y, rectangle.w, rectangle.h, 0,
                         CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);
+    update_rectangle(rectangle);
 
     XSelectInput(X->display, id_, SubstructureNotifyMask | StructureNotifyMask | ExposureMask |
                                   ButtonPressMask | ButtonReleaseMask | PointerMotionMask);
@@ -45,7 +46,7 @@ void XWindow::fill(Color const &color, std::optional<Rectangle> rect)
     if (rect)
         XFillRectangle(X->display, id_, gc_, rect->x, rect->y, rect->w, rect->h);
     else
-        XFillRectangle(X->display, id_, gc_, 0, 0, rectangle.w, rectangle.h);
+        XFillRectangle(X->display, id_, gc_, 0, 0, rectangle_.w, rectangle_.h);
 }
 
 void XWindow::text(int x, int y, std::string const &text_, TextProperties const& tp_)
@@ -104,6 +105,17 @@ void XWindow::draw(int x, int y, std::string const &slice)
     XSetClipMask(X->display, gc_, None);
 }
 
+Rectangle XWindow::rect(bool update_cache) const
+{
+    if (update_cache) {
+        XWindowAttributes xwa;
+        XGetWindowAttributes(X->display, id_, &xwa);
+        rectangle_ = Rectangle { xwa.x, xwa.y, (uint32_t) xwa.width, (uint32_t) xwa.height };
+    }
+
+    return rectangle_;
+}
+
 std::string XWindow::name() const
 {
     auto child = resources_.get_property_whandle(id_, "child");
@@ -148,4 +160,9 @@ std::vector<std::string> XWindow::child_protocols() const
     }
 
     return protocol_list;
+}
+
+void XWindow::move(Point const &new_pos)
+{
+    XMoveWindow(X->display, id_, new_pos.x, new_pos.y);
 }

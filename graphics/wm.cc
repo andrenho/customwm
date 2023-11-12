@@ -59,10 +59,10 @@ void WindowManager::on_destroy_child(WHandle child_id)
     }
 }
 
-void WindowManager::on_desktop_move_pointer(Point new_pos)
+void WindowManager::on_move_pointer(Point new_pos)
 {
     grab_manager_.move_pointer(new_pos);
-    THEME.call_opt("wm.on_desktop_mouse_move", new_pos);
+    THEME.call_opt("wm.on_move_pointer", new_pos);
 }
 
 void WindowManager::on_desktop_click(ClickEvent const &e)
@@ -125,7 +125,15 @@ void WindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
             }
         }
 
-        THEME.call_opt("wm.on_window_mouse_move", window, new_rel_pos);
+        THEME.call_opt("wm.on_window_move_pointer", window, new_rel_pos);
+    } catch (std::out_of_range&) {}
+}
+
+void WindowManager::on_window_configure(WHandle window, Rectangle rectangle)
+{
+    try {
+        LWindow* lwindow = windows_.at(window).get();
+        lwindow->update_rectangle(rectangle);
     } catch (std::out_of_range&) {}
 }
 

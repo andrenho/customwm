@@ -142,26 +142,31 @@ local theme = {
         end,
 
         on_window_click = function(window, ev)
+            if ev.button == 'left' and ev.release then
+                print('release')
+                wm:grab(window, nil)
+            end
         end,
 
-        on_desktop_click = function(window, ev)
+        on_desktop_click = function(ev)
+            if ev.button == 'left' and ev.release then
+                print('release')
+                wm:grab(window, nil)
+            end
         end,
 
         on_hotspot_click = function(window, hotspot, ev)
             local hs = getprop("wm.hotspots", window)[hotspot]
-            if hs and hs.grab then
-                if ev.pressed then
-                    wm:grab(window, hs.grab)
-                else
-                    wm:grab(window, nil)
-                end
+            if hs and hs.grab and ev.pressed and ev.button == 'left' then
+                print('grab')
+                wm:grab(window, hs.grab)
             end
         end,
 
-        on_window_mouse_move = function(window, pos)
+        on_window_move_pointer = function(window, pos)
         end,
 
-        on_desktop_mouse_move = function(pos)
+        on_move_pointer = function(pos)
         end,
 
         on_enter_hotspot = function(window, hotspot)

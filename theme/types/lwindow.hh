@@ -9,20 +9,27 @@
 using WHandle = uintptr_t;
 
 struct LWindow {
-
     virtual ~LWindow() = default;
 
+    // LUA methods
     virtual WHandle                   id() const = 0;
     virtual std::optional<WHandle>    child_id() const = 0;
-    [[nodiscard]] virtual Rectangle   rect() const = 0;
+    [[nodiscard]] virtual Rectangle   rect(bool update_cache=false) const = 0;
     virtual void                      fill(Color const& color, std::optional<Rectangle> rect={}) = 0;
     virtual void                      text(int x, int y, std::string const& text, TextProperties const& text_properties) = 0;
     virtual void                      draw(int x, int y, std::string const& slice) = 0;
     [[nodiscard]] virtual std::string name() const { return "Unnamed Application"; }
     virtual void                      set_cursor(std::string const& key) = 0;
     virtual bool                      focused() const = 0;
+    virtual void                      move(Point const& new_pos) = 0;
+
+    // C++ exclusive methods
+    virtual void                      update_rectangle(Rectangle const& r) { rectangle_ = r; }
 
     static constexpr const char* mt_identifier = "Window";
+
+protected:
+    mutable Rectangle rectangle_ { 0, 0, 0, 0 };
 };
 
 void l_window_create_metadata(lua_State* L);

@@ -15,7 +15,10 @@ void l_window_create_metadata(lua_State* L)
                 return luaw_push(L, THIS->child_id());
             }},
             { "rect", [](lua_State* L) {
-                return luaw_push(L, THIS->rect());
+                if (lua_gettop(L) >= 2)
+                    return luaw_push(L, THIS->rect(luaL_checkinteger(L, 3)));
+                else
+                    return luaw_push(L, THIS->rect());
             }},
             { "fill", [](lua_State* L) {
                 if (lua_gettop(L) >= 3)

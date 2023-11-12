@@ -9,6 +9,7 @@ public:
     explicit GrabManager(class WindowManager* wm) : wm_(wm) {}
 
     void set_grab(LWindow *window, GrabType grab_type);
+    bool has_grab() const { return current_grab_.has_value(); }
 
     void move_pointer(Point const &p);
 

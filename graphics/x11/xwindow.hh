@@ -20,18 +20,19 @@ public:
     XWindow& operator=(XWindow&&) = delete;
 
     Window id_;
-    Rectangle rectangle;
     bool deleted = false;
 
     WHandle                id() const override { return id_; }
     std::optional<WHandle> child_id() const override;
-    Rectangle              rect() const override { return rectangle; }
+    Rectangle              rect(bool update_cache) const override;
     void                   fill(Color const &color, std::optional<Rectangle> rect) override;
     void                   text(int x, int y, std::string const &text, TextProperties const& tp) override;
     void                   draw(int x, int y, std::string const &slice) override;
     std::string            name() const override;
     void                   set_cursor(std::string const &key) override;
     bool                   focused() const override;
+
+    void move(Point const &new_pos) override;
 
     std::vector<std::string> child_protocols() const;
 

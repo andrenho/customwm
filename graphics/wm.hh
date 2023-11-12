@@ -43,13 +43,14 @@ protected:
     // desktop events
     void on_create_child(WHandle child_id);
     void on_destroy_child(WHandle child);
-    void on_desktop_move_pointer(Point new_pos);
+    void on_move_pointer(Point new_pos);
     void on_desktop_click(ClickEvent const& e);
 
     // window events
     void on_window_expose(WHandle parent, Rectangle rectangle);
     void on_window_click(WHandle window_id, ClickEvent const& e);
     void on_window_move_pointer(WHandle parent, Point new_rel_pos);
+    void on_window_configure(WHandle window, Rectangle rectangle);
 
     // shared internal fields
     std::unique_ptr<Resources> resources_;
