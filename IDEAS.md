@@ -4,3 +4,4 @@
 - Key management
 - IPC between customwm and bar, etc
 - Wallpaper
+- Window maker docks
