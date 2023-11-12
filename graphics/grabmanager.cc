@@ -5,6 +5,8 @@
 void GrabManager::set_grab(LWindow *window, GrabType grab_type)
 {
     if (grab_type == GrabType::NoGrab) {
+        if (current_grab_)
+            current_grab_->window->set_cursor(Cursors::Pointer);
         current_grab_ = {};
     } else {
         current_grab_ = { window, grab_type };
@@ -27,19 +29,30 @@ void GrabManager::move_pointer(Point const &p)
                 window->move(new_pos);
                 break;
             case GrabType::TopLeft:
+                window->move({ rect.x + diff.x, rect.y + diff.y });
+                window->resize({ rect.w - diff.x, rect.h - diff.y });
                 break;
             case GrabType::Top:
+                window->move({ rect.x, rect.y + diff.y });
+                window->resize({ rect.w, rect.h - diff.y });
                 break;
             case GrabType::TopRight:
+                window->move({ rect.x, rect.y + diff.y });
+                window->resize({ rect.w + diff.x, rect.h - diff.y });
                 break;
             case GrabType::Left:
+                window->move({ rect.x + diff.x, rect.y });
+                window->resize({ rect.w - diff.x, rect.h });
                 break;
             case GrabType::Right:
                 window->resize({ rect.w + diff.x, rect.h });
                 break;
             case GrabType::BottomLeft:
+                window->move({ rect.x + diff.x, rect.y });
+                window->resize({ rect.w - diff.x, rect.h + diff.y });
                 break;
             case GrabType::Bottom:
+                window->resize({ rect.w, rect.h + diff.y });
                 break;
             case GrabType::BottomRight:
                 window->resize({ rect.w + diff.x, rect.h + diff.y });

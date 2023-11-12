@@ -104,7 +104,7 @@ void WindowManager::on_window_click(WHandle window_id, ClickEvent const &e)
 
 void WindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
 {
-    if (grab_manager_.is_moving())
+    if (grab_manager_.is_active())
         return;
 
     try {

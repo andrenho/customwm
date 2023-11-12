@@ -5,3 +5,4 @@
 - IPC between customwm and bar, etc
 - Wallpaper
 - Window maker docks
+- Move/resize - only window silloute

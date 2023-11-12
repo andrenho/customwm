@@ -43,6 +43,7 @@
 - [ ] Grab / move / resize window + configure (keep window rect)
   - [x] Move
   - [ ] Resize
+  - [ ] Resize, move protections
 - [ ] Minimize
 - [ ] Maximize
 - [ ] Sample W95 theme
