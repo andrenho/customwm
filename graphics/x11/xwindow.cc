@@ -165,8 +165,14 @@ void XWindow::move(Point const &new_pos)
     XMoveWindow(X->display, id_, new_pos.x, new_pos.y);
 }
 
-void XWindow::resize(Size const& new_size)
+void XWindow::resize(Size const& nsize)
 {
+    Size minimum_size = THEME.get_prop<Size>("wm.minimum_window_size", this);
+    Size new_size = {
+            std::max(minimum_size.w, new_size.w),
+            std::max(minimum_size.h, new_size.h),
+    };
+
     auto child = child_id();
     if (child) {
         child_rect_.w += (new_size.w - rectangle_.w);

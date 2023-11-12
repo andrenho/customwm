@@ -61,6 +61,8 @@ local theme = {
             }
         end,
 
+        minimum_window_size = { w = 64, h = 24 },
+
         hotspots = function(window)
             local r = window:rect()
             local border = getprop("wm.resize_border", window)
