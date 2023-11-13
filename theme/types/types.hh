@@ -13,6 +13,8 @@ struct Point {
     Point operator+(Point const& o) const { return { x + o.x, y + o.y }; }
     Point operator-(Point const& o) const { return { x - o.x, y - o.y }; }
 
+    Point operator+(class Size const& o) const;
+
     static Point from_lua(lua_State* L, int index);
     static bool lua_is(lua_State* L, int index);
     void to_lua(lua_State* L) const;
@@ -21,19 +23,27 @@ struct Point {
 struct Size {
     uint32_t w, h;
 
+    Size(uint32_t w, uint32_t h) : w(w), h(h) {}
+    Size(Point const& p) : w(p.x), h(p.y) {}
+
     bool operator==(Size const& sz) const { return sz.w == w && sz.h == h; }
+    Size operator+(Size const& o) const { return { w + o.w, h + o.h }; }
+    Size operator-(Size const& o) const { return { w - o.w, h - o.h }; }
 
     static Size from_lua(lua_State* L, int index);
     void to_lua(lua_State* L) const;
     static bool lua_is(lua_State* L, int index);
 };
 
+inline Point Point::operator+(Size const& o) const { return { x + (int32_t) o.w, y + (int32_t) o.h }; }
+
 struct Rectangle {
     int32_t x, y;
     uint32_t w, h;
 
-    bool contains(Point const& p) const;
+    bool  contains(Point const& p) const;
     Point topleft() const { return { x, y }; }
+    Point size_as_point() const { return { (int32_t) w, (int32_t) h }; }
     Size  size() const { return { w, h }; }
 
     void to_lua(lua_State* L) const;
@@ -59,6 +69,16 @@ struct std::hash<Color> {
     size_t operator()(Color const& c) const {
         return (((uint32_t) c.r) << 24) | (((uint32_t) c.g) << 16) | (((uint32_t) c.b) << 8) | c.a;
     }
+};
+
+struct Padding {
+    uint32_t top;
+    uint32_t left;
+    uint32_t bottom;
+    uint32_t right;
+
+    static Padding from_lua(lua_State* L, int index);
+    static bool lua_is(lua_State* L, int index);
 };
 
 struct WindowStartingLocation {

@@ -2,76 +2,61 @@
 
 #include "wm.hh"
 
-void GrabManager::set_grab(LWindow *window, GrabType grab_type)
+void GrabManager::set_grab(LWindow *window, GrabType grab_type, Point const& initial_pos)
 {
     if (grab_type == GrabType::NoGrab) {
         if (current_grab_)
             current_grab_->window->set_cursor(Cursors::Pointer);
         current_grab_ = {};
     } else {
-        current_grab_ = { window, grab_type };
+        current_grab_ = { window, grab_type, initial_pos, window->rect() };
     }
 }
 
-void GrabManager::move_pointer(Point const &p)
+void GrabManager::move_pointer(Point const &current_pos)
 {
+    static int i = 0;
     if (current_grab_) {
-        Point diff = p - last_pointer_;
-        LWindow* window = current_grab_->window;
-        Rectangle rect = window->rect(true);
 
-        Point new_pos { 0, 0 };
+        LWindow* window = current_grab_->window;
+        Size diff = current_pos - current_grab_->initial_pos;
+        Rectangle const& initial_rect = current_grab_->initial_rect;
+
         switch (current_grab_->grab_type) {
             case GrabType::NoGrab:
                 break;
             case GrabType::Move:
-                new_pos = rect.topleft() + diff;
-                window->move(new_pos);
+                window->move(current_grab_->initial_rect.topleft() + diff);
                 break;
             case GrabType::TopLeft:
-                window->move({ rect.x + diff.x, rect.y + diff.y });
-                window->resize({ rect.w - diff.x, rect.h - diff.y });
+                window->move({ initial_rect.x + (int32_t) diff.w, initial_rect.y + (int32_t) diff.h });
+                window->resize({ initial_rect.w - diff.w, initial_rect.h - diff.h });
                 break;
             case GrabType::Top:
-                window->move({ rect.x, rect.y + diff.y });
-                window->resize({ rect.w, rect.h - diff.y });
+                window->move({ initial_rect.x, initial_rect.y + (int32_t) diff.h });
+                window->resize({ initial_rect.w, initial_rect.h - diff.h });
                 break;
             case GrabType::TopRight:
-                window->move({ rect.x, rect.y + diff.y });
-                window->resize({ rect.w + diff.x, rect.h - diff.y });
+                window->move({ initial_rect.x, initial_rect.y + (int32_t) diff.h });
+                window->resize({ initial_rect.w + diff.w, initial_rect.h - diff.h });
                 break;
             case GrabType::Left:
-                window->move({ rect.x + diff.x, rect.y });
-                window->resize({ rect.w - diff.x, rect.h });
+                window->move({ initial_rect.x + (int32_t) diff.w, initial_rect.y });
+                window->resize({ initial_rect.w - diff.w, initial_rect.h });
                 break;
             case GrabType::Right:
-                window->resize({ rect.w + diff.x, rect.h });
+                window->resize({ initial_rect.w + diff.w, initial_rect.h });
                 break;
             case GrabType::BottomLeft:
-                window->move({ rect.x + diff.x, rect.y });
-                window->resize({ rect.w - diff.x, rect.h + diff.y });
+                window->move({ initial_rect.x + (int32_t) diff.w, initial_rect.y });
+                window->resize({ initial_rect.w - diff.w, initial_rect.h + diff.h });
                 break;
             case GrabType::Bottom:
-                window->resize({ rect.w, rect.h + diff.y });
+                window->resize({ initial_rect.w, initial_rect.h + diff.h });
                 break;
             case GrabType::BottomRight:
-                window->resize({ rect.w + diff.x, rect.h + diff.y });
+                window->resize(initial_rect.size() + diff);
                 break;
         }
     }
-
-    last_pointer_ = p;
 }
-
-#if 0
-// check if moving window
-    if (moving_window_with_mouse_.has_value()) {
-        XWindowAttributes xwa;
-        XGetWindowAttributes(X->display, (*moving_window_with_mouse_)->id, &xwa);
-        int x = xwa.x + e.x_root - last_mouse_position_.x;
-        int y = xwa.y + e.y_root - last_mouse_position_.y;
-        XMoveWindow(X->display, (*moving_window_with_mouse_)->id, x, y);
-    }
-
-    last_mouse_position_ = { e.x_root, e.y_root };
-#endif

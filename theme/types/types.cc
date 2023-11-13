@@ -54,10 +54,7 @@ void Point::to_lua(lua_State *L) const
 
 Size Size::from_lua(lua_State *L, int index)
 {
-    return {
-            .w = luaw_getfield<uint32_t>(L, index, "w"),
-            .h = luaw_getfield<uint32_t>(L, index, "h"),
-    };
+    return { luaw_getfield<uint32_t>(L, index, "w"), luaw_getfield<uint32_t>(L, index, "h") };
 }
 
 void Size::to_lua(lua_State *L) const
@@ -207,4 +204,21 @@ Hotspot Hotspot::from_lua(lua_State *L, int index)
         .area = luaw_getfield<Rectangle>(L, index, "area"),
         .cursor = luaw_getfield<std::optional<std::string>>(L, index, "cursor")
     };
+}
+
+Padding Padding::from_lua(lua_State *L, int index)
+{
+    return {
+        .top = luaw_getfield<uint32_t>(L, index, "top"),
+        .left = luaw_getfield<uint32_t>(L, index, "left"),
+        .bottom = luaw_getfield<uint32_t>(L, index, "bottom"),
+        .right = luaw_getfield<uint32_t>(L, index, "right"),
+    };
+}
+
+bool Padding::lua_is(lua_State *L, int index)
+{
+    return lua_type(L, index) == LUA_TTABLE &&
+           luaw_hasfield(L, index, "top") && luaw_hasfield(L, index, "left") &&
+           luaw_hasfield(L, index, "bottom") && luaw_hasfield(L, index, "right");
 }

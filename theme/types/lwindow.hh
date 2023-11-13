@@ -25,7 +25,7 @@ struct LWindow {
     virtual void                      resize(Size const& new_size) = 0;
 
     // C++ exclusive methods
-    void                              set_child(WHandle child_id, Rectangle const& rectangle);
+    void                              set_child(WHandle child_id, Padding const& padding);
     virtual void                      update_rectangle(Rectangle const& r) { rectangle_ = r; }
 
     static constexpr const char* mt_identifier = "Window";
@@ -33,7 +33,7 @@ struct LWindow {
 protected:
     mutable Rectangle      rectangle_ { 0, 0, 0, 0 };
     std::optional<WHandle> child_id_;
-    Rectangle              child_rect_ { 0, 0, 0, 0 };
+    Padding                child_padding_;
 };
 
 void l_window_create_metadata(lua_State* L);

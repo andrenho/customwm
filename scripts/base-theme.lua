@@ -6,7 +6,7 @@ local theme = {
     resources = {
 
         fonts = {
-            basic = { "helvetica-18" },
+            basic = { "helvetica-10" },
         },
 
     },
@@ -17,7 +17,7 @@ local theme = {
         -- PROPERTIES
         --
 
-        padding = { top = 24, bottom = 2, left = 2, right = 2 },
+        padding = { top = 26, bottom = 4, left = 4, right = 4 },
 
         resize_border = 3,
 
@@ -145,7 +145,7 @@ local theme = {
 
         on_window_click = function(window, ev)
             if ev.button == 'left' and not ev.pressed then
-                wm:grab(window, nil)
+                wm:grab(window, "none", ev.abs_pos)
             end
         end,
 
@@ -155,7 +155,7 @@ local theme = {
         on_hotspot_click = function(window, hotspot, ev)
             local hs = getprop("wm.hotspots", window)[hotspot]
             if hs and hs.grab and ev.pressed and ev.button == 'left' then
-                wm:grab(window, hs.grab)
+                wm:grab(window, hs.grab, ev.abs_pos)
             end
         end,
 

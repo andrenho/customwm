@@ -6,6 +6,7 @@
 #define THIS (luaw_to<LWindowManager*>(L, 1))
 
 const std::unordered_map<std::string, GrabType> LWindowManager::grab_types = {
+        { "none",         GrabType::NoGrab },
         { "move",         GrabType::Move },
         { "top-left",     GrabType::TopLeft },
         { "top",          GrabType::Top },
@@ -32,14 +33,10 @@ void l_wm_create_metadata(lua_State* L)
         }},
         { "grab", [](lua_State* L) {
             auto window = luaw_to<LWindow*>(L, 2);
-            if (lua_isnil(L, 3)) {
-                THIS->grab(window, GrabType::NoGrab);
-            } else {
-                try {
-                    THIS->grab(window, LWindowManager::grab_types.at(luaw_to<std::string>(L, 3)));
-                } catch (std::out_of_range&) {
-                    luaL_error(L, "Invalid grab type '%s'", luaw_to<const char*>(L, 3));
-                }
+            try {
+                THIS->grab(window, LWindowManager::grab_types.at(luaw_to<std::string>(L, 3)), luaw_to<Point>(L, 4));
+            } catch (std::out_of_range&) {
+                luaL_error(L, "Invalid grab type '%s'", luaw_to<const char*>(L, 3));
             }
             return 0;
         }},

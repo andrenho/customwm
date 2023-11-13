@@ -62,8 +62,8 @@ void l_window_create_metadata(lua_State* L)
     LOG.debug("Metatable setup for Window as '%s'", mt.c_str());
 }
 
-void LWindow::set_child(WHandle child_id, Rectangle const &rectangle)
+void LWindow::set_child(WHandle child_id, Padding const& padding)
 {
     child_id_ = child_id;
-    child_rect_ = rectangle;
+    child_padding_ = padding;
 }

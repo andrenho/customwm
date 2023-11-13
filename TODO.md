@@ -42,8 +42,10 @@
   - [x] Super
 - [ ] Grab / move / resize window + configure (keep window rect)
   - [x] Move
-  - [ ] Resize
-  - [ ] Resize, move protections
+  - [x] Resize
+  - [ ] Grabs and resizes are not perfect
+  - [ ] Faster resize performance
+  - [ ] Resize, move protections (minimum size, no out-of-screen, etc)
 - [ ] Minimize
 - [ ] Maximize
 - [ ] Sample W95 theme

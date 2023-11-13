@@ -22,6 +22,7 @@ void WindowManager::on_create_child(WHandle child_id)
     Rectangle child_rect = get_window_rectangle(child_id);
     Size screen_size = get_screen_size();
     auto [parent_rect, offset] = THEME.get_prop<WindowStartingLocation>("wm.window_starting_location", child_rect, screen_size);
+    Padding padding = THEME.get_prop<Padding>("wm.padding");
 
     // create new window
     std::unique_ptr<LWindow> parent_window = create_window(parent_rect);
@@ -32,7 +33,7 @@ void WindowManager::on_create_child(WHandle child_id)
 
     // reparent window
     reparent_window(parent_id, child_id, offset);
-    parent->set_child(child_id, { offset.x, offset.y, child_rect.w, child_rect.h });
+    parent->set_child(child_id, padding);
     parents_[child_id] = parent_id;
     LOG.info("Reparented window %d (parent %d)", child_id, parent_id);
 
@@ -154,7 +155,7 @@ std::optional<std::pair<std::string, Hotspot>> WindowManager::hotspot(LWindow* w
     }
 }
 
-void WindowManager::grab(LWindow *window, GrabType grab_type)
+void WindowManager::grab(LWindow *window, GrabType grab_type, Point const& initial_pos)
 {
-    grab_manager_.set_grab(window, grab_type);
+    grab_manager_.set_grab(window, grab_type, initial_pos);
 }
