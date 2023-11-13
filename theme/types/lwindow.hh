@@ -14,6 +14,7 @@ struct LWindow {
     // LUA methods
     virtual WHandle                   id() const = 0;
     std::optional<WHandle>            child_id() const { return child_id_; }
+    Padding                           padding() const { return child_padding_; }
     [[nodiscard]] virtual Rectangle   rect(bool update_cache=false) const = 0;
     virtual void                      fill(Color const& color, std::optional<Rectangle> rect={}) = 0;
     virtual void                      text(int x, int y, std::string const& text, TextProperties const& text_properties) = 0;

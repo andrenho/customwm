@@ -18,6 +18,8 @@ public:
     void bring_window_to_front(LWindow *window) override;
     void close_window(LWindow* window) override;
 
+    [[nodiscard]] Size screen_size() const override;
+
 protected:
     void add_existing_windows() override;
     void setup_event_listener() override;
@@ -27,10 +29,7 @@ protected:
 
     std::unique_ptr<LWindow> create_window(Rectangle const &rectangle) const override;
 
-protected:
-
     [[nodiscard]] Rectangle get_window_rectangle(WHandle window) const override;
-    [[nodiscard]] Size get_screen_size() const override;
 
     // overwritten events
     void on_window_configure(WHandle window, Rectangle rectangle) override;

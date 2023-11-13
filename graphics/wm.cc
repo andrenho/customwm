@@ -20,8 +20,8 @@ void WindowManager::on_create_child(WHandle child_id)
 {
     // where to place the new window?
     Rectangle child_rect = get_window_rectangle(child_id);
-    Size screen_size = get_screen_size();
-    auto [parent_rect, offset] = THEME.get_prop<WindowStartingLocation>("wm.window_starting_location", child_rect, screen_size);
+    Size screen_size_ = screen_size();
+    auto [parent_rect, offset] = THEME.get_prop<WindowStartingLocation>("wm.window_starting_location", child_rect, screen_size_);
     Padding padding = THEME.get_prop<Padding>("wm.padding");
 
     // create new window

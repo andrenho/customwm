@@ -37,7 +37,6 @@ protected:
     virtual void reparent_window(WHandle parent_id, WHandle child_id, Point const& offset) = 0;
 
     [[nodiscard]] virtual Rectangle get_window_rectangle(WHandle window) const = 0;
-    [[nodiscard]] virtual Size      get_screen_size() const = 0;
 
     [[nodiscard]] virtual std::unique_ptr<LWindow> create_window(Rectangle const& rectangle) const = 0;
 

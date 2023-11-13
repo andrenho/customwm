@@ -222,3 +222,12 @@ bool Padding::lua_is(lua_State *L, int index)
            luaw_hasfield(L, index, "top") && luaw_hasfield(L, index, "left") &&
            luaw_hasfield(L, index, "bottom") && luaw_hasfield(L, index, "right");
 }
+
+void Padding::to_lua(lua_State* L) const
+{
+    lua_newtable(L);
+    luaw_setfield(L, -1, "top", top);
+    luaw_setfield(L, -1, "left", left);
+    luaw_setfield(L, -1, "bottom", bottom);
+    luaw_setfield(L, -1, "right", right);
+}

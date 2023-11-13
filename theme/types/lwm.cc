@@ -44,6 +44,10 @@ void l_wm_create_metadata(lua_State* L)
             THIS->close_window(luaw_to<LWindow*>(L, 2));
             return 0;
         }},
+        { "screen_size", [](lua_State* L) {
+            luaw_push(L, THIS->screen_size());
+            return 1;
+        }},
     });
     LOG.debug("Metatable setup for WM as '%s'", mt.c_str());
 }

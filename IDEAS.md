@@ -6,3 +6,4 @@
 - Wallpaper
 - Window maker docks
 - Move/resize - only window silloute
+- Multi-monitor support

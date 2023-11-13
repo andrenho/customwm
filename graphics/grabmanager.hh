@@ -26,6 +26,8 @@ private:
         Point     initial_pos;
         Rectangle initial_rect;
         Size      minimum_window_size;
+        Point     minimum_window_location;
+        Point     maximum_window_location;
     };
     std::optional<Grab> current_grab_ {};
 
@@ -33,6 +35,7 @@ private:
     sc::duration   resize_update_time_;
 
     void resize(Point const &current_pos);
+    void move(Point const &current_pos);
 };
 
 #endif //GRABMANAGER_HH_

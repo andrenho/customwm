@@ -79,6 +79,7 @@ struct Padding {
 
     static Padding from_lua(lua_State* L, int index);
     static bool lua_is(lua_State* L, int index);
+    void to_lua(lua_State* L) const;
 };
 
 struct WindowStartingLocation {

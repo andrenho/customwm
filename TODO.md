@@ -46,9 +46,10 @@
   - [x] Grabs and resizes are not perfect
   - [x] Faster resize performance
   - [x] Minimum size
-  - [ ] Maximum screen location
+  - [x] Maximum screen location
 - [ ] Minimize
 - [ ] Maximize
+- [ ] ICCCM & EWMH
 - [ ] Sample W95 theme
 
 ## Bar

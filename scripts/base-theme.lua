@@ -19,8 +19,14 @@ local theme = {
 
         padding = { top = 26, bottom = 4, left = 4, right = 4 },
         resize_border = 3,
+
         resize_update_ms = 33,
+
         minimum_window_size = { w = 96, h = 32 },
+        minimum_window_location = { x = -2000, y = 0 },
+        maximum_window_location = function(wm)
+            return { x = 10000, y = wm:screen_size().h - getprop("wm.padding").top }
+        end,
 
         position_strategy = "cascade",   -- cascade, center, random, maximized, requested
 

@@ -147,14 +147,6 @@ Rectangle XWindowManager::get_window_rectangle(WHandle window) const
     return { requested_x, requested_y, (int) child_w, (int) child_h };
 }
 
-Size XWindowManager::get_screen_size() const
-{
-    return {
-        DisplayWidth(X->display, X->screen),
-        DisplayHeight(X->display, X->screen)
-    };
-}
-
 void XWindowManager::reparent_window(WHandle parent_id, WHandle child_id, Point const &offset)
 {
     XAddToSaveSet(X->display, child_id);
@@ -265,4 +257,9 @@ void XWindowManager::on_window_expose(WHandle parent, Rectangle rectangle)
             ((XWindow *) window)->update_backbuffer(rectangle);
         } catch (std::out_of_range&) {}
     }
+}
+
+Size XWindowManager::screen_size() const
+{
+    return { DisplayWidth(X->display, X->screen), DisplayHeight(X->display, X->screen) };
 }

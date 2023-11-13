@@ -14,6 +14,9 @@ void l_window_create_metadata(lua_State* L)
             { "child_id", [](lua_State* L) {
                 return luaw_push(L, THIS->child_id());
             }},
+            { "padding", [](lua_State* L) {
+                return luaw_push(L, THIS->padding());
+            }},
             { "rect", [](lua_State* L) {
                 if (lua_gettop(L) >= 2)
                     return luaw_push(L, THIS->rect(luaL_checkinteger(L, 3)));

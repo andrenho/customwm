@@ -1,3 +1,4 @@
+#include <random>
 #include "grabmanager.hh"
 
 #include "wm.hh"
@@ -21,7 +22,9 @@ void GrabManager::set_grab(LWindow *window, GrabType grab_type, Point const& ini
                 .grab_type = grab_type,
                 .initial_pos = initial_pos,
                 .initial_rect = window->rect(),
-                .minimum_window_size = THEME.get_prop<Size>("wm.minimum_window_size", window),
+                .minimum_window_size = THEME.get_prop<Size>("wm.minimum_window_size", wm_, window),
+                .minimum_window_location = THEME.get_prop<Point>("wm.minimum_window_location", wm_, window),
+                .maximum_window_location = THEME.get_prop<Point>("wm.maximum_window_location", wm_, window),
         };
     }
 }
@@ -31,12 +34,24 @@ void GrabManager::move_pointer(Point const &current_pos)
     if (current_grab_) {
 
         if (current_grab_->grab_type == GrabType::Move) {
-            LWindow* window = current_grab_->window;
-            window->move(current_grab_->initial_rect.topleft() + current_pos - current_grab_->initial_pos);
+            move(current_pos);
         } else if (current_grab_->grab_type != GrabType::NoGrab) {
             resize(current_pos);
         }
     }
+}
+
+void GrabManager::move(Point const &current_pos)
+{
+    LWindow* window = this->current_grab_->window;
+    Point new_pos = this->current_grab_->initial_rect.topleft() + current_pos - this->current_grab_->initial_pos;
+
+    new_pos.x = std::max(new_pos.x, this->current_grab_->minimum_window_location.x);
+    new_pos.x = std::min(new_pos.x, this->current_grab_->maximum_window_location.x);
+    new_pos.y = std::max(new_pos.y, this->current_grab_->minimum_window_location.y);
+    new_pos.y = std::min(new_pos.y, this->current_grab_->maximum_window_location.y);
+
+    window->move(new_pos);
 }
 
 void GrabManager::resize(Point const &current_pos)
