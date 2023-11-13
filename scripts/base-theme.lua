@@ -21,6 +21,8 @@ local theme = {
 
         resize_border = 3,
 
+        resize_update_ms = 33,
+
         position_strategy = "cascade",   -- cascade, center, random, maximized, requested
 
         window_starting_location = function(child_rect, screen_size)

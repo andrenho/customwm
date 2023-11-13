@@ -4,9 +4,12 @@
 #include "theme/types/lwindow.hh"
 #include "theme/types/lwm.hh"
 
+#include <chrono>
+using sc = std::chrono::system_clock;
+
 class GrabManager {
 public:
-    explicit GrabManager(class WindowManager* wm) : wm_(wm) {}
+    explicit GrabManager(class WindowManager* wm);
 
     void set_grab(LWindow *window, GrabType grab_type, Point const& initial_pos);
     bool is_active() const { return current_grab_.has_value(); }
@@ -24,6 +27,11 @@ private:
         Rectangle initial_rect;
     };
     std::optional<Grab> current_grab_ {};
+
+    sc::time_point last_resize_ = sc::now();
+    sc::duration   resize_update_time_;
+
+    void resize(Point const &current_pos);
 };
 
 #endif //GRABMANAGER_HH_
