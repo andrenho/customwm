@@ -200,10 +200,11 @@ bool Hotspot::lua_is(lua_State *L, int index)
 
 Hotspot Hotspot::from_lua(lua_State *L, int index)
 {
-    return {
-        .area = luaw_getfield<Rectangle>(L, index, "area"),
-        .cursor = luaw_getfield<std::optional<std::string>>(L, index, "cursor")
-    };
+    Hotspot hs {};
+    hs.area = luaw_getfield<Rectangle>(L, index, "area");
+    if (luaw_hasfield(L, index, "cursor"))
+        hs.cursor = luaw_getfield<std::optional<std::string>>(L, index, "cursor");
+    return hs;
 }
 
 Padding Padding::from_lua(lua_State *L, int index)

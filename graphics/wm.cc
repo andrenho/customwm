@@ -20,7 +20,7 @@ void WindowManager::on_create_child(WHandle child_id)
 {
     // where to place the new window?
     Rectangle child_rect = get_window_rectangle(child_id);
-    Size screen_size_ = screen_size();
+    Size screen_size_ = usable_screen_size();
     auto [parent_rect, offset] = THEME.get_prop<WindowStartingLocation>("wm.window_starting_location", child_rect, screen_size_);
     Padding padding = THEME.get_prop<Padding>("wm.padding");
 
@@ -158,4 +158,11 @@ std::optional<std::pair<std::string, Hotspot>> WindowManager::hotspot(LWindow* w
 void WindowManager::grab(LWindow *window, GrabType grab_type, Point const& initial_pos)
 {
     grab_manager_.set_grab(window, grab_type, initial_pos);
+}
+
+void WindowManager::maximize_window(LWindow *window)
+{
+    window->save_rectangle();
+    window->set_state(WindowState::Maximized);
+    window->resize(usable_screen_size());
 }

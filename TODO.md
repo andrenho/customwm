@@ -40,16 +40,35 @@
 - [x] Close window
 - [x] Load theme
   - [x] Super
-- [ ] Grab / move / resize window + configure (keep window rect)
+- [x] Grab / move / resize window + configure (keep window rect)
   - [x] Move
   - [x] Resize
   - [x] Grabs and resizes are not perfect
   - [x] Faster resize performance
   - [x] Minimum size
   - [x] Maximum screen location
-- [ ] Minimize
-- [ ] Maximize
-- [ ] ICCCM & EWMH
+- [ ] Maximize / Restore
+- [ ] ICCCM
+  - [ ] Minimize
+  - Window manager properties
+    - [ ] WM_STATE
+    - [ ] Changing Window State
+    - [ ] ConfigureWindow
+    - [ ] ChangeWindowAttributes
+  - Client properties
+    - [ ] Parse WM_HINTS, WM_NORMAL_HINTS
+    - [ ] WM_ICON_NAME, WM_ICON_SIZE (?)
+    - [ ] WM_TRANSIENT_FOR (?)
+    - [ ] WM_PROTOCOLS
+      - [ ] WM_TAKE_FOCUS
+      - [ ] WM_DELETE_WINDOW
+    - [ ] WM_COLORMAP_WINDOWS (?)
+    - [ ] WM_CLIENT_MACHINE (?)
+  - [ ] Selections
+    - https://www.uninformativ.de/blog/postings/2017-04-02/0/POSTING-en.html
+    - https://jameshunt.us/writings/managing-the-x11-clipboard/
+  - [ ] Session Management
+- [ ] EWMH
 - [ ] Sample W95 theme
 
 ## Bar

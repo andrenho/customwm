@@ -20,6 +20,8 @@ public:
     // overwritten from parent
     void set_focus(std::optional<LWindow *> window) override { focus_manager_.set_focus(window); }
     virtual void grab(LWindow *window, GrabType grab_type, Point const& initial_pos) override;
+    void maximize_window(LWindow* window) override;
+    Size usable_screen_size() const override { return screen_size(); }  // TODO
 
     // to be overwritten in library specific code
     virtual void expose(LWindow* window) = 0;

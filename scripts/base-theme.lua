@@ -145,7 +145,6 @@ local theme = {
             window:text(0, 0, window:name(), {
                 font = "basic", w = window:rect().w, h = 24, halign = "center", valign = "center"
             })
-            window:fill("#ff0000", getprop("wm.hotspots", window).close.area)
         end,
 
         on_window_click = function(window, ev)

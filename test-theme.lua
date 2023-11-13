@@ -16,6 +16,9 @@ return {
 
         hotspots = function(window)
             local h = getprop("super.wm.hotspots", window)
+            h.maximize = {
+                area = { x = window:rect().w - 35, y = 2, w = 13, h = 13 }
+            }
             h.close = {
                 area = { x = window:rect().w - 15, y = 2, w = 13, h = 13 },
                 cursor = "kill"
@@ -28,6 +31,12 @@ return {
             if hotspot == 'close' then
                 wm:close_window(window)
             end
+        end,
+
+        on_expose = function(window, exposed_area)
+            callopt("super.wm.on_expose", window, exposed_area)
+            window:fill("#4444ff", getprop("wm.hotspots", window).maximize.area)
+            window:fill("#ff0000", getprop("wm.hotspots", window).close.area)
         end,
 
     },

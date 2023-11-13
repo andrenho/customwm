@@ -40,9 +40,17 @@ void l_wm_create_metadata(lua_State* L)
             }
             return 0;
         }},
+        { "maximize_window", [](lua_State* L) {
+            THIS->maximize_window(luaw_to<LWindow*>(L, 2));
+            return 0;
+        }},
         { "close_window", [](lua_State* L) {
             THIS->close_window(luaw_to<LWindow*>(L, 2));
             return 0;
+        }},
+        { "usable_screen_size", [](lua_State* L) {
+            luaw_push(L, THIS->usable_screen_size());
+            return 1;
         }},
         { "screen_size", [](lua_State* L) {
             luaw_push(L, THIS->screen_size());

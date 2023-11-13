@@ -31,7 +31,7 @@ Options::Options(int argc, char **argv)
         };
 
         int idx;
-        int c = getopt_long(argc, argv, "d:t:hv", long_options, &idx);
+        int c = getopt_long(argc, argv, "d:t:hvx", long_options, &idx);
         if (c == -1)
             break;
 
