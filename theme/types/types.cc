@@ -7,8 +7,8 @@ Rectangle Rectangle::from_lua(lua_State *L, int index)
     return {
             .x = luaw_getfield<int32_t>(L, index, "x"),
             .y = luaw_getfield<int32_t>(L, index, "y"),
-            .w = luaw_getfield<uint32_t>(L, index, "w"),
-            .h = luaw_getfield<uint32_t>(L, index, "h"),
+            .w = luaw_getfield<int32_t>(L, index, "w"),
+            .h = luaw_getfield<int32_t>(L, index, "h"),
     };
 }
 
@@ -54,7 +54,7 @@ void Point::to_lua(lua_State *L) const
 
 Size Size::from_lua(lua_State *L, int index)
 {
-    return { luaw_getfield<uint32_t>(L, index, "w"), luaw_getfield<uint32_t>(L, index, "h") };
+    return { luaw_getfield<int32_t>(L, index, "w"), luaw_getfield<int32_t>(L, index, "h") };
 }
 
 void Size::to_lua(lua_State *L) const

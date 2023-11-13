@@ -13,7 +13,7 @@ struct Point {
     Point operator+(Point const& o) const { return { x + o.x, y + o.y }; }
     Point operator-(Point const& o) const { return { x - o.x, y - o.y }; }
 
-    Point operator+(class Size const& o) const;
+    Point operator+(struct Size const& o) const;
 
     static Point from_lua(lua_State* L, int index);
     static bool lua_is(lua_State* L, int index);
@@ -21,9 +21,9 @@ struct Point {
 };
 
 struct Size {
-    uint32_t w, h;
+    int32_t w, h;
 
-    Size(uint32_t w, uint32_t h) : w(w), h(h) {}
+    Size(int32_t w, int32_t h) : w(w), h(h) {}
     Size(Point const& p) : w(p.x), h(p.y) {}
 
     bool operator==(Size const& sz) const { return sz.w == w && sz.h == h; }
@@ -39,7 +39,7 @@ inline Point Point::operator+(Size const& o) const { return { x + (int32_t) o.w,
 
 struct Rectangle {
     int32_t x, y;
-    uint32_t w, h;
+    int32_t w, h;
 
     bool  contains(Point const& p) const;
     Point topleft() const { return { x, y }; }

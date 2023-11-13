@@ -46,7 +46,6 @@
   - [x] Grabs and resizes are not perfect
   - [x] Faster resize performance
   - [ ] Resize, move protections (minimum size, no out-of-screen, etc)
-  - [ ] Text caching
 - [ ] Minimize
 - [ ] Maximize
 - [ ] Sample W95 theme

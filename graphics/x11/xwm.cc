@@ -81,7 +81,7 @@ void XWindowManager::parse_next_event()
         case Expose:
             // LOG.debug("event: Expose %d", e.xexpose.window);
             on_window_expose(e.xexpose.window,
-                             {e.xexpose.x, e.xexpose.y, (uint32_t) e.xexpose.width, (uint32_t) e.xexpose.height});
+                             {e.xexpose.x, e.xexpose.y, e.xexpose.width, e.xexpose.height});
             break;
         case ButtonPress:
         case ButtonRelease:
@@ -104,8 +104,7 @@ void XWindowManager::parse_next_event()
         case ConfigureNotify:
             // LOG.debug("event: ConfigureNotify %d", e.xconfigure.window);
             on_window_configure(e.xconfigure.window,
-                                { e.xconfigure.x, e.xconfigure.y,
-                                  (uint32_t) e.xconfigure.width, (uint32_t) e.xconfigure.height });
+                                { e.xconfigure.x, e.xconfigure.y, e.xconfigure.width, e.xconfigure.height });
             break;
         case KeyPress:
         case KeyRelease:
@@ -145,14 +144,14 @@ Rectangle XWindowManager::get_window_rectangle(WHandle window) const
     int requested_x, requested_y;
     unsigned int child_w, child_h, border, depth;
     XGetGeometry(X->display, window, &root, &requested_x, &requested_y, &child_w, &child_h, &border, &depth);
-    return { requested_x, requested_y, child_w, child_h };
+    return { requested_x, requested_y, (int) child_w, (int) child_h };
 }
 
 Size XWindowManager::get_screen_size() const
 {
     return {
-        (uint32_t) DisplayWidth(X->display, X->screen),
-        (uint32_t) DisplayHeight(X->display, X->screen)
+        DisplayWidth(X->display, X->screen),
+        DisplayHeight(X->display, X->screen)
     };
 }
 

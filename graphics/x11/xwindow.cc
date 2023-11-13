@@ -108,7 +108,7 @@ Rectangle XWindow::rect(bool update_cache) const
     if (update_cache) {
         XWindowAttributes xwa;
         XGetWindowAttributes(X->display, id_, &xwa);
-        rectangle_ = Rectangle { xwa.x, xwa.y, (uint32_t) xwa.width, (uint32_t) xwa.height };
+        rectangle_ = Rectangle { xwa.x, xwa.y, xwa.width, xwa.height };
     }
 
     return rectangle_;
