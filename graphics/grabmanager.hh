@@ -25,6 +25,7 @@ private:
         GrabType  grab_type;
         Point     initial_pos;
         Rectangle initial_rect;
+        Size      minimum_window_size;
     };
     std::optional<Grab> current_grab_ {};
 

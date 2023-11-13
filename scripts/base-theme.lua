@@ -18,10 +18,9 @@ local theme = {
         --
 
         padding = { top = 26, bottom = 4, left = 4, right = 4 },
-
         resize_border = 3,
-
         resize_update_ms = 33,
+        minimum_window_size = { w = 96, h = 32 },
 
         position_strategy = "cascade",   -- cascade, center, random, maximized, requested
 
@@ -62,8 +61,6 @@ local theme = {
                 child_offset = { x = padding.left, y = padding.top }
             }
         end,
-
-        minimum_window_size = { w = 96, h = 32 },
 
         hotspots = function(window)
             local r = window:rect()

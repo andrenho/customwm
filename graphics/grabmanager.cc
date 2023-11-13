@@ -16,7 +16,13 @@ void GrabManager::set_grab(LWindow *window, GrabType grab_type, Point const& ini
             current_grab_->window->set_cursor(Cursors::Pointer);
         current_grab_ = {};
     } else {
-        current_grab_ = { window, grab_type, initial_pos, window->rect() };
+        current_grab_ = {
+                .window = window,
+                .grab_type = grab_type,
+                .initial_pos = initial_pos,
+                .initial_rect = window->rect(),
+                .minimum_window_size = THEME.get_prop<Size>("wm.minimum_window_size", window),
+        };
     }
 }
 
@@ -42,35 +48,41 @@ void GrabManager::resize(Point const &current_pos)
     if (sc::now() < (last_resize_ + resize_update_time_))
         return;
 
+    auto limit = [&](Size const& sz) {
+        return Size(
+                std::max(sz.w, current_grab_->minimum_window_size.w),
+                std::max(sz.h, current_grab_->minimum_window_size.h));
+    };
+
     switch (current_grab_->grab_type) {
         case GrabType::TopLeft:
-            window->move({ initial_rect.x + (int32_t) diff.w, initial_rect.y + (int32_t) diff.h });
-            window->resize({ initial_rect.w - diff.w, initial_rect.h - diff.h });
+            window->move({ initial_rect.x + diff.w, initial_rect.y + diff.h });
+            window->resize(limit({ initial_rect.w - diff.w, initial_rect.h - diff.h }));
             break;
         case GrabType::Top:
-            window->move({ initial_rect.x, initial_rect.y + (int32_t) diff.h });
-            window->resize({ initial_rect.w, initial_rect.h - diff.h });
+            window->move({ initial_rect.x, initial_rect.y + diff.h });
+            window->resize(limit({ initial_rect.w, initial_rect.h - diff.h }));
             break;
         case GrabType::TopRight:
-            window->move({ initial_rect.x, initial_rect.y + (int32_t) diff.h });
-            window->resize({ initial_rect.w + diff.w, initial_rect.h - diff.h });
+            window->move({ initial_rect.x, initial_rect.y + diff.h });
+            window->resize(limit({ initial_rect.w + diff.w, initial_rect.h - diff.h }));
             break;
         case GrabType::Left:
-            window->move({ initial_rect.x + (int32_t) diff.w, initial_rect.y });
-            window->resize({ initial_rect.w - diff.w, initial_rect.h });
+            window->move({ initial_rect.x + diff.w, initial_rect.y });
+            window->resize(limit({ initial_rect.w - diff.w, initial_rect.h }));
             break;
         case GrabType::Right:
-            window->resize({ initial_rect.w + diff.w, initial_rect.h });
+            window->resize(limit({ initial_rect.w + diff.w, initial_rect.h }));
             break;
         case GrabType::BottomLeft:
-            window->move({ initial_rect.x + (int32_t) diff.w, initial_rect.y });
-            window->resize({ initial_rect.w - diff.w, initial_rect.h + diff.h });
+            window->move({ initial_rect.x + diff.w, initial_rect.y });
+            window->resize(limit({ initial_rect.w - diff.w, initial_rect.h + diff.h }));
             break;
         case GrabType::Bottom:
-            window->resize({ initial_rect.w, initial_rect.h + diff.h });
+            window->resize(limit({ initial_rect.w, initial_rect.h + diff.h }));
             break;
         case GrabType::BottomRight:
-            window->resize(initial_rect.size() + diff);
+            window->resize(limit(initial_rect.size() + diff));
             break;
         default: break;
     }

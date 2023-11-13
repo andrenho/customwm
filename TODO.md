@@ -45,7 +45,8 @@
   - [x] Resize
   - [x] Grabs and resizes are not perfect
   - [x] Faster resize performance
-  - [ ] Resize, move protections (minimum size, no out-of-screen, etc)
+  - [x] Minimum size
+  - [ ] Maximum screen location
 - [ ] Minimize
 - [ ] Maximize
 - [ ] Sample W95 theme
