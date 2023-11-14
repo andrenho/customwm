@@ -1,0 +1,41 @@
+@startuml
+
+rectangle theme {
+    class Theme
+    abstract class LWindow
+    abstract class LWindowManager
+    Theme *-- LWindow
+    Theme *-- LWindowManager
+}
+
+rectangle graphics {
+    abstract class Graphics
+    abstract class WindowManager
+    abstract class GWindow
+    abstract class Resources
+    class GrabManager
+    class FocusManager
+
+    LWindowManager <|-- WindowManager
+    LWindow <|-- GWindow
+
+    WindowManager *-- GrabManager
+    WindowManager *-- FocusManager
+    WindowManager *-- Resources
+
+    Graphics --> WindowManager : create
+}
+
+rectangle x11 {
+    class X
+    class XWindowManager
+    class XWindow
+    class XResources
+
+    Graphics <|-- X
+    WindowManager <|-- XWindowManager
+    GWindow <|-- XWindow
+    Resources <|-- XResources
+}
+
+@enduml
