@@ -5,7 +5,7 @@
 #include "xwm.hh"
 
 XWindow::XWindow(XWindowManager const& wm, XResources const& resources, Rectangle const &rectangle)
-        : GWindow((WindowManager *) &wm, rectangle), xwm_(wm), resources_(resources)
+        : GWindow((GWindowManager *) &wm, rectangle), xwm_(wm), resources_(resources)
 {
     id_ = XCreateWindow(X->display, X->root, rectangle.x, rectangle.y, rectangle.w, rectangle.h, 0,
                         CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);

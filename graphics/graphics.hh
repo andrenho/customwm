@@ -3,11 +3,11 @@
 
 #include <optional>
 #include <string>
-#include "wm.hh"
+#include "gwm.hh"
 
 struct Graphics {
     virtual ~Graphics() = default;
-    virtual std::unique_ptr<WindowManager> create_wm() = 0;
+    virtual std::unique_ptr<GWindowManager> create_wm() = 0;
 
     static Graphics* create(std::optional<std::string> const& display);
 

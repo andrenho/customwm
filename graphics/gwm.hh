@@ -1,5 +1,5 @@
-#ifndef WM_HH_
-#define WM_HH_
+#ifndef GWM_HH_
+#define GWM_HH_
 
 #include <map>
 #include <memory>
@@ -11,9 +11,9 @@
 #include "grabmanager.hh"
 #include "gwindow.hh"
 
-class WindowManager : public LWindowManager {
+class GWindowManager : public LWindowManager {
 public:
-    explicit WindowManager(std::unique_ptr<Resources> resources)
+    explicit GWindowManager(std::unique_ptr<Resources> resources)
         : resources_(std::move(resources)), focus_manager_(this) {}
 
     void run();
@@ -70,4 +70,4 @@ private:
     std::optional<std::pair<std::string, Hotspot>> hotspot(GWindow* window, Point const& p) const;
 };
 
-#endif //WM_HH_
+#endif //GWM_HH_

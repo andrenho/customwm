@@ -1,6 +1,6 @@
 #include "gwindow.hh"
 
-#include "wm.hh"
+#include "gwm.hh"
 
 void GWindow::set_child(WHandle child_id, Padding const &padding)
 {

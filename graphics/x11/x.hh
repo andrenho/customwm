@@ -25,7 +25,7 @@ struct XGraphics : public Graphics {
     unsigned long black;
     unsigned long white;
 
-    std::unique_ptr<WindowManager> create_wm() override;
+    std::unique_ptr<GWindowManager> create_wm() override;
 };
 
 extern XGraphics* X;

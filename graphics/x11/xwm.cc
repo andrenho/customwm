@@ -9,7 +9,7 @@
 
 
 XWindowManager::XWindowManager()
-    : WindowManager(std::make_unique<XResources>()),
+    : GWindowManager(std::make_unique<XResources>()),
       xresources_(dynamic_cast<XResources *>(resources_.get()))
 {
 
@@ -212,7 +212,7 @@ void XWindowManager::propagate_keyevent_to_focused_window(XEvent e) const
 
 void XWindowManager::on_window_configure(WHandle window, Rectangle rectangle)
 {
-    WindowManager::on_window_configure(window, rectangle);
+    GWindowManager::on_window_configure(window, rectangle);
     try {
         LWindow* lwindow = windows_.at(window).get();
         ((XWindow *) lwindow)->update_backbuffer_size(rectangle.size());
@@ -228,7 +228,7 @@ void XWindowManager::on_window_expose(WHandle parent, Rectangle rectangle)
         } catch (std::out_of_range&) {}
 
     } else {
-        WindowManager::on_window_expose(parent, rectangle);
+        GWindowManager::on_window_expose(parent, rectangle);
 
         try {
             LWindow* window = windows_.at(parent).get();

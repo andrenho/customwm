@@ -2,8 +2,8 @@
 #define INIT_HH_
 
 #include <memory>
-#include "graphics/wm.hh"
+#include "graphics/gwm.hh"
 
-std::unique_ptr<WindowManager> initialize(int argc, char* argv[]);
+std::unique_ptr<GWindowManager> initialize(int argc, char* argv[]);
 
 #endif //INIT_HH_

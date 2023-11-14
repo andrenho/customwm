@@ -1,7 +1,7 @@
 #include <random>
 #include "grabmanager.hh"
 
-#include "wm.hh"
+#include "gwm.hh"
 #include "theme/theme.hh"
 
 GrabManager::GrabManager()

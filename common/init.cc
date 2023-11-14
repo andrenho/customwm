@@ -6,7 +6,7 @@
 #include "graphics/graphics.hh"
 #include "logger.hh"
 
-std::unique_ptr<WindowManager> initialize(int argc, char* argv[])
+std::unique_ptr<GWindowManager> initialize(int argc, char* argv[])
 {
     Options options(argc, argv);
 
@@ -23,7 +23,7 @@ std::unique_ptr<WindowManager> initialize(int argc, char* argv[])
 
     Graphics* graphics = Graphics::create(options.display);
 
-    std::unique_ptr<WindowManager> wm = graphics->create_wm();
+    std::unique_ptr<GWindowManager> wm = graphics->create_wm();
     THEME.create_global_object("wm", wm.get());
 
     if (!options.throw_exceptions)

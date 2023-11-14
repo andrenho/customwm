@@ -7,7 +7,7 @@
 
 class FocusManager {
 public:
-    explicit FocusManager(class WindowManager* wm) : wm_(wm) {}
+    explicit FocusManager(class GWindowManager* wm) : wm_(wm) {}
 
     bool is_window_focused(GWindow const* window) const;
     void set_focus(std::optional<GWindow *> window);
@@ -16,7 +16,7 @@ public:
     std::optional<GWindow*> focused_window() const { return focused_window_; }
 
 private:
-    class WindowManager*    wm_;
+    class GWindowManager*    wm_;
     std::optional<GWindow*> focused_window_ {};
 
     std::vector<GWindow*>   window_order_;

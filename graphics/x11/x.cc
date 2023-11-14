@@ -29,7 +29,7 @@ XGraphics::~XGraphics()
     XCloseDisplay(display);
 }
 
-std::unique_ptr<WindowManager> XGraphics::create_wm()
+std::unique_ptr<GWindowManager> XGraphics::create_wm()
 {
     return std::make_unique<XWindowManager>();
 }

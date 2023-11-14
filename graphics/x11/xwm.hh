@@ -4,12 +4,12 @@
 #include "theme/theme.hh"
 #include "xwindow.hh"
 #include "xresources.hh"
-#include "graphics/wm.hh"
+#include "graphics/gwm.hh"
 
 #include <unordered_map>
 #include <X11/Xlib.h>
 
-class XWindowManager : public WindowManager {
+class XWindowManager : public GWindowManager {
 public:
     XWindowManager();
 

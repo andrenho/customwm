@@ -5,7 +5,7 @@
 
 class GWindow : public LWindow {
 public:
-    GWindow(class WindowManager* wm, Rectangle const& rectangle)
+    GWindow(class GWindowManager* wm, Rectangle const& rectangle)
             : wm_(wm), rectangle_(rectangle) {}
 
     std::optional<WHandle> child_id() const override { return child_id_; }
@@ -19,7 +19,7 @@ public:
     virtual void           bring_to_front() = 0;
 
 protected:
-    class WindowManager*   wm_;
+    class GWindowManager*   wm_;
     std::optional<WHandle> child_id_;
     Padding                child_padding_;
     mutable Rectangle      rectangle_ { 0, 0, 0, 0 };

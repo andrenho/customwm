@@ -1,8 +1,8 @@
-#include "wm.hh"
+#include "gwm.hh"
 #include "theme/theme.hh"
 #include "common/logger.hh"
 
-void WindowManager::run()
+void GWindowManager::run()
 {
     add_existing_windows();
     setup_event_listener();
@@ -10,13 +10,13 @@ void WindowManager::run()
     main_loop();
 }
 
-[[noreturn]] void WindowManager::main_loop()
+[[noreturn]] void GWindowManager::main_loop()
 {
     for (;;)
         parse_next_event();
 }
 
-void WindowManager::on_create_child(WHandle child_id)
+void GWindowManager::on_create_child(WHandle child_id)
 {
     // where to place the new window?
     Rectangle child_rect = get_window_rectangle(child_id);
@@ -46,7 +46,7 @@ void WindowManager::on_create_child(WHandle child_id)
     focus_manager_.set_focus(parent);
 }
 
-void WindowManager::on_destroy_child(WHandle child_id)
+void GWindowManager::on_destroy_child(WHandle child_id)
 {
     auto it = parents_.find(child_id);
     if (it != parents_.end()) {
@@ -61,18 +61,18 @@ void WindowManager::on_destroy_child(WHandle child_id)
     }
 }
 
-void WindowManager::on_move_pointer(Point new_pos)
+void GWindowManager::on_move_pointer(Point new_pos)
 {
     grab_manager_.move_pointer(new_pos);
     THEME.call_opt("wm.on_move_pointer", new_pos);
 }
 
-void WindowManager::on_desktop_click(ClickEvent const &e)
+void GWindowManager::on_desktop_click(ClickEvent const &e)
 {
     THEME.call_opt("wm.on_desktop_click", e);
 }
 
-void WindowManager::on_window_expose(WHandle parent, Rectangle rectangle)
+void GWindowManager::on_window_expose(WHandle parent, Rectangle rectangle)
 {
     try {
         LWindow* window = windows_.at(parent).get();
@@ -80,7 +80,7 @@ void WindowManager::on_window_expose(WHandle parent, Rectangle rectangle)
     } catch (std::out_of_range&) {}
 }
 
-void WindowManager::on_window_click(WHandle window_id, ClickEvent const &e)
+void GWindowManager::on_window_click(WHandle window_id, ClickEvent const &e)
 {
     // check for clicks on the parent
     try {
@@ -103,7 +103,7 @@ void WindowManager::on_window_click(WHandle window_id, ClickEvent const &e)
     } catch (std::out_of_range&) {}
 }
 
-void WindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
+void GWindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
 {
     if (grab_manager_.is_active())
         return;
@@ -134,7 +134,7 @@ void WindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
     } catch (std::out_of_range&) {}
 }
 
-void WindowManager::on_window_configure(WHandle window, Rectangle rectangle)
+void GWindowManager::on_window_configure(WHandle window, Rectangle rectangle)
 {
     try {
         GWindow* gwindow = windows_.at(window).get();
@@ -142,7 +142,7 @@ void WindowManager::on_window_configure(WHandle window, Rectangle rectangle)
     } catch (std::out_of_range&) {}
 }
 
-std::optional<std::pair<std::string, Hotspot>> WindowManager::hotspot(GWindow* window, Point const& p) const
+std::optional<std::pair<std::string, Hotspot>> GWindowManager::hotspot(GWindow* window, Point const& p) const
 {
     try {
         for (auto const& [name, hotspot]: THEME.get_prop<std::map<std::string, Hotspot>>("wm.hotspots", window)) {
@@ -155,12 +155,12 @@ std::optional<std::pair<std::string, Hotspot>> WindowManager::hotspot(GWindow* w
     }
 }
 
-void WindowManager::grab(LWindow *window, GrabType grab_type, Point const& initial_pos)
+void GWindowManager::grab(LWindow *window, GrabType grab_type, Point const& initial_pos)
 {
     grab_manager_.set_grab((GWindow *) window, grab_type, initial_pos);
 }
 
-void WindowManager::set_focus(std::optional<LWindow *> window)
+void GWindowManager::set_focus(std::optional<LWindow *> window)
 {
     focus_manager_.set_focus(window.has_value() ? (GWindow *) *window : std::optional<GWindow *> {});
 }
