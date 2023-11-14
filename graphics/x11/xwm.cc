@@ -59,7 +59,7 @@ void XWindowManager::add_existing_windows()
     free(window_list);
 }
 
-std::unique_ptr<LWindow> XWindowManager::create_window(Rectangle const &rectangle) const
+std::unique_ptr<GWindow> XWindowManager::create_window(Rectangle const &rectangle) const
 {
     return std::make_unique<XWindow>(*this, *xresources_, rectangle);
 }
@@ -154,7 +154,7 @@ void XWindowManager::reparent_window(WHandle parent_id, WHandle child_id, Point 
     XMapWindow(X->display, child_id);
 }
 
-void XWindowManager::expose(LWindow* window)
+void XWindowManager::expose(GWindow* window)
 {
     XEvent ev {
         .xexpose {
@@ -173,7 +173,7 @@ void XWindowManager::expose(LWindow* window)
     XSendEvent(X->display, window->id(), false, ExposureMask, &ev);
 }
 
-void XWindowManager::bring_window_to_front(LWindow *window)
+void XWindowManager::bring_window_to_front(GWindow *window)
 {
     XRaiseWindow(X->display, window->id());
     // XSetInputFocus(X->display, window->id(), RevertToNone, CurrentTime);
@@ -207,28 +207,6 @@ void XWindowManager::propagate_keyevent_to_focused_window(XEvent e) const
             e.xbutton.window = *child_id;
             XSendEvent(X->display, *child_id, false, KeyPressMask | KeyReleaseMask, &e);
         }
-    }
-}
-
-void XWindowManager::close_window(LWindow* window)
-{
-    auto protocols = ((XWindow*) window)->child_protocols();
-    WHandle target = window->child_id().value_or(window->id());
-
-    if (std::find(protocols.begin(), protocols.end(), "WM_DELETE_WINDOW") != protocols.end()) {
-        XEvent e {
-            .xclient {
-                .type = ClientMessage,
-                .window = target,
-                .message_type = XInternAtom(X->display, "WM_PROTOCOLS", true),
-                .format = 32,
-            }
-        };
-        e.xclient.data.l[0] = (long) (XInternAtom(X->display, "WM_DELETE_WINDOW", false));
-        e.xclient.data.l[1] = CurrentTime;
-        XSendEvent(X->display, target, false, NoEventMask, &e);
-    } else {
-        XDestroyWindow(X->display, target);
     }
 }
 

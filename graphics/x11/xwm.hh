@@ -15,8 +15,7 @@ public:
 
     [[nodiscard]] std::string interface_name() const override { return "X11"; }
 
-    void bring_window_to_front(LWindow *window) override;
-    void close_window(LWindow* window) override;
+    void bring_window_to_front(GWindow *window) override;
 
     [[nodiscard]] Size screen_size() const override;
 
@@ -25,9 +24,9 @@ protected:
     void setup_event_listener() override;
     void parse_next_event() override;
     void reparent_window(WHandle parent_id, WHandle child_id, Point const &offset) override;
-    void expose(LWindow* window) override;
+    void expose(GWindow* window) override;
 
-    std::unique_ptr<LWindow> create_window(Rectangle const &rectangle) const override;
+    std::unique_ptr<GWindow> create_window(Rectangle const &rectangle) const override;
 
     [[nodiscard]] Rectangle get_window_rectangle(WHandle window) const override;
 

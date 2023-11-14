@@ -9,23 +9,23 @@
 #include "resources.hh"
 #include "focusmanager.hh"
 #include "grabmanager.hh"
+#include "gwindow.hh"
 
 class WindowManager : public LWindowManager {
 public:
     explicit WindowManager(std::unique_ptr<Resources> resources)
-        : resources_(std::move(resources)), grab_manager_(this), focus_manager_(this) {}
+        : resources_(std::move(resources)), focus_manager_(this) {}
 
     void run();
 
     // overwritten from parent
-    void set_focus(std::optional<LWindow *> window) override { focus_manager_.set_focus(window); }
+    void set_focus(std::optional<LWindow *> window) override;
     virtual void grab(LWindow *window, GrabType grab_type, Point const& initial_pos) override;
-    void maximize_window(LWindow* window) override;
     Size usable_screen_size() const override { return screen_size(); }  // TODO
 
     // to be overwritten in library specific code
-    virtual void expose(LWindow* window) = 0;
-    virtual void bring_window_to_front(LWindow* window) = 0;
+    virtual void expose(GWindow* window) = 0;
+    virtual void bring_window_to_front(GWindow* window) = 0;
 
     // getters
     [[nodiscard]] FocusManager const& focus_manager() const { return focus_manager_; }
@@ -40,7 +40,7 @@ protected:
 
     [[nodiscard]] virtual Rectangle get_window_rectangle(WHandle window) const = 0;
 
-    [[nodiscard]] virtual std::unique_ptr<LWindow> create_window(Rectangle const& rectangle) const = 0;
+    [[nodiscard]] virtual std::unique_ptr<GWindow> create_window(Rectangle const& rectangle) const = 0;
 
     // desktop events
     void on_create_child(WHandle child_id);
@@ -57,7 +57,7 @@ protected:
     // shared internal fields
     std::unique_ptr<Resources> resources_;
     GrabManager  grab_manager_;
-    std::unordered_map<WHandle, std::unique_ptr<LWindow>> windows_;
+    std::unordered_map<WHandle, std::unique_ptr<GWindow>> windows_;
 
 private:
     std::unordered_map<WHandle, WHandle> parents_;  // [child] = parent
@@ -67,7 +67,7 @@ private:
     FocusManager focus_manager_;
 
     [[noreturn]] void main_loop();
-    std::optional<std::pair<std::string, Hotspot>> hotspot(LWindow* window, Point const& p) const;
+    std::optional<std::pair<std::string, Hotspot>> hotspot(GWindow* window, Point const& p) const;
 };
 
 #endif //WM_HH_

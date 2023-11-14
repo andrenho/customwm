@@ -47,7 +47,9 @@
   - [x] Faster resize performance
   - [x] Minimum size
   - [x] Maximum screen location
-- [ ] Maximize / Restore
+- [ ] Maximize
+  - [x] Maximize
+  - [ ] Restore
 - [ ] ICCCM
   - [ ] Minimize
   - Window manager properties

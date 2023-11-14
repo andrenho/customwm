@@ -195,7 +195,7 @@ void ClickEvent::to_lua(lua_State *L) const
 bool Hotspot::lua_is(lua_State *L, int index)
 {
     return lua_type(L, index) == LUA_TTABLE &&
-           luaw_hasfield(L, index, "area") && luaw_hasfield(L, index, "cursor");
+           luaw_hasfield(L, index, "area");
 }
 
 Hotspot Hotspot::from_lua(lua_State *L, int index)

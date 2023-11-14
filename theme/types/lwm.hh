@@ -15,8 +15,6 @@ struct LWindowManager {
     [[nodiscard]] virtual std::string interface_name() const = 0;
 
     virtual void set_focus(std::optional<LWindow*> window) = 0;
-    virtual void maximize_window(LWindow* window) = 0;
-    virtual void close_window(LWindow* window) = 0;
     virtual void grab(LWindow* window, GrabType grab_type, Point const& initial_pos) = 0;
 
     virtual Size screen_size() const = 0;

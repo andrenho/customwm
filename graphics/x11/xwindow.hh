@@ -4,12 +4,12 @@
 #include <X11/Xlib.h>
 #include <X11/Xft/Xft.h>
 
-#include "theme/types/lwindow.hh"
 #include "xresources.hh"
+#include "graphics/gwindow.hh"
 
 #include <map>
 
-class XWindow : public LWindow {
+class XWindow : public GWindow {
 public:
     XWindow(class XWindowManager const& wm, XResources const& resources, Rectangle const &rectangle);
     ~XWindow() override;
@@ -20,7 +20,6 @@ public:
     XWindow& operator=(XWindow&&) = delete;
 
     Window id_;
-    bool deleted = false;
 
     WHandle                id() const override { return id_; }
     Rectangle              rect(bool update_cache) const override;
@@ -30,9 +29,10 @@ public:
     std::string            name() const override;
     void                   set_cursor(std::string const &key) override;
     bool                   focused() const override;
-
     void                   move(Point const& new_pos) override;
     void                   resize(Size const& new_size) override;
+    void                   close() override;
+    void                   bring_to_front() override;
 
     // these functions are used to accelerate the painting of the screen (expose) while moving
     void                   update_backbuffer(Rectangle const& rectangle);
@@ -42,7 +42,7 @@ public:
     std::vector<std::string> child_protocols() const;
 
 private:
-    class XWindowManager const& wm_;
+    class XWindowManager const& xwm_;
     XResources const&           resources_;
     GC                          gc_;
     XftDraw*                    xft_draw_ = nullptr;

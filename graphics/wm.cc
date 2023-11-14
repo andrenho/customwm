@@ -25,10 +25,10 @@ void WindowManager::on_create_child(WHandle child_id)
     Padding padding = THEME.get_prop<Padding>("wm.padding");
 
     // create new window
-    std::unique_ptr<LWindow> parent_window = create_window(parent_rect);
+    std::unique_ptr<GWindow> parent_window = create_window(parent_rect);
     WHandle parent_id = parent_window->id();
     auto [it,_] = windows_.emplace(parent_id, std::move(parent_window));
-    LWindow* parent = it->second.get();
+    GWindow* parent = it->second.get();
     LOG.debug("Created parent window id %d", parent->id());
 
     // reparent window
@@ -51,7 +51,7 @@ void WindowManager::on_destroy_child(WHandle child_id)
     auto it = parents_.find(child_id);
     if (it != parents_.end()) {
         try {
-            LWindow* window = windows_.at(it->second).get();
+            GWindow* window = windows_.at(it->second).get();
             parents_.erase(child_id);
             THEME.call_opt("wm.on_window_unregistered", window);
             LOG.debug("Destroyed parent window id %d", window->id());
@@ -84,7 +84,7 @@ void WindowManager::on_window_click(WHandle window_id, ClickEvent const &e)
 {
     // check for clicks on the parent
     try {
-        LWindow* window = windows_.at((WHandle) window_id).get();
+        GWindow* window = windows_.at((WHandle) window_id).get();
 
         focus_manager_.set_focus(window);
 
@@ -98,7 +98,7 @@ void WindowManager::on_window_click(WHandle window_id, ClickEvent const &e)
     // check for clicks on the children
     try {
         WHandle parent_id = parents_.at(window_id);
-        LWindow* window = windows_.at((WHandle) parent_id).get();
+        GWindow* window = windows_.at((WHandle) parent_id).get();
         focus_manager_.set_focus(window);
     } catch (std::out_of_range&) {}
 }
@@ -109,7 +109,7 @@ void WindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
         return;
 
     try {
-        LWindow* window = windows_.at(parent).get();
+        GWindow* window = windows_.at(parent).get();
 
         std::optional<std::string> new_hotspot {};
         auto hs = hotspot(window, new_rel_pos);
@@ -137,12 +137,12 @@ void WindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
 void WindowManager::on_window_configure(WHandle window, Rectangle rectangle)
 {
     try {
-        LWindow* lwindow = windows_.at(window).get();
-        lwindow->update_rectangle(rectangle);
+        GWindow* gwindow = windows_.at(window).get();
+        gwindow->update_rectangle(rectangle);
     } catch (std::out_of_range&) {}
 }
 
-std::optional<std::pair<std::string, Hotspot>> WindowManager::hotspot(LWindow* window, Point const& p) const
+std::optional<std::pair<std::string, Hotspot>> WindowManager::hotspot(GWindow* window, Point const& p) const
 {
     try {
         for (auto const& [name, hotspot]: THEME.get_prop<std::map<std::string, Hotspot>>("wm.hotspots", window)) {
@@ -157,12 +157,10 @@ std::optional<std::pair<std::string, Hotspot>> WindowManager::hotspot(LWindow* w
 
 void WindowManager::grab(LWindow *window, GrabType grab_type, Point const& initial_pos)
 {
-    grab_manager_.set_grab(window, grab_type, initial_pos);
+    grab_manager_.set_grab((GWindow *) window, grab_type, initial_pos);
 }
 
-void WindowManager::maximize_window(LWindow *window)
+void WindowManager::set_focus(std::optional<LWindow *> window)
 {
-    window->save_rectangle();
-    window->set_state(WindowState::Maximized);
-    window->resize(usable_screen_size());
+    focus_manager_.set_focus(window.has_value() ? (GWindow *) *window : std::optional<GWindow *> {});
 }

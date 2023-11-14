@@ -5,12 +5,12 @@
 #include "common/logger.hh"
 #include "wm.hh"
 
-bool FocusManager::is_window_focused(LWindow const *window) const
+bool FocusManager::is_window_focused(GWindow const *window) const
 {
     return focused_window_.value_or(nullptr) == window;
 }
 
-void FocusManager::set_focus(std::optional<LWindow *> window)
+void FocusManager::set_focus(std::optional<GWindow *> window)
 {
     if (window == focused_window_)
         return;
@@ -34,11 +34,11 @@ void FocusManager::set_focus(std::optional<LWindow *> window)
         else
             std::rotate(it, it+1, window_order_.end());
 
-        wm_->bring_window_to_front(*focused_window_);
+        (*focused_window_)->bring_to_front();
     }
 }
 
-void FocusManager::remove_window(LWindow *window)
+void FocusManager::remove_window(GWindow *window)
 {
     if (focused_window_ && *focused_window_ == window)
         focused_window_ = {};

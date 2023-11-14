@@ -8,7 +8,7 @@
 
 using WHandle = uintptr_t;
 
-enum WindowState { Normal, Minimized, Maximized };
+enum class WindowState { Normal, Minimized, Maximized };
 
 struct LWindow {
     virtual ~LWindow() = default;
@@ -26,21 +26,14 @@ struct LWindow {
     virtual bool                      focused() const = 0;
     virtual void                      move(Point const& new_pos) = 0;
     virtual void                      resize(Size const& new_size) = 0;
-
-    // C++ exclusive methods
-    void                              set_child(WHandle child_id, Padding const& padding);
-    virtual void                      update_rectangle(Rectangle const& r) { rectangle_ = r; }
-    virtual void                      save_rectangle() { saved_rectangle_ = rectangle_; };
-    void                              set_state(WindowState state) { window_state_ = state; }
+    virtual void                      maximize() = 0;
+    virtual void                      close() = 0;
 
     static constexpr const char* mt_identifier = "Window";
 
 protected:
-    mutable Rectangle      rectangle_ { 0, 0, 0, 0 };
     std::optional<WHandle> child_id_;
     Padding                child_padding_;
-    Rectangle              saved_rectangle_;
-    WindowState            window_state_;
 };
 
 void l_window_create_metadata(lua_State* L);

@@ -24,7 +24,7 @@ local theme = {
 
         minimum_window_size = { w = 96, h = 32 },
         minimum_window_location = { x = -2000, y = 0 },
-        maximum_window_location = function(wm)
+        maximum_window_location = function()
             return { x = 10000, y = wm:screen_size().h - getprop("wm.padding").top }
         end,
 

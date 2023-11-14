@@ -4,13 +4,12 @@
 #include "wm.hh"
 #include "theme/theme.hh"
 
-GrabManager::GrabManager(WindowManager *wm)
-        : wm_(wm)
+GrabManager::GrabManager()
 {
     resize_update_time_ = std::chrono::milliseconds(THEME.get_prop<unsigned long>("wm.resize_update_ms"));
 }
 
-void GrabManager::set_grab(LWindow *window, GrabType grab_type, Point const& initial_pos)
+void GrabManager::set_grab(GWindow *window, GrabType grab_type, Point const& initial_pos)
 {
     if (grab_type == GrabType::NoGrab) {
         if (current_grab_)
@@ -22,9 +21,9 @@ void GrabManager::set_grab(LWindow *window, GrabType grab_type, Point const& ini
                 .grab_type = grab_type,
                 .initial_pos = initial_pos,
                 .initial_rect = window->rect(),
-                .minimum_window_size = THEME.get_prop<Size>("wm.minimum_window_size", wm_, window),
-                .minimum_window_location = THEME.get_prop<Point>("wm.minimum_window_location", wm_, window),
-                .maximum_window_location = THEME.get_prop<Point>("wm.maximum_window_location", wm_, window),
+                .minimum_window_size = THEME.get_prop<Size>("wm.minimum_window_size", window),
+                .minimum_window_location = THEME.get_prop<Point>("wm.minimum_window_location", window),
+                .maximum_window_location = THEME.get_prop<Point>("wm.maximum_window_location", window),
         };
     }
 }
@@ -43,7 +42,7 @@ void GrabManager::move_pointer(Point const &current_pos)
 
 void GrabManager::move(Point const &current_pos)
 {
-    LWindow* window = this->current_grab_->window;
+    GWindow* window = this->current_grab_->window;
     Point new_pos = this->current_grab_->initial_rect.topleft() + current_pos - this->current_grab_->initial_pos;
 
     new_pos.x = std::max(new_pos.x, this->current_grab_->minimum_window_location.x);
@@ -56,7 +55,7 @@ void GrabManager::move(Point const &current_pos)
 
 void GrabManager::resize(Point const &current_pos)
 {
-    LWindow* window = current_grab_->window;
+    GWindow* window = current_grab_->window;
     Size diff = current_pos - current_grab_->initial_pos;
     Rectangle const& initial_rect = current_grab_->initial_rect;
 

@@ -5,7 +5,7 @@
 #include "xwm.hh"
 
 XWindow::XWindow(XWindowManager const& wm, XResources const& resources, Rectangle const &rectangle)
-        : wm_(wm), resources_(resources)
+        : GWindow((WindowManager *) &wm), xwm_(wm), resources_(resources)
 {
     id_ = XCreateWindow(X->display, X->root, rectangle.x, rectangle.y, rectangle.w, rectangle.h, 0,
                         CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);
@@ -136,7 +136,7 @@ void XWindow::set_cursor(std::string const &key)
 
 bool XWindow::focused() const
 {
-    return wm_.focus_manager().is_window_focused(this);
+    return xwm_.focus_manager().is_window_focused(this);
 }
 
 std::vector<std::string> XWindow::child_protocols() const
@@ -206,3 +206,29 @@ void XWindow::expose_from_backbuffer(Rectangle const& rectangle)
               rectangle.x, rectangle.y);
 }
 
+void XWindow::close()
+{
+    auto protocols = child_protocols();
+    WHandle target = child_id_.value_or(id_);
+
+    if (std::find(protocols.begin(), protocols.end(), "WM_DELETE_WINDOW") != protocols.end()) {
+        XEvent e {
+                .xclient {
+                        .type = ClientMessage,
+                        .window = target,
+                        .message_type = XInternAtom(X->display, "WM_PROTOCOLS", true),
+                        .format = 32,
+                }
+        };
+        e.xclient.data.l[0] = (long) (XInternAtom(X->display, "WM_DELETE_WINDOW", false));
+        e.xclient.data.l[1] = CurrentTime;
+        XSendEvent(X->display, target, false, NoEventMask, &e);
+    } else {
+        XDestroyWindow(X->display, target);
+    }
+}
+
+void XWindow::bring_to_front()
+{
+    XRaiseWindow(X->display, id_);
+}

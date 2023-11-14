@@ -28,8 +28,10 @@ return {
 
         on_hotspot_click = function(window, hotspot, ev)
             callopt("super.wm.on_hotspot_click", window, hotspot, ev)
-            if hotspot == 'close' then
-                wm:close_window(window)
+            if hotspot == "close" then
+                window:close()
+            elseif hotspot == "maximize" then
+                window:maximize()
             end
         end,
 
