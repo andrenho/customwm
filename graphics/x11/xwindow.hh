@@ -28,7 +28,6 @@ public:
     void                   draw(int x, int y, std::string const &slice) override;
     std::string            name() const override;
     void                   set_cursor(std::string const &key) override;
-    bool                   focused() const override;
     void                   move(Point const& new_pos) override;
     void                   resize(Size const& new_size) override;
     void                   close() override;

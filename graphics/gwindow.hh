@@ -5,17 +5,23 @@
 
 class GWindow : public LWindow {
 public:
-    GWindow(class WindowManager* wm) : wm_(wm) {}
+    GWindow(class WindowManager* wm, Rectangle const& rectangle)
+            : wm_(wm), rectangle_(rectangle) {}
 
-    void set_child(WHandle child_id, Padding const& padding);
-    void update_rectangle(Rectangle const& r) { rectangle_ = r; }
-    void set_state(WindowState state) { window_state_ = state; }
-    virtual void bring_to_front() = 0;
+    std::optional<WHandle> child_id() const override { return child_id_; }
+    Padding                padding() const override { return child_padding_; }
+    void                   maximize_restore() override;
+    bool                   focused() const override;
 
-    void maximize() override;
+    void                   set_child(WHandle child_id, Padding const& padding);
+    void                   update_rectangle(Rectangle const& r) { rectangle_ = r; }
+    void                   set_state(WindowState state) { window_state_ = state; }
+    virtual void           bring_to_front() = 0;
 
 protected:
     class WindowManager*   wm_;
+    std::optional<WHandle> child_id_;
+    Padding                child_padding_;
     mutable Rectangle      rectangle_ { 0, 0, 0, 0 };
     Rectangle              saved_rectangle_;
     WindowState            window_state_;

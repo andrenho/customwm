@@ -31,7 +31,7 @@ return {
             if hotspot == "close" then
                 window:close()
             elseif hotspot == "maximize" then
-                window:maximize()
+                window:maximize_restore()
             end
         end,
 

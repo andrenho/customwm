@@ -61,8 +61,8 @@ void l_window_create_metadata(lua_State* L)
                 THIS->resize(luaw_to<Size>(L, 2));
                 return 0;
             }},
-            { "maximize", [](lua_State* L) {
-                THIS->maximize();
+            { "maximize_restore", [](lua_State* L) {
+                THIS->maximize_restore();
                 return 0;
             }},
             { "close", [](lua_State* L) {

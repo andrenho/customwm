@@ -5,11 +5,10 @@
 #include "xwm.hh"
 
 XWindow::XWindow(XWindowManager const& wm, XResources const& resources, Rectangle const &rectangle)
-        : GWindow((WindowManager *) &wm), xwm_(wm), resources_(resources)
+        : GWindow((WindowManager *) &wm, rectangle), xwm_(wm), resources_(resources)
 {
     id_ = XCreateWindow(X->display, X->root, rectangle.x, rectangle.y, rectangle.w, rectangle.h, 0,
                         CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);
-    rectangle_ = rectangle;
 
     backbuffer_ = XCreatePixmap(X->display, id_, rectangle.w, rectangle.h, X->depth);
 
@@ -134,11 +133,6 @@ void XWindow::set_cursor(std::string const &key)
     XDefineCursor(X->display, id_, resources_.get_cursor(key));
 }
 
-bool XWindow::focused() const
-{
-    return xwm_.focus_manager().is_window_focused(this);
-}
-
 std::vector<std::string> XWindow::child_protocols() const
 {
     std::vector<std::string> protocol_list;
@@ -165,22 +159,13 @@ void XWindow::move(Point const &new_pos)
     XMoveWindow(X->display, id_, new_pos.x, new_pos.y);
 }
 
-void XWindow::resize(Size const& nsize)
+void XWindow::resize(Size const& new_size)
 {
-    /*
-    Size minimum_size = THEME.get_prop<Size>("wm.minimum_window_size", this);  // TODO - cache this
-    Size new_size = {
-            std::max(minimum_size.w, nsize.w),
-            std::max(minimum_size.h, nsize.h),
-    };
-     */
-    Size new_size = nsize;
-
     auto child = child_id();
     if (child) {
         XResizeWindow(X->display, *child,
-                      nsize.w - (child_padding_.left + child_padding_.right) - 1,
-                      nsize.h - (child_padding_.top + child_padding_.bottom) - 1);
+                      new_size.w - (child_padding_.left + child_padding_.right) - 1,
+                      new_size.h - (child_padding_.top + child_padding_.bottom) - 1);
     }
 
     XResizeWindow(X->display, id_, new_size.w, new_size.h);

@@ -43,7 +43,6 @@ struct Rectangle {
 
     bool  contains(Point const& p) const;
     Point topleft() const { return { x, y }; }
-    Point size_as_point() const { return { (int32_t) w, (int32_t) h }; }
     Size  size() const { return { w, h }; }
 
     void to_lua(lua_State* L) const;

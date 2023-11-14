@@ -50,6 +50,7 @@
 - [ ] Maximize
   - [x] Maximize
   - [ ] Restore
+- [ ] Document classes in plantuml - maybe write a HACKING document (?)
 - [ ] ICCCM
   - [ ] Minimize
   - Window manager properties
