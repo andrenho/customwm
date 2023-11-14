@@ -19,7 +19,7 @@ public:
     virtual void           bring_to_front() = 0;
 
 protected:
-    class GWindowManager*   wm_;
+    class GWindowManager*  wm_;
     std::optional<WHandle> child_id_;
     Padding                child_padding_;
     mutable Rectangle      rectangle_ { 0, 0, 0, 0 };

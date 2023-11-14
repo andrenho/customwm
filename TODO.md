@@ -47,10 +47,11 @@
   - [x] Faster resize performance
   - [x] Minimum size
   - [x] Maximum screen location
-- [ ] Maximize
+- [x] Maximize
   - [x] Maximize
-  - [ ] Restore
-- [ ] Document classes in plantuml - maybe write a HACKING document (?)
+  - [x] Restore
+- [x] Document classes in plantuml - maybe write a HACKING document (?)
+- [x] Focus redraw issues
 - [ ] ICCCM
   - [ ] Minimize
   - Window manager properties

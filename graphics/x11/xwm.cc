@@ -173,12 +173,6 @@ void XWindowManager::expose(GWindow* window)
     XSendEvent(X->display, window->id(), false, ExposureMask, &ev);
 }
 
-void XWindowManager::bring_window_to_front(GWindow *window)
-{
-    XRaiseWindow(X->display, window->id());
-    // XSetInputFocus(X->display, window->id(), RevertToNone, CurrentTime);
-}
-
 ClickEvent XWindowManager::map_to_click_event(XButtonEvent e) const
 {
     ClickEvent click_event {

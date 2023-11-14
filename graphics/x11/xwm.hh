@@ -15,8 +15,6 @@ public:
 
     [[nodiscard]] std::string interface_name() const override { return "X11"; }
 
-    void bring_window_to_front(GWindow *window) override;
-
     [[nodiscard]] Size screen_size() const override;
 
 protected:

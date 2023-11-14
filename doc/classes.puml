@@ -10,20 +10,22 @@ rectangle theme {
 
 rectangle graphics {
     abstract class Graphics
-    abstract class WindowManager
+    abstract class GWindowManager
     abstract class GWindow
     abstract class Resources
     class GrabManager
     class FocusManager
 
-    LWindowManager <|-- WindowManager
+    LWindowManager <|-- GWindowManager
     LWindow <|-- GWindow
 
-    WindowManager *-- GrabManager
-    WindowManager *-- FocusManager
-    WindowManager *-- Resources
+    GWindowManager *-left- GrabManager
+    GWindowManager *-- FocusManager
+    GWindowManager *-- Resources
 
-    Graphics --> WindowManager : create
+    GWindow -left-> GWindowManager
+
+    Graphics -left-> GWindowManager : create
 }
 
 rectangle x11 {
@@ -33,7 +35,7 @@ rectangle x11 {
     class XResources
 
     Graphics <|-- X
-    WindowManager <|-- XWindowManager
+    GWindowManager <|-- XWindowManager
     GWindow <|-- XWindow
     Resources <|-- XResources
 }
