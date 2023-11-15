@@ -52,7 +52,11 @@
   - [x] Restore
 - [x] Document classes in plantuml - maybe write a HACKING document (?)
 - [x] Focus redraw issues
+- [ ] Improve window buffering
+  - [ ] Draw to buffer, and then expose to window (?)
+  - [ ] Use multiple windows (?)
 - [ ] ICCCM
+  - [ ] Create XAtomManager
   - [ ] Minimize
   - Window manager properties
     - [ ] WM_STATE
@@ -69,6 +73,7 @@
     - [ ] WM_COLORMAP_WINDOWS (?)
     - [ ] WM_CLIENT_MACHINE (?)
   - [ ] Selections
+    - https://specifications.freedesktop.org/clipboards-spec/clipboards-latest.txt
     - https://www.uninformativ.de/blog/postings/2017-04-02/0/POSTING-en.html
     - https://jameshunt.us/writings/managing-the-x11-clipboard/
   - [ ] Session Management

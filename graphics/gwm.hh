@@ -65,6 +65,8 @@ private:
 
     [[noreturn]] void main_loop();
     std::optional<std::pair<std::string, Hotspot>> hotspot(GWindow* window, Point const& p) const;
+
+    void window_do(WHandle handle, std::function<void(GWindow *)> const& f);
 };
 
 #endif //GWM_HH_

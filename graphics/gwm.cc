@@ -50,14 +50,13 @@ void GWindowManager::on_destroy_child(WHandle child_id)
 {
     auto it = parents_.find(child_id);
     if (it != parents_.end()) {
-        try {
-            GWindow* window = windows_.at(it->second).get();
+        window_do(it->second, [&](GWindow* window) {
             parents_.erase(child_id);
             THEME.call_opt("wm.on_window_unregistered", window);
             LOG.debug("Destroyed parent window id %d", window->id());
             focus_manager_.remove_window(window);
             windows_.erase(window->id());
-        } catch (std::out_of_range&) {}
+        });
     }
 }
 
@@ -74,18 +73,15 @@ void GWindowManager::on_desktop_click(ClickEvent const &e)
 
 void GWindowManager::on_window_expose(WHandle parent, Rectangle rectangle)
 {
-    try {
-        LWindow* window = windows_.at(parent).get();
+    window_do(parent, [&](GWindow* window) {
         THEME.call_opt("wm.on_expose", window, rectangle);
-    } catch (std::out_of_range&) {}
+    });
 }
 
 void GWindowManager::on_window_click(WHandle window_id, ClickEvent const &e)
 {
     // check for clicks on the parent
-    try {
-        GWindow* window = windows_.at((WHandle) window_id).get();
-
+    window_do(window_id, [&](GWindow* window) {
         focus_manager_.set_focus(window);
 
         auto hs = hotspot(window, e.pos);
@@ -93,13 +89,14 @@ void GWindowManager::on_window_click(WHandle window_id, ClickEvent const &e)
             THEME.call_opt("wm.on_hotspot_click", window, hs->first, e);
 
         THEME.call_opt("wm.on_window_click", window, e);
-    } catch (std::out_of_range&) {}
+    });
 
     // check for clicks on the children
     try {
         WHandle parent_id = parents_.at(window_id);
-        GWindow* window = windows_.at((WHandle) parent_id).get();
-        focus_manager_.set_focus(window);
+        window_do(parent_id, [&](GWindow* window) {
+            focus_manager_.set_focus(window);
+        });
     } catch (std::out_of_range&) {}
 }
 
@@ -108,9 +105,7 @@ void GWindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
     if (grab_manager_.is_active())
         return;
 
-    try {
-        GWindow* window = windows_.at(parent).get();
-
+    window_do(parent, [&](GWindow* window) {
         std::optional<std::string> new_hotspot {};
         auto hs = hotspot(window, new_rel_pos);
         if (hs) {
@@ -131,15 +126,14 @@ void GWindowManager::on_window_move_pointer(WHandle parent, Point new_rel_pos)
         }
 
         THEME.call_opt("wm.on_window_move_pointer", window, new_rel_pos);
-    } catch (std::out_of_range&) {}
+    });
 }
 
 void GWindowManager::on_window_configure(WHandle window, Rectangle rectangle)
 {
-    try {
-        GWindow* gwindow = windows_.at(window).get();
-        gwindow->update_rectangle(rectangle);
-    } catch (std::out_of_range&) {}
+    window_do(window, [&](GWindow* window) {
+        window->update_rectangle(rectangle);
+    });
 }
 
 std::optional<std::pair<std::string, Hotspot>> GWindowManager::hotspot(GWindow* window, Point const& p) const
@@ -163,4 +157,11 @@ void GWindowManager::grab(LWindow *window, GrabType grab_type, Point const& init
 void GWindowManager::set_focus(std::optional<LWindow *> window)
 {
     focus_manager_.set_focus(window.has_value() ? (GWindow *) *window : std::optional<GWindow *> {});
+}
+
+void GWindowManager::window_do(WHandle handle, std::function<void(GWindow *)> const &f)
+{
+    auto it = windows_.find(handle);
+    if (it != windows_.end())
+        f(it->second.get());
 }
