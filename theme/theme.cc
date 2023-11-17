@@ -10,12 +10,20 @@
 #include "util/log.hh"
 #include "luascripts.inc"
 
-Theme::Theme()
-    : Lptr(luaw_newstate(), [](lua_State* LL) { lua_close(LL); }), L(Lptr.get())
+Theme::Theme(Options *options)
+    : options_(options), Lptr(luaw_newstate(), [](lua_State* LL) { lua_close(LL); }), L(Lptr.get())
+{}
+
+void Theme::init()
 {
     set_error_action(ErrorAction::THROW);
-
     luaw_do_z(L, luascripts);
+
+    if (!options_->throw_exceptions)
+        set_error_action(ErrorAction::ERROR);
+
+    if (options_->theme_file)
+        load_theme_file(options_->theme_file.value());
 
     /*
     l_wm_create_metadata(L);

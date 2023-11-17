@@ -10,21 +10,39 @@ set(SCRIPTS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/theme/scripts)
 set(LUA_SCRIPTS
         ${SCRIPTS_PATH}/deepcopy.lua
         ${SCRIPTS_PATH}/inspect.lua
-        ${SCRIPTS_PATH}/base-theme.lua
-        ${SCRIPTS_PATH}/theme-utils.lua)
+        ${SCRIPTS_PATH}/theme-utils.lua
+        ${SCRIPTS_PATH}/base-theme.lua)
 
 set(COMMON_SRC
         theme/theme.hh theme/theme.inl theme/theme.cc theme/themeexception.hh
         theme/types/types.hh theme/types/types.cc
         util/log.hh util/log.cc)
 
+set(X11_SRC
+        graphics/graphics.hh
+        graphics/x11/graphicsx11.cc
+        graphics/x11/graphicsx11.hh)
+
 set(CUSTOMWM_SRC
         ${COMMON_SRC}
+        customwm/main.cc
         options/options.hh options/options.cc
-        customwm/main.cc)
+        windowmanager/windowmanager.cc
+        windowmanager/windowmanager.hh
+        windowmanager/events.cc
+        windowmanager/events.hh)
 
 set(CUSTOMWM_X11_SRC
+        ${X11_SRC}
         ${CUSTOMWM_SRC})
+
+#
+# External libraries
+#
+
+find_package(ZLIB REQUIRED)
+find_package(X11)
+# TODO - check for X11/wayland depending on the target
 
 #
 # Options
@@ -39,13 +57,12 @@ set(LUAJIT_A ${LUAW_PATH}/libluaw-jit.a)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-Wall -Wextra)
-include_directories(${PROJECT_SOURCE_DIR} ${GENPATH} contrib/luaw/luaw contrib/luaw/luajit/src)
-
-#
-# External libraries
-#
-
-find_package(ZLIB REQUIRED)
+include_directories(
+        ${PROJECT_SOURCE_DIR}
+        ${GENPATH}
+        contrib/luaw/luaw
+        contrib/luaw/luajit/src
+        ${X11_INCLUDE_DIR})
 
 #
 # luaw and luajit compilation
@@ -80,4 +97,4 @@ set_target_properties(luajit_a PROPERTIES IMPORTED_LOCATION ${LUAJIT_A})
 
 add_executable(customwm-x11 ${CUSTOMWM_X11_SRC})
 add_dependencies(customwm-x11 luascripts)
-target_link_libraries(customwm-x11 PUBLIC luajit_a ${ZLIB_LIBRARIES})
+target_link_libraries(customwm-x11 PUBLIC luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES})
