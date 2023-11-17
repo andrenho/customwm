@@ -20,6 +20,7 @@ set(COMMON_SRC
 
 set(CUSTOMWM_SRC
         ${COMMON_SRC}
+        options/options.hh options/options.cc
         customwm/main.cc)
 
 set(CUSTOMWM_X11_SRC
@@ -62,7 +63,6 @@ add_custom_target(distclean
 #
 # lua scripts header generation
 #
-
 
 add_custom_command(
         OUTPUT ${GENPATH}/luascripts.inc

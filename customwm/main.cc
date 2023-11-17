@@ -1,18 +1,16 @@
 /*
 #include "customwm/config/config.hh"
 #include "theme/theme.hh"
-
-#include <memory>
  */
 
-#include "util/log.hh"
+#include <memory>
+#include "options/options.hh"
 
 int main(int argc, char* argv[])
 {
-    info("Initialized");
-    /*
     // initialize services
-    auto config = std::make_unique<Config>();
+    auto config = std::make_unique<Options>(argc, argv);
+    /*
     auto theme = std::make_unique<Theme>();
 
     // startup services

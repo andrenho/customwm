@@ -1,6 +1,6 @@
 #include "init.hh"
 
-#include "../../customwm/config/config.hh"
+#include "options/options.hh"
 #include ".old/theme/theme.hh"
 
 #include ".old/graphics/graphics.hh"

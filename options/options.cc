@@ -1,11 +1,11 @@
-#include "config.hh"
-#include "common/util/log.hh"
+#include "options.hh"
+#include "util/log.hh"
 
 #include <cstdio>
 #include <cstdlib>
 #include <getopt.h>
 
-void Config::display_help(int exit_status)
+void Options::display_help(int exit_status)
 {
     printf("    -d, --display   Sets the display (default: $DISPLAY)\n");
     printf("    -t, --theme     Sets the theme (default: default)\n");
@@ -15,7 +15,7 @@ void Config::display_help(int exit_status)
     exit(exit_status);
 }
 
-void Config::init(int argc, char **argv)
+Options::Options(int argc, char **argv)
 {
     const char* display_env = getenv("DISPLAY");
     if (display_env)
