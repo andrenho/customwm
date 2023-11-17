@@ -2,7 +2,7 @@
 #include "grabmanager.hh"
 
 #include "gwm.hh"
-#include "theme/theme.hh"
+#include ".old/theme/theme.hh"
 
 GrabManager::GrabManager()
 {

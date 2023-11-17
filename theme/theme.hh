@@ -48,8 +48,6 @@ private:
     static constexpr const char* THEME_GLOBAL = "theme";
 };
 
-extern Theme THEME;
-
 #include "theme.inl"
 
 #endif //THEME_HH_

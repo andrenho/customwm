@@ -1,9 +1,9 @@
 #include "init.hh"
 
-#include "options.hh"
-#include "theme/theme.hh"
+#include "../../customwm/config/config.hh"
+#include ".old/theme/theme.hh"
 
-#include "graphics/graphics.hh"
+#include ".old/graphics/graphics.hh"
 #include "logger.hh"
 
 std::unique_ptr<GWindowManager> initialize(int argc, char* argv[])

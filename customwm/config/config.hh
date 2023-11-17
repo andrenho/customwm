@@ -1,12 +1,12 @@
-#ifndef OPTIONS_HH_
-#define OPTIONS_HH_
+#ifndef CONFIG_HH_
+#define CONFIG_HH_
 
 #include <optional>
 #include <string>
 
-class Options {
+class Config {
 public:
-    Options(int argc, char* argv[]);
+    void init(int argc, char* argv[]);
 
     std::optional<std::string> display {};
     std::optional<std::string> theme_file {};
@@ -17,4 +17,4 @@ private:
     static void display_help(int exit_status);
 };
 
-#endif //OPTIONS_HH_
+#endif //CONFIG_HH_

@@ -1,7 +1,7 @@
 #ifndef RESOURCES_HH_
 #define RESOURCES_HH_
 
-#include "theme/types/lwindow.hh"
+#include ".old/theme/types/lwindow.hh"
 
 struct Cursors {
     static constexpr const char* Pointer = "pointer";

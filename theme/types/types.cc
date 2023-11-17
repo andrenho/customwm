@@ -1,6 +1,6 @@
 #include "types.hh"
 
-#include "../../contrib/luaw/luaw/luaw.hh"
+#include "contrib/luaw/luaw/luaw.hh"
 
 Rectangle Rectangle::from_lua(lua_State *L, int index)
 {

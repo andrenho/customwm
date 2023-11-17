@@ -5,9 +5,9 @@
 #include <X11/Xft/Xft.h>
 #include <unordered_map>
 #include <string>
-#include "theme/theme.hh"
-#include "theme/types/types.hh"
-#include "graphics/resources.hh"
+#include ".old/theme/theme.hh"
+#include ".old/theme/types/types.hh"
+#include ".old/graphics/resources.hh"
 
 struct Image {
     Pixmap pixmap;

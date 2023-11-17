@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include "common/logger.hh"
+#include ".old/common/logger.hh"
 #include "gwm.hh"
 
 bool FocusManager::is_window_focused(GWindow const *window) const

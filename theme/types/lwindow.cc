@@ -1,7 +1,7 @@
 #include "lwindow.hh"
 
 #include "luaw.hh"
-#include "common/logger.hh"
+#include ".old/common/logger.hh"
 
 #define THIS (luaw_to<LWindow*>(L, 1))
 

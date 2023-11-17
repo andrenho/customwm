@@ -9,7 +9,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-#include "common/logger.hh"
+#include ".old/common/logger.hh"
 #include "x.hh"
 
 XResources::XResources()

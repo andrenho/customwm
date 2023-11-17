@@ -1,7 +1,7 @@
 #ifndef GWINDOW_HH_
 #define GWINDOW_HH_
 
-#include "theme/types/lwindow.hh"
+#include ".old/theme/types/lwindow.hh"
 
 class GWindow : public LWindow {
 public:

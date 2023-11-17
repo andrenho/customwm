@@ -2,7 +2,7 @@
 #define GRABMANAGER_HH_
 
 #include "gwindow.hh"
-#include "theme/types/lwm.hh"
+#include ".old/theme/types/lwm.hh"
 
 #include <chrono>
 using sc = std::chrono::system_clock;

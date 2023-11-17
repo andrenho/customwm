@@ -5,7 +5,7 @@
 #include <memory>
 #include <unordered_map>
 
-#include "theme/types/lwm.hh"
+#include ".old/theme/types/lwm.hh"
 #include "resources.hh"
 #include "focusmanager.hh"
 #include "grabmanager.hh"

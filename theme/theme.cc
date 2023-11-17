@@ -6,13 +6,9 @@
 #include <fstream>
 
 #include "themeexception.hh"
-#include "types/exceptions.hh"
-#include "types/lwm.hh"
-#include "types/lwindow.hh"
-#include "common/logger.hh"
-#include "scripts/luascripts.inc"
-
-Theme THEME;
+#include "theme/types/exceptions.hh"
+#include "util/log.hh"
+#include "luascripts.inc"
 
 Theme::Theme()
     : Lptr(luaw_newstate(), [](lua_State* LL) { lua_close(LL); }), L(Lptr.get())
@@ -21,8 +17,10 @@ Theme::Theme()
 
     luaw_do_z(L, luascripts);
 
+    /*
     l_wm_create_metadata(L);
     l_window_create_metadata(L);
+     */
 }
 
 void Theme::set_error_action(ErrorAction action)
@@ -30,13 +28,13 @@ void Theme::set_error_action(ErrorAction action)
     switch (action) {
         case ErrorAction::LOG:
             lua_atpanic(L, [](lua_State* LL) -> int {
-                LOG.error("lua error: %s", lua_tostring(LL, -1));
+                error("lua error: %s", lua_tostring(LL, -1));
                 return 0;
             });
             break;
         case ErrorAction::ERROR:
             lua_atpanic(L, [](lua_State* LL) -> int {
-                LOG.error("lua error: %s", lua_tostring(LL, -1));
+                error("lua error: %s", lua_tostring(LL, -1));
                 exit(EXIT_FAILURE);
             });
             break;

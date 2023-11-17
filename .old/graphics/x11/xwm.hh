@@ -1,10 +1,10 @@
 #ifndef WMX11_HH_
 #define WMX11_HH_
 
-#include "theme/theme.hh"
+#include ".old/theme/theme.hh"
 #include "xwindow.hh"
 #include "xresources.hh"
-#include "graphics/gwm.hh"
+#include ".old/graphics/gwm.hh"
 
 #include <unordered_map>
 #include <X11/Xlib.h>

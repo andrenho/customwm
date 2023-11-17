@@ -1,11 +1,11 @@
-#include "options.hh"
-#include "common/logger.hh"
+#include "config.hh"
+#include "common/util/log.hh"
 
 #include <cstdio>
 #include <cstdlib>
 #include <getopt.h>
 
-void Options::display_help(int exit_status)
+void Config::display_help(int exit_status)
 {
     printf("    -d, --display   Sets the display (default: $DISPLAY)\n");
     printf("    -t, --theme     Sets the theme (default: default)\n");
@@ -15,7 +15,7 @@ void Options::display_help(int exit_status)
     exit(exit_status);
 }
 
-Options::Options(int argc, char **argv)
+void Config::init(int argc, char **argv)
 {
     const char* display_env = getenv("DISPLAY");
     if (display_env)
@@ -49,7 +49,7 @@ Options::Options(int argc, char **argv)
                 throw_exceptions = true;
                 break;
             case 'v':
-                LOG.level = Logger::Debug;
+                log_level = LogLevel::Debug;
                 break;
             case '?':
                 display_help(EXIT_FAILURE);

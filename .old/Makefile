@@ -60,7 +60,7 @@ ${OBJ_COMMON} ${OBJ_GRAPHICS_X11} ${OBJ_CUSTOMWM}: ${LUAJIT_HEADER}
 # scripts
 #
 
-theme/theme.o: scripts/luascripts.inc
+theme/theme.o: scripts
 
 scripts/luascripts.inc: ${LUA_SCRIPTS} ${LUAZH}
 	${LUAZH} luascripts ${LUASZ_FLAGS} ${LUA_SCRIPTS} > $@

@@ -1,6 +1,6 @@
 #include "gwm.hh"
-#include "theme/theme.hh"
-#include "common/logger.hh"
+#include ".old/theme/theme.hh"
+#include ".old/common/logger.hh"
 
 void GWindowManager::run()
 {
