@@ -12,6 +12,8 @@ public:
 
     void init() override;
 
+    void listen_to_wm_events() override;
+
 private:
     Display*      display  = nullptr;
     int           screen   = 0;

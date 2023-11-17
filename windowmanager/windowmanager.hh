@@ -3,12 +3,13 @@
 
 class WindowManager {
 public:
-    explicit WindowManager(class Theme* theme) : theme_(theme) {}
+    explicit WindowManager(class Theme* theme, class Graphics* graphics) : theme_(theme), graphics_(graphics) {}
 
-    void init() {}
+    void init();
 
 private:
     class Theme* theme_;
+    class Graphics* graphics_;
 };
 
 #endif //WINDOWMANAGER_HH_

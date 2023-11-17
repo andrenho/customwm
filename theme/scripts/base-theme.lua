@@ -125,7 +125,7 @@ local theme = {
         --
 
         after_start = function()
-            print("Started " .. wm:interface_name() .. " backend.")
+            -- print("Started " .. wm:interface_name() .. " backend.")
         end,
 
         after_window_registered = function(window)

@@ -8,6 +8,8 @@ public:
 
     virtual void init() = 0;
 
+    virtual void listen_to_wm_events() = 0;
+
 protected:
     class Options* options_;
 };

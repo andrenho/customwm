@@ -29,6 +29,9 @@ void Theme::init()
     l_wm_create_metadata(L);
     l_window_create_metadata(L);
      */
+
+    if (!options_->throw_exceptions)
+        set_error_action(ErrorAction::LOG);
 }
 
 void Theme::set_error_action(ErrorAction action)
