@@ -30,7 +30,7 @@ local theme = {
 
         position_strategy = "cascade",   -- cascade, center, random, maximized, requested
 
-        window_starting_location = function(child_rect, screen_size)
+        window_starting_location = function(wm, child_rect, screen_size)
 
             local function window_starting_position(child_rect_, screen_size_)
                 local strategy = getprop("wm.position_strategy")
@@ -68,7 +68,7 @@ local theme = {
             }
         end,
 
-        hotspots = function(window)
+        hotspots = function(wm, window)
             local r = window:rect()
             local border = getprop("wm.resize_border", window)
             return {
@@ -124,19 +124,19 @@ local theme = {
         -- EVENTS (overrideable)
         --
 
-        after_start = function()
-            -- print("Started " .. wm:interface_name() .. " backend.")
+        after_start = function(wm)
+            print("Started " .. wm:interface_name() .. " backend.")
         end,
 
-        after_window_registered = function(window)
+        after_window_registered = function(wm, window)
             print("Window registered: ", window:id())
         end,
 
-        on_window_unregistered = function(window)
+        on_window_unregistered = function(wm, window)
             print("Window unregistered: ", window:id())
         end,
 
-        on_expose = function(window, exposed_area)
+        on_expose = function(wm, window, exposed_area)
             if window:focused() then
                 window:fill("#a0a0ff")
             else
@@ -147,32 +147,32 @@ local theme = {
             })
         end,
 
-        on_window_click = function(window, ev)
+        on_window_click = function(wm, window, ev)
             if ev.button == 'left' and not ev.pressed then
                 wm:grab(window, "none", ev.abs_pos)
             end
         end,
 
-        on_desktop_click = function(ev)
+        on_desktop_click = function(wm, ev)
         end,
 
-        on_hotspot_click = function(window, hotspot, ev)
+        on_hotspot_click = function(wm, window, hotspot, ev)
             local hs = getprop("wm.hotspots", window)[hotspot]
             if hs and hs.grab and ev.pressed and ev.button == 'left' then
                 wm:grab(window, hs.grab, ev.abs_pos)
             end
         end,
 
-        on_window_move_pointer = function(window, pos)
+        on_window_move_pointer = function(wm, window, pos)
         end,
 
-        on_move_pointer = function(pos)
+        on_move_pointer = function(wm, pos)
         end,
 
-        on_enter_hotspot = function(window, hotspot)
+        on_enter_hotspot = function(wm, window, hotspot)
         end,
 
-        on_leave_hotspot = function(window, hotspot)
+        on_leave_hotspot = function(wm, window, hotspot)
         end,
     }
 

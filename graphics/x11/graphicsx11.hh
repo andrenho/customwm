@@ -11,8 +11,11 @@ public:
     ~GraphicsX11() override;
 
     void init() override;
+    std::string interface_name() const override { return "X11"; }
 
-    void listen_to_wm_events() override;
+    void subscribe_to_wm_events() override;
+
+    std::optional<Event> next_event() override;
 
 private:
     Display*      display  = nullptr;

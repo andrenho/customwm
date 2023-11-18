@@ -74,7 +74,7 @@ Composite:
 The **XWindow Manager** has the following responsibilities:
  - Own the outer windows and keep track of them
  - Reparent and deal with inner window lifecycle
- - Events: either deal with them or send them up to the theme
+ - WMEvents: either deal with them or send them up to the theme
  - Execute things requested by the theme on X11
 
 The **base theme** has the following responsabilities:

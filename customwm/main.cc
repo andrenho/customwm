@@ -3,7 +3,7 @@
 #include "theme/theme.hh"
 #include "graphics/x11/graphicsx11.hh"
 #include "windowmanager/windowmanager.hh"
-#include "windowmanager/events.hh"
+#include "windowmanager/wmevents.hh"
 
 int main(int argc, char* argv[])
 {
@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     std::unique_ptr<Graphics> graphics = std::make_unique<GraphicsX11>(config.get());
 
     auto window_manager = std::make_unique<WindowManager>(theme.get(), graphics.get());
-    auto events = std::make_unique<Events>(theme.get(), graphics.get(), window_manager.get());
+    auto events = std::make_unique<WMEvents>(theme.get(), graphics.get(), window_manager.get());
 
     // startup services
     theme->init();

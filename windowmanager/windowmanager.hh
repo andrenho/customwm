@@ -10,6 +10,8 @@ public:
 private:
     class Theme* theme_;
     class Graphics* graphics_;
+
+    void create_lua_metatable();
 };
 
 #endif //WINDOWMANAGER_HH_

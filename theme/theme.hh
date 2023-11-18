@@ -30,6 +30,7 @@ public:
     std::vector<uint8_t> resource_image(std::string const& key) const;
 
     template <typename T> void create_global_object(std::string const& lua_name, T* object);
+    template <typename T> void create_metatable(LuaMetatable const& mt) { luaw_set_metatable<T>(L, mt); }
 
     void print_effective_theme() const;
     void check_for_theme_file_reloaded();

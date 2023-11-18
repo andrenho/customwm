@@ -19,6 +19,7 @@ set(COMMON_SRC
         util/log.hh util/log.cc)
 
 set(X11_SRC
+        graphics/event.hh
         graphics/graphics.hh
         graphics/x11/graphicsx11.cc
         graphics/x11/graphicsx11.hh)
@@ -29,8 +30,8 @@ set(CUSTOMWM_SRC
         options/options.hh options/options.cc
         windowmanager/windowmanager.cc
         windowmanager/windowmanager.hh
-        windowmanager/events.cc
-        windowmanager/events.hh)
+        windowmanager/wmevents.cc
+        windowmanager/wmevents.hh)
 
 set(CUSTOMWM_X11_SRC
         ${X11_SRC}

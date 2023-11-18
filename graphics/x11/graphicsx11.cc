@@ -33,7 +33,7 @@ GraphicsX11::~GraphicsX11()
     }
 }
 
-void GraphicsX11::listen_to_wm_events()
+void GraphicsX11::subscribe_to_wm_events()
 {
     XSetErrorHandler([](Display* dsp, XErrorEvent* e) -> int {
         if (e->error_code == BadAccess && e->request_code == 2 && e->minor_code == 0) {
@@ -54,4 +54,14 @@ void GraphicsX11::listen_to_wm_events()
     XGrabKeyboard(display, root, true, GrabModeAsync, GrabModeAsync, CurrentTime);
 
     XSync(display, false);
+}
+
+std::optional<Event> GraphicsX11::next_event()
+{
+    XEvent e;
+    XNextEvent(display, &e);
+
+
+
+    return {};
 }
