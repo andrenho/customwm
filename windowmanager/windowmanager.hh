@@ -16,11 +16,12 @@ public:
     void add_child_window(WindowHandle child_handle);
     void remove_window(WindowHandle window_handle);
 
+    static void create_lua_metatable(class Theme* theme);
+
 private:
     class Theme* theme_;
     class Graphics* graphics_;
 
-    void create_lua_metatable();
     ParentWindow* find_parent(WindowHandle parent_handle) const;
 
     std::unordered_map<WindowHandle, std::unique_ptr<ParentWindow>> parents_;

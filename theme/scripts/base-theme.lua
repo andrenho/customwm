@@ -129,11 +129,11 @@ local theme = {
         end,
 
         after_window_reparented = function(wm, window)
-            print("Window reparented: ", window:id())
+            print("Window reparented: ", window:handle())
         end,
 
         on_window_unregistered = function(wm, window)
-            print("Window unregistered: ", window:id())
+            print("Window unregistered: ", window:handle())
         end,
 
         on_expose = function(wm, window, exposed_area)

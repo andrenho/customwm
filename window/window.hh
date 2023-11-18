@@ -11,6 +11,10 @@ public:
 
     WindowHandle handle() const { return handle_; }
 
+    static void create_lua_metatable(class Theme* theme);
+
+    static constexpr const char* mt_identifier = "Window";
+
 protected:
     class Graphics* graphics_;
 

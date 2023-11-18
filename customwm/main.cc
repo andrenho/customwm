@@ -16,6 +16,9 @@ int main(int argc, char* argv[])
     auto window_manager = std::make_unique<WindowManager>(theme.get(), graphics.get());
     auto events = std::make_unique<WMEvents>(theme.get(), graphics.get(), window_manager.get());
 
+    WindowManager::create_lua_metatable(theme.get());
+    Window_::create_lua_metatable(theme.get());
+
     // startup services
     theme->init();
     graphics->init();

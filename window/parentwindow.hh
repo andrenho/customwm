@@ -11,6 +11,8 @@ public:
 
     WindowHandle child_handle() const { return child_handle_; }
 
+    static constexpr const char* mt_identifier = "Window";
+
 private:
     WindowHandle child_handle_ = 0;
 };
