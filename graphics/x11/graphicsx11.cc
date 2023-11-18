@@ -16,6 +16,8 @@ void GraphicsX11::init()
         exit(EXIT_FAILURE);
     }
 
+    XSync(display, false);
+
     screen = DefaultScreen(display);
     root = DefaultRootWindow(display);
     visual = DefaultVisual(display, screen);
@@ -26,6 +28,9 @@ void GraphicsX11::init()
     white = WhitePixel(display, screen);
 
     debug("X11 screen initialized");
+
+    if (options_->debug_mode)
+        XSynchronize(display, True);
 }
 
 GraphicsX11::~GraphicsX11()
@@ -55,8 +60,6 @@ void GraphicsX11::subscribe_to_wm_events()
                                       ButtonPressMask | ButtonReleaseMask | KeyPressMask | KeyReleaseMask);
     XSetInputFocus(display, root, RevertToNone, CurrentTime);
     XGrabKeyboard(display, root, true, GrabModeAsync, GrabModeAsync, CurrentTime);
-
-    XSync(display, false);
 }
 
 std::optional<Event> GraphicsX11::next_event()

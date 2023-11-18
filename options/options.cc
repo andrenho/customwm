@@ -10,6 +10,7 @@ void Options::display_help(int exit_status)
     printf("    -d, --display   Sets the display (default: $DISPLAY)\n");
     printf("    -t, --theme     Sets the theme (default: default)\n");
     printf("    -v, --verbose   Print debugging logs\n");
+    printf("    -D, --debug     Run in debugging mode (very slow)\n");
     printf("    -x, --exception Throw naked exception on error\n");
     printf("    -h, --help      Prints this help\n");
     exit(exit_status);
@@ -26,12 +27,13 @@ Options::Options(int argc, char **argv)
                 { "display", required_argument, nullptr, 'd' },
                 { "theme", required_argument, nullptr, 't' },
                 { "verbose", no_argument, nullptr, 'v' },
+                { "debug", no_argument, nullptr, 'D' },
                 { "exception", no_argument, nullptr, 'x' },
                 { "help", required_argument, nullptr, 'h' },
         };
 
         int idx;
-        int c = getopt_long(argc, argv, "d:t:hvx", long_options, &idx);
+        int c = getopt_long(argc, argv, "d:t:hvDx", long_options, &idx);
         if (c == -1)
             break;
 
@@ -50,6 +52,9 @@ Options::Options(int argc, char **argv)
                 break;
             case 'v':
                 log_level = LogLevel::Debug;
+                break;
+            case 'D':
+                debug_mode = true;
                 break;
             case '?':
                 display_help(EXIT_FAILURE);

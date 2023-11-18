@@ -47,7 +47,6 @@ void WindowManager::add_child_window(WindowHandle child_handle)
 
 void WindowManager::remove_window(WindowHandle window_handle)
 {
-
     for (auto const& [parent_handle, parent_window]: parents_) {
         if (parent_window->child_handle() == window_handle) {
             parents_.erase(parent_handle);

@@ -6,7 +6,6 @@
 class ParentWindow : public Window_ {
 public:
     ParentWindow(class Graphics* graphics, Rectangle const& rectangle) : Window_(graphics, rectangle) {}
-    ~ParentWindow() override;
 
     void reparent_child(WindowHandle child_handle, Point const& offset);
 
