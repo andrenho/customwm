@@ -2,8 +2,7 @@
 #define EVENT_HH_
 
 #include <variant>
-
-using WindowHandle = uintptr_t;
+#include "whandle.hh"
 
 struct WindowAdded {
     WindowHandle handle;

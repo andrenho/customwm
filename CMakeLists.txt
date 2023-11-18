@@ -11,31 +11,34 @@ set(LUA_SCRIPTS
         ${SCRIPTS_PATH}/deepcopy.lua
         ${SCRIPTS_PATH}/inspect.lua
         ${SCRIPTS_PATH}/theme-utils.lua
-        ${SCRIPTS_PATH}/base-theme.lua)
+        ${SCRIPTS_PATH}/base-theme.lua
+)
 
 set(COMMON_SRC
+        options/options.hh options/options.cc
         theme/theme.hh theme/theme.inl theme/theme.cc theme/themeexception.hh
         theme/types/types.hh theme/types/types.cc
-        util/log.hh util/log.cc)
+        graphics/whandle.hh graphics/event.hh graphics/graphics.hh
+        util/log.hh util/log.cc
+)
 
 set(X11_SRC
-        graphics/event.hh
-        graphics/graphics.hh
-        graphics/x11/graphicsx11.cc
-        graphics/x11/graphicsx11.hh)
+        graphics/x11/graphicsx11.hh graphics/x11/graphicsx11.cc
+)
 
 set(CUSTOMWM_SRC
         ${COMMON_SRC}
         customwm/main.cc
-        options/options.hh options/options.cc
-        windowmanager/windowmanager.cc
-        windowmanager/windowmanager.hh
-        windowmanager/wmevents.cc
-        windowmanager/wmevents.hh)
+        windowmanager/windowmanager.hh windowmanager/windowmanager.cc
+        windowmanager/wmevents.hh windowmanager/wmevents.cc
+        window/window.hh window/window.cc
+        window/parentwindow.hh window/parentwindow.cc
+)
 
 set(CUSTOMWM_X11_SRC
         ${X11_SRC}
-        ${CUSTOMWM_SRC})
+        ${CUSTOMWM_SRC}
+)
 
 #
 # External libraries

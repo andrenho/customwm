@@ -15,10 +15,6 @@ private:
     class Theme* theme_;
     class Graphics* graphics_;
     class WindowManager* window_manager_;
-
-    void on_window_added(WindowAdded const &added);
-
-    void on_window_removed(WindowRemoved const &removed);
 };
 
 #endif //WMEVENTS_HH_

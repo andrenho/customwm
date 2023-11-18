@@ -1,5 +1,7 @@
 #include "windowmanager.hh"
 
+#include <algorithm>
+
 #include "graphics/graphics.hh"
 #include "theme/theme.hh"
 
@@ -22,3 +24,44 @@ void WindowManager::create_lua_metatable()
     });
 #undef THIS
 }
+
+void WindowManager::add_child_window(WindowHandle child_handle)
+{
+    // where to place the new window?
+    Rectangle child_rect            = graphics_->get_window_rectangle(child_handle);
+    Size      screen_size           = graphics_->screen_size();
+    auto      [parent_rect, offset] = theme_->get_prop<WindowStartingLocation>("wm.window_starting_location", this, child_rect, screen_size);
+    Padding   padding               = theme_->get_prop<Padding>("wm.padding", this);
+
+    // create new window
+    auto parent_uptr = std::make_unique<ParentWindow>(graphics_, parent_rect);
+    ParentWindow* parent = parents_.emplace(parent_uptr->handle(), std::move(parent_uptr)).first->second.get();
+
+    // reparent child window
+    parent->reparent_child(child_handle, offset);
+
+    // TODO - theme_->call_opt("wm.after_window_reparented", this, parent);
+
+    // TODO - set focus
+}
+
+void WindowManager::remove_window(WindowHandle window_handle)
+{
+
+    for (auto const& [parent_handle, parent_window]: parents_) {
+        if (parent_window->child_handle() == window_handle) {
+            parents_.erase(parent_handle);
+            return;
+        }
+    }
+}
+
+ParentWindow *WindowManager::find_parent(WindowHandle parent_handle) const
+{
+    try {
+        return parents_.at(parent_handle).get();
+    } catch (std::out_of_range&) {
+        return nullptr;
+    }
+}
+

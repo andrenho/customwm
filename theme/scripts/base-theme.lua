@@ -128,8 +128,8 @@ local theme = {
             print("Started " .. wm:interface_name() .. " backend.")
         end,
 
-        after_window_registered = function(wm, window)
-            print("Window registered: ", window:id())
+        after_window_reparented = function(wm, window)
+            print("Window reparented: ", window:id())
         end,
 
         on_window_unregistered = function(wm, window)
