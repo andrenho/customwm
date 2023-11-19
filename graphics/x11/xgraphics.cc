@@ -152,5 +152,5 @@ void XGraphics::fill(WindowHandle window, Color const& color, Rectangle const &r
 {
     WindowInfo const& info = window_info_.at(window);
     XSetForeground(display, info.gc, resources_.get_color(color));
-    XFillRectangle(display, window, info.gc, rect.x, rect.y, rect.w, rect.h);
+    XFillRectangle(display, info.backbuffer, info.gc, rect.x, rect.y, rect.w, rect.h);
 }

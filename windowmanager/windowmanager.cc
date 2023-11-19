@@ -32,11 +32,11 @@ void WindowManager::add_child_window(WindowHandle child_handle)
     Padding   padding               = theme_->get_prop<Padding>("wm.padding", this);
 
     // create new window
-    auto parent_uptr = std::make_unique<ParentWindow>(graphics_, parent_rect);
+    auto parent_uptr = std::make_unique<ParentWindow>(theme_, graphics_, parent_rect);
     ParentWindow* parent = parents_.emplace(parent_uptr->handle(), std::move(parent_uptr)).first->second.get();
 
     // reparent child window
-    parent->reparent_child(child_handle, offset);
+    parent->reparent_child(child_handle, offset, padding);
 
     theme_->call_opt("wm.after_window_reparented", this, parent);
 

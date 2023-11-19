@@ -6,16 +6,18 @@
 
 class Window_ {
 public:
-    Window_(class Graphics* graphics, Rectangle const& rectangle);
+    Window_(class Theme* theme, class Graphics* graphics, Rectangle const& rectangle);
     virtual ~Window_();
+
+    void draw();
 
     WindowHandle handle() const { return handle_; }
 
     static void create_lua_metatable(class Theme* theme);
-
     static constexpr const char* mt_identifier = "Window";
 
 protected:
+    class Theme* theme_;
     class Graphics* graphics_;
 
     WindowHandle handle_;

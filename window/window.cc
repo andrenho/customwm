@@ -3,14 +3,26 @@
 #include "graphics/graphics.hh"
 #include "theme/theme.hh"
 
-Window_::Window_(Graphics *graphics, Rectangle const &rectangle)
-        : graphics_(graphics), handle_(graphics_->create_window(rectangle)), rectangle_(rectangle)
+Window_::Window_(Theme* theme, Graphics *graphics, Rectangle const &rectangle)
+        : theme_(theme), graphics_(graphics), handle_(graphics_->create_window(rectangle)), rectangle_(rectangle)
 {
+    draw();
 }
 
 Window_::~Window_()
 {
     graphics_->destroy_window(handle_);
+}
+
+void Window_::draw()
+{
+    theme_->call_opt("wm.draw_window", this);
+}
+
+void Window_::fill(Color const &color, std::optional<Rectangle> rect)
+{
+    Rectangle rectangle = rect.value_or(Rectangle { 0, 0, rectangle_.w, rectangle_.h });
+    graphics_->fill(handle_, color, rectangle);
 }
 
 void Window_::create_lua_metatable(Theme* theme)
@@ -28,12 +40,7 @@ void Window_::create_lua_metatable(Theme* theme)
                 THIS->fill(luaw_to<Color>(L, 2), {});
             return 0;
         }},
-    });
+   });
 #undef THIS
 }
 
-void Window_::fill(Color const &color, std::optional<Rectangle> rect)
-{
-    Rectangle rectangle = rect.value_or(Rectangle { 0, 0, rectangle_.w, rectangle_.h });
-    graphics_->fill(handle_, color, rectangle);
-}

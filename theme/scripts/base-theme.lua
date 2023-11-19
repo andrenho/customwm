@@ -136,6 +136,10 @@ local theme = {
             print("Window unregistered: ", window:handle())
         end,
 
+        draw_window = function(window)
+            window:fill("#a0a0ff")
+        end,
+
         on_expose = function(wm, window, exposed_area)
             if window:focused() then
                 window:fill("#a0a0ff")
