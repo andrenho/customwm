@@ -11,7 +11,7 @@
 class XGraphics : public Graphics {
 public:
     explicit XGraphics(class Options *options, class Theme* theme)
-            : Graphics(options), resources(this, theme) {}
+            : Graphics(options), resources_(this, theme) {}
     ~XGraphics() override;
 
     void init() override;
@@ -28,6 +28,7 @@ public:
     void         destroy_window(WindowHandle window) override;
     void         reparent_window(WindowHandle parent, WindowHandle child, Point const& offset) override;
     void         unparent_window(WindowHandle child) override;
+    void         fill(WindowHandle window, Color const& color, Rectangle const& rect) override;
 
     // events
     void                 subscribe_to_wm_events() override;
@@ -46,7 +47,7 @@ private:
     unsigned long black    = 0;
     unsigned long white    = 0;
 
-    XResources    resources;
+    XResources    resources_;
 
     struct WindowInfo {
         Pixmap backbuffer;

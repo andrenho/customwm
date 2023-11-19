@@ -19,7 +19,7 @@
 - [x] Events
 - [x] New window - reparent, add existing windows
 - [x] Window object
-- [ ] Resource manager
+- [x] Resource manager
 - [ ] Fill, (RM: colors)
 - [ ] RM: Load image
 - [ ] Display image

@@ -19,6 +19,10 @@ protected:
     class Graphics* graphics_;
 
     WindowHandle handle_;
+    Rectangle    rectangle_;
+
+private:
+    void fill(Color const& color, std::optional<Rectangle> rect);
 };
 
 #endif //WINDOW_HH_

@@ -32,7 +32,7 @@ void XGraphics::init()
     if (options_->debug_mode)
         XSynchronize(display, True);
 
-    resources.init();
+    resources_.init();
 }
 
 XGraphics::~XGraphics()
@@ -146,4 +146,11 @@ void XGraphics::unparent_window(WindowHandle child)
     XReparentWindow(display, child, root, 0, 0);
 
     debug("Window %d unparented", child);
+}
+
+void XGraphics::fill(WindowHandle window, Color const& color, Rectangle const &rect)
+{
+    WindowInfo const& info = window_info_.at(window);
+    XSetForeground(display, info.gc, resources_.get_color(color));
+    XFillRectangle(display, window, info.gc, rect.x, rect.y, rect.w, rect.h);
 }
