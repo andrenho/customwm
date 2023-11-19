@@ -20,7 +20,7 @@
 - [x] New window - reparent, add existing windows
 - [x] Window object
 - [x] Resource manager
-- [ ] Fill, (RM: colors)
+- [x] Fill, (RM: colors)
 - [ ] RM: Load image
 - [ ] Display image
 - [ ] RM: Load font
