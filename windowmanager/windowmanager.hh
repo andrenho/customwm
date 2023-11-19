@@ -15,6 +15,7 @@ public:
 
     void add_child_window(WindowHandle child_handle);
     void remove_window(WindowHandle window_handle);
+    void expose_window(WindowHandle window, Rectangle const& rectangle);
 
     static void create_lua_metatable(class Theme* theme);
 

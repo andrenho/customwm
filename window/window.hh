@@ -10,6 +10,7 @@ public:
     virtual ~Window_();
 
     void draw();
+    void expose(Rectangle const& rectangle);
 
     WindowHandle handle() const { return handle_; }
 

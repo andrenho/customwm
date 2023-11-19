@@ -22,7 +22,12 @@ void Window_::draw()
 void Window_::fill(Color const &color, std::optional<Rectangle> rect)
 {
     Rectangle rectangle = rect.value_or(Rectangle { 0, 0, rectangle_.w, rectangle_.h });
-    graphics_->fill(handle_, color, rectangle);
+    graphics_->window_fill(handle_, color, rectangle);
+}
+
+void Window_::expose(Rectangle const &rectangle)
+{
+    graphics_->window_swap_buffers(handle_, rectangle);
 }
 
 void Window_::create_lua_metatable(Theme* theme)
@@ -43,4 +48,3 @@ void Window_::create_lua_metatable(Theme* theme)
    });
 #undef THIS
 }
-

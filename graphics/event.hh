@@ -3,6 +3,7 @@
 
 #include <variant>
 #include "windowhandle.hh"
+#include "theme/types/types.hh"
 
 struct WindowAdded {
     WindowHandle handle;
@@ -12,6 +13,11 @@ struct WindowRemoved {
     WindowHandle handle;
 };
 
-using Event = std::variant<WindowAdded, WindowRemoved>;
+struct WindowExpose {
+    WindowHandle handle;
+    Rectangle    rectangle;
+};
+
+using Event = std::variant<WindowAdded, WindowRemoved, WindowExpose>;
 
 #endif //EVENT_HH_

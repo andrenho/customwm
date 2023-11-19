@@ -28,7 +28,8 @@ public:
     void         destroy_window(WindowHandle window) override;
     void         reparent_window(WindowHandle parent, WindowHandle child, Point const& offset) override;
     void         unparent_window(WindowHandle child) override;
-    void         fill(WindowHandle window, Color const& color, Rectangle const& rect) override;
+    void         window_fill(WindowHandle window, Color const& color, Rectangle const& rect) override;
+    void         window_swap_buffers(WindowHandle window, Rectangle const& rectangle) override;
 
     // events
     void                 subscribe_to_wm_events() override;

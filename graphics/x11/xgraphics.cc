@@ -74,6 +74,11 @@ std::optional<Event> XGraphics::next_event()
             return WindowAdded { e.xmaprequest.window };
         case UnmapNotify:
             return WindowRemoved { e.xunmap.window };
+        case Expose:
+            return WindowExpose {
+                .handle = e.xexpose.window,
+                .rectangle = Rectangle { e.xexpose.x, e.xexpose.y, e.xexpose.width, e.xexpose.height },
+            };
     }
 
     return {};
@@ -148,9 +153,16 @@ void XGraphics::unparent_window(WindowHandle child)
     debug("Window %d unparented", child);
 }
 
-void XGraphics::fill(WindowHandle window, Color const& color, Rectangle const &rect)
+void XGraphics::window_fill(WindowHandle window, Color const& color, Rectangle const &rect)
 {
     WindowInfo const& info = window_info_.at(window);
     XSetForeground(display, info.gc, resources_.get_color(color));
     XFillRectangle(display, info.backbuffer, info.gc, rect.x, rect.y, rect.w, rect.h);
+}
+
+void XGraphics::window_swap_buffers(WindowHandle window, Rectangle const &rectangle)
+{
+    WindowInfo const& info = window_info_.at(window);
+    XCopyArea(display, info.backbuffer, window, info.gc, rectangle.x, rectangle.y, rectangle.w, rectangle.h,
+              rectangle.x, rectangle.y);
 }

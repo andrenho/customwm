@@ -53,6 +53,13 @@ void WindowManager::remove_window(WindowHandle window_handle)
     }
 }
 
+void WindowManager::expose_window(WindowHandle window, Rectangle const& rectangle)
+{
+    ParentWindow* parent_window = find_parent(window);
+    if (parent_window)
+        parent_window->expose(rectangle);
+}
+
 ParentWindow *WindowManager::find_parent(WindowHandle parent_handle) const
 {
     try {
