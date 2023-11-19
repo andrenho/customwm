@@ -18,12 +18,13 @@ set(COMMON_SRC
         options/options.hh options/options.cc
         theme/theme.hh theme/theme.inl theme/theme.cc theme/themeexception.hh
         theme/types/types.hh theme/types/types.cc
-        graphics/whandle.hh graphics/event.hh graphics/graphics.hh
+        graphics/windowhandle.hh graphics/event.hh graphics/graphics.hh
         util/log.hh util/log.cc
 )
 
 set(X11_SRC
-        graphics/x11/graphicsx11.hh graphics/x11/graphicsx11.cc
+        graphics/x11/xgraphics.hh graphics/x11/xgraphics.cc
+        graphics/x11/xresources.hh graphics/x11/xresources.cc
 )
 
 set(CUSTOMWM_SRC
@@ -38,6 +39,7 @@ set(CUSTOMWM_SRC
 set(CUSTOMWM_X11_SRC
         ${X11_SRC}
         ${CUSTOMWM_SRC}
+        graphics/cursors.hh
 )
 
 #
@@ -46,6 +48,7 @@ set(CUSTOMWM_X11_SRC
 
 find_package(ZLIB REQUIRED)
 find_package(X11)
+find_package(Freetype)
 # TODO - check for X11/wayland depending on the target
 
 #
@@ -61,12 +64,8 @@ set(LUAJIT_A ${LUAW_PATH}/libluaw-jit.a)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-Wall -Wextra)
-include_directories(
-        ${PROJECT_SOURCE_DIR}
-        ${GENPATH}
-        contrib/luaw/luaw
-        contrib/luaw/luajit/src
-        ${X11_INCLUDE_DIR})
+include_directories(${PROJECT_SOURCE_DIR} ${GENPATH} contrib/luaw/luaw contrib/luaw/luajit/src
+        ${X11_INCLUDE_DIR} ${X11_Xft_INCLUDE_PATH} ${FREETYPE_INCLUDE_DIRS})
 
 #
 # luaw and luajit compilation
@@ -101,4 +100,4 @@ set_target_properties(luajit_a PROPERTIES IMPORTED_LOCATION ${LUAJIT_A})
 
 add_executable(customwm-x11 ${CUSTOMWM_X11_SRC})
 add_dependencies(customwm-x11 luascripts)
-target_link_libraries(customwm-x11 PUBLIC luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES})
+target_link_libraries(customwm-x11 PRIVATE luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES} ${X11_Xft_LIB} ${FREETYPE_LIBRARIES})

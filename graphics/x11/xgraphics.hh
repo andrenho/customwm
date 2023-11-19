@@ -1,16 +1,18 @@
-#ifndef GRAPHICSX11_HH_
-#define GRAPHICSX11_HH_
+#ifndef XGRAPHICS_HH_
+#define XGRAPHICS_HH_
 
 #include <unordered_map>
 
 #include <X11/Xlib.h>
 
 #include "graphics/graphics.hh"
+#include "xresources.hh"
 
-class GraphicsX11 : public Graphics {
+class XGraphics : public Graphics {
 public:
-    explicit GraphicsX11(class Options *options) : Graphics(options) {}
-    ~GraphicsX11() override;
+    explicit XGraphics(class Options *options, class Theme* theme)
+            : Graphics(options), resources(this, theme) {}
+    ~XGraphics() override;
 
     void init() override;
 
@@ -31,6 +33,8 @@ public:
     void                 subscribe_to_wm_events() override;
     std::optional<Event> next_event() override;
 
+    friend class XResources;
+
 private:
     Display*      display  = nullptr;
     int           screen   = 0;
@@ -42,6 +46,8 @@ private:
     unsigned long black    = 0;
     unsigned long white    = 0;
 
+    XResources    resources;
+
     struct WindowInfo {
         Pixmap backbuffer;
         GC     gc;
@@ -50,4 +56,4 @@ private:
     std::unordered_map<WindowHandle, WindowInfo> window_info_;
 };
 
-#endif //GRAPHICSX11_HH_
+#endif //XGRAPHICS_HH_

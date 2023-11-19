@@ -2,7 +2,7 @@
 #define WINDOW_HH_
 
 #include "theme/types/types.hh"
-#include "graphics/whandle.hh"
+#include "graphics/windowhandle.hh"
 
 class Window_ {
 public:

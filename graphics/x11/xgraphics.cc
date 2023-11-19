@@ -1,11 +1,11 @@
-#include "graphicsx11.hh"
+#include "xgraphics.hh"
 
 #include <cstdlib>
 
 #include "options/options.hh"
 #include "util/log.hh"
 
-void GraphicsX11::init()
+void XGraphics::init()
 {
     const char* display_str = nullptr;
     if (options_->display)
@@ -31,9 +31,11 @@ void GraphicsX11::init()
 
     if (options_->debug_mode)
         XSynchronize(display, True);
+
+    resources.init();
 }
 
-GraphicsX11::~GraphicsX11()
+XGraphics::~XGraphics()
 {
     if (display) {
         XCloseDisplay(display);
@@ -41,7 +43,7 @@ GraphicsX11::~GraphicsX11()
     debug("X11 screen destroyed");
 }
 
-void GraphicsX11::subscribe_to_wm_events()
+void XGraphics::subscribe_to_wm_events()
 {
     XSetErrorHandler([](Display* dsp, XErrorEvent* e) -> int {
         if (e->error_code == BadAccess && e->request_code == 2 && e->minor_code == 0) {
@@ -62,7 +64,7 @@ void GraphicsX11::subscribe_to_wm_events()
     XGrabKeyboard(display, root, true, GrabModeAsync, GrabModeAsync, CurrentTime);
 }
 
-std::optional<Event> GraphicsX11::next_event()
+std::optional<Event> XGraphics::next_event()
 {
     XEvent e;
     XNextEvent(display, &e);
@@ -77,12 +79,12 @@ std::optional<Event> GraphicsX11::next_event()
     return {};
 }
 
-Size GraphicsX11::screen_size() const
+Size XGraphics::screen_size() const
 {
     return { DisplayWidth(display, screen), DisplayHeight(display, screen) };
 }
 
-Rectangle GraphicsX11::get_window_rectangle(WindowHandle window) const
+Rectangle XGraphics::get_window_rectangle(WindowHandle window) const
 {
     Window root;
     int requested_x, requested_y;
@@ -91,7 +93,7 @@ Rectangle GraphicsX11::get_window_rectangle(WindowHandle window) const
     return { requested_x, requested_y, (int) child_w, (int) child_h };
 }
 
-WindowHandle GraphicsX11::create_window(Rectangle const &rectangle)
+WindowHandle XGraphics::create_window(Rectangle const &rectangle)
 {
     WindowHandle handle = XCreateWindow(display, root, rectangle.x, rectangle.y, rectangle.w, rectangle.h, 0,
                                         CopyFromParent, InputOutput, CopyFromParent, 0, nullptr);
@@ -113,7 +115,7 @@ WindowHandle GraphicsX11::create_window(Rectangle const &rectangle)
     return handle;
 }
 
-void GraphicsX11::destroy_window(WindowHandle window)
+void XGraphics::destroy_window(WindowHandle window)
 {
     XUnmapWindow(display, window);
 
@@ -128,7 +130,7 @@ void GraphicsX11::destroy_window(WindowHandle window)
     debug("Window %d destroyed", window);
 }
 
-void GraphicsX11::reparent_window(WindowHandle parent, WindowHandle child, Point const &offset)
+void XGraphics::reparent_window(WindowHandle parent, WindowHandle child, Point const &offset)
 {
     XAddToSaveSet(display, child);
     XReparentWindow(display, child, parent, offset.x, offset.y);
@@ -137,7 +139,7 @@ void GraphicsX11::reparent_window(WindowHandle parent, WindowHandle child, Point
     debug("Window %d reparented into %d", child, parent);
 }
 
-void GraphicsX11::unparent_window(WindowHandle child)
+void XGraphics::unparent_window(WindowHandle child)
 {
     XUnmapWindow(display, child);
     XRemoveFromSaveSet(display, child);

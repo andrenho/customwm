@@ -2,7 +2,7 @@
 #define EVENT_HH_
 
 #include <variant>
-#include "whandle.hh"
+#include "windowhandle.hh"
 
 struct WindowAdded {
     WindowHandle handle;

@@ -4,7 +4,7 @@
 #include <memory>
 #include <unordered_map>
 
-#include "graphics/whandle.hh"
+#include "graphics/windowhandle.hh"
 #include "window/parentwindow.hh"
 
 class WindowManager {
