@@ -67,10 +67,12 @@ unsigned long XResources::get_color(Color const &color) const
 
     // non-cached
     XColor xcolor = {
+            .pixel = 0,
             .red = static_cast<unsigned short>(color.r * 256),
             .green = static_cast<unsigned short>(color.g * 256),
             .blue = static_cast<unsigned short>(color.b * 256),
             .flags = DoRed | DoGreen | DoBlue,
+            .pad = 0,
     };
     if (XAllocColor(X->display, X->colormap, &xcolor) == 0)
         info("Color allocation failed (%d %d %d)", color.r, color.g, color.b);

@@ -2,6 +2,8 @@
 #define GRAPHICS_HH_
 
 #include <string>
+#include <vector>
+
 #include "event.hh"
 #include "theme/types/types.hh"
 
