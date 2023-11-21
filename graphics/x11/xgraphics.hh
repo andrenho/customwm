@@ -30,7 +30,7 @@ public:
     void         unparent_window(WindowHandle child) override;
     void         window_fill(WindowHandle window, Color const& color, Rectangle const& rect) override;
     void         window_swap_buffers(WindowHandle window, Rectangle const& rectangle) override;
-    void         add_existing_windows() override;
+    std::vector<WindowHandle> toplevel_windows() const;
 
     // events
     void                 subscribe_to_wm_events() override;

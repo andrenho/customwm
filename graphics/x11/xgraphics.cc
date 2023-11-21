@@ -167,27 +167,19 @@ void XGraphics::window_swap_buffers(WindowHandle window, Rectangle const &rectan
               rectangle.x, rectangle.y);
 }
 
-void XGraphics::add_existing_windows()
+std::vector<WindowHandle> XGraphics::toplevel_windows() const
 {
     Window root_, parent;
     Window* window_list;
     unsigned int n_windows;
 
     XQueryTree(display, root, &root_, &parent, &window_list, &n_windows);
-    for (size_t i = 0; i < n_windows; ++i) {
-        XEvent e {
-            .xmaprequest {
-                .type = MapRequest,
-                .serial = 0,
-                .send_event = True,
-                .display = display,
-                .parent = root,
-                .window = window_list[i],
-            }
-        };
-        XSendEvent(display, root, False, SubstructureRedirectMask | SubstructureNotifyMask, &e);
-    }
+
+    std::vector<WindowHandle> windows(n_windows);
+    for (size_t i = 0; i < n_windows; ++i)
+        windows.push_back(window_list[i]);
 
     XFree(window_list);
-
+    return windows;
 }
+

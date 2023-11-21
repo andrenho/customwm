@@ -8,7 +8,8 @@
 void WindowManager::init()
 {
     theme_->call_opt("wm.after_start", this);
-    graphics_->add_existing_windows();
+    for (WindowHandle handle: graphics_->toplevel_windows())
+        add_child_window(handle);
 }
 
 void WindowManager::create_lua_metatable(Theme* theme)
