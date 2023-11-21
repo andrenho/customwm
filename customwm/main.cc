@@ -22,8 +22,8 @@ int main(int argc, char* argv[])
     // startup services
     theme->init();
     graphics->init();
-    window_manager->init();
     events->init();
+    window_manager->init();
 
     // run
     events->run();

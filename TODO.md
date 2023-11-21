@@ -21,10 +21,6 @@
 - [x] Window object
 - [x] Resource manager
 - [x] Fill, (RM: colors)
-- [ ] RM: Load image
-- [ ] Display image
-- [ ] RM: Load font
-- [ ] Text
 - [ ] Add existing windows
 - [ ] Cursors
 - [ ] X properties
@@ -55,6 +51,10 @@
 - [ ] Improve window buffering
     - [ ] Draw to buffer, and then expose to window (?)
     - [ ] Use multiple windows (?)
+- [ ] RM: Load image
+- [ ] Display image
+- [ ] RM: Load font
+- [ ] Text
 - [ ] ICCCM
     - [ ] Create XAtomManager
     - [ ] Minimize

@@ -23,6 +23,7 @@ public:
     virtual void         unparent_window(WindowHandle child) = 0;
     virtual void         window_fill(WindowHandle window, Color const& color, Rectangle const& rect) = 0;
     virtual void         window_swap_buffers(WindowHandle window, Rectangle const& rectangle) = 0;
+    virtual void         add_existing_windows() = 0;
 
     // window information
     virtual Rectangle   get_window_rectangle(WindowHandle window) const = 0;
