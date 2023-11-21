@@ -68,6 +68,16 @@ include_directories(${PROJECT_SOURCE_DIR} ${GENPATH} contrib/luaw/luaw contrib/l
         ${X11_INCLUDE_DIR} ${X11_Xft_INCLUDE_PATH} ${FREETYPE_INCLUDE_DIRS})
 
 #
+# Clone git submodules
+#
+
+if (NOT EXISTS ${LUAW_PATH}/Makefile)
+    execute_process(COMMAND git submodule update --init --remote --recursive
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}}
+            COMMAND_ERROR_IS_FATAL ANY)
+endif()
+
+#
 # luaw and luajit compilation
 #
 

@@ -21,6 +21,18 @@
 - [x] Window object
 - [x] Resource manager
 - [x] Fill, (RM: colors)
+- [ ] Create releaseable version
+  - [ ] Build on Linux
+  - [ ] Auto get git submodules
+  - [ ] Package checklist
+  - [ ] Check for dependencies (CMake)
+  - [ ] How to distribute (create package?)
+  - [ ] Build instructions
+  - [ ] Use instructions
+  - [ ] Autobuild in github
+  - [ ] Create next steps
+- [ ] OpenGL version
+- [ ] Wayland version
 - [ ] Add existing windows
 - [ ] Cursors
 - [ ] X properties
