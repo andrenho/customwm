@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(customwm VERSION 0.0.1)
+file(READ PRJ_VERSION VERSION)
+project(customwm VERSION ${VERSION})
 
 #
 # Sources
@@ -87,10 +88,6 @@ add_custom_command(
         COMMAND make -j 10 -C ${PROJECT_SOURCE_DIR}/contrib/luaw luazh-jit libluaw-jit.a
 )
 
-add_custom_target(distclean
-        COMMAND make clean
-        COMMAND make -C ${PROJECT_SOURCE_DIR}/contrib/luaw clean)
-
 #
 # lua scripts header generation
 #
@@ -114,3 +111,11 @@ add_dependencies(customwm luascripts)
 target_link_libraries(customwm PRIVATE luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES} ${X11_Xft_LIB} ${FREETYPE_LIBRARIES})
 
 install(TARGETS customwm)
+
+#
+# special targets
+#
+
+add_custom_target(distclean
+        COMMAND make clean
+        COMMAND make -C ${PROJECT_SOURCE_DIR}/contrib/luaw clean)
