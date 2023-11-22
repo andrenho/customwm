@@ -28,7 +28,7 @@
   - [x] Check for dependencies (CMake)
   - [x] Build instructions
   - [x] make install
-  - [ ] make dist
+  - [x] make dist
   - [ ] Create next steps
   - [ ] Reorganize TODO
   - [ ] PR template (checklist)
