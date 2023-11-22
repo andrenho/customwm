@@ -47,8 +47,8 @@ set(CUSTOMWM_X11_SRC
 #
 
 find_package(ZLIB REQUIRED)
-find_package(X11)
-find_package(Freetype)
+find_package(Freetype REQUIRED)
+find_package(X11 REQUIRED)
 # TODO - check for X11/wayland depending on the target
 
 #
