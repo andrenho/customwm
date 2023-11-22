@@ -4,9 +4,12 @@
 #include "graphics/x11/xgraphics.hh"
 #include "windowmanager/windowmanager.hh"
 #include "windowmanager/wmevents.hh"
+#include "util/log.hh"
 
 int main(int argc, char* argv[])
 {
+    info("customwm " VERSION);
+
     // initialize services
     auto config = std::make_unique<Options>(argc, argv);
     auto theme = std::make_unique<Theme>(config.get());

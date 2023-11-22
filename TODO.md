@@ -27,7 +27,7 @@
   - [x] Package checklist
   - [x] Check for dependencies (CMake)
   - [x] Build instructions
-  - [ ] make install
+  - [x] make install
   - [ ] make dist
   - [ ] Create next steps
   - [ ] Reorganize TODO

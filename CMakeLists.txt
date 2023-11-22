@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(customwm)
+project(customwm VERSION 0.0.1)
 
 #
 # Sources
@@ -66,6 +66,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-Wall -Wextra)
 include_directories(${PROJECT_SOURCE_DIR} ${GENPATH} contrib/luaw/luaw contrib/luaw/luajit/src
         ${X11_INCLUDE_DIR} ${X11_Xft_INCLUDE_PATH} ${FREETYPE_INCLUDE_DIRS})
+add_definitions(-DVERSION=\"${CMAKE_PROJECT_VERSION}\")
 
 #
 # Clone git submodules
@@ -108,6 +109,8 @@ add_custom_target(luascripts DEPENDS ${GENPATH}/luascripts.inc)
 add_library(luajit_a SHARED IMPORTED)
 set_target_properties(luajit_a PROPERTIES IMPORTED_LOCATION ${LUAJIT_A})
 
-add_executable(customwm-x11 ${CUSTOMWM_X11_SRC})
-add_dependencies(customwm-x11 luascripts)
-target_link_libraries(customwm-x11 PRIVATE luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES} ${X11_Xft_LIB} ${FREETYPE_LIBRARIES})
+add_executable(customwm ${CUSTOMWM_X11_SRC})
+add_dependencies(customwm luascripts)
+target_link_libraries(customwm PRIVATE luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES} ${X11_Xft_LIB} ${FREETYPE_LIBRARIES})
+
+install(TARGETS customwm)
