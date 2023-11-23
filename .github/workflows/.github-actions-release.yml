@@ -22,5 +22,6 @@ jobs:
           artifactErrorsFailBuild: true
           generateReleaseNotes: true
           prerelease: true
+          name: "${{ steps.getversion.outputs.version }}"
           tag: "${{ steps.getversion.outputs.version }}"
           commit: "${{ github.ref }}"
