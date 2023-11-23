@@ -1,0 +1,19 @@
+name: Release new version
+on:
+  - pull_request  # TODO
+jobs:
+  build:
+    name: Generate package and release it
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Build package
+        run: mkdir ${{ github.workspace }} && ./makedist.sh
+      - name: Create release
+        uses: ncipollo/release-action@v1.13.0
+        with:
+          artifacts: ${{ github.workspace }}/customwm-*.tar.bz2
+          artifactErrorsFailBuild: true
+          generateReleaseNotes: true
+          prerelease: true

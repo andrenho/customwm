@@ -3,6 +3,7 @@ on:
   - pull_request
 jobs:
   build:
+    name: Build and test for leaks
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
