@@ -13,3 +13,5 @@ jobs:
         run: mkdir ${{ github.workspace }}/build && cd ${{ github.workspace }}/build && cmake ${{ github.workspace }}
       - name: Build application
         run: make -C ${{ github.workspace }}/build
+      - name: Look for leaks
+        run: cd ${{ github.workspace }} && valgrind --leak-check=full --show-leak-kinds=all --suppressions=../customwm.supp --gen-suppressions=all -- ./customwm -b dummy -v -x
