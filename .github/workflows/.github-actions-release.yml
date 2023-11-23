@@ -16,12 +16,22 @@ jobs:
         id: getversion
         run: echo "version=v$(cat ${{ github.workspace }}/PRJ_VERSION)" >> $GITHUB_OUTPUT
       - name: Create release
+        uses: avakar/tag-and-release@v1
+        with:
+          tag_name: "${{ steps.getversion.outputs.version }}"
+          prelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create tag
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: "${{ steps.getversion.outputs.version }}"
+      - name: Create release
         uses: ncipollo/release-action@v1.13.0
         with:
           artifacts: ${{ github.workspace }}/customwm-*.tar.bz2
           artifactErrorsFailBuild: true
           generateReleaseNotes: true
           prerelease: true
-          name: "${{ steps.getversion.outputs.version }}"
           tag: "${{ steps.getversion.outputs.version }}"
           commit: "${{ github.ref }}"
