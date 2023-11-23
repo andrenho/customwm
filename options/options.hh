@@ -6,7 +6,13 @@
 
 class Options {
 public:
+    enum class Backend { Dummy, X11, Wayland };
+    enum class Render  { Xlib, OpenGL };
+
     Options(int argc, char* argv[]);
+
+    Backend backend = Backend::X11;
+    Render  render = Render::Xlib;
 
     std::optional<std::string> display {};
     std::optional<std::string> theme_file {};

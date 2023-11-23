@@ -29,10 +29,13 @@
   - [x] Build instructions
   - [x] make install
   - [x] make dist
-  - [ ] Create next steps
-  - [ ] Reorganize TODO
+  - [ ] Create dummy version, run valgrind
   - [ ] PR template (checklist)
   - [ ] Autobuild in github
+      - [ ] Compile all versions
+      - [ ] Generate package
+  - [ ] Create next steps
+  - [ ] Reorganize TODO
 - [ ] OpenGL version
 - [ ] Wayland version
 - [ ] Add existing windows

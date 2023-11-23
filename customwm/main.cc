@@ -11,10 +11,10 @@ int main(int argc, char* argv[])
     info("customwm " VERSION);
 
     // initialize services
-    auto config = std::make_unique<Options>(argc, argv);
-    auto theme = std::make_unique<Theme>(config.get());
+    auto options = std::make_unique<Options>(argc, argv);
+    auto theme = std::make_unique<Theme>(options.get());
 
-    std::unique_ptr<Graphics> graphics = std::make_unique<XGraphics>(config.get(), theme.get());
+    std::unique_ptr<Graphics> graphics = Graphics::create_unique_ptr(options.get(), theme.get());
 
     auto window_manager = std::make_unique<WindowManager>(theme.get(), graphics.get());
     auto events = std::make_unique<WMEvents>(theme.get(), graphics.get(), window_manager.get());

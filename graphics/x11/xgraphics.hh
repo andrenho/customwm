@@ -10,8 +10,7 @@
 
 class XGraphics : public Graphics {
 public:
-    explicit XGraphics(class Options *options, class Theme* theme)
-            : Graphics(options), resources_(this, theme) {}
+    explicit XGraphics(class Options *options, class Theme* theme) : Graphics(options), resources_(this, theme) {}
     ~XGraphics() override;
 
     void init() override;

@@ -5,11 +5,11 @@
 #include <vector>
 
 #include "event.hh"
+#include "options/options.hh"
 #include "theme/types/types.hh"
 
 class Graphics {
 public:
-    explicit Graphics(class Options* options) : options_(options) {}
     virtual ~Graphics() = default;
 
     virtual void init() = 0;
@@ -34,7 +34,11 @@ public:
     virtual void subscribe_to_wm_events() = 0;
     virtual std::optional<Event> next_event() = 0;
 
+    static std::unique_ptr<Graphics> create_unique_ptr(Options* options, class Theme* theme);
+
 protected:
+    explicit Graphics(class Options* options) : options_(options) {}
+
     class Options* options_;
 };
 

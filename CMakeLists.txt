@@ -19,13 +19,14 @@ set(COMMON_SRC
         options/options.hh options/options.cc
         theme/theme.hh theme/theme.inl theme/theme.cc theme/themeexception.hh
         theme/types/types.hh theme/types/types.cc
-        graphics/windowhandle.hh graphics/event.hh graphics/graphics.hh
-        util/log.hh util/log.cc
-)
-
-set(X11_SRC
+        graphics/cursors.hh
+        graphics/windowhandle.hh
+        graphics/event.hh
+        graphics/graphics.hh graphics/graphics.cc
         graphics/x11/xgraphics.hh graphics/x11/xgraphics.cc
         graphics/x11/xresources.hh graphics/x11/xresources.cc
+        util/log.hh util/log.cc
+        window/window.hh window/window.cc
 )
 
 set(CUSTOMWM_SRC
@@ -33,14 +34,7 @@ set(CUSTOMWM_SRC
         customwm/main.cc
         windowmanager/windowmanager.hh windowmanager/windowmanager.cc
         windowmanager/wmevents.hh windowmanager/wmevents.cc
-        window/window.hh window/window.cc
         window/parentwindow.hh window/parentwindow.cc
-)
-
-set(CUSTOMWM_X11_SRC
-        ${X11_SRC}
-        ${CUSTOMWM_SRC}
-        graphics/cursors.hh
 )
 
 #
@@ -50,7 +44,6 @@ set(CUSTOMWM_X11_SRC
 find_package(ZLIB REQUIRED)
 find_package(Freetype REQUIRED)
 find_package(X11 REQUIRED)
-# TODO - check for X11/wayland depending on the target
 
 #
 # Options
@@ -106,7 +99,7 @@ add_custom_target(luascripts DEPENDS ${GENPATH}/luascripts.inc)
 add_library(luajit_a SHARED IMPORTED)
 set_target_properties(luajit_a PROPERTIES IMPORTED_LOCATION ${LUAJIT_A})
 
-add_executable(customwm ${CUSTOMWM_X11_SRC})
+add_executable(customwm ${CUSTOMWM_SRC})
 add_dependencies(customwm luascripts)
 target_link_libraries(customwm PRIVATE luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES} ${X11_Xft_LIB} ${FREETYPE_LIBRARIES})
 
