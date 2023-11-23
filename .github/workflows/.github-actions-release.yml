@@ -12,11 +12,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Build package
         run: cd ${{ github.workspace }} && ./makedist.sh
-      - name: Create release
-        uses: ncipollo/release-action@v1.13.0
+      - name: Get version
         run: |
           VER=$(cat ${{ github.workspace }}/PRJ_VERSION)
           echo "VERSION=$VER" >> $GITHUB_ENV
+          echo $GITHUB_ENV
+      - name: Create release
+        uses: ncipollo/release-action@v1.13.0
         with:
           artifacts: ${{ github.workspace }}/customwm-*.tar.bz2
           artifactErrorsFailBuild: true
