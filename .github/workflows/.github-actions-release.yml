@@ -15,13 +15,6 @@ jobs:
       - name: Get version
         id: getversion
         run: echo "version=v$(cat ${{ github.workspace }}/PRJ_VERSION)" >> $GITHUB_OUTPUT
-      - name: Create release
-        uses: avakar/tag-and-release@v1
-        with:
-          tag_name: "${{ steps.getversion.outputs.version }}"
-          prelease: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create tag
         uses: rickstaa/action-create-tag@v1
         with:
