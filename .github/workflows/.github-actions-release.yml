@@ -1,6 +1,7 @@
 name: Release new version
 on:
-  - pull_request
+  push:
+    branches: [master]
 jobs:
   build:
     name: Generate package and release it
