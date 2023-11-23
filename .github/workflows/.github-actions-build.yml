@@ -1,11 +1,10 @@
 name: Build & Check leaks
 on:
-  pull_request:
-    types: [opened, synchronize]
+  - pull_request
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - run: sudo apt-get install -y libx11-dev libz3-dev libfreetype-dev cmake g++ valgrind
-      - run: mkdir ${{ github.workspace }}/build && cd ${{ github.workspace }}/build && cmake ..
+      - run: mkdir ${{ github.workspace }}/build && cd ${{ github.workspace }}/build && cmake ${{ github.workspace }}
       - run: make -C ${{ github.workspace }}/build
