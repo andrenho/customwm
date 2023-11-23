@@ -14,7 +14,7 @@ jobs:
         run: cd ${{ github.workspace }} && ./makedist.sh
       - name: Get version
         id: getversion
-        run: echo "version=v$(${{ github.workspace }}/PRJ_VERSION)" >> $GITHUB_OUTPUT
+        run: echo "version=v$(cat ${{ github.workspace }}/PRJ_VERSION)" >> $GITHUB_OUTPUT
       - name: Create release
         uses: ncipollo/release-action@v1.13.0
         with:
