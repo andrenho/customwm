@@ -27,4 +27,3 @@ jobs:
           generateReleaseNotes: true
           prerelease: true
           tag: "${{ steps.getversion.outputs.version }}"
-          commit: "${{ github.ref }}"
