@@ -1,0 +1,30 @@
+name: Release new version
+on:
+  push:
+    branches: [master]
+jobs:
+  build:
+    name: Generate package and release it
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Build package
+        run: cd ${{ github.workspace }} && ./makedist.sh
+      - name: Get version
+        id: getversion
+        run: echo "version=v$(cat ${{ github.workspace }}/PRJ_VERSION)" >> $GITHUB_OUTPUT
+      - name: Create tag
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: "${{ steps.getversion.outputs.version }}"
+      - name: Create release
+        uses: ncipollo/release-action@v1.13.0
+        with:
+          artifacts: ${{ github.workspace }}/customwm-*.tar.bz2
+          artifactErrorsFailBuild: true
+          generateReleaseNotes: true
+          prerelease: true
+          tag: "${{ steps.getversion.outputs.version }}"

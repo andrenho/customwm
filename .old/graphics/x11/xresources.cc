@@ -1,21 +1,18 @@
 #include "xresources.hh"
 
 #include <X11/Xft/Xft.h>
-#include <X11/cursorfont.h>
-#include <X11/Xatom.h>
 
 #define STBI_NO_HDR
 #define STBI_NO_LINEAR
 #define STBI_NO_JPEG
 #define STBI_FAILURE_USERMSG
 #define STB_IMAGE_IMPLEMENTATION
-#include "contrib/stb_image.h"
+#include "stb_image.h"
 
-#include "graphics/x11/xgraphics.hh"
-#include "theme/theme.hh"
-#include "util/log.hh"
+#include ".old/common/logger.hh"
+#include "x.hh"
 
-void XResources::init()
+XResources::XResources()
 {
     cursors_[Cursors::Pointer] = XCreateFontCursor(X->display, XC_left_ptr);
     cursors_[Cursors::Wait] = XCreateFontCursor(X->display, XC_watch);
@@ -67,15 +64,13 @@ unsigned long XResources::get_color(Color const &color) const
 
     // non-cached
     XColor xcolor = {
-            .pixel = 0,
             .red = static_cast<unsigned short>(color.r * 256),
             .green = static_cast<unsigned short>(color.g * 256),
             .blue = static_cast<unsigned short>(color.b * 256),
             .flags = DoRed | DoGreen | DoBlue,
-            .pad = 0,
     };
     if (XAllocColor(X->display, X->colormap, &xcolor) == 0)
-        info("Color allocation failed (%d %d %d)", color.r, color.g, color.b);
+        LOG.info("Color allocation failed (%d %d %d)", color.r, color.g, color.b);
     colors_.emplace(color, xcolor.pixel);
     return xcolor.pixel;
 }
@@ -96,7 +91,7 @@ XftColor& XResources::get_xft_color(Color const& color) const
     };
     XftColor xft_color;
     if (XftColorAllocValue(X->display, X->visual, X->colormap, &xcolor, &xft_color) == 0)
-        info("XftColor allocation failed (%d %d %d)", color.r, color.g, color.b);
+        LOG.info("XftColor allocation failed (%d %d %d)", color.r, color.g, color.b);
     auto kv = xft_colors_.emplace(color, xft_color);
     return kv.first->second;
 }
@@ -113,7 +108,7 @@ XftFont* XResources::get_font(std::string const& key) const
 
 std::pair<Image, Rectangle> XResources::get_slice_image(std::string const& slice_name) const
 {
-    auto slice = theme_->resource_slice(slice_name);
+    auto slice = THEME.resource_slice(slice_name);
     if (!slice.has_value())
         throw std::runtime_error("Slice '" + slice_name + "' not found in theme file.");
 
@@ -131,12 +126,12 @@ std::pair<Image, Rectangle> XResources::get_slice_image(std::string const& slice
 
 XftFont* XResources::load_font(std::string const& key) const
 {
-    auto font_names = theme_->resource_font(key);
+    auto font_names = THEME.resource_font(key);
 
     for (auto const& font_name: font_names) {
         XftFont* font = XftFontOpenName(X->display, X->screen, font_name.c_str());
         if (font) {
-            debug("Loaded font '%s' as %p", font_name.c_str(), font);
+            LOG.debug("Loaded font '%s' as %p", font_name.c_str(), font);
             return font;
         }
     }
@@ -146,7 +141,7 @@ XftFont* XResources::load_font(std::string const& key) const
 
 Image XResources::load_image(std::string const& key) const
 {
-    auto image = theme_->resource_image(key);
+    auto image = THEME.resource_image(key);
 
     // load image pixels
     int w, h;
@@ -182,7 +177,7 @@ Image XResources::load_image(std::string const& key) const
     // create mask
     Pixmap mask = XCreatePixmapFromBitmapData(X->display, X->root, (char *) mask_data, w, h, X->white, X->black, 1);
 
-    debug("Image created for '%s'", key.c_str());
+    LOG.debug("Image created for '%s'", key.c_str());
 
     return { .pixmap = pixmap, .mask = mask };
 }
@@ -192,12 +187,12 @@ Cursor XResources::get_cursor(std::string const& key) const
     try {
         return cursors_.at(key);
     } catch (std::out_of_range&) {
-        info("Cursor not found: " + key);
+        LOG.info("Cursor not found: " + key);
         return None;
     }
 }
 
-void XResources::set_property(WindowHandle window, std::string const &name, WindowHandle const &value)
+void XResources::set_property(WHandle window, std::string const &name, WHandle const &value)
 {
     Atom atom = XInternAtom(X->display, name.c_str(), false);
 
@@ -205,7 +200,7 @@ void XResources::set_property(WindowHandle window, std::string const &name, Wind
                     (unsigned char *) &value, 1);
 }
 
-std::optional<WindowHandle> XResources::get_property_handle(WindowHandle window, std::string const &name) const
+std::optional<WHandle> XResources::get_property_whandle(WHandle window, std::string const &name) const
 {
     Atom atom = XInternAtom(X->display, name.c_str(), false);
 

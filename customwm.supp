@@ -1,0 +1,8 @@
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   ...
+   fun:g_*
+   ...
+   obj:/usr/lib/ld-linux-x86-64.so.2
+}

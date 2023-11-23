@@ -1,25 +1,16 @@
 #include "graphics.hh"
+#include "graphics/x11/xgraphics.hh"
+#include "graphics/dummy/dgraphics.hh"
 
-#ifdef X11
-#  include "x11/x.hh"
-#endif
-
-#ifdef WAYLAND
-#  include "wayland/graphics_wayland.hh"
-#endif
-
-std::unique_ptr<Graphics> Graphics::graphics_;
-
-Graphics* Graphics::create(std::optional<std::string> const &display)
+std::unique_ptr<Graphics> Graphics::create_unique_ptr(Options* options, class Theme* theme)
 {
-#ifdef X11
-    Graphics::graphics_ = std::make_unique<XGraphics>(display);
-    X = dynamic_cast<XGraphics*>(Graphics::graphics_.get());
-#endif
-#ifdef WAYLAND
-    Graphics::graphics_ = std::make_unique<Graphics_Wayland>(display);
-    W = dynamic_cast<Graphics_X11*>(Graphics::graphics_.get());
-#endif
-    return graphics_.get();
+    switch (options->backend) {
+        case Options::Backend::Dummy:
+            return std::make_unique<DGraphics>(options);
+        case Options::Backend::X11:
+            return std::make_unique<XGraphics>(options, theme);
+        case Options::Backend::Wayland:
+            throw std::runtime_error("sorry: wayland not supported yet");
+    }
+    throw std::runtime_error("Invalid option");
 }
-

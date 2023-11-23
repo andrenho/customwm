@@ -1,28 +1,23 @@
 #ifndef XRESOURCES_HH_
 #define XRESOURCES_HH_
 
-#include <unordered_map>
-#include <string>
-
 #include <X11/Xlib.h>
 #include <X11/Xft/Xft.h>
-
-#include "graphics/cursors.hh"
-#include "graphics/windowhandle.hh"
-#include "theme/types/types.hh"
+#include <unordered_map>
+#include <string>
+#include ".old/theme/theme.hh"
+#include ".old/theme/types/types.hh"
+#include ".old/graphics/resources.hh"
 
 struct Image {
     Pixmap pixmap;
     Pixmap mask;
 };
 
-class XResources {
+class XResources : public Resources {
 public:
-    XResources(class XGraphics* X, class Theme* theme)
-            : X(X), theme_(theme) {}
-    ~XResources();
-
-    void          init();
+    XResources();
+    ~XResources() override;
 
     unsigned long get_color(Color const &color) const;
     XftColor&     get_xft_color(Color const& color) const;
@@ -30,13 +25,10 @@ public:
     std::pair<Image, Rectangle> get_slice_image(std::string const& slice_name) const;
     Cursor        get_cursor(std::string const& key) const;
 
-    void set_property(WindowHandle window, std::string const &name, WindowHandle const &value);
-    std::optional<WindowHandle> get_property_handle(WindowHandle window, std::string const &name) const;
+    void set_property(WHandle window, std::string const &name, WHandle const &value) override;
+    std::optional<WHandle> get_property_whandle(WHandle window, std::string const &name) const override;
 
 private:
-    class XGraphics* X;
-    class Theme* theme_;
-
     mutable std::unordered_map<Color, unsigned long>  colors_;
     mutable std::unordered_map<Color, XftColor>       xft_colors_;
     mutable std::unordered_map<std::string, XftFont*> fonts_;

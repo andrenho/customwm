@@ -1,20 +1,48 @@
 #ifndef GRAPHICS_HH_
 #define GRAPHICS_HH_
 
-#include <optional>
+#include <memory>
 #include <string>
-#include "gwm.hh"
+#include <vector>
 
-struct Graphics {
+#include "event.hh"
+#include "options/options.hh"
+#include "theme/types/types.hh"
+
+class Graphics {
+public:
     virtual ~Graphics() = default;
-    virtual std::unique_ptr<GWindowManager> create_wm() = 0;
 
-    static Graphics* create(std::optional<std::string> const& display);
+    virtual void init() = 0;
+
+    // information
+    virtual std::string               interface_name() const = 0;
+    virtual Size                      screen_size() const = 0;
+    virtual std::vector<WindowHandle> toplevel_windows() const = 0;
+
+    // window actions
+    virtual WindowHandle create_window(Rectangle const& rectangle) = 0;
+    virtual void         destroy_window(WindowHandle window) = 0;
+    virtual void         reparent_window(WindowHandle parent, WindowHandle child, Point const& offset) = 0;
+    virtual void         unparent_window(WindowHandle child) = 0;
+
+    // window drawing
+    virtual void         window_fill(WindowHandle window, Color const& color, Rectangle const& rect) = 0;
+    virtual void         window_swap_buffers(WindowHandle window, Rectangle const& rectangle) = 0;
+
+    // window information
+    virtual Rectangle   get_window_rectangle(WindowHandle window) const = 0;
+
+    // events
+    virtual void subscribe_to_wm_events() = 0;
+    virtual std::optional<Event> next_event() = 0;
+
+    static std::unique_ptr<Graphics> create_unique_ptr(Options* options, class Theme* theme);
 
 protected:
-    Graphics() = default;
+    explicit Graphics(class Options* options) : options_(options) {}
 
-    static std::unique_ptr<Graphics> graphics_;
+    class Options* options_;
 };
 
 #endif //GRAPHICS_HH_
