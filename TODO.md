@@ -29,11 +29,11 @@
   - [x] Build instructions
   - [x] make install
   - [x] make dist
-  - [ ] Create dummy version, run valgrind
-  - [ ] PR template (checklist)
+  - [x] Create dummy version, run valgrind
   - [ ] Autobuild in github
       - [ ] Compile all versions
       - [ ] Generate package
+  - [ ] PR template (checklist)
   - [ ] Create next steps
   - [ ] Reorganize TODO
 - [ ] OpenGL version

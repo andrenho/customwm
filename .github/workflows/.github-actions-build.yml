@@ -1,0 +1,11 @@
+name: Build & Check leaks
+on:
+  pull_request:
+    types: [opened]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sudo apt-get install -y libx11-dev libz3-dev libfreetype-dev cmake g++
+      - run: mkdir build && cd build && cmake ..
+      - run: make -C build
