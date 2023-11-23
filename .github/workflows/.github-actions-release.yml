@@ -13,10 +13,7 @@ jobs:
       - name: Build package
         run: cd ${{ github.workspace }} && ./makedist.sh
       - name: Get version
-        run: |
-          VER=$(cat ${{ github.workspace }}/PRJ_VERSION)
-          echo "VERSION=$VER" >> $GITHUB_ENV
-          echo $GITHUB_ENV
+        run: echo "version=v$(${{ github.workspace }}/PRJ_VERSION)" >> $GITHUB_OUTPUT
       - name: Create release
         uses: ncipollo/release-action@v1.13.0
         with:
@@ -24,5 +21,5 @@ jobs:
           artifactErrorsFailBuild: true
           generateReleaseNotes: true
           prerelease: true
-          tag: "v${{ env.VERSION }}"
+          tag: ${{ steps.getversion.outputs.version }}
           commit: "${{ github.ref }}"
