@@ -16,8 +16,9 @@ public:
     void init() override;
 
     // information
-    std::string interface_name() const override { return "X11"; }
-    Size        screen_size() const override;
+    std::string               interface_name() const override { return "X11"; }
+    Size                      screen_size() const override;
+    std::vector<WindowHandle> toplevel_windows() const override;
 
     // window information
     Rectangle get_window_rectangle(WindowHandle window) const override;
@@ -29,7 +30,6 @@ public:
     void         unparent_window(WindowHandle child) override;
     void         window_fill(WindowHandle window, Color const& color, Rectangle const& rect) override;
     void         window_swap_buffers(WindowHandle window, Rectangle const& rectangle) override;
-    std::vector<WindowHandle> toplevel_windows() const override;
 
     // events
     void                 subscribe_to_wm_events() override;

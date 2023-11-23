@@ -15,13 +15,16 @@ void WMEvents::init()
 
 void WMEvents::run()
 {
-    for (;;) {
+    bool quit = false;
+
+    while(!quit) {
         auto oe = graphics_->next_event();
         if (oe) {
             std::visit(overloaded {
                 [this](WindowAdded& e)   { window_manager_->add_child_window(e.handle); },
                 [this](WindowRemoved& e) { window_manager_->remove_window(e.handle); },
                 [this](WindowExpose& e)  { window_manager_->expose_window(e.handle, e.rectangle); },
+                [&quit](Quit& _)         { (void)_; quit = true; }
             }, *oe);
         }
     }

@@ -18,6 +18,8 @@ struct WindowExpose {
     Rectangle    rectangle;
 };
 
-using Event = std::variant<WindowAdded, WindowRemoved, WindowExpose>;
+struct Quit {};
+
+using Event = std::variant<WindowAdded, WindowRemoved, WindowExpose, Quit>;
 
 #endif //EVENT_HH_

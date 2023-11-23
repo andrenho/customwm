@@ -27,6 +27,7 @@ set(COMMON_SRC
         graphics/x11/xresources.hh graphics/x11/xresources.cc
         util/log.hh util/log.cc
         window/window.hh window/window.cc
+        graphics/dummy/dgraphics.hh
 )
 
 set(CUSTOMWM_SRC
