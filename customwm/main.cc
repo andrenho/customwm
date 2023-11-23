@@ -8,6 +8,8 @@
 
 int main(int argc, char* argv[])
 {
+    return 0;
+
     info("customwm " VERSION);
 
     // initialize services
