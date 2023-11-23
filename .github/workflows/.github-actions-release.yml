@@ -6,8 +6,7 @@ jobs:
   build:
     name: Generate package and release it
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    permissions: write-all
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
