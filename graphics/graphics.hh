@@ -1,6 +1,7 @@
 #ifndef GRAPHICS_HH_
 #define GRAPHICS_HH_
 
+#include <memory>
 #include <string>
 #include <vector>
 

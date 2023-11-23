@@ -12,4 +12,5 @@ std::unique_ptr<Graphics> Graphics::create_unique_ptr(Options* options, class Th
         case Options::Backend::Wayland:
             throw std::runtime_error("sorry: wayland not supported yet");
     }
+    throw std::runtime_error("Invalid option");
 }

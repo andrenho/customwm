@@ -6,6 +6,7 @@
 #include <cstring>
 #include <getopt.h>
 
+#include <stdexcept>
 #include <string>
 using namespace std::string_literals;
 
