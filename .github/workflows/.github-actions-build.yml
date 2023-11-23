@@ -1,7 +1,7 @@
 name: Build & Check leaks
 on:
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
 jobs:
   build:
     runs-on: ubuntu-latest
