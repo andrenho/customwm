@@ -9,6 +9,8 @@ test-theme
 *.dSYM/*
 workspace.xml
 Info.plist
+build/
+cmake-build-*/
 
 # Prerequisites
 *.d

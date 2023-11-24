@@ -37,7 +37,7 @@ public:
 
     friend class XResources;
 
-private:
+protected:
     Display*      display  = nullptr;
     int           screen   = 0;
     Window        root     = None;

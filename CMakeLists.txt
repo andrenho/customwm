@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.26)
 
 file(READ PRJ_VERSION VERSION)
 project(customwm VERSION ${VERSION})
@@ -28,6 +28,8 @@ set(COMMON_SRC
         util/log.hh util/log.cc
         window/window.hh window/window.cc
         graphics/dummy/dgraphics.hh
+        graphics/x11/gl/xglgraphics.cc
+        graphics/x11/gl/xglgraphics.hh
 )
 
 set(CUSTOMWM_SRC
@@ -45,6 +47,7 @@ set(CUSTOMWM_SRC
 find_package(ZLIB REQUIRED)
 find_package(Freetype REQUIRED)
 find_package(X11 REQUIRED)
+find_package(OpenGL REQUIRED)
 
 #
 # Options
@@ -60,7 +63,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-Wall -Wextra)
 include_directories(${PROJECT_SOURCE_DIR} ${GENPATH} contrib/luaw/luaw contrib/luaw/luajit/src
-        ${X11_INCLUDE_DIR} ${X11_Xft_INCLUDE_PATH} ${FREETYPE_INCLUDE_DIRS})
+        ${X11_INCLUDE_DIR} ${X11_Xft_INCLUDE_PATH} ${FREETYPE_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIRS})
 add_definitions(-DVERSION=\"${CMAKE_PROJECT_VERSION}\")
 
 #
@@ -102,7 +105,8 @@ set_target_properties(luajit_a PROPERTIES IMPORTED_LOCATION ${LUAJIT_A})
 
 add_executable(customwm ${CUSTOMWM_SRC})
 add_dependencies(customwm luascripts)
-target_link_libraries(customwm PRIVATE luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES} ${X11_Xft_LIB} ${FREETYPE_LIBRARIES})
+target_link_libraries(customwm PRIVATE
+        luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES} ${X11_Xft_LIB} ${FREETYPE_LIBRARIES} ${OPENGL_LIBRARIES} ${OPENGL_glx_LIBRARY})
 
 install(TARGETS customwm)
 
