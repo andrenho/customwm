@@ -28,8 +28,8 @@ set(COMMON_SRC
         util/log.hh util/log.cc
         window/window.hh window/window.cc
         graphics/dummy/dgraphics.hh
-        graphics/x11/gl/xglgraphics.cc
-        graphics/x11/gl/xglgraphics.hh
+        graphics/x11/gl/xopenglgraphics.cc
+        graphics/x11/gl/xopenglgraphics.hh
 )
 
 set(CUSTOMWM_SRC
@@ -103,10 +103,15 @@ add_custom_target(luascripts DEPENDS ${GENPATH}/luascripts.inc)
 add_library(luajit_a SHARED IMPORTED)
 set_target_properties(luajit_a PROPERTIES IMPORTED_LOCATION ${LUAJIT_A})
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set(OPENGL_glx_LIBRARY /opt/X11/lib/libGL.dylib)
+endif()
+
 add_executable(customwm ${CUSTOMWM_SRC})
 add_dependencies(customwm luascripts)
 target_link_libraries(customwm PRIVATE
-        luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES} ${X11_Xft_LIB} ${FREETYPE_LIBRARIES} ${OPENGL_LIBRARIES} ${OPENGL_glx_LIBRARY})
+        luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES} ${X11_Xft_LIB} ${FREETYPE_LIBRARIES} ${OPENGL_LIBRARIES} ${OPENGL_glx_LIBRARY}
+)
 
 install(TARGETS customwm)
 

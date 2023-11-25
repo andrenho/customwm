@@ -1,7 +1,4 @@
-#include "xglgraphics.hh"
-
-#include <GL/gl.h>
-#include <GL/glx.h>
+#include "xopenglgraphics.hh"
 
 typedef GLXContext (*glXCreateContextAttribsARBProc)
         (Display*, GLXFBConfig, GLXContext, Bool, const int*);
@@ -22,7 +19,7 @@ static int context_attribs[] = {
         None
 };
 
-WindowHandle XGLGraphics::create_window(Rectangle const &rectangle)
+WindowHandle XOpenGLGraphics::create_window(Rectangle const &rectangle)
 {
     WindowHandle window = XGraphics::create_window(rectangle);
 
@@ -40,6 +37,8 @@ WindowHandle XGLGraphics::create_window(Rectangle const &rectangle)
     if (!context)
         throw std::runtime_error("Failed to create OpenGL context. Exiting.");
 
+    contexts_.emplace(window, context);
+
     glXMakeCurrent(display, window, context);
 
     int major = 0, minor = 0;
@@ -51,4 +50,13 @@ WindowHandle XGLGraphics::create_window(Rectangle const &rectangle)
            glGetString(GL_RENDERER));
 
     return window;
+}
+
+void XOpenGLGraphics::destroy_window(WindowHandle window)
+{
+    try {
+        glXDestroyContext(display, contexts_.at(window));
+        contexts_.erase(window);
+    } catch (std::out_of_range&) {}
+    XGraphics::destroy_window(window);
 }
