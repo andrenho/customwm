@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.26)
 file(READ PRJ_VERSION VERSION)
 project(customwm VERSION ${VERSION})
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 #
 # Sources
 #
