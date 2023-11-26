@@ -6,14 +6,15 @@ rectangle theme {
     class Theme
     lua_scripts -> Theme
     note right of Theme
-        Loads user provided theme file
+        Loads user-provided
+        theme file
     end note
 }
 
-class Window
+class Window <to_lua>
 
 rectangle windowmanager {
-    class WindowManager
+    class WindowManager <to_lua>
     class ParentWindow
     class WMEvents {
         +run()
@@ -34,7 +35,7 @@ rectangle graphics {
     Pencil <|-- OpenGLPencil
 }
 
-windowmanager -up--> Theme
+windowmanager -up-> Theme
 WindowManager --> Graphics
 Window --> Pencil
 
