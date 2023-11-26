@@ -8,6 +8,7 @@ public:
     ParentWindow(class Theme* theme, class Graphics* graphics, Rectangle const& rectangle)
             : Window_(theme, graphics, rectangle) {}
 
+    void draw() override;
     void reparent_child(WindowHandle child_handle, Point const& offset, Padding const& padding);
 
     WindowHandle child_handle() const { return child_handle_; }

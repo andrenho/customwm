@@ -7,17 +7,11 @@ Window_::Window_(Theme* theme, Graphics *graphics, Rectangle const &rectangle)
         : theme_(theme), graphics_(graphics), handle_(graphics_->create_window(rectangle)), rectangle_(rectangle),
           pencil_(graphics->create_pencil(this))
 {
-    draw();
 }
 
 Window_::~Window_()
 {
     graphics_->destroy_window(handle_);
-}
-
-void Window_::draw()
-{
-    theme_->call_opt("wm.draw_window", this);
 }
 
 void Window_::expose(Rectangle const &rectangle)

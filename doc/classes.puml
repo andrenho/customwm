@@ -1,5 +1,7 @@
 @startuml
 
+class Options
+
 rectangle theme {
     package lua_scripts <<Database>> {
     }

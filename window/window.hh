@@ -10,7 +10,7 @@ public:
     Window_(class Theme* theme, class Graphics* graphics, Rectangle const& rectangle);
     virtual ~Window_();
 
-    void draw();
+    virtual void draw() = 0;
     void expose(Rectangle const& rectangle);
 
     WindowHandle handle() const { return handle_; }
