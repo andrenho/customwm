@@ -44,7 +44,7 @@ set(CUSTOMWM_SRC
         customwm/main.cc
         windowmanager/windowmanager.hh windowmanager/windowmanager.cc
         windowmanager/wmevents.hh windowmanager/wmevents.cc
-        window/parentwindow.hh window/parentwindow.cc
+        windowmanager/parentwindow.hh windowmanager/parentwindow.cc
 )
 
 #
