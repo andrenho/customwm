@@ -4,7 +4,8 @@
 #include "theme/theme.hh"
 
 Window_::Window_(Theme* theme, Graphics *graphics, Rectangle const &rectangle)
-        : theme_(theme), graphics_(graphics), handle_(graphics_->create_window(rectangle)), rectangle_(rectangle)
+        : theme_(theme), graphics_(graphics), handle_(graphics_->create_window(rectangle)), rectangle_(rectangle),
+          pencil_(graphics->create_pencil(this))
 {
     draw();
 }
@@ -19,15 +20,9 @@ void Window_::draw()
     theme_->call_opt("wm.draw_window", this);
 }
 
-void Window_::fill(Color const &color, std::optional<Rectangle> rect)
-{
-    Rectangle rectangle = rect.value_or(Rectangle { 0, 0, rectangle_.w, rectangle_.h });
-    graphics_->window_fill(handle_, color, rectangle);
-}
-
 void Window_::expose(Rectangle const &rectangle)
 {
-    graphics_->window_swap_buffers(handle_, rectangle);
+    pencil_->on_expose(rectangle);
 }
 
 void Window_::create_lua_metatable(Theme* theme)
@@ -39,10 +34,9 @@ void Window_::create_lua_metatable(Theme* theme)
             return 1;
         }},
         { "fill", [](lua_State* L) {
-            if (lua_gettop(L) >= 3)
-                THIS->fill(luaw_to<Color>(L, 2), luaw_to<std::optional<Rectangle>>(L, 3));
-            else
-                THIS->fill(luaw_to<Color>(L, 2), {});
+            Rectangle rectangle = luaw_to<std::optional<Rectangle>>(L, 3)
+                    .value_or(Rectangle::from_size(THIS->rectangle_.size()));
+            THIS->pencil_->fill(luaw_to<Color>(L, 2), rectangle);
             return 0;
         }},
    });

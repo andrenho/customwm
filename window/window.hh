@@ -3,6 +3,7 @@
 
 #include "theme/types/types.hh"
 #include "graphics/windowhandle.hh"
+#include "graphics/pencil/pencil.hh"
 
 class Window_ {
 public:
@@ -14,6 +15,8 @@ public:
 
     WindowHandle handle() const { return handle_; }
 
+    Rectangle const &rectangle() const { return rectangle_; }
+
     static void create_lua_metatable(class Theme* theme);
     static constexpr const char* mt_identifier = "Window";
 
@@ -23,9 +26,7 @@ protected:
 
     WindowHandle handle_;
     Rectangle    rectangle_;
-
-private:
-    void fill(Color const& color, std::optional<Rectangle> rect);
+    std::unique_ptr<Pencil> pencil_;
 };
 
 #endif //WINDOW_HH_

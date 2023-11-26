@@ -28,14 +28,13 @@ public:
     void         destroy_window(WindowHandle window) override;
     void         reparent_window(WindowHandle parent, WindowHandle child, Point const& offset) override;
     void         unparent_window(WindowHandle child) override;
-    void         window_fill(WindowHandle window, Color const& color, Rectangle const& rect) override;
-    void         window_swap_buffers(WindowHandle window, Rectangle const& rectangle) override;
 
     // events
     void                 subscribe_to_wm_events() override;
     std::optional<Event> next_event() override;
 
     friend class XResources;
+    friend class XlibPencil;
 
 protected:
     Display*      display  = nullptr;
@@ -49,13 +48,6 @@ protected:
     unsigned long white    = 0;
 
     XResources    resources_;
-
-    struct WindowInfo {
-        Pixmap backbuffer;
-        GC     gc;
-        // TODO - add Xft
-    };
-    std::unordered_map<WindowHandle, WindowInfo> window_info_;
 };
 
 #endif //XGRAPHICS_HH_

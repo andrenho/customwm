@@ -8,6 +8,7 @@
 #include "event.hh"
 #include "options/options.hh"
 #include "theme/types/types.hh"
+#include "graphics/pencil/pencil.hh"
 
 class Graphics {
 public:
@@ -26,10 +27,6 @@ public:
     virtual void         reparent_window(WindowHandle parent, WindowHandle child, Point const& offset) = 0;
     virtual void         unparent_window(WindowHandle child) = 0;
 
-    // window drawing
-    virtual void         window_fill(WindowHandle window, Color const& color, Rectangle const& rect) = 0;
-    virtual void         window_swap_buffers(WindowHandle window, Rectangle const& rectangle) = 0;
-
     // window information
     virtual Rectangle   get_window_rectangle(WindowHandle window) const = 0;
 
@@ -37,6 +34,10 @@ public:
     virtual void subscribe_to_wm_events() = 0;
     virtual std::optional<Event> next_event() = 0;
 
+    // pencil
+    virtual std::unique_ptr<Pencil> create_pencil(Window_* window) const = 0;
+
+    // factory
     static std::unique_ptr<Graphics> create_unique_ptr(Options* options, class Theme* theme);
 
 protected:

@@ -30,6 +30,11 @@ set(COMMON_SRC
         graphics/dummy/dgraphics.hh
         graphics/x11/gl/xopenglgraphics.cc
         graphics/x11/gl/xopenglgraphics.hh
+        graphics/x11/xlib/xlibgraphics.hh
+        graphics/x11/xlib/xlibgraphics.cc
+        graphics/pencil/pencil.hh
+        graphics/pencil/xlib/xlibpencil.cc
+        graphics/pencil/xlib/xlibpencil.hh
 )
 
 set(CUSTOMWM_SRC
