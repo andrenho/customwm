@@ -15,7 +15,8 @@ public:
     ~XOpenGLGraphics() override;
 
     void init() override;
-    void select_window_for_drawing(WindowHandle window) override;
+
+    void paint(WindowHandle window, std::function<void()> paint_function) override;
 
     std::unique_ptr<Pencil> create_pencil(Window_ *window) override;
 

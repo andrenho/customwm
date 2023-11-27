@@ -24,6 +24,7 @@ public:
     void         destroy_window(MU WindowHandle window) override {}
     void         reparent_window(MU WindowHandle parent, MU WindowHandle child, MU Point const &offset) override {}
     void         unparent_window(MU WindowHandle child) override {}
+    void         paint(MU WindowHandle window, MU std::function<void()> paint_function) override {}
 
     // events
     void                 subscribe_to_wm_events() override {}

@@ -31,6 +31,9 @@ void OpenGLManager::print_info()
 GLuint OpenGLManager::compile(char const* vertex_shader, char const* fragment_shader)
 {
     GLuint vs = glCreateShader(GL_VERTEX_SHADER);
+
+    // TODO...
+
     return vs;
 }
 

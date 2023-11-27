@@ -49,7 +49,12 @@ XOpenGLGraphics::~XOpenGLGraphics()
         glXDestroyContext(display, context_);
 }
 
-void XOpenGLGraphics::select_window_for_drawing(WindowHandle window)
+std::unique_ptr<Pencil> XOpenGLGraphics::create_pencil(Window_* window)
+{
+    return std::make_unique<OpenGLPencil>(window, this, &opengl_manager_);
+}
+
+void XOpenGLGraphics::paint(WindowHandle window, std::function<void()> paint_function)
 {
     glXMakeCurrent(display, window, context_);
 
@@ -57,9 +62,8 @@ void XOpenGLGraphics::select_window_for_drawing(WindowHandle window)
         opengl_manager_.print_info();
         printed_opengl_info_ = true;
     }
-}
 
-std::unique_ptr<Pencil> XOpenGLGraphics::create_pencil(Window_* window)
-{
-    return std::make_unique<OpenGLPencil>(window, this, &opengl_manager_);
+    paint_function();
+
+    glXSwapBuffers(display, window);
 }
