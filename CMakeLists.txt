@@ -118,6 +118,7 @@ set_target_properties(luajit_a PROPERTIES IMPORTED_LOCATION ${LUAJIT_A})
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(OPENGL_glx_LIBRARY /opt/X11/lib/libGL.dylib)
+    set(GLEW_LIBRARIES /opt/homebrew/Cellar/glew/2.2.0_1/lib/libGLEW.2.2.0.dylib)
 endif()
 
 add_executable(customwm ${CUSTOMWM_SRC})
