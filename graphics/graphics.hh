@@ -10,6 +10,8 @@
 #include "theme/types/types.hh"
 #include "graphics/pencil/pencil.hh"
 
+#define MU [[maybe_unused]]
+
 class Graphics {
 public:
     virtual ~Graphics() = default;
@@ -26,6 +28,7 @@ public:
     virtual void         destroy_window(WindowHandle window) = 0;
     virtual void         reparent_window(WindowHandle parent, WindowHandle child, Point const& offset) = 0;
     virtual void         unparent_window(WindowHandle child) = 0;
+    virtual void         select_window_for_drawing(MU WindowHandle window) {}
 
     // window information
     virtual Rectangle   get_window_rectangle(WindowHandle window) const = 0;
@@ -35,7 +38,7 @@ public:
     virtual std::optional<Event> next_event() = 0;
 
     // pencil
-    virtual std::unique_ptr<Pencil> create_pencil(Window_* window) const = 0;
+    virtual std::unique_ptr<Pencil> create_pencil(Window_* window) = 0;
 
     // factory
     static std::unique_ptr<Graphics> create_unique_ptr(Options* options, class Theme* theme);
@@ -45,5 +48,7 @@ protected:
 
     class Options* options_;
 };
+
+#undef MU
 
 #endif //GRAPHICS_HH_

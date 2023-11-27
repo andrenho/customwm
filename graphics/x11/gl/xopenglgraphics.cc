@@ -1,4 +1,5 @@
 #include "xopenglgraphics.hh"
+#include "graphics/pencil/opengl/openglpencil.hh"
 
 typedef GLXContext (*glXCreateContextAttribsARBProc)
         (Display*, GLXFBConfig, GLXContext, Bool, const int*);
@@ -19,9 +20,9 @@ static int context_attribs[] = {
         None
 };
 
-WindowHandle XOpenGLGraphics::create_window(Rectangle const &rectangle)
+void XOpenGLGraphics::init()
 {
-    WindowHandle window = XGraphics::create_window(rectangle);
+    XGraphics::init();
 
     int num_fbc = 0;
     GLXFBConfig *fbc = glXChooseFBConfig(display, screen, visual_attribs, &num_fbc);
@@ -33,13 +34,9 @@ WindowHandle XOpenGLGraphics::create_window(Rectangle const &rectangle)
     if (!glXCreateContextAttribsARB)
         throw std::runtime_error("glXCreateContextAttribsARB() not found");
 
-    GLXContext context = glXCreateContextAttribsARB(display, fbc[0], nullptr, true, context_attribs);
-    if (!context)
+    context_ = glXCreateContextAttribsARB(display, fbc[0], nullptr, true, context_attribs);
+    if (!context_)
         throw std::runtime_error("Failed to create OpenGL context. Exiting.");
-
-    contexts_.emplace(window, context);
-
-    glXMakeCurrent(display, window, context);
 
     int major = 0, minor = 0;
     glGetIntegerv(GL_MAJOR_VERSION, &major);
@@ -48,15 +45,20 @@ WindowHandle XOpenGLGraphics::create_window(Rectangle const &rectangle)
            major, minor,
            glGetString(GL_VENDOR),
            glGetString(GL_RENDERER));
-
-    return window;
 }
 
-void XOpenGLGraphics::destroy_window(WindowHandle window)
+XOpenGLGraphics::~XOpenGLGraphics()
 {
-    try {
-        glXDestroyContext(display, contexts_.at(window));
-        contexts_.erase(window);
-    } catch (std::out_of_range&) {}
-    XGraphics::destroy_window(window);
+    if (context_)
+        glXDestroyContext(display, context_);
+}
+
+void XOpenGLGraphics::select_window_for_drawing(WindowHandle window)
+{
+    glXMakeCurrent(display, window, context_);
+}
+
+std::unique_ptr<Pencil> XOpenGLGraphics::create_pencil(Window_* window)
+{
+    return std::make_unique<OpenGLPencil>(window, this, &opengl_manager_);
 }

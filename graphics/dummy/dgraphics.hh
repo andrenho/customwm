@@ -30,7 +30,7 @@ public:
     std::optional<Event> next_event() override { return Quit(); }
 
     // pencil
-    std::unique_ptr<Pencil> create_pencil(MU Window_* window) const override { return nullptr; }
+    std::unique_ptr<Pencil> create_pencil(MU Window_* window) override { return nullptr; }
 };
 
 #undef MU

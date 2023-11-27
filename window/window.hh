@@ -1,6 +1,7 @@
 #ifndef WINDOW_HH_
 #define WINDOW_HH_
 
+#include <memory>
 #include "theme/types/types.hh"
 #include "graphics/windowhandle.hh"
 #include "graphics/pencil/pencil.hh"

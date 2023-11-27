@@ -12,5 +12,6 @@ void ParentWindow::reparent_child(WindowHandle child_handle, Point const& offset
 
 void ParentWindow::draw()
 {
+    graphics_->select_window_for_drawing(this->handle());
     theme_->call_opt("wm.draw_window", this);
 }

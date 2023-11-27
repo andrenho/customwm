@@ -7,7 +7,7 @@ class XlibGraphics : public XGraphics {
 public:
     XlibGraphics(class Options *options, class Theme* theme) : XGraphics(options, theme) {}
 
-    std::unique_ptr<Pencil> create_pencil(Window_* window) const override;
+    std::unique_ptr<Pencil> create_pencil(Window_* window) override;
 };
 
 #endif //XLIBGRAPHICS_HH_
