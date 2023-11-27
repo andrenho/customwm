@@ -30,10 +30,45 @@ void OpenGLManager::print_info()
 
 GLuint OpenGLManager::compile(char const* vertex_shader, char const* fragment_shader)
 {
-    GLuint vs = glCreateShader(GL_VERTEX_SHADER);
+    auto compile_shader = [](GLuint shader_type, const char* shader_source) -> GLuint {
+        GLuint shader = glCreateShader(shader_type);
+        glShaderSource(shader, 1, &shader_source, nullptr);
+        glCompileShader(shader);
 
-    // TODO...
+        GLint success;
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+        if (!success) {
+            GLchar info[512];
+            glGetShaderInfoLog(shader, sizeof(info), nullptr, info);
+            glDeleteShader(shader);
+            throw std::runtime_error("Shader compilation failed: "s + info);
+        }
 
-    return vs;
+        return shader;
+    };
+
+    GLuint vs = compile_shader(GL_VERTEX_SHADER, vertex_shader_fill);
+    GLuint fs = compile_shader(GL_FRAGMENT_SHADER, fragment_shader_fill);
+
+    GLuint program = glCreateProgram();
+    glAttachShader(program, vs);
+    glAttachShader(program, fs);
+    glLinkProgram(program);
+
+    GLint success;
+    glGetProgramiv(program, GL_LINK_STATUS, &success);
+    if (!success) {
+        GLchar info[512];
+        glGetProgramInfoLog(program, sizeof(info), nullptr, info);
+        glDeleteShader(vs);
+        glDeleteShader(fs);
+        glDeleteProgram(program);
+        throw std::runtime_error("Error linking shader: "s + info);
+    }
+
+    glDeleteShader(vs);
+    glDeleteShader(fs);
+
+    return program;
 }
 
