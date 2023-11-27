@@ -21,6 +21,7 @@ public:
 private:
     GLXContext context_ = nullptr;
     OpenGLManager opengl_manager_;
+    bool          printed_opengl_info_ = false;
 };
 
 #endif //XOPENGLGRAPHICS_HH_

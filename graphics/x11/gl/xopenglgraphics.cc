@@ -37,14 +37,6 @@ void XOpenGLGraphics::init()
     context_ = glXCreateContextAttribsARB(display, fbc[0], nullptr, true, context_attribs);
     if (!context_)
         throw std::runtime_error("Failed to create OpenGL context. Exiting.");
-
-    int major = 0, minor = 0;
-    glGetIntegerv(GL_MAJOR_VERSION, &major);
-    glGetIntegerv(GL_MINOR_VERSION, &minor);
-    printf("OpenGL context created.\nVersion %d.%d\nVendor %s\nRenderer %s\n",
-           major, minor,
-           glGetString(GL_VENDOR),
-           glGetString(GL_RENDERER));
 }
 
 XOpenGLGraphics::~XOpenGLGraphics()
@@ -56,6 +48,11 @@ XOpenGLGraphics::~XOpenGLGraphics()
 void XOpenGLGraphics::select_window_for_drawing(WindowHandle window)
 {
     glXMakeCurrent(display, window, context_);
+
+    if (!printed_opengl_info_) {
+        opengl_manager_.print_info();
+        printed_opengl_info_ = true;
+    }
 }
 
 std::unique_ptr<Pencil> XOpenGLGraphics::create_pencil(Window_* window)

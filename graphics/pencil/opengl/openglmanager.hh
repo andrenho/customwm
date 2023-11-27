@@ -6,7 +6,7 @@
 
 class OpenGLManager {
 public:
-    OpenGLManager();
+    void print_info();
 };
 
 #endif //OPENGLMANAGER_HH_
