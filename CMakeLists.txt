@@ -49,6 +49,7 @@ set(CUSTOMWM_SRC
         windowmanager/parentwindow.hh windowmanager/parentwindow.cc
         graphics/pencil/opengl/openglmanager.cc
         graphics/pencil/opengl/openglmanager.hh
+        graphics/pencil/opengl/shaders.hh
 )
 
 #
@@ -59,6 +60,7 @@ find_package(ZLIB REQUIRED)
 find_package(Freetype REQUIRED)
 find_package(X11 REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(GLEW REQUIRED)
 
 #
 # Options
@@ -74,7 +76,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-Wall -Wextra)
 include_directories(${PROJECT_SOURCE_DIR} ${GENPATH} contrib/luaw/luaw contrib/luaw/luajit/src
-        ${X11_INCLUDE_DIR} ${X11_Xft_INCLUDE_PATH} ${FREETYPE_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIRS})
+        ${X11_INCLUDE_DIR} ${X11_Xft_INCLUDE_PATH} ${FREETYPE_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS})
 add_definitions(-DVERSION=\"${CMAKE_PROJECT_VERSION}\")
 
 #
@@ -121,8 +123,8 @@ endif()
 add_executable(customwm ${CUSTOMWM_SRC})
 add_dependencies(customwm luascripts)
 target_link_libraries(customwm PRIVATE
-        luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES} ${X11_Xft_LIB} ${FREETYPE_LIBRARIES} ${OPENGL_LIBRARIES} ${OPENGL_glx_LIBRARY}
-)
+        luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES} ${X11_Xft_LIB} ${FREETYPE_LIBRARIES} ${OPENGL_LIBRARIES}
+        ${OPENGL_glx_LIBRARY} ${GLEW_LIBRARIES})
 
 install(TARGETS customwm)
 

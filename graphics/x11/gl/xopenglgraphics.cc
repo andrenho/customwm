@@ -37,6 +37,10 @@ void XOpenGLGraphics::init()
     context_ = glXCreateContextAttribsARB(display, fbc[0], nullptr, true, context_attribs);
     if (!context_)
         throw std::runtime_error("Failed to create OpenGL context. Exiting.");
+
+    glXMakeCurrent(display, root, context_);
+
+    opengl_manager_.init();
 }
 
 XOpenGLGraphics::~XOpenGLGraphics()

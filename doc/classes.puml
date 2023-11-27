@@ -29,12 +29,18 @@ rectangle windowmanager {
 rectangle graphics {
     abstract class Graphics
     abstract class Pencil
+    abstract class XGraphics
 
     Graphics <|-- XGraphics
     Graphics <|-- WaylandGraphics
 
+    XGraphics <|-- XlibGraphics
+    XGraphics <|-- XOpenGLGraphics
+
     Pencil <|-- XlibPencil
     Pencil <|-- OpenGLPencil
+
+    OpenGLPencil .. OpenGLManager
 }
 
 windowmanager -up-> Theme

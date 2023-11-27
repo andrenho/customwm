@@ -1,6 +1,7 @@
 #ifndef XOPENGLGRAPHICS_HH_
 #define XOPENGLGRAPHICS_HH_
 
+#include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glx.h>
 
