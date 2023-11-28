@@ -5,17 +5,27 @@
 #include <GL/gl.h>
 #include <GL/glx.h>
 
+struct FillProgram {
+    GLuint vao;
+    GLuint program;
+    GLint  bgColorLocation;
+};
+
 class OpenGLManager {
 public:
+    ~OpenGLManager();
+
     void init();
     void print_info();
 
-    GLuint fill_program() const { return fill_program_; }
+    FillProgram const& fill() const { return fill_; }
 
 private:
-    GLuint fill_program_ = 0;
+    FillProgram fill_;
 
-    GLuint compile(char const* vertex_shader, char const* fragment_shader);
+    GLuint compile(const char* name, char const* vertex_shader, char const* fragment_shader);
+
+    void init_fill();
 };
 
 #endif //OPENGLMANAGER_HH_

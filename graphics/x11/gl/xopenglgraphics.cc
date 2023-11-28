@@ -58,6 +58,8 @@ void XOpenGLGraphics::paint(WindowHandle window, std::function<void()> paint_fun
 {
     glXMakeCurrent(display, window, context_);
 
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     if (!printed_opengl_info_) {
         opengl_manager_.print_info();
         printed_opengl_info_ = true;
