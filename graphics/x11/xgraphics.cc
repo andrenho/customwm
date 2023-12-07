@@ -125,7 +125,7 @@ void XGraphics::reparent_window(WindowHandle parent, WindowHandle child, Point c
 {
     XAddToSaveSet(display, child);
     XReparentWindow(display, child, parent, offset.x, offset.y);
-    XMapWindow(display, child);
+    // XMapWindow(display, child);
 
     debug("Window %d reparented into %d", child, parent);
 }

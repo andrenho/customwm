@@ -7,6 +7,7 @@
 
 struct FillProgram {
     GLuint vao;
+    GLuint vbo;
     GLuint program;
     GLint  bgColorLocation;
 };

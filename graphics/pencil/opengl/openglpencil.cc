@@ -7,6 +7,8 @@ void OpenGLPencil::on_expose(Rectangle const& rectangle) const
 {
 }
 
+extern float vertices[9];
+
 void OpenGLPencil::fill(Color const& color, Rectangle const& rect) const
 {
     // TODO - remove this
@@ -24,7 +26,10 @@ void OpenGLPencil::fill(Color const& color, Rectangle const& rect) const
     glUniform4fv(opengl_manager_->fill().bgColorLocation, 1, glcolor);
     glBindVertexArray(opengl_manager_->fill().vao);
 
-    glDrawArrays(GL_QUADS, 0, 4);
+    glBindBuffer(GL_ARRAY_BUFFER, opengl_manager_->fill().vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 
     glBindVertexArray(0);
 }

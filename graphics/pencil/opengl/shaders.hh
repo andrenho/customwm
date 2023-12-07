@@ -19,7 +19,7 @@ const char* fragment_shader_fill = R"(
 
     void main()
     {
-        FragColor = bgColor;
+        FragColor = vec4(1.0, 1.0, 1.0, 1.0);
     }
 )";
 
