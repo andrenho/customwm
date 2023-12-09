@@ -29,7 +29,7 @@ void OpenGLPencil::fill(Color const& color, [[maybe_unused]] Rectangle const& re
 
     // vertex parameters
 
-    float x = -0.5f, y = -0.5f, w = 1.0f, h = 1.0f;
+    float x = 10.f, y = 10.f, w = 100.f, h = 100.f;
     float vertices[] = {
             x, y,
             x + w, y,
