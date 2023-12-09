@@ -32,7 +32,7 @@ void OpenGLManager::init_fill()
     glGenBuffers(1, &fill_.vbo);
     glBindBuffer(GL_ARRAY_BUFFER, fill_.vbo);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
 }
 

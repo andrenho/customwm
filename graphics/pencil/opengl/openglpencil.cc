@@ -3,15 +3,6 @@
 #include <GL/gl.h>
 #include <GL/glx.h>
 
-static float vertices[] = {
-        -0.5f, -0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-        -0.5f,  0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        -0.5f,  0.5f, 0.0f,
-         0.5f,  0.5f, 0.0f,
-};
-
 
 void OpenGLPencil::on_expose([[maybe_unused]] Rectangle const& rectangle) const
 {
@@ -31,13 +22,28 @@ void OpenGLPencil::fill(Color const& color, [[maybe_unused]] Rectangle const& re
     };
 
     glUseProgram(opengl_manager_->fill().program);
-    glUniform4fv(opengl_manager_->fill().bgColorLocation, 1, glcolor);
-    glBindVertexArray(opengl_manager_->fill().vao);
+
+    // vertex parameters
+
+    float x = -0.5f, y = -0.5f, w = 1.0f, h = 1.0f;
+    float vertices[] = {
+            x, y,
+            x + w, y,
+            x + w, y + h,
+            x, y + h
+    };
 
     glBindBuffer(GL_ARRAY_BUFFER, opengl_manager_->fill().vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    // fragment parameters
+
+    glUniform4fv(opengl_manager_->fill().bgColorLocation, 1, glcolor);
+    glBindVertexArray(opengl_manager_->fill().vao);
+
+    // draw
+
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
     glBindVertexArray(0);
 }
