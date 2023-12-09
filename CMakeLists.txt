@@ -49,7 +49,10 @@ set(CUSTOMWM_SRC
         windowmanager/parentwindow.hh windowmanager/parentwindow.cc
         graphics/pencil/opengl/openglmanager.cc
         graphics/pencil/opengl/openglmanager.hh
-        graphics/pencil/opengl/shaders.hh
+        graphics/pencil/opengl/programs/program.cc
+        graphics/pencil/opengl/programs/program.hh
+        graphics/pencil/opengl/programs/fillprogram.cc
+        graphics/pencil/opengl/programs/fillprogram.hh
 )
 
 #

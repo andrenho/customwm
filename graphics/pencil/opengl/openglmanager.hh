@@ -4,19 +4,10 @@
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glx.h>
-
-struct FillProgram {
-    GLuint vao;
-    GLuint vbo;
-    GLuint program;
-    GLint  projectionLocation;
-    GLint  bgColorLocation;
-};
+#include "graphics/pencil/opengl/programs/fillprogram.hh"
 
 class OpenGLManager {
 public:
-    ~OpenGLManager();
-
     void init();
     void print_info();
 
@@ -24,10 +15,6 @@ public:
 
 private:
     FillProgram fill_;
-
-    GLuint compile(const char* name, char const* vertex_shader, char const* fragment_shader);
-
-    void init_fill();
 };
 
 #endif //OPENGLMANAGER_HH_
