@@ -22,7 +22,6 @@ rectangle windowmanager {
         +run()
     }
     WindowManager -> "1..n" ParentWindow
-    ParentWindow -up-|> Window
     WindowManager .left. WMEvents
 }
 
@@ -40,11 +39,12 @@ rectangle graphics {
     Pencil <|-- XlibPencil
     Pencil <|-- OpenGLPencil
 
-    OpenGLPencil .. OpenGLManager
+    OpenGLPencil .left. OpenGLManager
 }
 
+ParentWindow -up-|> Window
 windowmanager -up-> Theme
 WindowManager --> Graphics
-Window --> Pencil
+Window ---> Pencil
 
 @enduml

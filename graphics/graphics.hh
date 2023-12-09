@@ -29,7 +29,7 @@ public:
     virtual void         destroy_window(WindowHandle window) = 0;
     virtual void         reparent_window(WindowHandle parent, WindowHandle child, Point const& offset) = 0;
     virtual void         unparent_window(WindowHandle child) = 0;
-    virtual void         paint(WindowHandle window, std::function<void()> paint_function) = 0;
+    virtual void         paint(Window_* window, std::function<void()> paint_function) = 0;
 
     // window information
     virtual Rectangle   get_window_rectangle(WindowHandle window) const = 0;

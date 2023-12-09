@@ -54,9 +54,10 @@ std::unique_ptr<Pencil> XOpenGLGraphics::create_pencil(Window_* window)
     return std::make_unique<OpenGLPencil>(window, this, &opengl_manager_);
 }
 
-void XOpenGLGraphics::paint(WindowHandle window, std::function<void()> paint_function)
+void XOpenGLGraphics::paint(Window_* window, std::function<void()> paint_function)
 {
-    glXMakeCurrent(display, window, context_);
+    glXMakeCurrent(display, window->handle(), context_);
+    glViewport(0, 0, window->rectangle().w, window->rectangle().h);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -67,5 +68,5 @@ void XOpenGLGraphics::paint(WindowHandle window, std::function<void()> paint_fun
 
     paint_function();
 
-    glXSwapBuffers(display, window);
+    glXSwapBuffers(display, window->handle());
 }
