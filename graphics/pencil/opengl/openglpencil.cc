@@ -3,6 +3,10 @@
 #include <GL/gl.h>
 #include <GL/glx.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+#include "window/window.hh"
 
 void OpenGLPencil::on_expose([[maybe_unused]] Rectangle const& rectangle) const
 {
@@ -35,6 +39,9 @@ void OpenGLPencil::fill(Color const& color, [[maybe_unused]] Rectangle const& re
 
     glBindBuffer(GL_ARRAY_BUFFER, opengl_manager_->fill().vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glm::mat4 projection = glm::ortho(0.0f, (float) window_->rectangle().w, 0.0f, (float) window_->rectangle().h);
+    glUniformMatrix4fv(opengl_manager_->fill().projectionLocation, 1, GL_FALSE, &projection[0][0]);
 
     // fragment parameters
 

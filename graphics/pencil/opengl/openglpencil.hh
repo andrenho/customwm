@@ -7,12 +7,13 @@
 class OpenGLPencil : public Pencil {
 public:
     OpenGLPencil(class Window_* window, class Graphics const* graphics, OpenGLManager* opengl_manager)
-            : Pencil(window, graphics), opengl_manager_(opengl_manager) {}
+            : Pencil(window, graphics), window_(window), opengl_manager_(opengl_manager) {}
 
     void on_expose(Rectangle const& rectangle) const override;
     void fill(Color const& color, Rectangle const& rect) const override;
 
 private:
+    Window_* window_;
     OpenGLManager* opengl_manager_;
 };
 

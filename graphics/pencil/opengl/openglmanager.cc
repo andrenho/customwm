@@ -24,6 +24,7 @@ void OpenGLManager::init_fill()
     fill_.program = compile("fill", vertex_shader_fill, fragment_shader_fill);
 
     glUseProgram(fill_.program);
+    fill_.projectionLocation = glGetUniformLocation(fill_.program, "projection");
     fill_.bgColorLocation = glGetUniformLocation(fill_.program, "bgColor");
 
     glGenVertexArrays(1, &fill_.vao);
