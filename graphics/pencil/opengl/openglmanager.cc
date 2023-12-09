@@ -39,7 +39,9 @@ void OpenGLManager::init_fill()
 
 OpenGLManager::~OpenGLManager()
 {
-    // TODO - clear everything
+    glDeleteBuffers(1, &fill_.vbo);
+    glDeleteVertexArrays(1, &fill_.vao);
+    glDeleteProgram(fill_.program);
 }
 
 
