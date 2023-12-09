@@ -18,25 +18,16 @@ void OpenGLPencil::fill(Color const& color, [[maybe_unused]] Rectangle const& re
     glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    GLfloat glcolor[] = {
-            ((float) color.r) / 255.0f,
-            ((float) color.g) / 255.0f,
-            ((float) color.b) / 255.0f,
-            ((float) color.a) / 255.0f,
-    };
-
     glUseProgram(opengl_manager_->fill().program);
 
     // vertex parameters
 
-    float x = 10.f, y = 10.f, w = 100.f, h = 100.f;
     float vertices[] = {
-            x, y,
-            x + w, y,
-            x + w, y + h,
-            x, y + h
+            (float) rect.x, (float) rect.y,
+            (float) rect.x + (float) rect.w, (float) rect.y,
+            (float) rect.x + (float) rect.w, (float) rect.y + (float) rect.h,
+            (float) rect.x, (float) rect.y + (float) rect.h
     };
-
     glBindBuffer(GL_ARRAY_BUFFER, opengl_manager_->fill().vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
@@ -45,7 +36,14 @@ void OpenGLPencil::fill(Color const& color, [[maybe_unused]] Rectangle const& re
 
     // fragment parameters
 
+    GLfloat glcolor[] = {
+            ((float) color.r) / 255.0f,
+            ((float) color.g) / 255.0f,
+            ((float) color.b) / 255.0f,
+            ((float) color.a) / 255.0f,
+    };
     glUniform4fv(opengl_manager_->fill().bgColorLocation, 1, glcolor);
+
     glBindVertexArray(opengl_manager_->fill().vao);
 
     // draw

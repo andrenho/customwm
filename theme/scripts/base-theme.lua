@@ -137,7 +137,7 @@ local theme = {
         end,
 
         draw_window = function(window)
-            window:fill("#ffffff")
+            window:fill("#ffffff", {x=10, y=10, w=10, h=10})
         end,
 
         on_expose = function(wm, window, exposed_area)
