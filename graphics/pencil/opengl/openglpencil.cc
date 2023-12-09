@@ -3,13 +3,21 @@
 #include <GL/gl.h>
 #include <GL/glx.h>
 
-void OpenGLPencil::on_expose(Rectangle const& rectangle) const
+static float vertices[] = {
+        -0.5f, -0.5f, 0.0f,
+         0.5f, -0.5f, 0.0f,
+        -0.5f,  0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        -0.5f,  0.5f, 0.0f,
+         0.5f,  0.5f, 0.0f,
+};
+
+
+void OpenGLPencil::on_expose([[maybe_unused]] Rectangle const& rectangle) const
 {
 }
 
-extern float vertices[9];
-
-void OpenGLPencil::fill(Color const& color, Rectangle const& rect) const
+void OpenGLPencil::fill(Color const& color, [[maybe_unused]] Rectangle const& rect) const
 {
     // TODO - remove this
     glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
@@ -29,7 +37,7 @@ void OpenGLPencil::fill(Color const& color, Rectangle const& rect) const
     glBindBuffer(GL_ARRAY_BUFFER, opengl_manager_->fill().vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
 
     glBindVertexArray(0);
 }

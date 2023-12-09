@@ -137,14 +137,14 @@ local theme = {
         end,
 
         draw_window = function(window)
-            window:fill("#a0a0ff")
+            window:fill("#ffffff")
         end,
 
         on_expose = function(wm, window, exposed_area)
             if window:focused() then
-                window:fill("#a0a0ff")
+                window:fill("#000000")
             else
-                window:fill("#a0a0a0")
+                window:fill("#ffffff")
             end
             window:text(0, 0, window:name(), {
                 font = "basic", w = window:rect().w, h = 24, halign = "center", valign = "center"

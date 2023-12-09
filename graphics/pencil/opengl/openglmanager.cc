@@ -9,20 +9,6 @@ using namespace std::string_literals;
 #include "shaders.hh"
 #include "util/log.hh"
 
-static GLfloat fill_vertices[] = {
-        // positions
-        -1.0f, -1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f,
-        1.0f,  1.0f, 0.0f,
-        -1.0f,  1.0f, 0.0f
-};
-
-float vertices[] = {
-    -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
-     0.0f,  0.5f, 0.0f
-};
-
 void OpenGLManager::init()
 {
     GLenum err = glewInit();
@@ -41,12 +27,10 @@ void OpenGLManager::init_fill()
     fill_.bgColorLocation = glGetUniformLocation(fill_.program, "bgColor");
 
     glGenVertexArrays(1, &fill_.vao);
-    glGenBuffers(1, &fill_.vbo);
-
     glBindVertexArray(fill_.vao);
 
+    glGenBuffers(1, &fill_.vbo);
     glBindBuffer(GL_ARRAY_BUFFER, fill_.vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
