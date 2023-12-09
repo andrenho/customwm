@@ -27,7 +27,6 @@ rectangle windowmanager {
 
 rectangle graphics {
     abstract class Graphics
-    abstract class Pencil
     abstract class XGraphics
 
     Graphics <|-- XGraphics
@@ -36,10 +35,19 @@ rectangle graphics {
     XGraphics <|-- XlibGraphics
     XGraphics <|-- XOpenGLGraphics
 
-    Pencil <|-- XlibPencil
-    Pencil <|-- OpenGLPencil
+    rectangle pencil {
+        abstract class Pencil
+        abstract class Program
 
-    OpenGLPencil .left. OpenGLManager
+        Pencil <|-- XlibPencil
+        Pencil <|-- OpenGLPencil
+
+        OpenGLPencil .up. OpenGLManager
+
+        OpenGLManager -> "1..n" Program
+
+        Program <|-- FillProgram
+    }
 }
 
 ParentWindow -up-|> Window
