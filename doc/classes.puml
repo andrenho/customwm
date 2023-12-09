@@ -42,7 +42,7 @@ rectangle graphics {
         Pencil <|-- XlibPencil
         Pencil <|-- OpenGLPencil
 
-        OpenGLPencil .up. OpenGLManager
+        OpenGLPencil .. OpenGLManager
 
         OpenGLManager -> "1..n" Program
 
