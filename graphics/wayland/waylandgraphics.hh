@@ -4,6 +4,8 @@
 #include "graphics/graphics.hh"
 #include "window/window.hh"
 
+#include <wayland-server-core.h>
+
 class WaylandGraphics : public Graphics {
 public:
     WaylandGraphics(class Options *options, [[maybe_unused]] class Theme* theme) : Graphics(options) {}
@@ -30,6 +32,9 @@ public:
 
     // pencil
     std::unique_ptr<Pencil> create_pencil(Window_ *window) override;
+
+private:
+    wl_display* display = nullptr;
 };
 
 #endif //CUSTOMWM_WAYLANDGRAPHICS_HH

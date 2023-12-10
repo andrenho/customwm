@@ -109,7 +109,8 @@ if (WITH_OPENGL)
 endif()
 
 if (WITH_WAYLAND)
-    pkg_check_modules(wlroots REQUIRED)
+    pkg_check_modules(WLROOTS REQUIRED wlroots)
+    pkg_check_modules(WAYLAND_SRV REQUIRED wayland-server)
 endif()
 
 #
@@ -175,7 +176,7 @@ add_executable(customwm ${CUSTOMWM_SRC})
 add_dependencies(customwm luascripts)
 target_link_libraries(customwm PRIVATE
         luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES} ${X11_Xft_LIB} ${FREETYPE_LIBRARIES} ${OPENGL_LIBRARIES}
-        ${OPENGL_glx_LIBRARY} ${GLEW_LIBRARIES} ${LIBRARIES})
+        ${OPENGL_glx_LIBRARY} ${GLEW_LIBRARIES} ${WLROOTS_LIBRARIES} ${WAYLAND_SRV_LIBRARIES})
 
 install(TARGETS customwm)
 

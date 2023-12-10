@@ -4,7 +4,7 @@
 
 void WaylandGraphics::init()
 {
-
+    display = wl_display_create();
 }
 
 Size WaylandGraphics::screen_size() const
