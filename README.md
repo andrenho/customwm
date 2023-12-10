@@ -23,10 +23,32 @@ The programs are:
 
 ## Building
 
-```sh
+```shell
 mkdir build
 cd build
 cmake ..
 make
 sudo make install
+```
+
+### Alternative build options
+
+By default, the application will be built with both X11 and Wayland support.
+
+To build for X11 only (no OpenGL):
+
+```shell
+cmake -DWITH_OPENGL=OFF -DWITH_WAYLAND=OFF ..
+```
+
+To build for X11 only (with OpenGL):
+
+```shell
+cmake -DWITH_WAYLAND=OFF ..
+```
+
+To build for Wayland only:
+
+```shell
+cmake -DWITH_X11=OFF ..
 ```

@@ -106,12 +106,6 @@ WindowHandle XGraphics::create_window(Rectangle const &rectangle)
     XSelectInput(display, handle, SubstructureNotifyMask | StructureNotifyMask | ExposureMask |
                                   ButtonPressMask | ButtonReleaseMask | PointerMotionMask);
 
-    window_info_.emplace(handle, WindowInfo {
-        .backbuffer = XCreatePixmap(display, handle, rectangle.w, rectangle.h, depth),
-        .gc = XCreateGC(display, handle, 0, nullptr),
-        // .xft_draw = XftDrawCreate(display, id_, visual, colormap);
-    });
-
     XMapWindow(display, handle);
 
     // TODO - define arrow cursor
@@ -123,15 +117,7 @@ WindowHandle XGraphics::create_window(Rectangle const &rectangle)
 void XGraphics::destroy_window(WindowHandle window)
 {
     XUnmapWindow(display, window);
-
-    WindowInfo const& info = window_info_.at(window);
-    // XftDrawDestroy(xft_draw_);
-    XFreeGC(display, info.gc);
-    XFreePixmap(display, info.backbuffer);
-
     XDestroyWindow(display, window);
-    window_info_.erase(window);
-
     debug("Window %d destroyed", window);
 }
 
@@ -151,20 +137,6 @@ void XGraphics::unparent_window(WindowHandle child)
     XReparentWindow(display, child, root, 0, 0);
 
     debug("Window %d unparented", child);
-}
-
-void XGraphics::window_fill(WindowHandle window, Color const& color, Rectangle const &rect)
-{
-    WindowInfo const& info = window_info_.at(window);
-    XSetForeground(display, info.gc, resources_.get_color(color));
-    XFillRectangle(display, info.backbuffer, info.gc, rect.x, rect.y, rect.w, rect.h);
-}
-
-void XGraphics::window_swap_buffers(WindowHandle window, Rectangle const &rectangle)
-{
-    WindowInfo const& info = window_info_.at(window);
-    XCopyArea(display, info.backbuffer, window, info.gc, rectangle.x, rectangle.y, rectangle.w, rectangle.h,
-              rectangle.x, rectangle.y);
 }
 
 std::vector<WindowHandle> XGraphics::toplevel_windows() const

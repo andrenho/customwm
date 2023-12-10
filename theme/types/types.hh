@@ -48,6 +48,8 @@ struct Rectangle {
     void to_lua(lua_State* L) const;
     static Rectangle from_lua(lua_State* L, int index);
     static bool lua_is(lua_State* L, int index);
+
+    static Rectangle from_size(Size const& sz) { return { 0, 0, sz.w, sz.h }; }
 };
 
 struct Color {

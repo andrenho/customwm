@@ -1,0 +1,58 @@
+@startuml
+
+class Options
+
+rectangle theme {
+    package lua_scripts <<Database>> {
+    }
+    class Theme
+    lua_scripts -> Theme
+    note right of Theme
+        Loads user-provided
+        theme file
+    end note
+}
+
+class Window <to_lua>
+
+rectangle windowmanager {
+    class WindowManager <to_lua>
+    class ParentWindow
+    class WMEvents {
+        +run()
+    }
+    WindowManager -> "1..n" ParentWindow
+    WindowManager .left. WMEvents
+}
+
+rectangle graphics {
+    abstract class Graphics
+    abstract class XGraphics
+
+    Graphics <|-- XGraphics
+    Graphics <|-- WaylandGraphics
+
+    XGraphics <|-- XlibGraphics
+    XGraphics <|-- XOpenGLGraphics
+
+    rectangle pencil {
+        abstract class Pencil
+        abstract class Program
+
+        Pencil <|-- XlibPencil
+        Pencil <|-- OpenGLPencil
+
+        OpenGLPencil .. OpenGLManager
+
+        OpenGLManager -> "1..n" Program
+
+        Program <|-- FillProgram
+    }
+}
+
+ParentWindow -up-|> Window
+windowmanager -up-> Theme
+WindowManager --> Graphics
+Window ---> Pencil
+
+@enduml

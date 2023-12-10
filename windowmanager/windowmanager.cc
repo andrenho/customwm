@@ -43,6 +43,9 @@ void WindowManager::add_child_window(WindowHandle child_handle)
 
     theme_->call_opt("wm.after_window_reparented", this, parent);
 
+    // initial drawing
+    parent->draw();
+
     // TODO - set focus
 }
 

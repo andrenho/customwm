@@ -138,8 +138,15 @@ local theme = {
 
         draw_window = function(window)
             window:fill("#a0a0ff")
+            window:fill("#a00000", {
+                x = window:rect().w - 24,
+                y = 4,
+                w = 20,
+                h = 18,
+            })
         end,
 
+        --[[
         on_expose = function(wm, window, exposed_area)
             if window:focused() then
                 window:fill("#a0a0ff")
@@ -150,6 +157,7 @@ local theme = {
                 font = "basic", w = window:rect().w, h = 24, halign = "center", valign = "center"
             })
         end,
+        ]]
 
         on_window_click = function(wm, window, ev)
             if ev.button == 'left' and not ev.pressed then

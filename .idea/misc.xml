@@ -6,4 +6,7 @@
       <file path="$PROJECT_DIR$/.old" />
     </excludeRoots>
   </component>
+  <component name="MakefileWorkspace">
+    <contentRoot DIR="$PROJECT_DIR$" />
+  </component>
 </project>
