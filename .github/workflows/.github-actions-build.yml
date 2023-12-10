@@ -9,7 +9,10 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Install dependencies
-        run: sudo apt-get install -y libx11-dev libxft-dev libz3-dev libfreetype-dev cmake g++ valgrind
+        run: |
+          sudo apt-get clean
+          sudo apt-get update
+          sudo apt-get install -y libx11-dev libxft-dev libz3-dev libfreetype-dev cmake g++ valgrind
       - name: Run CMake
         run: mkdir ${{ github.workspace }}/build && cd ${{ github.workspace }}/build && cmake ${{ github.workspace }}
       - name: Build application
