@@ -1,14 +1,19 @@
 #ifndef CUSTOMWM_WAYLANDGRAPHICS_HH
 #define CUSTOMWM_WAYLANDGRAPHICS_HH
 
+extern "C" {
+#include <wayland-server-core.h>
+#include <wlr/backend.h>
+}
+
 #include "graphics/graphics.hh"
 #include "window/window.hh"
-
-#include <wayland-server-core.h>
 
 class WaylandGraphics : public Graphics {
 public:
     WaylandGraphics(class Options *options, [[maybe_unused]] class Theme* theme) : Graphics(options) {}
+    ~WaylandGraphics() override;
+
     void init() override;
 
     // information
@@ -34,7 +39,9 @@ public:
     std::unique_ptr<Pencil> create_pencil(Window_ *window) override;
 
 private:
-    wl_display* display = nullptr;
+    wl_display*    display = nullptr;
+    wl_event_loop* event_loop = nullptr;
+    wlr_backend*   backend = nullptr;
 };
 
 #endif //CUSTOMWM_WAYLANDGRAPHICS_HH
