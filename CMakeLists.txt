@@ -39,6 +39,12 @@ set(COMMON_SRC
         graphics/pencil/xlib/xlibpencil.hh
         graphics/pencil/opengl/openglpencil.cc
         graphics/pencil/opengl/openglpencil.hh
+        graphics/pencil/opengl/openglmanager.cc
+        graphics/pencil/opengl/openglmanager.hh
+        graphics/pencil/opengl/programs/program.cc
+        graphics/pencil/opengl/programs/program.hh
+        graphics/pencil/opengl/programs/fillprogram.cc
+        graphics/pencil/opengl/programs/fillprogram.hh
 )
 
 set(CUSTOMWM_SRC
@@ -47,12 +53,6 @@ set(CUSTOMWM_SRC
         windowmanager/windowmanager.hh windowmanager/windowmanager.cc
         windowmanager/wmevents.hh windowmanager/wmevents.cc
         windowmanager/parentwindow.hh windowmanager/parentwindow.cc
-        graphics/pencil/opengl/openglmanager.cc
-        graphics/pencil/opengl/openglmanager.hh
-        graphics/pencil/opengl/programs/program.cc
-        graphics/pencil/opengl/programs/program.hh
-        graphics/pencil/opengl/programs/fillprogram.cc
-        graphics/pencil/opengl/programs/fillprogram.hh
 )
 
 #
