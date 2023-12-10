@@ -138,6 +138,12 @@ local theme = {
 
         draw_window = function(window)
             window:fill("#a0a0ff")
+            window:fill("#a00000", {
+                x = window:rect().w - 24,
+                y = 4,
+                w = 20,
+                h = 18,
+            })
         end,
 
         --[[

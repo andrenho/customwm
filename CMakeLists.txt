@@ -151,7 +151,7 @@ add_custom_command(
 
 add_custom_command(
         OUTPUT ${GENPATH}/luascripts.inc
-        DEPENDS ${LUAZH_JIT}
+        DEPENDS ${LUAZH_JIT} ${LUA_SCRIPTS}
         COMMAND mkdir -p ${GENPATH}
         COMMAND ${LUAZH_JIT} luascripts ${LUASZ_FLAGS} ${LUA_SCRIPTS} > ${GENPATH}/luascripts.inc)
 add_custom_target(luascripts DEPENDS ${GENPATH}/luascripts.inc)

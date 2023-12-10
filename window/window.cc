@@ -33,6 +33,10 @@ void Window_::create_lua_metatable(Theme* theme)
             THIS->pencil_->fill(luaw_to<Color>(L, 2), rectangle);
             return 0;
         }},
+        { "rect", [](lua_State* L) {
+            luaw_push(L, THIS->rectangle());
+            return 1;
+        }},
    });
 #undef THIS
 }
