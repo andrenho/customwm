@@ -46,6 +46,8 @@ set(OPENGL_SRC
 )
 
 set(WAYLAND_SRC
+        graphics/wayland/waylandgraphics.cc
+        graphics/wayland/waylandgraphics.hh
 )
 
 set(COMMON_SRC
@@ -107,6 +109,7 @@ if (WITH_OPENGL)
 endif()
 
 if (WITH_WAYLAND)
+    pkg_check_modules(wlroots REQUIRED)
 endif()
 
 #
@@ -123,7 +126,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-Wall -Wextra)
 include_directories(${PROJECT_SOURCE_DIR} ${GENPATH} contrib/luaw/luaw contrib/luaw/luajit/src
-        ${X11_INCLUDE_DIR} ${X11_Xft_INCLUDE_PATH} ${FREETYPE_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS})
+        ${X11_INCLUDE_DIR} ${X11_Xft_INCLUDE_PATH} ${FREETYPE_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${wlroots_INCLUDE_DIRS})
 add_definitions(-DVERSION=\"${CMAKE_PROJECT_VERSION}\")
 
 #
@@ -172,7 +175,7 @@ add_executable(customwm ${CUSTOMWM_SRC})
 add_dependencies(customwm luascripts)
 target_link_libraries(customwm PRIVATE
         luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES} ${X11_Xft_LIB} ${FREETYPE_LIBRARIES} ${OPENGL_LIBRARIES}
-        ${OPENGL_glx_LIBRARY} ${GLEW_LIBRARIES})
+        ${OPENGL_glx_LIBRARY} ${GLEW_LIBRARIES} ${LIBRARIES})
 
 install(TARGETS customwm)
 

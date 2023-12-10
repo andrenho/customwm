@@ -9,6 +9,7 @@
 #include "graphics/x11/gl/xopenglgraphics.hh"
 #include "graphics/x11/xlib/xlibgraphics.hh"
 #include "util/log.hh"
+#include "graphics/wayland/waylandgraphics.hh"
 
 std::unique_ptr<Graphics> Graphics::create_unique_ptr(Options* options, [[maybe_unused]] class Theme* theme)
 {
@@ -35,8 +36,7 @@ std::unique_ptr<Graphics> Graphics::create_unique_ptr(Options* options, [[maybe_
 
         case Options::Backend::Wayland:
 #ifdef WITH_WAYLAND
-            error("sorry: wayland not supported yet");
-            exit(EXIT_FAILURE);
+            return std::make_unique<WaylandGraphics>(options, theme);
 #else
             error("Application compiled without Wayland support.");
             exit(EXIT_FAILURE);

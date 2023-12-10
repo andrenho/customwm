@@ -35,7 +35,7 @@ public:
     virtual Rectangle   get_window_rectangle(WindowHandle window) const = 0;
 
     // events
-    virtual void subscribe_to_wm_events() = 0;
+    virtual void                 subscribe_to_wm_events() = 0;
     virtual std::optional<Event> next_event() = 0;
 
     // pencil
