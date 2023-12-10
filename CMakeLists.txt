@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.26)
 
+option(WITH_X11     "WITH_X11" ON)
+option(WITH_OPENGL  "WITH_OPENGL" ON)
+option(WITH_WAYLAND "WITH_WAYLAND" ON)
+
 file(READ PRJ_VERSION VERSION)
 project(customwm VERSION ${VERSION})
 
@@ -17,26 +21,20 @@ set(LUA_SCRIPTS
         ${SCRIPTS_PATH}/base-theme.lua
 )
 
-set(COMMON_SRC
-        options/options.hh options/options.cc
-        theme/theme.hh theme/theme.inl theme/theme.cc theme/themeexception.hh
-        theme/types/types.hh theme/types/types.cc
-        graphics/cursors.hh
-        graphics/windowhandle.hh
-        graphics/event.hh
-        graphics/graphics.hh graphics/graphics.cc
-        graphics/x11/xgraphics.hh graphics/x11/xgraphics.cc
-        graphics/x11/xresources.hh graphics/x11/xresources.cc
-        util/log.hh util/log.cc
-        window/window.hh window/window.cc
-        graphics/dummy/dgraphics.hh
-        graphics/x11/gl/xopenglgraphics.cc
-        graphics/x11/gl/xopenglgraphics.hh
+set(X11_SRC
+        graphics/x11/xgraphics.hh
+        graphics/x11/xgraphics.cc
+        graphics/x11/xresources.hh
+        graphics/x11/xresources.cc
         graphics/x11/xlib/xlibgraphics.hh
         graphics/x11/xlib/xlibgraphics.cc
-        graphics/pencil/pencil.hh
         graphics/pencil/xlib/xlibpencil.cc
         graphics/pencil/xlib/xlibpencil.hh
+)
+
+set(OPENGL_SRC
+        graphics/x11/gl/xopenglgraphics.cc
+        graphics/x11/gl/xopenglgraphics.hh
         graphics/pencil/opengl/openglpencil.cc
         graphics/pencil/opengl/openglpencil.hh
         graphics/pencil/opengl/openglmanager.cc
@@ -46,6 +44,43 @@ set(COMMON_SRC
         graphics/pencil/opengl/programs/fillprogram.cc
         graphics/pencil/opengl/programs/fillprogram.hh
 )
+
+set(WAYLAND_SRC
+)
+
+set(COMMON_SRC
+        options/options.hh options/options.cc
+        theme/theme.hh
+        theme/theme.inl
+        theme/theme.cc
+        theme/themeexception.hh
+        theme/types/types.hh
+        theme/types/types.cc
+        graphics/cursors.hh
+        graphics/windowhandle.hh
+        graphics/event.hh
+        graphics/graphics.hh
+        graphics/graphics.cc
+        graphics/dummy/dgraphics.hh
+        graphics/pencil/pencil.hh
+        util/log.hh util/log.cc
+        window/window.hh window/window.cc
+)
+
+if (WITH_X11)
+    add_compile_definitions(WITH_X11)
+    list(APPEND COMMON_SRC ${X11_SRC})
+endif()
+
+if (WITH_OPENGL)
+    add_compile_definitions(WITH_OPENGL)
+    list(APPEND COMMON_SRC ${OPENGL_SRC})
+endif()
+
+if (WITH_WAYLAND)
+    add_compile_definitions(WITH_WAYLAND)
+    list(APPEND COMMON_SRC ${WAYLAND_SRC})
+endif()
 
 set(CUSTOMWM_SRC
         ${COMMON_SRC}
@@ -61,9 +96,18 @@ set(CUSTOMWM_SRC
 
 find_package(ZLIB REQUIRED)
 find_package(Freetype REQUIRED)
-find_package(X11 REQUIRED)
-find_package(OpenGL REQUIRED)
-find_package(GLEW REQUIRED)
+
+if (WITH_X11)
+    find_package(X11 REQUIRED)
+endif()
+
+if (WITH_OPENGL)
+    find_package(OpenGL REQUIRED)
+    find_package(GLEW REQUIRED)
+endif()
+
+if (WITH_WAYLAND)
+endif()
 
 #
 # Options

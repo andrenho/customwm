@@ -1,4 +1,8 @@
+#include <cstdio>
+#include <cstdlib>
+
 #include <memory>
+
 #include "options/options.hh"
 #include "theme/theme.hh"
 #include "graphics/x11/xgraphics.hh"
