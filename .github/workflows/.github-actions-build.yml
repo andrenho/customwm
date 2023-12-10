@@ -12,7 +12,7 @@ jobs:
         run: |
           sudo apt-get clean
           sudo apt-get update
-          sudo apt-get install -y libx11-dev libxft-dev libz3-dev libfreetype-dev libglew-dev glm cmake g++ valgrind
+          sudo apt-get install -y libx11-dev libxft-dev libz3-dev libfreetype-dev libglew-dev mesa-common-dev glm cmake g++ valgrind
       - name: Run CMake
         run: mkdir ${{ github.workspace }}/build && cd ${{ github.workspace }}/build && cmake ${{ github.workspace }}
       - name: Build application
