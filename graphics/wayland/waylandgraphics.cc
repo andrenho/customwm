@@ -1,29 +1,47 @@
 #include "waylandgraphics.hh"
 
+extern "C" {
+#include <wlr/util/log.h>
+#include <wlr/render/allocator.h>
+#include <wlr/backend/multi.h>
+}
+
 #include "util/log.hh"
 
 #define MU [[maybe_unused]]
 
 void WaylandGraphics::init()
 {
+    if (options_->debug_mode)
+        wlr_log_init(WLR_DEBUG, nullptr);
+
     display = wl_display_create();
     if (!display) {
         error("Could not create a wayland display");
         exit(EXIT_FAILURE);
     }
-    event_loop = wl_display_get_event_loop(display);
 
-    wlr_session* session;
-    backend = wlr_backend_autocreate(display, &session);
+    backend = wlr_backend_autocreate(display, nullptr);
     if (!wlr_backend_start(backend)) {
         error("Could not start wlroots backend");
         exit(EXIT_FAILURE);
     }
+
+    renderer = wlr_renderer_autocreate(backend);
+    if (!renderer) {
+        error("Failed to create renderer");
+        exit(EXIT_FAILURE);
+    }
+    wlr_renderer_init_wl_display(renderer, display);
+
+    event_loop = wl_display_get_event_loop(display);
 }
 
 std::optional<Event> WaylandGraphics::next_event()
 {
     wl_display_run(display);
+
+    return {};
 }
 
 

@@ -4,6 +4,7 @@
 extern "C" {
 #include <wayland-server-core.h>
 #include <wlr/backend.h>
+#include <wlr/render/wlr_renderer.h>
 }
 
 #include "graphics/graphics.hh"
@@ -42,6 +43,7 @@ private:
     wl_display*    display = nullptr;
     wl_event_loop* event_loop = nullptr;
     wlr_backend*   backend = nullptr;
+    wlr_renderer*  renderer = nullptr;
 };
 
 #endif //CUSTOMWM_WAYLANDGRAPHICS_HH

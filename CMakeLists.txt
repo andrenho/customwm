@@ -111,6 +111,7 @@ endif()
 if (WITH_WAYLAND)
     pkg_check_modules(WLROOTS REQUIRED wlroots)
     pkg_check_modules(WAYLAND_SRV REQUIRED wayland-server)
+    pkg_check_modules(PIXMAN REQUIRED pixman-1)
     add_compile_definitions(WLR_USE_UNSTABLE)
 endif()
 
@@ -128,7 +129,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-Wall -Wextra)
 include_directories(${PROJECT_SOURCE_DIR} ${GENPATH} contrib/luaw/luaw contrib/luaw/luajit/src
-        ${X11_INCLUDE_DIR} ${X11_Xft_INCLUDE_PATH} ${FREETYPE_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${wlroots_INCLUDE_DIRS})
+        ${X11_INCLUDE_DIR} ${X11_Xft_INCLUDE_PATH} ${FREETYPE_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS}
+        ${WLROOTS_INCLUDE_DIRS} ${WAYLAND_SRV_INCLUDE_DIRS} ${PIXMAN_INCLUDE_DIRS})
 add_definitions(-DVERSION=\"${CMAKE_PROJECT_VERSION}\")
 
 #
@@ -177,7 +179,7 @@ add_executable(customwm ${CUSTOMWM_SRC})
 add_dependencies(customwm luascripts)
 target_link_libraries(customwm PRIVATE
         luajit_a ${ZLIB_LIBRARIES} ${X11_LIBRARIES} ${X11_Xft_LIB} ${FREETYPE_LIBRARIES} ${OPENGL_LIBRARIES}
-        ${OPENGL_glx_LIBRARY} ${GLEW_LIBRARIES} ${WAYLAND_SRV_LIBRARIES} ${WLROOTS_LIBRARIES})
+        ${OPENGL_glx_LIBRARY} ${GLEW_LIBRARIES} ${WAYLAND_SRV_LIBRARIES} ${WLROOTS_LIBRARIES} ${PIXMAN_LIBRARIES})
 
 install(TARGETS customwm)
 
